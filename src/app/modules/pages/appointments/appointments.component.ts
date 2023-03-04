@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef } from '@angular/core';
+import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { environment } from 'environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
     FormBuilder,
@@ -33,6 +33,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { DateAdapter } from '@angular/material/core';
+// import { debug } from 'console';
 
 @Component({
     selector: 'app-appointments',
@@ -41,7 +42,10 @@ import { DateAdapter } from '@angular/material/core';
     encapsulation: ViewEncapsulation.None,
     providers: [DatePipe],
 })
-export class AppointmentsComponent implements OnInit {
+export class AppointmentsComponent implements OnInit,OnDestroy {
+
+    patientHistorys: any = [];
+
     myControl = new FormControl();
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
@@ -106,6 +110,8 @@ export class AppointmentsComponent implements OnInit {
     todayDataSourcePrintBookings: any = [];
     upcomingDataSourceBookings: any = [];
 
+filename:any=[];
+
     patientsappointments: any = [];
     filterPatientappointments: any = [];
     searchKey1: string;
@@ -142,6 +148,10 @@ export class AppointmentsComponent implements OnInit {
     roleID: any;
     registrationID: any;
 
+    advice: any;
+    nextvisit: any;
+
+
     docsXml: any = [];
     medicineXml: any = [];
     selectedDate: any;
@@ -150,6 +160,7 @@ export class AppointmentsComponent implements OnInit {
     form: any;
     fileName: any;
     patientHistory: any = [];
+    patientsappointment = new MatTableDataSource(this.todayDataSourceBookings);
     patientHistoryList: any = [];
     filteredAppointments: any = [];
     isChecked: boolean = false;
@@ -172,7 +183,9 @@ export class AppointmentsComponent implements OnInit {
     showHideDiv = false;
     filterValues = {};
     filterSelectObj = [];
+    labreportfiles = [];
     dataSource = new MatTableDataSource();
+    fileUrl: string;
     constructor(
         public patientsService: PatientsService,
         public medicineService: MedicineService,
@@ -247,6 +260,9 @@ export class AppointmentsComponent implements OnInit {
             state.mobile.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
+
+   
+
     displayedColumns: string[] = [
         'SL',
         'Patient',
@@ -254,7 +270,7 @@ export class AppointmentsComponent implements OnInit {
         'Doctor',
         'Time',
         'WaitingTime',
-        'Status',
+        'Status',       
         'VisitCount',
         'ReceiptToken',
         'Billing',
@@ -333,6 +349,10 @@ export class AppointmentsComponent implements OnInit {
             () => { }
         );
     }
+    applyFilters() {
+        
+        this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+    }
 
     remove(fruit: string): void {
         const index = this.fruits.indexOf(fruit);
@@ -360,7 +380,7 @@ export class AppointmentsComponent implements OnInit {
 
 
 
-        debugger;
+        
         this.addStaticData();
         this.getDocs();
         this.getComplaints();
@@ -437,6 +457,7 @@ export class AppointmentsComponent implements OnInit {
                 }),
             });
         }
+        
         this.vitalsForm = this._formBuilder.group({
             weight: [''],
             bloodGroup: [''],
@@ -459,7 +480,7 @@ export class AppointmentsComponent implements OnInit {
 
         if (this.roleID == '1') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken',
+                'SL', 'Patient', 'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
                  'Actions', 'View'
             ];
         }
@@ -502,6 +523,13 @@ export class AppointmentsComponent implements OnInit {
 
     }
 
+
+    ngOnDestroy(): void {
+        localStorage.removeItem('accessToken');
+
+        
+        localStorage.removeItem('loginDetails');
+    }
     filterChange(filter, event) {
         //let filterValues = {}
         // this.filterValues[filter.columnProp] = event.target.value.trim().toLowerCase()
@@ -559,8 +587,8 @@ export class AppointmentsComponent implements OnInit {
     addStaticData() {
 
         this.frequencyList = [];
-        this.frequencyList.push({ ID: 1, frequency: 'Days' })
-        this.frequencyList.push({ ID: 2, frequency: 'Months' })
+        this.frequencyList.push({ ID: 1, frequency: 'Day' })
+        this.frequencyList.push({ ID: 2, frequency: 'Month' })
 
 
         this.frequencyListMedication = [];
@@ -582,6 +610,10 @@ export class AppointmentsComponent implements OnInit {
         this.dose.push({ ID: 2, label: '1-0-1' })
         this.dose.push({ ID: 2, label: '1-0-0' })
         this.dose.push({ ID: 2, label: '0-0-1' })
+        this.dose.push({ ID: 2, label: '1/2-0-0 ' })
+        this.dose.push({ ID: 2, label: '0-1/2-0' })
+        this.dose.push({ ID: 2, label: '0-0-1/2' })
+        this.dose.push({ ID: 2, label: '1/2-1/2-1/2' })
 
         this.when = [];
         this.when.push({ ID: 2, label: 'After Food' })
@@ -616,7 +648,7 @@ export class AppointmentsComponent implements OnInit {
     }
 
     onRowClicked(row) {
-        debugger;
+        
         // this.rowClickedData=row;
         this.Screen = 2;
         this.detailData = row;
@@ -628,6 +660,7 @@ export class AppointmentsComponent implements OnInit {
 
         }
         else {
+            
             this.patientName = row.patient + " " + "(" + row.gender + ", Age " + row.age + ")"
             // this.vitalsForm.reset();
             // this.fruits = [];
@@ -646,7 +679,9 @@ export class AppointmentsComponent implements OnInit {
     }
 
     onRowPrintPresecptionClicked(row) {
+        
         if (row.vitalsID) {
+            
             this.detailData = row;
             this.setValues(row);
             this.ViewPrescption();
@@ -681,7 +716,7 @@ export class AppointmentsComponent implements OnInit {
         this.utilitiesService.getAllAppointments().subscribe(
             (data) => {
                 if (data) {
-                    debugger;
+                    
                     this.allAppointments = data;
                     this.date = new Date();
                     this.date.setHours(0, 0, 0, 0);
@@ -691,7 +726,7 @@ export class AppointmentsComponent implements OnInit {
                         this.patientsappointments = data;
                         //Today Bookings
                         this.todayDataSourceBookings = data.filter((a) => a.serviceDate == todayDate);
-                        debugger;
+                        
 
                         this.selection = new Set < this.todayDataSourceBookings > (true);
                         //Future Bookings
@@ -769,7 +804,7 @@ export class AppointmentsComponent implements OnInit {
 
 
     sortData(sort: MatSort) {
-        debugger;
+        
 
         if (sort.active == "patientARCID") {
             if (sort.direction == "asc")
@@ -963,7 +998,7 @@ export class AppointmentsComponent implements OnInit {
                 if (this.horizontalStepperForm.value.step2.discount != "") {
                     discList = this.discounts.filter(a => a.discountID === this.horizontalStepperForm.value.step2.discount);
                 }
-                debugger;
+                
                 if (this.horizontalStepperForm.value.step2.price != "" && this.horizontalStepperForm.value.step2.discount != "") {
                     //   
                     if (discList.length > 0 && pricList.length > 0) {
@@ -989,7 +1024,10 @@ export class AppointmentsComponent implements OnInit {
         return user && user.mobile ? user.mobile : '';
     }
     applyFilter(val) {
-
+        
+        val = val.trim(); // Remove whitespace
+        val = val.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = val;
         // this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
         let details = this.patients.filter(
             (a) => a.mobile.trim() == val.value.mobile.trim() && a.patient.trim().toLowerCase() == val.value.patient.trim().toLowerCase()
@@ -1081,7 +1119,7 @@ export class AppointmentsComponent implements OnInit {
 
     updateSelect(val) {
         this.horizontalStepper.selectedIndex = 0;
-        debugger;
+        
         if (val.duePayment != null && val.duePayment != '0.00') {
             this.updateSelectDuePay(val)
         }
@@ -1139,7 +1177,7 @@ export class AppointmentsComponent implements OnInit {
 
         this.getSlotsWithDocIDEdit(val.doctorID, val.slotTime);
 
-        debugger;
+        
         this.step1.controls['docName'].setValue(val.doctorID);
         this.step1.controls['firstName'].setValue(val.patient);
        // this.step1.controls['lastName'].setValue(val.patient);
@@ -1165,7 +1203,7 @@ export class AppointmentsComponent implements OnInit {
 
     // next(val)
     // {
-    //     debugger
+    //     
     //     var slot =val.step1.slot;
     //     if(slot == 0)
     //     {
@@ -1176,7 +1214,7 @@ export class AppointmentsComponent implements OnInit {
 
 
     addRegisterPatientAppointment(val) {
-        debugger;
+        
         this.appt.AppointmentID = Number(this.appointID);
         this.appt.registrationID = Number(val.step1.docName);  //
         this.appt.PatientID = Number(this.patientID);  //
@@ -1257,7 +1295,7 @@ export class AppointmentsComponent implements OnInit {
         this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
 
             if (data) {
-                debugger;
+                
                 if (data > 0) {
                     this.receiptToken = data;
                     this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
@@ -1288,7 +1326,7 @@ export class AppointmentsComponent implements OnInit {
 
     //Receipt Print
     openCompanyDetailsDialog(): void {
-        debugger;
+        
         const dialogConfig = new MatDialogConfig();
         dialogConfig.restoreFocus = false;
         dialogConfig.autoFocus = false;
@@ -1315,7 +1353,7 @@ export class AppointmentsComponent implements OnInit {
 
     //Receipt Print preception
     ViewPrescption(): void {
-        debugger;
+        
         const dialogConfig = new MatDialogConfig();
         dialogConfig.restoreFocus = false;
         dialogConfig.autoFocus = false;
@@ -1859,7 +1897,7 @@ export class AppointmentsComponent implements OnInit {
             when: [''],
             frequencyListMedication: [''],
             duration: [''],
-            notes: ['']
+            notes: [''],
         });
     }
     createMedicationItem1(): FormGroup {
@@ -1875,16 +1913,19 @@ export class AppointmentsComponent implements OnInit {
     }
 
     addItem(): void {
+        
         this.items = this.vitalsForm.get('items') as FormArray;
         this.items.push(this.createItem1());
     }
 
     addMedicationItem(): void {
+        
         this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
         this.medicationitems.push(this.createMedicationItem1());
     }
 
     get employees(): FormArray {
+        
         return this.vitalsForm.get('items') as FormArray;
     }
 
@@ -1913,6 +1954,7 @@ export class AppointmentsComponent implements OnInit {
         this.PatientID = val.patientID;
         this.AppointmentID = val.appointmentID;
         this.vitalsID = 0;
+        
         this.items = this.vitalsForm.get('items') as FormArray;
         this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
         const arr = <FormArray>this.vitalsForm.controls.items;
@@ -1983,7 +2025,7 @@ export class AppointmentsComponent implements OnInit {
     }
 
     getSlotsWithDocID(val) {
-        debugger;
+        
         this.selectedDate = this.step1.get('appDate').value
         var d = new Date(this.selectedDate);
         var n = d.getDay();
@@ -2094,6 +2136,14 @@ export class AppointmentsComponent implements OnInit {
         );
     }
 
+    bindMobileNo(){
+        
+
+        // this.horizontalStepperForm.step1.mobNum.setValue(this.searchKey3)
+        this.step1.controls['mobNum'].setValue(this.searchKey3);
+        // this.horizontalStepperForm.controls.step1['mobNum'].setValue(this.searchKey3);
+        //this.horizontalStepperForm.value.step1.mobNum=this.searchKey3
+    }
 
     getComplaints() {
         this.flag = '4'
@@ -2137,23 +2187,25 @@ export class AppointmentsComponent implements OnInit {
         for (var i = 0; i < val.items.length; i++) {
             if (val.items[i].docType != null) {
                 itemArr.push({
-                    AppointmentID: this.AppointmentID
-                    , DocumentTypeID: val.items[i].docType.documentTypeID
+                    AppointmentID: this.AppointmentID,
+                     DocumentTypeID: val.items[i].docType.documentTypeID,
                     //  , DocTypeNAme: val.items[i].Image
-                    , DocTypeNAme: "VitalsDocs\\" + val.items[i].Image.split("\\").pop()
+                     DocTypeNAme: "VitalsDocs\\" + val.items[i].Image.split("\\").pop()
                 });
             }
             else {
                 itemArr.push({
-                    AppointmentID: this.AppointmentID
-                    , DocumentTypeID: undefined
+                    AppointmentID: this.AppointmentID,
+                    DocumentTypeID: undefined,
                     //  , DocTypeNAme: val.items[i].Image
-                    , DocTypeNAme: "VitalsDocs\\"
+                     DocTypeNAme: "VitalsDocs\\"
                 });
             }
         }
         let medicationArr = [];
+        
         for (var i = 0; i < val.medicationitems.length; i++) {
+
             medicationArr.push({
                 vitalsID: this.AppointmentID
                 , medicine: val.medicationitems[i].medicine
@@ -2161,7 +2213,11 @@ export class AppointmentsComponent implements OnInit {
                 , when: val.medicationitems[i].when
                 , frequencyListMedication: val.medicationitems[i].frequencyListMedication
                 , duration: val.medicationitems[i].duration
-                , notes: val.medicationitems[i].notes
+                , notes: val.medicationitems[i].notes,
+
+               
+
+                
             });
         }
 
@@ -2320,6 +2376,7 @@ export class AppointmentsComponent implements OnInit {
             this.patientName = row.patient + " " + "(" + row.gender + ", Age " + row.age + ")"
             // this.vitalsForm.reset();
             // this.fruits = [];
+            
             this.flag = '1'
             this.PatientID = row.patientID;
             this.AppointmentID = row.appointmentID;
@@ -2374,6 +2431,7 @@ export class AppointmentsComponent implements OnInit {
                             fileName: [this.docsXml[i].docTypeNAme],
                             docType: [uom[0]],
                         }));
+                       
                     }
                     this.spinner.hide();
                 } else {
@@ -2390,7 +2448,7 @@ export class AppointmentsComponent implements OnInit {
             (data) => {
 
                 if (data) {
-                    debugger;
+                    
                     this.medicineXml = data;
                     this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
                     const arr = <FormArray>this.vitalsForm.controls.medicationitems;
@@ -2404,7 +2462,8 @@ export class AppointmentsComponent implements OnInit {
                             duration: [this.medicineXml[i].duration],
                             notes: [this.medicineXml[i].notes]
                         }));
-                    }
+                    
+                 }
                     this.spinner.hide();
                 } else {
                     this.spinner.hide();
@@ -2419,11 +2478,15 @@ export class AppointmentsComponent implements OnInit {
         this.vitalsID = val.vitalsID;
         this.PatientID = val.patientID;
         this.AppointmentID = val.appointmentID;
+        this.advice = val.advice;
+        this.nextvisit = val.nextVisit;
+
         this.GetComplaintsXML();
         this.GetDocumentsXML();
         this.GetMedicineXML();
         this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
         if (this.vitals.length > 0) {
+            
             this.vitalsForm.controls['weight'].setValue(this.vitals[0].weight)
             this.vitalsForm.controls['bloodGroup'].setValue(this.vitals[0].bloodGroup)
             this.vitalsForm.controls['temp'].setValue(this.vitals[0].temperature_F)
@@ -2433,11 +2496,12 @@ export class AppointmentsComponent implements OnInit {
             this.vitalsForm.controls['SpO2'].setValue(this.vitals[0].spO2)
             this.vitalsForm.controls['BMI'].setValue(this.vitals[0].bmi)
             this.vitalsForm.controls['visitReason'].setValue(this.vitals[0].visitReasonID)
-
             this.vitalsForm.controls['advice'].setValue(this.vitals[0].advice)
             this.vitalsForm.controls['nextVisit'].setValue(this.vitals[0].nextVisit)
             this.vitalsForm.controls['pickADate'].setValue(this.vitals[0].pickADate)
             this.vitalsForm.controls['frequency'].setValue(this.vitals[0].frequency)
+          
+
         }
     }
     detectFiles(event, item) {
@@ -2502,8 +2566,11 @@ export class AppointmentsComponent implements OnInit {
         let arr = [];
         arr.push({ PatientID: Number(val.patientID) })
         var url = 'PatientsAppointments/PatientHistory/';
+        
         this.utilitiesService.CRUD(arr, url).subscribe(
+           
             (data) => {
+                
                 if (data) {
 
                     const dateforToday = new Date();
@@ -2516,6 +2583,8 @@ export class AppointmentsComponent implements OnInit {
                         if (this.patientHistory[i].vitalsID > 0) {
                             this.GetComplaintsListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
                             this.GetMedicineListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
+                            this.GetDocumentListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
+
                         }
 
                     }
@@ -2588,6 +2657,53 @@ export class AppointmentsComponent implements OnInit {
             () => { this.spinner.hide(); }
         );
     }
+    DownloadDocument(fileDownloadPath) {
+        this.fileUrl = fileDownloadPath; //"wwwroot/SiteDocument/SiteDemo1/FileDocument.doc" static file path
+        this.utilitiesService.DocumentsDownload(this.fileUrl).subscribe(async (event) => {
+            let data = event as HttpResponse < Blob > ;
+            const downloadedFile = new Blob([data.body as BlobPart], {
+                type: data.body?.type
+            });
+            console.log("ddd", downloadedFile)
+            if (downloadedFile.type != "") {
+                const a = document.createElement('a');
+                a.setAttribute('style', 'display:none;');
+                document.body.appendChild(a);
+                a.download = this.fileUrl;
+                a.href = URL.createObjectURL(downloadedFile);
+                a.target = '_blank';
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
+    }
+    GetDocumentListXML(val, history) {
+        debugger
+                this.apptList.VitalsID = val;
+                this.utilitiesService.GetDocumentsXML(this.apptList).subscribe(
+                    (data) => {
+                        debugger
+                        if (data) {
+        
+                            this.docsXml = data;
+                            this.docsList = [];
+                            for (var i = 0; i < this.docsXml.length; i++) {
+                                this.docsList.push(this.docsXml[i]);
+                                this.labreportfiles.push(this.docsList[i].docTypeNAme.slice(11))
+                            }
+                            // var splitted = this.docsList[0].docTypeNAme.slice(11);
+                            this.fileUrl=this.docsList[0].docTypeNAme.slice(11);
+                            // this.filename=this.docsList[0].value.docTypeNAme;
+
+                            history.documents = this.docsList;
+                            this.spinner.hide();
+                        } else {
+                            this.spinner.hide();
+                        }
+                    },
+                    () => { this.spinner.hide(); }
+                );
+            }
     appoinmentLink() {
         //this._router.navigate(['/Appointments']);
         this.Screen = 1;
@@ -2596,10 +2712,10 @@ export class AppointmentsComponent implements OnInit {
 
     GetMedicineData() {
 
-        debugger;
+        
         this.medicineService.GetMedicineList().subscribe(
             (data) => {
-                debugger;
+                
                 if (data) {
                     if (this.roleID == 2) {
                         this.medicinePrescepList = data;
@@ -2621,7 +2737,7 @@ export class AppointmentsComponent implements OnInit {
 
     // //Receipt Print
     // openPresecptionDialog(): void {
-    //     debugger;
+    //     
     //     const dialogConfig = new MatDialogConfig();
     //     dialogConfig.restoreFocus = false;
     //     dialogConfig.autoFocus = false;

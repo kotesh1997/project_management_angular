@@ -14,8 +14,61 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field>
+            </div>
+        <!---   <div class="col-lg-3">
+            <mat-form-field floatLabel="never" class="search">
+                <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient  Appointment Date"
+                    autocomplete="off" (keyup)="applyFilter()" />
+                <mat-icon matPrefix>search</mat-icon>
+                <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
+                    (click)="onSearchClear()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            </div>-->
+            <div class="col-lg-3">
+                <!-- <mat-form-field class="col-span-2 flex flex-col" appearance="outline"
+                style="padding-left:0;">
+                <mat-label>Select Day</mat-label>
+                (selectionChange)="OnDaySelect()"
+                <mat-select matNativeControl  name="filterdayval">
+                    <mat-option [value]="yesterday" >Yesterday</mat-option>
+                    <mat-option [value]="today">Today</mat-option>
+                    <mat-option [value]="tomorrow">Tomorrow</mat-option>
+
+                    </mat-select>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill" class="col-span-2 flex flex-col" 
+            style="padding-left:0;">
+                <!-- <mat-label>Select Day</mat-label> -->
                 
-             </div>
+                <mat-select  (selectionChange)="OnDaySelect($event.value)"  name="filterdayval">
+                  <mat-option *ngFor="let day of days" [value]="day.value">
+                    {{day.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!---- <mat-form-field >
+                    
+                    <select matNativeControl required autocomplete="off" (change)="applyFilter()">
+                        <option value="volvo">yesterday</option>
+                        <option value="saab">Today</option>
+                        <option value="audi">Tommorow</option>
+                    </select>
+                  </mat-form-field> -->
+             <!--- <div class="col-lg-3">  
+                  <mat-form-field class="col-lg-4" class="search">
+                        <!-- <mat-label>Select Date</mat-label> -->
+                     <!----<input matInput [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="appToDate" 
+                              />
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                    
+                </div>-->
+             
+
            <!-- <div class="col-lg-9" style="text-align: end;">
                 <button class="fuse-mat-button-rounded mt-2" mat-flat-button [color]="'primary'"
                 (click)="patientDrawer.toggle()">
@@ -113,6 +166,7 @@
                 <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon>
             </div> -->
             <div class="col-lg-4">
+
                 <div class="col-lg-1">
                 </div>
                 <div class="col-lg-2" style="cursor: pointer;" (click)="appoinmentLink()">
@@ -189,6 +243,9 @@
                                                         class="service_d"> : {{item.bp}}</span></label><br />
                                                 <label><span class="service_d">BMI</span> <span class="service_d"> :
                                                         {{item.bmi}} </span></label><br />
+                                                        <label><span class="service_d">Advice</span> <span class="service_d"> :
+                                                            {{item.advice}} </span></label><br />       
+                                                        
 
 
                                                 <br /> <br />

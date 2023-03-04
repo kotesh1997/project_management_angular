@@ -1,0 +1,1 @@
+{"ast":null,"code":"export * from '@fuse/services/tailwind/tailwind.module';\nexport * from '@fuse/services/tailwind/tailwind.service';","map":null,"metadata":{},"sourceType":"module"}

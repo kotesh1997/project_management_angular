@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { AuthResetPasswordComponent } from 'app/modules/auth/reset-password/reset-password.component';\nexport const authResetPasswordRoutes = [{\n  path: '',\n  component: AuthResetPasswordComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

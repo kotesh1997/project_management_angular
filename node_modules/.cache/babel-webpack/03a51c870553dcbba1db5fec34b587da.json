@@ -1,0 +1,1 @@
+{"ast":null,"code":"export * from '@fuse/components/fullscreen/fullscreen.component';\nexport * from '@fuse/components/fullscreen/fullscreen.module';\nexport * from '@fuse/components/fullscreen/fullscreen.types';","map":null,"metadata":{},"sourceType":"module"}

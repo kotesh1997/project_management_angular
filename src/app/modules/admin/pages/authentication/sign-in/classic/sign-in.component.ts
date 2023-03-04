@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
@@ -10,13 +10,15 @@ import { AuthService } from 'app/core/auth/auth.service';
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class SignInClassicComponent implements OnInit
+export class SignInClassicComponent implements OnInit 
 {
+
     alert: { type: FuseAlertType; message: string } = {
         type   : 'success',
         message: ''
     };
     signInForm: FormGroup;
+
     showAlert: boolean = false;
 
     /**
@@ -28,7 +30,7 @@ export class SignInClassicComponent implements OnInit
     )
     {
     }
-
+   
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------

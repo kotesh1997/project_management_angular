@@ -35,7 +35,7 @@
                     </mat-form-field>
                     <div class="col-span-2 items-center flex flex-col" style="
                     position: relative;
-                    lp: '24%';
+                    /* lp: '24%'; */
                     left: -20%;
                     top: 30%;
                 "> <button mat-flat-button  color="warn" (click)="resetFilters()">Reset</button></div>
@@ -708,7 +708,7 @@
                                     *ngIf="actionName=='New Appointment'">
 
                                     <input type="text" [(ngModel)]="searchKey3" placeholder="Search Patient Profile"
-                                        aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                        aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" (change)="bindMobileNo()">
                                     <mat-icon matPrefix>perm_identity</mat-icon>
                                     <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey3"
                                         (click)="onSearchClear()">
@@ -1016,6 +1016,7 @@
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Blood Pressure</mat-label>
                                                                 <input matInput [formControlName]="'bloodPressure'" />
+                                                           
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -1039,6 +1040,13 @@
                                                                 <input matInput [formControlName]="'BMI'" />
                                                             </mat-form-field>
                                                         </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Advice</mat-label>
+                                                                <input matInput [formControlName]="'advice'" />
+                                                            </mat-form-field>
+                                                        </div>
+    
 
                                                     </div>
                                                 </fieldset>
@@ -1061,7 +1069,7 @@
                                             aria-labelledby="headingTwo">
                                             <div class="panel-body">
                                                 <fieldset class="scheduler-border" [formGroup]="vitalsForm">
-                                                    <div class="row">
+                                               <!---    <div class="row">
                                                         <mat-form-field class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                                             appearance="outline">
                                                             <mat-label>Select Visit Reason</mat-label>
@@ -1073,7 +1081,7 @@
                                                             </mat-select>
                                                         </mat-form-field>
 
-                                                    </div>
+                                                    </div>-->
                                                     <div class="row">
                                                         <mat-form-field
                                                             class="example-chip-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -1428,6 +1436,13 @@
                                                             <input matInput [formControlName]="'BMI'" />
                                                         </mat-form-field>
                                                     </div>
+                                                <!---    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Advice</mat-label>
+                                                            <input matInput [formControlName]="'advice'" />
+                                                        </mat-form-field>
+                                                    </div>-->
+
 
                                                 </div>
                                             </fieldset>
@@ -1447,7 +1462,7 @@
                                         <div class="panel-body">
                                             <fieldset class="scheduler-border" [formGroup]="vitalsForm">
                                                 <div class="row">
-                                                    <mat-form-field class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                                  <!---- <mat-form-field class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                                         appearance="outline">
                                                         <mat-label>Select Visit Reason</mat-label>
                                                         <mat-select [formControlName]="'visitReason'">
@@ -1456,7 +1471,7 @@
                                                                 {{ item.reason }}
                                                             </mat-option>
                                                         </mat-select>
-                                                    </mat-form-field>
+                                                    </mat-form-field>-->
 
                                                 </div>
                                                 <div class="row">
@@ -1614,18 +1629,23 @@
                                             <tr formArrayName="medicationitems"
                                                 *ngFor="let item of vitalsForm.get('medicationitems')['controls']; let j = index;">
                                                 <ng-container [formGroupName]="j">
-                                                    <td >
+                                                    <td  >
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>medicine</mat-label>
-                                                            <mat-select [formControlName]="'medicine'" >
+                                                            <mat-select [formControlName]="'medicine'" [dataSource]="patientsappointment">
+                                                                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
+                                                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                                                                    <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient  Appointment Date"
+                                                                    autocomplete="off" (keyup)="applyFilters()" />  </mat-form-field>
                                                                 <mat-option *ngFor="let item of medicinePrescepList" class="medication" 
-                                                                    [value]="item.medicineName">
+                                                                    [value]="item.medicineName" >
                                                                     <h4 mat-line> {{ item.medicineName }}</h4>
                                                                     <p mat-line>Composition - {{ item.composition }}</p>                                                                  
                                                                    
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
+
                                                     </td>
                                                    
 
@@ -1680,6 +1700,13 @@
                                                             <input matInput [formControlName]="'notes'" />
                                                         </mat-form-field>
                                                     </td>
+                                                <!---  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Advice</mat-label>
+                                                            <input matInput [formControlName]="'advice'" />
+                                                        </mat-form-field>
+                                                    </div>-->
+
                                                     <td>
                                                         <mat-icon style="color: #32CD32;cursor: pointer;"
                                                             (click)="addMedicationItem()">add_box</mat-icon>
@@ -1774,21 +1801,24 @@
                                                         </mat-form-field>
                                                     </div> -->
                                                 </div>
-                                                <div class="flex justify-end">
-                                                    <button class="px-8" mat-flat-button [color]="'primary'" (click)="
-                    addUpdateVitals(vitalsForm.value);" type="button">
-                                                        Submit
-                                                    </button>
-                                                </div>
+                                              
                                             </fieldset>
                                         </div>
+                                       
                                     </div>
-
+                                    <div class="flex justify-end">
+                                        <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+        addUpdateVitals(vitalsForm.value);" type="button">
+                                            Submit
+                                        </button>
+                                    </div>
                                 </mat-tab>
+                                
                             </mat-tab-group>
 
                         </div>
                     </mat-tab>
+                    
                     <mat-tab label="Previous Visit">
 
                         <div class="row" *ngFor="let item of patientHistory ">
@@ -1820,8 +1850,8 @@
                                             <div class="col-lg-4 col-md-2 col-sm-8">
                                                 <label><span class="service">Service</span> <span class="service_d"> :
                                                         {{item.serviceName}}</span></label><br />
-                                                <label><span class="service">Complaint Box</span> <span class="service_d">
-                                                        : {{item.reason}}</span></label><br />
+                                               <!--- <label><span class="service">Complaint Box</span> <span class="service_d">
+                                                        : {{item.reason}}</span></label><br />-->
                                                 <label><span class="service">Observation</span> <span class="service_d">
                                                         :{{item.complaintName}} </span></label>
                                                 <br /> <br />
@@ -1838,18 +1868,27 @@
                                                         class="service_d"> : {{item.bp}}</span></label><br />
                                                 <label><span class="service_d">BMI</span> <span class="service_d"> :
                                                         {{item.bmi}} </span></label><br />
-
+                                              <!---- <label><span class="service_d">Advice</span> <span class="service_d"> :
+                                                            {{item.advice}} </span></label><br />   --->
 
                                                 <br /> <br />
 
                                                 <label>
                                                     <span>
                                                         <a href="http//google.co.in" target="_blank">
-                                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/121px-PDF_file_icon.svg.png " style="width: 30px; height: 30px;position: relative;top: 20px;left: -17px;" >
+                                                         <!---  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/121px-PDF_file_icon.svg.png " style="width: 30px; height: 30px;position: relative;top: 20px;left: -17px;" >-->
                                                         </a>
                                                     </span>
-                                                    <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span><span><input type="file" style="position: relative;bottom: 28px;left: 130px;"></span><span class="service_d">
-                                                      <!--- Hermatology_report.pdf-->
+
+                                                    <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span><!--<span><input type="file" style="position: relative;bottom: 28px;left: 130px;"></span>-->
+                                                    <span class="service_d" *ngFor="let val of labreportfiles"  >
+                                                    <ul>
+                                                        <li (click)="DownloadDocument(val)">{{val}}</li> 
+                                                    </ul>  
+                                                    
+                                                       
+                                                        <!-- <a href="D:\Rheumatology\cmsapi\CMS.API\VitalsDocs\TestScenarios1.pdf" download>Test.pdf</a> -->
+                                                      
                                                     </span>
                                                 </label><br />
 
@@ -1858,7 +1897,6 @@
                                                 <table id="customers">
                                                     <tr>
                                                         <th>Medicine</th>
-                                                        <th>1/2 Dose</th>
                                                         <th>Dose</th>
                                                         <th>When</th>
                                                         <th>Frequency</th>
@@ -1875,7 +1913,7 @@
                                                         </td>
                                                         <td>{{medList.dose}}</td>
                                                         <td>{{medList.when}}</td>
-                                                        <td>{{medList.when}}</td>
+                                                    <!----  <td>{{medList.when}}</td>-->
                                                         <td>{{medList.frequencyListMedication}}</td>
                                                         <td>{{medList.duration}}</td>
                                                         <td>{{medList.notes}}</td>
@@ -1883,6 +1921,20 @@
 
                                                 </table>
                                             </div>
+
+                                         <!---   <div class="col-lg-8 col-md-8 col-sm-12">
+                                                <table id="customers1">
+                                                    <tr>
+                                                        <th>Image</th>
+                                                    </tr>
+                                                    <tr *ngFor="let doclist of item.docsList ">
+                                                        <td>{{doclist.docTypeNAme}}
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>-->
+
                                         </div>
                                     </mat-expansion-panel>
                                 </mat-accordion>
@@ -1954,7 +2006,7 @@
                                     <div class="tocken_no">{{todayDataSourcePrintBookings[0].patient}}</div>
                                 </td>
 
-                            </tr>
+                            </tr>  
 
                             <tr style="background-color:#fff">
 
@@ -2015,9 +2067,9 @@
                                                 <td class="Adress_row" valign="top">
                                                     <p style="margin-bottom: 5px;"><strong>Advance Rheumatology
                                                             Center</strong></p>
-                                                    <p style="margin-top: 0;">,6-3-652, 1st Floor, Kautilya Building,
+                                                    <p style="margin-top: 0;"> 6-3-652, 1st Floor, Kautilya Building,
                                                         near Erramanzil bus stop, Somajiguda, <br> Hyderabad, Telangana
-                                                        500082,Contact No:9088765677</p>
+                                                        500082, Contact No : 9088765677</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -2060,7 +2112,7 @@
                                 <td class="payment_Receipt">
                                     <img src="assets/images/logo/LOGO.png" style=" width: 100%;" />
                                 </td>
-                                <td class="heading_1">Prescription</td>
+                                <td class="heading_1" >Prescription</td>
                             </tr>
                         </table>
 
@@ -2094,7 +2146,17 @@
                                     <div class="tocken_no">{{detailData.patient}}</div>
                                 </td>
                             </tr>
+                         <!---  <tr style="background-color:#fff">
 
+                                <td class="td_style">
+                                    <span>AdviceTest</span>
+                                    <div class="tocken_no">{{detailData.advice}}</div>
+                                </td>
+                                <td class="td_style">
+                                    <span>Next visit</span>
+                                    <div class="tocken_no">{{detailData.patient}}</div>
+                                </td>
+                            </tr>-->
                         </table>
                         <table class="Payment_method_bgmcolr">
                             <tr>
@@ -2106,8 +2168,9 @@
                                             <th>When</th>
                                             <th>Frequency</th>
                                             <th>Duration</th>
-                                            <th>Notes</th>
+                                           
                                         </tr>
+                                       
                                         <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2">
                                             <td><span class="service">{{medList.medicine}}</span><br />  
                                                 <span class="serviceFont" *ngFor="let item of medicinePrescepList">
@@ -2121,12 +2184,48 @@
                                             <td>{{medList.when}}</td>
                                             <td>{{medList.frequencyListMedication}}</td>
                                             <td>{{medList.duration}}</td>
-                                            <td>{{medList.notes}}</td>
+                                         <!---   <td>{{medList.notes}}</td>-->
                                         </tr>
                                     </table>
 
                                 </td>
                             </tr>
+                        </table>
+                          <table class="Payment_method_bgmcolr">
+                            <tr>
+                                <td class="Payment_row">
+                                    <table id="customers">
+                                            <p><b>Notes</b></p>
+                                        <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2">
+                                            <td>{{medList.notes}}</td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td class="Payment_row">
+                                    <table id="Advise">
+                                            <p><b>Advise</b></p>
+                                        <tr  class="td_table2">
+                                            <td>{{vitalsForm.get('advice').value}}</td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Payment_row">
+                                    <table id="Nextvisit">
+                                            <p><b>Nextvisit</b></p>
+                                        <tr  class="td_table2">
+                                            <td>{{vitalsForm.get('nextVisit').value}}{{vitalsForm.get('frequency').value}}</td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                           
                         </table>
                     </td>
                 </tr>
@@ -2147,7 +2246,7 @@
                                                             Center</strong></p>
                                                     <p style="margin-top: 0;">6-3-652, 1st Floor, Kautilya Building,
                                                         near Erramanzil bus stop, Somajiguda, <br> Hyderabad, Telangana
-                                                        500082,Contact No:9088765677 </p>
+                                                        500082, Contact No : 9088765677 </p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -2169,7 +2268,7 @@
     </mat-dialog-content>
     <mat-dialog-actions style="float:right;">
         <button type="button" mat-button matDialogClose (click)="closePrecesptionDialog()">Cancel</button>
-        <button type="button" mat-raised-button color="accent" (click)="printPresecption('component2')">View prescription</button>
+        <button type="button" mat-raised-button color="accent" (click)="printPresecption('component2')">Print</button>
     </mat-dialog-actions>
     <!-- </form> -->
 </ng-template>

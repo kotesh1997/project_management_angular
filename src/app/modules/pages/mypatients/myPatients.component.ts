@@ -15,18 +15,27 @@ import {
     FormArray
 } from '@angular/forms';
 
+interface Days {
+    value: string;
+    viewValue: string;
+  }
 @Component({
     selector: 'app-mypatients',
     templateUrl: './mypatients.component.html',
     styleUrls: ['./mypatients.component.scss']
 })
 export class MyPatientsComponent implements AfterViewInit {
+    days: Days[] = [
+        {value: '1', viewValue: 'Yesterday'},
+        {value: '2', viewValue: 'Today'},
+        {value: '3', viewValue: 'Tomorrow'},
+      ];    
     horizontalStepperForm: FormGroup;
     constructor(public mypatientsService: MyPatientsService, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
     ) { }
 
 
-
+    filterdayval:any;
     displayedColumns: string[] = ['SL', 'Patient', 'Mobile', 'LastSeen','Vitals'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -129,6 +138,38 @@ export class MyPatientsComponent implements AfterViewInit {
     onSearchClear() {
         this.searchKey = "";
         this.applyFilter();
+    }
+
+
+    // OnDaySelect(){
+
+    // }
+    OnDaySelect(event:any) {
+        debugger
+        var selectedValue= event;
+        // var selectedValue= this.filterdayval;
+        var Todaysdate = new Date();
+        var dateFilter;
+        switch(selectedValue.toLowerCase())
+        {
+                case "2":
+                    dateFilter =  (Todaysdate.getDate() - 2).toLocaleString();
+                    break;
+                    case "3":
+                    dateFilter=  (Todaysdate.getDate() +1).toLocaleString();
+                    break;
+                    case"1":
+                    dateFilter = Todaysdate.getDate().toLocaleString();
+                    
+        }
+        this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+         
+        
+
+         this.searchKey = dateFilter;
+        this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+
+        
     }
     applyFilter() {
         this.patientsappointments.filter = this.searchKey.trim().toLowerCase();

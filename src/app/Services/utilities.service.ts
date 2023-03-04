@@ -37,6 +37,14 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
+    DocumentsDownload(fileUrl: string) {
+        debugger
+        return this.http.get(this.API_URL + "PatientsAppointments/DocumentsDownload?fileUrl=" + fileUrl, {
+            reportProgress: true,
+            observe: 'events',
+            responseType: 'blob'
+        });
+    }
     GetDocumentsXML(data) {
         debugger
         return this.http

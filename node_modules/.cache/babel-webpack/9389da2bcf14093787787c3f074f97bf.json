@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { AuthSignOutComponent } from 'app/modules/auth/sign-out/sign-out.component';\nexport const authSignOutRoutes = [{\n  path: '',\n  component: AuthSignOutComponent\n}];","map":null,"metadata":{},"sourceType":"module"}
