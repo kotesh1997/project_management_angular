@@ -257,8 +257,9 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-button *ngIf="roleID=='5' || roleID=='1'">
-                             <div mat-menu-item (click)="onRowClicked(row)">
+                          
+                            <button mat-menu-item  *ngIf="roleID=='5' || roleID=='1'" (click)="onView(element)">
+                                <div >
                                 <mat-icon svgIcon="heroicons_solid:eye"></mat-icon>
                                 <span>View</span></div>
                             </button> 
@@ -885,6 +886,7 @@
                                     <mat-select [formControlName]="'price'" (selectionChange)="applyNetPrice($event)"
                                         required [disabled]="isDuePay">
                                         <mat-option *ngFor="let item of prices " [value]="item.priceID">
+                                            
                                             {{ item.price }}
                                         </mat-option>
                                     </mat-select>
@@ -2047,7 +2049,7 @@
                             <tr style="background-color:#fff">
 
                                 <td class="td_style">
-                                    <span>ServiceName</span>
+                                    <span>ServiceNames</span>
                                     <div class="tocken_no">{{todayDataSourcePrintBookings[0].serviceName}}</div>
                                 </td>
                                 <td class="td_style">

@@ -388,7 +388,7 @@ filename:any=[];
     ngOnInit(): void {
 
        // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
-
+debugger;
         this.doctors.sort();
         this.addStaticData();
         this.getDocs();
@@ -727,6 +727,7 @@ filename:any=[];
 
 
     getAllAppointments() {
+        debugger
         this.spinner.show();
         this.utilitiesService.getAllAppointments().subscribe(
             (data) => {
@@ -933,7 +934,10 @@ filename:any=[];
         this.utilitiesService.getAllAppointmentBills().subscribe(
             (data) => {
                 if (data) {
+                    debugger
                     this.prices = data;
+                    
+            this.step2.controls['price'].setValue(2);
                     // this.prices.splice(0, 1);
                 } else {
                 }
@@ -982,7 +986,7 @@ filename:any=[];
     }
 
     actionFormName(val) {
-
+debugger
         this.isDuePay = false;
         this.slotsArr = [];
         this.step1.reset();
@@ -1004,6 +1008,8 @@ filename:any=[];
             map(value => this._filter(value)),
         );
 
+                    
+        this.step2.controls['price'].setValue(2);
     }
     applyNetPrice(val) {
 
@@ -1141,8 +1147,17 @@ filename:any=[];
     get step2(): any {
         return this.horizontalStepperForm.get('step2');
     }
+    onView(val) {
+        debugger
+        
+        this.receiptToken=val.receiptToken;
+        // this.editCompanyDialogRef = this.dialog.open(this.editCompanyModal);
+        this.ngOnInit();
+        
+    }
 
     updateSelect(val) {
+        debugger
         this.horizontalStepper.selectedIndex = 0;
         
         if (val.duePayment != null && val.duePayment != '0.00') {
@@ -1359,7 +1374,7 @@ filename:any=[];
         dialogConfig.autoFocus = false;
         dialogConfig.role = 'dialog';
         dialogConfig.disableClose = true;
-
+debugger
         this.editCompanyDialogRef = this.dialog.open(this.editCompanyModal, dialogConfig);
 
         this.editCompanyDialogRef.afterClosed().subscribe(result => {

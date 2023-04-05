@@ -61,7 +61,17 @@ export class ReportComponent implements OnInit {
     appFromDate: Date;
     appToDate: Date;
 
-
+exportpdf(){
+    // const doc = new jsPDF("p", "pt", "a4");
+    // const source = document.getElementById("content");
+    // // doc.text("Test", 40, 20);
+    // doc.setFontSize(12)
+    // doc.html(source, {
+    //   callback: function(pdf) {
+    //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+    //   }
+    // });
+}
     ExportTOExcel() {
 
         const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
