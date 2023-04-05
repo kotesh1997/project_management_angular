@@ -82,6 +82,7 @@ export class MedicineComponent implements OnInit {
         XLSX.writeFile(wb, 'SheetJS.xlsx');
         
         }
+        
   
 
     ngOnInit(): void {
@@ -105,10 +106,21 @@ export class MedicineComponent implements OnInit {
                 if (data) {
                     if(this.roleID == 2)
                     {
+                        // console.log(data);
+                    data = data .sort((a,b) => {
+                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+                            return -1;
+                        }
+                    })
                     this.medicineList = data;
                     this.medicineList = this.medicineList.filter((a) => a.medic == this.registrationID);
                     }
                     else
+                    data = data .sort((a,b) => {
+                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+                            return -1;
+                        }
+                    })
                     this.medicineList = data;
                 }
 

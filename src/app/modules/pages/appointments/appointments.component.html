@@ -33,16 +33,21 @@
 
                             </mat-select>
                     </mat-form-field>
-                    <div class="col-span-2 items-center flex flex-col" style="
+                    <!-- <div class="col-span-2 items-center flex flex-col" style="
                     position: relative;
                     /* lp: '24%'; */
                     left: -20%;
                     top: 30%;
-                "> <button mat-flat-button  color="warn" (click)="resetFilters()">Reset</button></div>
-                   
-                    
-                        <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end" *ngIf="roleID == 1 || roleID == 3" mat-flat-button [color]="'primary'"
-                         style="position: relative;top: 24%;right: 30%;"
+                "> <button mat-raised-button  color="warn" (click)="resetFilters()">Reset</button></div> -->
+                  <!-- *ngIf="roleID == 1 || roleID == 3" -->
+                  <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                  style="position: relative;top: 22%;right: -30%; width: 175px;"
+                      (click)="resetFilters()">
+                      
+                      <span class="ml-2">Reset</span>
+                  </button>
+                        <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                        style="position: relative;top: 24%;right: -10%;width: 175px;;"
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                             <span class="ml-2">New Appointment</span>
@@ -124,13 +129,13 @@
                 <ng-container matColumnDef="WaitingTime">
                     <th mat-header-cell *matHeaderCellDef>
                         <div class="row">
-                            <div class="col-lg-12">WaitingTime</div>
+                            <div class="col-lg-12">Waiting Time</div>
 
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.waitingTime !=0">
-                            <b> {{ element.waitingTime }} m </b>
+                            <b> {{ element.waitingTime }} </b>
                         </span>
                         <span *ngIf="element.waitingTime ==0">
                             -
@@ -163,7 +168,7 @@
                 <ng-container matColumnDef="VisitCount">
                     <th mat-header-cell *matHeaderCellDef>
                         <div class="row">
-                            <div class="col-lg-12">VisitCount#</div>
+                            <div class="col-lg-12">Visit Count#</div>
 
                         </div>
                     </th>
@@ -203,7 +208,7 @@
                 </ng-container>
                 <ng-container matColumnDef="DuePayment">
                     <th mat-header-cell *matHeaderCellDef>
-                        DuePayment
+                        Due Payment
                     </th>
 
                     <td mat-cell *matCellDef="let element" style="cursor: pointer;">
@@ -252,10 +257,11 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <!-- <button mat-menu-item (click)="viewHistory(element)">
-                                <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
-                                <span>View</span>
-                            </button> -->
+                            <button mat-button *ngIf="roleID=='5' || roleID=='1'">
+                             <div mat-menu-item (click)="onRowClicked(row)">
+                                <mat-icon svgIcon="heroicons_solid:eye"></mat-icon>
+                                <span>View</span></div>
+                            </button> 
                             <button mat-menu-item (click)="appointmentDrawer.toggle();updateSelect(element)">
                                 <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
                                 <span>Edit</span>
@@ -342,12 +348,24 @@
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
-                    <button mat-flat-button  color="warn" (click)="resetFilters()" style="position:relative;left: -220px;top: 25;">Reset</button>
+                    <!-- <button mat-flat-button  color="warn" (click)="resetFilters()" style="position:relative;left: -220px;top: 25;">Reset</button>
                     <button class="fuse-mat-button-rounded" mat-flat-button [color]="'primary'"
                         (click)="appointmentDrawer.toggle();actionFormName('New Appointment')" style="left: -120px;top:7px;position: relative;">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2" >New Appointment</span>
+                    </button> -->
+                    <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                    style="position: relative;top: 8px;right: 9%; width: 170px;"
+                        (click)="resetFilters()">
+                        
+                        <span class="ml-2">Reset</span>
                     </button>
+                          <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                          style="position: relative;top:-28px;right: -230px;width: 180px;"
+                              (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
+                              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                              <span class="ml-2">New Appointment</span>
+                          </button>
                 </div>
             </div>
             <div class="example-container mat-elevation-z8">
@@ -431,7 +449,7 @@
                     <ng-container matColumnDef="WaitingTime">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="row">
-                                <div class="col-lg-12">WaitingTime</div>
+                                <div class="col-lg-12">Waiting Time</div>
 
                             </div>
                         </th>
@@ -446,7 +464,7 @@
                     <ng-container matColumnDef="VisitCount">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="row">
-                                <div class="col-lg-12">VisitCount</div>
+                                <div class="col-lg-12">Visit Count#</div>
 
                             </div>
                         </th>
@@ -487,10 +505,11 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <!--<button mat-menu-item (click)="viewHistory(element)">
-                                    <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
-                                    <span>View</span>
-                                </button>-->
+                                <button mat-button *ngIf="roleID=='5' || roleID=='1'">
+                                <div mat-menu-item (click)="onRowClicked(row)">
+                                    <mat-icon svgIcon="heroicons_solid:pencil-eye"></mat-icon>
+                                    <span>View</span></div>
+                                </button>
                                 <button mat-menu-item (click)="
                                 updateSelect(element);
                                 appointmentDrawer.toggle()
@@ -535,14 +554,14 @@
                             placeholder="Search Profile">
                     </mat-form-field>
                 </div>
-                <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
+                <!-- <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
                     <button mat-flat-button  color="warn" (click)="resetFilters()" style="position:relative;left: -220px;top: 25;">Reset</button>
                     <button class="fuse-mat-button-rounded" mat-flat-button [color]="'primary'"
                         (click)="appointmentDrawer.toggle();actionFormName('New Appointment')" style="position: relative;top:5px;left:-120px;">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Appointment</span>
                     </button>
-                </div>
+                </div> -->
             </div>
             <div class="example-container mat-elevation-z8">
                 <table mat-table [dataSource]="patientsappointments" matSort>
@@ -599,12 +618,12 @@
                                     <mat-icon style="font-size: 20px ;margin-top: 9px;">watch_later</mat-icon>
                                 </div>
                                 <div class="col-lg-8">
-                                    <b> {{ element.serviceDate | date }}</b>
+                                   <b> {{ element.serviceDate | date }}</b>
                                     <div>
                                         {{
                                         element.slotTime
                                         }}
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
 
@@ -613,7 +632,7 @@
                     <ng-container matColumnDef="WaitingTime">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="row">
-                                <div class="col-lg-12">WaitingTime</div>
+                                <div class="col-lg-12">Waiting Time</div>
 
                             </div>
                         </th>
@@ -627,7 +646,7 @@
                     <ng-container matColumnDef="VisitCount">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="row">
-                                <div class="col-lg-12">VisitCount</div>
+                                <div class="col-lg-12">Visit Count</div>
 
                             </div>
                         </th>
@@ -704,11 +723,11 @@
                             #horizontalStepperStep1>
                             <ng-template matStepLabel>Appointment Details</ng-template>
                             <div class="row">
-                                <mat-form-field floatLabel="never" class="col-lg-12"
+                                <!-- <mat-form-field floatLabel="never" class="col-lg-12"
                                     *ngIf="actionName=='New Appointment'">
 
                                     <input type="text" [(ngModel)]="searchKey3" placeholder="Search Patient Profile"
-                                        aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" (change)="bindMobileNo()">
+                                        aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" >
                                     <mat-icon matPrefix>perm_identity</mat-icon>
                                     <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey3"
                                         (click)="onSearchClear()">
@@ -720,17 +739,39 @@
                                             <mat-icon>account_circle</mat-icon> {{option.mobile}} ( {{option.patient}} )
                                         </mat-option>
                                     </mat-autocomplete>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <mat-form-field floatLabel="never" class="col-lg-12"
+                                *ngIf="actionName=='New Appointment'">
+
+                                <input type="text" [(ngModel)]="searchKey3" placeholder="Search Patient Profile"
+                                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                <mat-icon matPrefix>perm_identity</mat-icon>
+                                <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey3"
+                                    (click)="onSearchClear()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                                    (optionSelected)='applyFilter($event.option)'>
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        <mat-icon>account_circle</mat-icon> {{option.mobile}} ( {{option.patient}} )
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
                             </div>
 
                             <div class="row" style="padding-top: 15px;">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Select Date</mat-label>
-                                    <input matInput [matDatepicker]="picker" [formControlName]="'appDate'"
+                                    <input matInput [matDatepicker]="picker" [formControlName]="'appDate'" [min]="yesterday"
                                         [readonly]="isDuePay" required />
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-datepicker #picker ></mat-datepicker>
                                 </mat-form-field>
+                                <!-- <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker [min]="today"></mat-datepicker>
+                                  </mat-form-field> -->
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Select Doctor</mat-label>
                                     <mat-select [formControlName]="'docName'"
@@ -756,7 +797,7 @@
                             <div class="row">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Full Name</mat-label>
-                                    <input matInput [formControlName]="'firstName'" required [readonly]="isDuePay" />
+                                    <input matInput [formControlName]="'firstName'" required [readonly]="isDuePay" [(ngModel)]="fName"/>
                                 </mat-form-field>
 
                                 <!-- <mat-form-field class="col-lg-4" appearance="outline">
@@ -766,13 +807,13 @@
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Mobile Number </mat-label>
                                     <!-- (keyup)="searchPatient($event.target.value)" -->
-                                    <input matInput [formControlName]="'mobNum'" required [readonly]="isDuePay"   />
+                                    <input matInput [formControlName]="'mobNum'" pattern="[0-9]{10}" [(ngModel)]="mobNum" required [readonly]="isDuePay"  />
                                     
                                  
                                 </mat-form-field>
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Age</mat-label>
-                                    <input matInput [formControlName]="'age'" required [readonly]="isDuePay" />
+                                    <input matInput [formControlName]="'age'" required [readonly]="isDuePay" [(ngModel)]="age"/>
                                 </mat-form-field>
                             </div>
                             <div class="row">
@@ -872,13 +913,13 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="row" *ngIf="isPriceTag &&roleID==1">
+                            <!-- <div class="row" *ngIf="isPriceTag &&roleID==1">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Net Price</mat-label>
                                     <input matInput [formControlName]="'netPrice'" [readonly]="true" />
                                 </mat-form-field>
 
-                            </div>
+                            </div> -->
                             <div class="row" *ngIf="isDuePay&&roleID==1">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Amount to Pay</mat-label>
@@ -1132,7 +1173,7 @@
                                                 <a class="collapsed" role="button" data-toggle="collapse"
                                                     data-parent="#accordionGroupClosed" href="#collapseCloseThree"
                                                     aria-expanded="false" aria-controls="collapseThree">
-                                                    Attachemets
+                                                    Attachements
                                                 </a>
                                             </h4>
                                         </div>
@@ -1630,7 +1671,7 @@
                                                 *ngFor="let item of vitalsForm.get('medicationitems')['controls']; let j = index;">
                                                 <ng-container [formGroupName]="j">
                                                     <td  >
-                                                        <mat-form-field appearance="outline">
+                                                         <mat-form-field appearance="outline">
                                                             <mat-label>medicine</mat-label>
                                                             <mat-select [formControlName]="'medicine'" [dataSource]="patientsappointment">
                                                                 <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
@@ -1644,7 +1685,15 @@
                                                                    
                                                                 </mat-option>
                                                             </mat-select>
-                                                        </mat-form-field>
+                                                        </mat-form-field> 
+
+                                                        <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Medicine</mat-label>
+                                                                
+                                                                <input matInput [formControlName]="'medication'" />
+                                                            </mat-form-field>
+                                                        </div> -->
 
                                                     </td>
                                                    
@@ -1709,7 +1758,7 @@
 
                                                     <td>
                                                         <mat-icon style="color: #32CD32;cursor: pointer;"
-                                                            (click)="addMedicationItem()">add_box</mat-icon>
+                                                            (click)="addMedicationItem()">add_box</mat-icon>     
 
                                                         <mat-icon style="color:#ff4081;cursor: pointer;"
                                                             (click)="DeleteMedicationItem(j)">delete</mat-icon>
@@ -1719,7 +1768,7 @@
                                             </tr>
 
 
-                                        </table>
+                                        </table><br>
                                         <table>
                                             <tr>
 
@@ -2137,11 +2186,11 @@
                             </tr>
                             <tr style="background-color:#fff">
 
-                                <td class="td_style">
+                                <td class="td_style mt-1">
                                     <span>ServiceName</span>
                                     <div class="tocken_no">{{detailData.serviceName}}</div>
                                 </td>
-                                <td class="td_style">
+                                <td class="td_style mt-1">
                                     <span>Patient Name</span>
                                     <div class="tocken_no">{{detailData.patient}}</div>
                                 </td>
@@ -2160,19 +2209,19 @@
                         </table>
                         <table class="Payment_method_bgmcolr">
                             <tr>
-                                <td class="Payment_row">
+                                <td class="Payment_row mt-2">
                                     <table id="customers">
                                         <tr>
-                                            <th>Medicine</th>
-                                            <th>Dose</th>
-                                            <th>When</th>
-                                            <th>Frequency</th>
-                                            <th>Duration</th>
+                                            <th style="width: 20%;">Medicine</th>
+                                            <th style="width: 20%;">Dose</th>
+                                            <th style="width: 20%;">When</th>
+                                            <th style="width: 20%;">Frequency</th>
+                                            <th style="width: 20%;">Duration</th>
                                            
                                         </tr>
                                        
                                         <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2">
-                                            <td><span class="service">{{medList.medicine}}</span><br />  
+                                            <td style="width: 20%;"><span class="service">{{medList.medicine}}</span><br />  
                                                 <span class="serviceFont" *ngFor="let item of medicinePrescepList">
                                                     <div *ngIf="item.medicineName == medList.medicine">    
                                                        Composition - {{item.composition}}                                                        
@@ -2180,10 +2229,10 @@
                                                 </span>
                                                <!-- <span class="service"> Composition - {{medList.medicine}}    </span>                                          -->
                                             </td>
-                                            <td>{{medList.dose}}</td>
-                                            <td>{{medList.when}}</td>
-                                            <td>{{medList.frequencyListMedication}}</td>
-                                            <td>{{medList.duration}}</td>
+                                            <td style="width: 20%;text-align: center;">{{medList.dose}}</td>
+                                            <td style="width: 20%; text-align: center;">{{medList.when}}</td>
+                                            <td style="width: 20%;text-align: center;">{{medList.frequencyListMedication}}</td>
+                                            <td style="width: 20%;text-align: center;">{{medList.duration}}</td>
                                          <!---   <td>{{medList.notes}}</td>-->
                                         </tr>
                                     </table>
@@ -2196,7 +2245,7 @@
                                 <td class="Payment_row">
                                     <table id="customers">
                                             <p><b>Notes</b></p>
-                                        <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2">
+                                        <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2"  class="table table-borderless">
                                             <td>{{medList.notes}}</td>
                                         </tr>
                                     </table>
@@ -2205,9 +2254,9 @@
                             </tr> 
                             <tr>
                                 <td class="Payment_row">
-                                    <table id="Advise">
+                                    <table id="Advise"  >
                                             <p><b>Advise</b></p>
-                                        <tr  class="td_table2">
+                                        <tr  class="td_table2" class="table table-borderless">
                                             <td>{{vitalsForm.get('advice').value}}</td>
                                         </tr>
                                     </table>
@@ -2216,9 +2265,9 @@
                             </tr>
                             <tr>
                                 <td class="Payment_row">
-                                    <table id="Nextvisit">
+                                    <table id="Nextvisit" >
                                             <p><b>Nextvisit</b></p>
-                                        <tr  class="td_table2">
+                                        <tr  class="td_table2"  class="table table-borderless">
                                             <td>{{vitalsForm.get('nextVisit').value}}{{vitalsForm.get('frequency').value}}</td>
                                         </tr>
                                     </table>

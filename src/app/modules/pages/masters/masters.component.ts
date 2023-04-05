@@ -45,6 +45,7 @@ export class MastersComponent implements OnInit {
     flag: string;
     regDetailsJrList: any = [];
     regDetailsFrontList: any = [];
+    regDetailsLabList: any = [];
     regDetails: any = [];
     totalRegDetails:any=[];
     genders: any = [];
@@ -102,6 +103,8 @@ export class MastersComponent implements OnInit {
             gender         : ['', Validators.required],
             experience     : ['', Validators.required],
             qualification  : ['', Validators.required],
+            aadharNumber  : ['', Validators.required],
+            pancardNumber : ['', Validators.required],
             specializations: ['', Validators.required],
             institution    : ['', Validators.required],
             status         : ['', Validators.required],
@@ -225,6 +228,10 @@ export class MastersComponent implements OnInit {
                     this.regDetailsFrontList = new MatTableDataSource(this.regDetailsFrontList);
                     this.regDetailsFrontList.sort = this.sort;
 
+                    this.regDetailsLabList = this.totalRegDetails.filter((a) => a.roleID == 6);
+                    this.regDetailsLabList = new MatTableDataSource(this.regDetailsLabList);
+                    this.regDetailsLabList.sort = this.sort;
+
                     
                 } else {
                     this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
@@ -250,6 +257,13 @@ export class MastersComponent implements OnInit {
         this.form.reset();
         this.flag = '1';
         this.roleID = '3';
+    }
+    addActionFormLabAssitant(val)
+    {
+        this.actionName = 'Lab Assitant'
+        this.form.reset();
+        this.flag = '1';
+        this.roleID = '6';
     }
 
 
@@ -279,7 +293,9 @@ export class MastersComponent implements OnInit {
              ,Password       :val.password       
              ,GenderID       :val.gender         
              ,Experience     :val.experience     
-             ,Qualification  :val.qualification  
+             ,Qualification  :val.qualification
+             ,AadharNumber   :val.aadharNumber
+             ,PancardNumber  :val.pancardNumber  
             , SpecializationID:val.specializations
              ,Institution    :val.institution    
              ,StatusID         :val.status         
@@ -328,6 +344,10 @@ export class MastersComponent implements OnInit {
         {
             this.actionName = 'Front Desk';
         }
+        else if(  this.roleID = '6')
+        {
+            this.actionName = 'Lab Assitant';
+        }
         else if(  this.roleID = '2')
         {
             this.actionName = 'Doctor';
@@ -341,6 +361,8 @@ export class MastersComponent implements OnInit {
         this.form.controls['gender'].setValue(val.genderID);
         this.form.controls['experience'].setValue(val.experience);
         this.form.controls['qualification'].setValue(val.qualification);
+        this.form.controls['aadharNumber'].setValue(val.aadharNumber);
+        this.form.controls['pancardNumber'].setValue(val.pancardNumber);
         this.form.controls['specializations'].setValue(val.specializationID);
         this.form.controls['institution'].setValue(val.institution);
         this.form.controls['status'].setValue(val.statusID);
@@ -358,6 +380,10 @@ export class MastersComponent implements OnInit {
         else if(  this.roleID = '3')
         {
             this.actionName = 'Front Desk';
+        }
+        else if(  this.roleID = '6')
+        {
+            this.actionName = 'Lab Assitant';
         }
         else if(  this.roleID = '2')
         {
@@ -378,7 +404,9 @@ export class MastersComponent implements OnInit {
              ,Password       :val.password       
              ,GenderID       :val.gender         
              ,Experience     :val.experience     
-             ,Qualification  :val.qualification  
+             ,Qualification  :val.qualification 
+             ,AadharNumber  :val.aadharNumber
+             ,PancardNumber  :val.PancardNumber  
             , SpecializationID:val.specializations
              ,Institution    :val.institution    
              ,StatusID         :val.status         

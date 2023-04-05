@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +32,7 @@ import { MyPatientsComponent } from './mypatients/myPatients.component';
 import { ReportComponent } from './Reports/report.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import { PatientsService } from './patients/patients.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -118,12 +118,14 @@ const Routes: Route[] = [
         MatStepperModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        // MatDatepickerInputEvent,
         NgxMatDatetimePickerModule,
         NgxMatTimepickerModule,
         NgxMatNativeDateModule,
         NgxMaterialTimepickerModule,
         FuseAlertModule, MatSnackBarModule, FullCalendarModule, 
+       
     ],
-    providers: [PatientsService, AdmindashboardService,MyPatientsService,ReportService,MedicineService],
+    providers: [PatientsService,DatePipe, AdmindashboardService,MyPatientsService,ReportService,MedicineService],
 })
 export class PagesModule {}

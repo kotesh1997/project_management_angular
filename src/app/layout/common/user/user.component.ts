@@ -65,10 +65,13 @@ export class UserComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        debugger
+        var val=  localStorage.getItem('loginDetails');
         // Subscribe to user changes
         this._userService.user$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
+                debugger
                 this.user = user;
                 this.loginDetails = JSON.parse(
                     localStorage.getItem('loginDetails')

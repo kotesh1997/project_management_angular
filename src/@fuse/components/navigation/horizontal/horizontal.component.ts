@@ -72,8 +72,8 @@ export class FuseHorizontalNavigationComponent
                 //     link: '/Patients',
                 // },
                 {
-                    id: 'Employess',
-                    title: 'Employess',
+                    id: 'Employees',
+                    title: 'Employees',
                     type: 'basic',
                     link: '/Employess',
                 },

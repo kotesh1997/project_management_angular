@@ -1,11 +1,11 @@
 <div *ngIf="(Screen==1)" class="flex flex-col flex-auto min-w-0">
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
+    <div class="flex-auto p-9 sm:p-10" >
         <!-- CONTENT GOES HERE -->
         <div class="row">
-            <div class="col-lg-3">
-                <!-- <mat-form-field floatLabel="never" class="search">
+            <!-- <div class="col-lg-3 padding-left:30px">
+                <mat-form-field floatLabel="never" class="search">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
                         autocomplete="off" (keyup)="applyFilter()" />
                     <mat-icon matPrefix>search</mat-icon>
@@ -13,23 +13,26 @@
                         (click)="onSearchClear()">
                         <mat-icon>close</mat-icon>
                     </button>
-                </mat-form-field> -->                
-            </div>
-                <div class="col-lg-3">
-                    <button mat-raised-button color="primary" (click)="ExportTOExcel()" style="padding-left: 19px;">
+                </mat-form-field>                 
+            </div> -->
+                <div class="col-lg-2" style="float: right;" >
+                    <button mat-raised-button color="primary" (click)="ExportTOExcel()" style="padding: left 20px;">
                         Export as Excel
                       </button>
                 
             </div>
-           <div class="col-lg-3">
-                <!--  <button mat-raised-button color="primary" (click)="GetPatientData(appFromDate,appToDate)">
-                    Search
-                  </button>-->
+           <!-- <div class="col-lg-2">
+               
+                  <button mat-raised-button color="primary" >
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:document'"></mat-icon>
+                    Export as PDF
+                  </button>
+            
                   
                  
                   
-            </div> 
-            <div class="col-lg-1">
+            </div>  -->
+            <div class="col-lg-1 " style="float: right;position: relative;left: -70px;">
                 <button class="fuse-mat-button-rounded" mat-flat-button [color]="'primary'"
                 (click)="drawer.toggle();">
                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -45,10 +48,10 @@
                
             </div> -->
 
-        </div>
+        </div><br>
 
-        <div class="example-container mat-elevation-z8" #TABLE>
-            <table mat-table [dataSource]="medicineList" matSort>
+        <div class="example-container mat-elevation-z8" #TABLE style="padding-bottom:20px;">
+            <table mat-table [dataSource]="medicineList" matSort >
                 <!-- Position Column -->
                 <ng-container matColumnDef="MedicineId">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>

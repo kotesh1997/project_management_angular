@@ -14,6 +14,8 @@ import {
     NgForm,
     FormArray
 } from '@angular/forms';
+import moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 interface Days {
     value: string;
@@ -31,7 +33,7 @@ export class MyPatientsComponent implements AfterViewInit {
         {value: '3', viewValue: 'Tomorrow'},
       ];    
     horizontalStepperForm: FormGroup;
-    constructor(public mypatientsService: MyPatientsService, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
+    constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
     ) { }
 
 
@@ -61,10 +63,12 @@ export class MyPatientsComponent implements AfterViewInit {
     items: FormArray;
     medicationitems: FormArray;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    yesterdaydate: any;
+    todaydate: any;
+    tomorrowdate: any;
 
     ngAfterViewInit(): void {
-        debugger;
+    
         this.loginDetails = JSON.parse(localStorage.getItem('loginDetails'));
         if (this.loginDetails) {
             this.roleID = this.loginDetails.roleID;
@@ -75,7 +79,7 @@ export class MyPatientsComponent implements AfterViewInit {
     }
 
     sortData(sort: MatSort) {
-        debugger;
+        
         if (sort.active == "SL") {
             if (sort.direction == "asc")
                 this.patientHistory.sort((a, b) => (a.appointmentID < b.appointmentID ? -1 : 1));
@@ -114,7 +118,7 @@ export class MyPatientsComponent implements AfterViewInit {
 
         this.mypatientsService.GetAllAppointments_Distict().subscribe(
             (data) => {
-                debugger;
+                
                 if (data) {
                     if (this.roleID == 2)
                         this.patientHistory = data.filter((a) => a.doctorID == this.registrationID);
@@ -145,27 +149,32 @@ export class MyPatientsComponent implements AfterViewInit {
 
     // }
     OnDaySelect(event:any) {
-        debugger
+        
         var selectedValue= event;
         // var selectedValue= this.filterdayval;
-        var Todaysdate = new Date();
+        this.todaydate=new Date().toLocaleDateString();
+        this.tomorrowdate=moment(this.todaydate).add(1, 'days');
+        this.yesterdaydate=moment(this.todaydate).subtract(1, 'd');
+        this.todaydate=this.datePipe.transform(new Date(this.todaydate), 'dd MMM yyyy');
+        this.tomorrowdate=this.datePipe.transform(new Date(this.tomorrowdate).toLocaleDateString(), 'dd MMM yyyy');
+        this.yesterdaydate=this.datePipe.transform(new Date(this.yesterdaydate).toLocaleDateString(), 'dd MMM yyyy');
+        //this.yesterdaydate.setDate( this.todaydate.getDate() -1 );
+       // this.tomorrowdate.setDate( this.todaydate.getDate() + 1 );
         var dateFilter;
         switch(selectedValue.toLowerCase())
         {
-                case "2":
-                    dateFilter =  (Todaysdate.getDate() - 2).toLocaleString();
+                case "1":
+                    dateFilter =  this.yesterdaydate;
                     break;
-                    case "3":
-                    dateFilter=  (Todaysdate.getDate() +1).toLocaleString();
+                    case "2":
+                    dateFilter= this.todaydate;
                     break;
-                    case"1":
-                    dateFilter = Todaysdate.getDate().toLocaleString();
+                    case"3":
+                    dateFilter = this.tomorrowdate;
                     
         }
-        this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
-         
-        
-
+        //this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+    
          this.searchKey = dateFilter;
         this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
 
@@ -176,7 +185,7 @@ export class MyPatientsComponent implements AfterViewInit {
     }
 
     onRowClicked(row) {
-        debugger;
+        
         // this.rowClickedData=row;
         this.Screen = 2;
         this.detailData = row;
@@ -207,14 +216,14 @@ export class MyPatientsComponent implements AfterViewInit {
 
 
     viewHistory(val) {
-        //debugger;
+        
         let arr = [];
         arr.push({ PatientID: Number(val.patientID) })
         var url = 'PatientsAppointments/PatientHistory/';
         this.utilitiesService.CRUD(arr, url).subscribe(
             (data) => {
                 if (data) {
-                    debugger;
+                    
                     const dateforToday = new Date();
                     this.patientHistory = data;
                     this.patientHistory = this.patientHistory.filter((a) => new Date(a.serviceDate) <= new Date(dateforToday));
@@ -269,9 +278,9 @@ export class MyPatientsComponent implements AfterViewInit {
         this.apptList.VitalsID = val;
         this.utilitiesService.GetMedicineXML(this.apptList).subscribe(
             (data) => {
-                debugger;
+                
                 if (data) {
-                    debugger;
+                    
                     this.medicineXml = data;
                     //this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
                     // const arr = <FormArray>this.vitalsForm.controls.medicationitems;

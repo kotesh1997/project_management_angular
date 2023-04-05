@@ -33,7 +33,9 @@ import { map, startWith } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { DateAdapter } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 // import { debug } from 'console';
+
 
 @Component({
     selector: 'app-appointments',
@@ -105,6 +107,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy {
     genders: any = [];
     upcomingBookings: any = [];
     todayBookings: any = [];
+    mobNum: string;
 
     todayDataSourceBookings: any = [];
     todayDataSourcePrintBookings: any = [];
@@ -186,7 +189,9 @@ filename:any=[];
     labreportfiles = [];
     dataSource = new MatTableDataSource();
     fileUrl: string;
+    yesterday = new Date();
     constructor(
+        
         public patientsService: PatientsService,
         public medicineService: MedicineService,
         private _formBuilder: FormBuilder,
@@ -202,7 +207,9 @@ filename:any=[];
         private _router: Router,
         private dialog: MatDialog,
         private dateAdapter: DateAdapter<Date>,
+      
     ) {
+        this.yesterday.setDate(this.yesterday.getDate() - 0);
 
         // Object to create Filter for
         this.filterSelectObj = [
@@ -253,13 +260,15 @@ filename:any=[];
             );
 
 
-    }
+   
+        }
     filterStates(name: string) {
 
         return this.filterPatientappointments.filter(state =>
             state.mobile.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
-
+    
+   
 
    
 
@@ -351,7 +360,7 @@ filename:any=[];
     }
     applyFilters() {
         
-        this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+        this.medicinePrescepList.filter = this.searchKey.trim().toLowerCase();
     }
 
     remove(fruit: string): void {
@@ -375,12 +384,12 @@ filename:any=[];
     //     const filterValue = value.toLowerCase();
     //     return this.complaints.filter(fruit => fruit.complaintName.toLowerCase().includes(filterValue));
     // }
-
+   // sorted : []
     ngOnInit(): void {
 
+       // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
 
-
-        
+        this.doctors.sort();
         this.addStaticData();
         this.getDocs();
         this.getComplaints();
@@ -421,7 +430,7 @@ filename:any=[];
                     serviceName: ['', Validators.required],
                     price: ['', Validators.required],
                     discount: [''],
-                    amountPaid: ['', Validators.required],
+                    amountPaid: ['700', Validators.required],
                     skipPayment: [''],
                     netPrice: [''],
                     duePayment: [''],
@@ -448,7 +457,7 @@ filename:any=[];
                     serviceName: ['', Validators.required],
                     price: ['', Validators.required],
                     discount: [''],
-                    amountPaid: [''],
+                    amountPaid: ['700'],
                     skipPayment: [''],
                     netPrice: [''],
                     duePayment: [''],
@@ -522,13 +531,19 @@ filename:any=[];
 
 
     }
+    today: Date = new Date();
+    onDateChange(event: MatDatepickerInputEvent<Date>) {
+        if (event.value < this.today) {
+          this.selectedDate.setValue(null);
+        }
+    }
 
 
     ngOnDestroy(): void {
         localStorage.removeItem('accessToken');
 
         
-        localStorage.removeItem('loginDetails');
+       // localStorage.removeItem('loginDetails');
     }
     filterChange(filter, event) {
         //let filterValues = {}
@@ -836,7 +851,12 @@ filename:any=[];
         this.utilitiesService.getAllDoctors().subscribe(
             (data) => {
                 if (data) {
-
+                    // console.log(data)
+                    data = data .sort((a,b) => {
+                        if((a.doctor).toLowerCase() < (b.doctor).toLowerCase()){
+                            return -1;
+                        }
+                    })
                     this.doctors = data;
                 } else {
                 }
@@ -937,8 +957,8 @@ filename:any=[];
     }
     onSearchClear() {
 
-        this.searchKey3 = '';
-        // this.applyFilter();
+       this.searchKey3 = '';
+    //this.applyFilter();
     }
 
     onAppointmentClear() {
@@ -1023,8 +1043,13 @@ filename:any=[];
     displayFn(user): string {
         return user && user.mobile ? user.mobile : '';
     }
+    fName:any;
+    age:any;
     applyFilter(val) {
-        
+        console.log(val);
+        this.fName = val.value.patientName;
+        this.mobNum = val.value.mobile;
+        this.age = val.value.age;
         val = val.trim(); // Remove whitespace
         val = val.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = val;
@@ -1304,7 +1329,9 @@ filename:any=[];
                         "duration": 2000
                     });
 
-                    this.ngOnInit();
+                    this.ngOnInit(
+                       
+                    );
                     this.appt = {};
                     // const dialogRef = this.dialog.open({
                     //     width: '600px',
@@ -2136,14 +2163,14 @@ filename:any=[];
         );
     }
 
-    bindMobileNo(){
+//    bindMobileNo(){
         
 
-        // this.horizontalStepperForm.step1.mobNum.setValue(this.searchKey3)
-        this.step1.controls['mobNum'].setValue(this.searchKey3);
-        // this.horizontalStepperForm.controls.step1['mobNum'].setValue(this.searchKey3);
-        //this.horizontalStepperForm.value.step1.mobNum=this.searchKey3
-    }
+//         // this.horizontalStepperForm.step1.mobNum.setValue(this.searchKey3)
+//         this.step1.controls['mobNum'].setValue(this.searchKey3);
+//         // this.horizontalStepperForm.controls.step1['mobNum'].setValue(this.searchKey3);
+//         //this.horizontalStepperForm.value.step1.mobNum=this.searchKey3
+//     }
 
     getComplaints() {
         this.flag = '4'
@@ -2678,15 +2705,16 @@ filename:any=[];
         });
     }
     GetDocumentListXML(val, history) {
-        debugger
+        
                 this.apptList.VitalsID = val;
                 this.utilitiesService.GetDocumentsXML(this.apptList).subscribe(
                     (data) => {
-                        debugger
+                        
                         if (data) {
         
                             this.docsXml = data;
                             this.docsList = [];
+                            this.labreportfiles = [];
                             for (var i = 0; i < this.docsXml.length; i++) {
                                 this.docsList.push(this.docsXml[i]);
                                 this.labreportfiles.push(this.docsList[i].docTypeNAme.slice(11))
@@ -2718,10 +2746,20 @@ filename:any=[];
                 
                 if (data) {
                     if (this.roleID == 2) {
+                        data = data .sort((a,b) => {
+                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+                            return -1;
+                            }
+                        })
                         this.medicinePrescepList = data;
                         // this.medicinePrescepList = this.medicinePrescepList.filter((a) => a.medic == this.registrationID);
                     }
                     else
+                    data = data .sort((a,b) => {
+                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+                            return -1;
+                        }
+                    })
                         this.medicinePrescepList = data;
                 }
 

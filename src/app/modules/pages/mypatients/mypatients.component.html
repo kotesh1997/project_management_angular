@@ -42,7 +42,7 @@
             style="padding-left:0;">
                 <!-- <mat-label>Select Day</mat-label> -->
                 
-                <mat-select  (selectionChange)="OnDaySelect($event.value)"  name="filterdayval">
+                <mat-select  (selectionChange)="OnDaySelect($event.value)"  name="filterdayval" style="padding-top:18px;">
                   <mat-option *ngFor="let day of days" [value]="day.value">
                     {{day.viewValue}}
                   </mat-option>
