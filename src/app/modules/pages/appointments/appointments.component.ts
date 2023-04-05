@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,7 +44,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
     encapsulation: ViewEncapsulation.None,
     providers: [DatePipe],
 })
-export class AppointmentsComponent implements OnInit,OnDestroy {
+export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 
     patientHistorys: any = [];
 
@@ -1959,12 +1959,27 @@ debugger
         this.items = this.vitalsForm.get('items') as FormArray;
         this.items.push(this.createItem1());
     }
-
+ngOnChanges(changes: SimpleChanges): void {
+    
+}
     addMedicationItem(): void {
+        debugger
         
         this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
-        this.medicationitems.push(this.createMedicationItem1());
+        
+        this.medicationitems.push(
+            this._formBuilder.group({
+                medicine: [''],
+                dose: [''],
+                when: [''],
+                frequencyListMedication: [''],
+                duration: [''],
+                notes: ['']
+            })
+        );
+        this.vitalsForm.get('medicationitems') as FormArray ;
     }
+
 
     get employees(): FormArray {
         

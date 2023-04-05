@@ -11,6 +11,10 @@ import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DateAdapter } from '@angular/material/core';
+import { jsPDF } from "jspdf";
+
+import autoTable from 'jspdf-autotable'
+
 
 import {
 
@@ -62,10 +66,33 @@ export class ReportComponent implements OnInit {
     appToDate: Date;
 
 exportpdf(){
+    debugger
+      var prepare=[];
+    this.patientsappointments.filteredData.forEach(e=>{
+      var tempObj =[];
+      tempObj.push(e.patientARCID);
+      tempObj.push(e.appointmentID);
+      tempObj.push( e.age);
+      tempObj.push( e.mobile);
+      tempObj.push( e.serviceName);
+      tempObj.push(e.serviceDate);
+      tempObj.push(e.visitCount);
+      tempObj.push(e.payment);
+      
+      tempObj.push(e.modeofPayment);
+      prepare.push(tempObj);
+    });
+    const doc = new jsPDF();
+    autoTable(doc,{
+        head: [['Patient ARCID',' SL','Patient Name & Gender','Phone Number',' Service Name','Last Visit','Visit Count','Payment','ModeofPayment']],
+        body: prepare
+    });
+    doc.save('Reports' + '.pdf');
+  
     // const doc = new jsPDF("p", "pt", "a4");
-    // const source = document.getElementById("content");
+    // const source = document.getElementById("table1");
     // // doc.text("Test", 40, 20);
-    // doc.setFontSize(12)
+    // doc.setFontSize(20)
     // doc.html(source, {
     //   callback: function(pdf) {
     //     doc.output("dataurlnewwindow"); // preview pdf file when exported
