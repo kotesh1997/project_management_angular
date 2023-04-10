@@ -4,7 +4,7 @@
     <div class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <!-- <mat-form-field floatLabel="never" class="search">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
                         autocomplete="off" (keyup)="applyFilter()" />
@@ -22,7 +22,7 @@
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                 <mat-form-field class="col-lg-4" class="search">
                     <!-- <mat-label>Select Date</mat-label> -->
                     <input matInput [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="appToDate" 
@@ -33,23 +33,29 @@
                 
             </div>
             <div class="col-lg-1">
+            </div>
+            <div class="col-lg-1">
                 <button mat-raised-button color="primary" (click)="GetPatientData(appFromDate,appToDate)">
                     Search
                   </button>
                  
                   
             </div>
-            <div class="col-lg-1">
-            <!-- <button mat-raised-button color="primary" (click)="ExportTOExcel()" style="padding-left: 19px;">
-                Export as Excel
-              </button> -->
-              <button mat-raised-button color="primary" (click)="exportpdf()" style="padding-left: 19px;">
+            <div class="col-lg-2">
+                <button mat-raised-button color="primary" (click)="ExportTOExcel()" >
+                    Export as Excel
+                  </button>
+                 
+                  
+            </div>
+           
+            <div class="col-lg-2">
+           
+              <button mat-raised-button color="primary" (click)="exportpdf()" >
                 Export as PDF
               </button>
             </div>
-            <div class="col-lg-1">
-               
-                </div>
+           
             <div class="col-lg-2">
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>

@@ -264,6 +264,14 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
+    getAllAppointments1(): Observable<any> {
+        return this.http
+            .get<any>(this.API_URL + 'PatientsAppointments/GetAllAppointments1')
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
     deleteAppointment(patientsAppointments) {
         debugger
         return this.http

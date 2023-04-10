@@ -85,6 +85,7 @@ export class MastersComponent implements OnInit {
     satItems: FormArray;
     allSlots: any=[];
     actionName: string = 'Doctor'
+    status1: any[];
     constructor(public patientsService: PatientsService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -102,14 +103,15 @@ export class MastersComponent implements OnInit {
             confirmPassword: ['', Validators.required],
             gender         : ['', Validators.required],
             experience     : ['', Validators.required],
-            qualification  : ['', Validators.required],
+            qualification  : ['', ],
             aadharNumber  : ['', Validators.required],
             pancardNumber : ['', Validators.required],
             specializations: ['', Validators.required],
-            institution    : ['', Validators.required],
+            institution    : ['', ],
             status         : ['', Validators.required],
-            aboutMe        : ['', Validators.required],
-            address        : ['', Validators.required],
+            aboutMe        : ['', ],
+            address        : ['', ],
+           
 
             
         }, { validator: matchingPasswords('password', 'confirmPassword') });
@@ -189,10 +191,19 @@ export class MastersComponent implements OnInit {
     }
 
     getStatuses() {
+        debugger
         this.utilitiesService.getStatuses().subscribe(
             (data) => {
                 if (data) {
                     this.status = data;
+                    this.status1=[]
+                    for(var i=0;i<this.status.length;i++){
+if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " ){
+    this.status1.push(this.status[i])
+}
+
+                    }
+
                     this.statusList = data;
 
                 } else {
@@ -260,7 +271,7 @@ export class MastersComponent implements OnInit {
     }
     addActionFormLabAssitant(val)
     {
-        this.actionName = 'Lab Assitant'
+        this.actionName = 'Lab Assistant'
         this.form.reset();
         this.flag = '1';
         this.roleID = '6';
@@ -346,7 +357,7 @@ export class MastersComponent implements OnInit {
         }
         else if(  this.roleID = '6')
         {
-            this.actionName = 'Lab Assitant';
+            this.actionName = 'Lab Assistant';
         }
         else if(  this.roleID = '2')
         {
@@ -383,7 +394,7 @@ export class MastersComponent implements OnInit {
         }
         else if(  this.roleID = '6')
         {
-            this.actionName = 'Lab Assitant';
+            this.actionName = 'Lab Assistant';
         }
         else if(  this.roleID = '2')
         {

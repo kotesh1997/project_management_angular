@@ -590,7 +590,7 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Service">
+                    <!-- <ng-container matColumnDef="Service">
                         <th mat-header-cell *matHeaderCellDef>
                             Service Name
                         </th>
@@ -629,7 +629,7 @@
                             </div>
 
                         </td>
-                    </ng-container>
+                    </ng-container> -->
                     <ng-container matColumnDef="WaitingTime">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="row">
@@ -1675,11 +1675,12 @@
                                                     <td  >
                                                          <mat-form-field appearance="outline">
                                                             <mat-label>medicine</mat-label>
+
                                                             <mat-select [formControlName]="'medicine'" [dataSource]="patientsappointment">
-                                                                <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
-                                                                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                                                    <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient  Appointment Date"
-                                                                    autocomplete="off" (keyup)="applyFilters()" />  </mat-form-field>
+                                                                <mat-form-field *ngIf="formfields" class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
+                                                                    <mat-icon   class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                                                                    <input [formControlName]="'medicine1'"  matInput [(ngModel)]="searchKey" placeholder="Search a Patient  Appointment Date"
+                                                                    autocomplete="off" (keyup)="applyFilters()"  />  </mat-form-field>
                                                                 <mat-option *ngFor="let item of medicinePrescepList" class="medication" 
                                                                     [value]="item.medicineName" >
                                                                     <h4 mat-line> {{ item.medicineName }}</h4>
@@ -1757,20 +1758,30 @@
                                                             <input matInput [formControlName]="'advice'" />
                                                         </mat-form-field>
                                                     </div>-->
-
+  
                                                     <td>
-                                                        <mat-icon style="color: #32CD32;cursor: pointer;"
-                                                            (click)="addMedicationItem()">add_box</mat-icon>     
+                                                        
+                                                            <button type="button">
+                                                                <mat-icon style="color: #32CD32;cursor: pointer;"
+                                                                (click)="addMedicationItem()">add_box</mat-icon> 
+                                                            </button>   
+                                                            <button type="button">
+                                                                <mat-icon style="color:#ff4081;cursor: pointer;"
+                                                                (click)="DeleteMedicationItem(j)">delete</mat-icon>
+                                                            </button>
 
-                                                        <mat-icon style="color:#ff4081;cursor: pointer;"
-                                                            (click)="DeleteMedicationItem(j)">delete</mat-icon>
+                                                     
                                                     </td>
                                                     <br />
                                                 </ng-container>
                                             </tr>
 
 
-                                        </table><br>
+                                        </table>
+                                     
+                            
+                                        
+                                        <br>
                                         <table>
                                             <tr>
 
@@ -1934,9 +1945,11 @@
                                                     <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span><!--<span><input type="file" style="position: relative;bottom: 28px;left: 130px;"></span>-->
                                                     <span class="service_d" *ngFor="let val of labreportfiles"  >
                                                     <ul>
-                                                        <li (click)="DownloadDocument(val)">{{val}}</li> 
+                                                        <li >{{val}}</li>
+                                                        <!-- <li (click)="DownloadDocument(val)">{{val}}</li>  -->
                                                     </ul>  
-                                                    
+                                                    <button type="button" mat-raised-button color="primary" (click)="DownloadDocument(val)">Download</button>
+
                                                        
                                                         <!-- <a href="D:\Rheumatology\cmsapi\CMS.API\VitalsDocs\TestScenarios1.pdf" download>Test.pdf</a> -->
                                                       

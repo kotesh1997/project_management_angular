@@ -190,6 +190,8 @@ filename:any=[];
     dataSource = new MatTableDataSource();
     fileUrl: string;
     yesterday = new Date();
+    formfields: boolean;
+    formfields1: boolean;
     constructor(
         
         public patientsService: PatientsService,
@@ -290,9 +292,9 @@ filename:any=[];
     displayedColumnsHistory: string[] = [
         'SL',
         'Patient',
-        'Service',
-        'Doctor',
-        'Time',
+        // 'Service',
+        // 'Doctor',
+        // 'Time',
         'VisitCount',
         'View'
     ];
@@ -386,7 +388,7 @@ filename:any=[];
     // }
    // sorted : []
     ngOnInit(): void {
-
+        this.formfields=true;
        // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
 debugger;
         this.doctors.sort();
@@ -395,7 +397,7 @@ debugger;
         this.getComplaints();
         this.getVisitReason();
         this.vitalsCrud();
-
+        this.gethistory();
 
         this.getAllAppointments();
         this.getAllDoctors();
@@ -495,7 +497,8 @@ debugger;
         }
         else if (this.roleID == '2') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount',
+                'SL', 'Patient', 
+                'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount',
                  'Vitals', 'View'
             ];
             this.displayedColumnsUpcoming = [
@@ -725,7 +728,37 @@ debugger;
         this.filteredAppointments = filtered;
     }
 
+gethistory(){
+    this.utilitiesService.getAllAppointments1().subscribe(
+        (data) => {
+            if (data) {
+              
+                if (this.roleID != 2) {
+                    this.patientsappointments = data;
+                   
+                }
+                else {
+                    // this.registrationID=this.loginDetails.registrationID;
 
+                  
+                    this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
+                }
+
+            }
+       
+            this.patientsappointments = new MatTableDataSource(this.patientsappointments);
+
+            this.patientsappointments.paginator = this.HistoryPaginator;
+
+
+            this.spinner.hide();
+        },
+
+        () => {
+            this.spinner.hide();
+        }
+    );
+}
     getAllAppointments() {
         debugger
         this.spinner.show();
@@ -739,7 +772,7 @@ debugger;
                     let todayDate = this.datepipe.transform(this.date, 'dd MMM yyyy');
                     const dateforToday = new Date();
                     if (this.roleID != 2) {
-                        this.patientsappointments = data;
+                       // this.patientsappointments = data;
                         //Today Bookings
                         this.todayDataSourceBookings = data.filter((a) => a.serviceDate == todayDate);
                         
@@ -760,7 +793,7 @@ debugger;
                         //Future Bookings
                         this.upcomingBookings = data.filter((a) => new Date(a.serviceDate) > new Date(dateforToday) && a.doctorID == this.registrationID);
                         //All Bookings
-                        this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
+                       // this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
                     }
 
                     this.filterPatientappointments = data.filter(
@@ -770,12 +803,12 @@ debugger;
                 this.todayDataSourceBookings.sort((a, b) => (a.status < b.status ? -1 : 1));
                 this.todayBookings = new MatTableDataSource(this.todayDataSourceBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
-                this.patientsappointments = new MatTableDataSource(this.patientsappointments);
+               // this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
 
                 this.todayBookings.paginator = this.paginator;
                 this.upcomingBookings.paginator = this.upcomingPaginator;
-                this.patientsappointments.paginator = this.HistoryPaginator;
+               // this.patientsappointments.paginator = this.HistoryPaginator;
 
                 if (this.receiptToken > 0) {
                     this.date = new Date();
@@ -1251,7 +1284,10 @@ debugger
     //     }
     // }
 
+    Download(val){
+        debugger
 
+    }
 
     addRegisterPatientAppointment(val) {
         
@@ -1934,13 +1970,15 @@ debugger
     createMedicationItem(): FormGroup {
 
         return this._formBuilder.group({
-            medicine: [''],
-            dose: [''],
-            when: [''],
-            frequencyListMedication: [''],
-            duration: [''],
-            notes: [''],
+            medicine: ['',],
+            medicine1 :['',],
+            dose: ['', ],
+            when: ['', ],
+            frequencyListMedication:['', ],
+            duration: ['', ],
+            notes:['', ],
         });
+       
     }
     createMedicationItem1(): FormGroup {
 
@@ -1962,22 +2000,28 @@ debugger
 ngOnChanges(changes: SimpleChanges): void {
     
 }
+change(){
+
+}   
     addMedicationItem(): void {
         debugger
-        
-        this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
-        
-        this.medicationitems.push(
-            this._formBuilder.group({
-                medicine: [''],
-                dose: [''],
-                when: [''],
-                frequencyListMedication: [''],
-                duration: [''],
-                notes: ['']
-            })
-        );
-        this.vitalsForm.get('medicationitems') as FormArray ;
+        this.formfields=true;
+       
+         this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
+         this.medicationitems.push(this.createMedicationItem());
+         this.applyFilters();
+         this.change();
+        // medicationitems1.push(
+        //     this._formBuilder.group({
+        //         medicine:new FormControl(),
+        //         dose: new FormControl(),
+        //         when: new FormControl(),
+        //         frequencyListMedication: new FormControl(),
+        //         duration: new FormControl(),
+        //         notes: new FormControl(''),
+        //     })
+        // );
+
     }
 
 
@@ -2346,6 +2390,7 @@ ngOnChanges(changes: SimpleChanges): void {
         );
     }
     getAllAppointmentsAfterSAve() {
+        debugger
         this.spinner.show();
         this.utilitiesService.getAllAppointments().subscribe(
             (data) => {
