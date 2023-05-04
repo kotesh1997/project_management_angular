@@ -45,6 +45,14 @@ export class UtilitiesService {
             responseType: 'blob'
         });
     }
+    DocumentsDownload1(fileUrl: string) {
+        debugger
+        return this.http.get(this.API_URL + "PatientsAppointments/DocumentsDownload?fileUrl=" + fileUrl, {
+            reportProgress: true,
+            observe: 'events',
+            responseType: 'blob'
+        });
+    }
     GetDocumentsXML(data) {
         debugger
         return this.http
@@ -267,6 +275,14 @@ export class UtilitiesService {
     getAllAppointments1(): Observable<any> {
         return this.http
             .get<any>(this.API_URL + 'PatientsAppointments/GetAllAppointments1')
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
+    getAllAppointments2( RegID): Observable<any> {
+        return this.http
+            .get<any>(this.API_URL + 'PatientsAppointments/GetAllAppointments2?RegId='+RegID)
             .pipe(
                 tap((status) => console.log('status: ' + status)),
                 catchError(this.handleError)

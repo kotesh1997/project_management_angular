@@ -1,7 +1,23 @@
 .example-container {
     overflow: auto;
 }
-
+.mat-flat-button{
+    
+    background-color: #ff7633  !important; 
+}
+// .mat-flat-button:hover{
+    
+//     background-color: #146aa6  !important; 
+// }
+.Overlays{
+    background-color: #666666  !important; 
+}
+.mat-raised-button{
+    background-color: #ff7633  !important; 
+}
+.mat-raised-button:hover{
+    background-color: #146aa6  !important; 
+}
 table {
     width: 100%;
 }
@@ -105,6 +121,14 @@ ul {
     border-radius: 0 !important;
     border-bottom: 2px solid #123654;
     background-color: rgb(18 54 84 / 0%) !important;
+
+       
+     
+}
+.mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label {
+   
+        justify-content: left !important;
+     
 }
 
 .lbl_1 {
@@ -647,6 +671,7 @@ body .light .mat-elevation-z8 {
 
 .panelLabel .mat-tab-labels {
     flex-direction: column;
+   
 }
 
 .panelLabel .mat-tab-group {

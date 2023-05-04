@@ -42,7 +42,8 @@ fuse-horizontal-navigation {
             .fuse-horizontal-navigation-item-active-forced {
 
                 .fuse-horizontal-navigation-item-title {
-                    @apply text-primary #{'!important'};
+                  //  @apply text-primary #{'!important'};
+                    color: #146aa6
                 }
 
                 .fuse-horizontal-navigation-item-subtitle {

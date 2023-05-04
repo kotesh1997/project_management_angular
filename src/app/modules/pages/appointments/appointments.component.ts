@@ -15,6 +15,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { GcPdfViewer } from '@grapecity/gcpdfviewer';
 import {
     FormBuilder,
     FormControl,
@@ -22,6 +23,8 @@ import {
     NgForm,
     Validators, FormArray
 } from '@angular/forms';
+
+
 import { GeneralService } from '../../../Services/general.service';
 import { UtilitiesService } from 'app/Services/utilities.service';
 import { ToastService } from 'app/Services/toastservice';
@@ -34,6 +37,8 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dial
 import { MatStepper } from '@angular/material/stepper';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+declare const PDFObject: any;
 // import { debug } from 'console';
 
 
@@ -47,11 +52,12 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 
     patientHistorys: any = [];
-
+    ModePrice=false;
     myControl = new FormControl();
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
     tabWay = "vert";
+    pdfSrc = "https://research.google.com/pubs/archive/44678.pdf";
 
     private API_URL: any = environment.API_URL;
     selectable = true;
@@ -190,9 +196,16 @@ filename:any=[];
     dataSource = new MatTableDataSource();
     fileUrl: string;
     yesterday = new Date();
-    formfields: boolean;
+    formfields: boolean=true;
     formfields1: boolean;
-    constructor(
+    url: string | ArrayBuffer;
+    pdfSrcc: Uint8Array;
+    urls: SafeResourceUrl;
+    isLoading: boolean;
+    pdfData: string;
+    filename1: string;
+   
+    constructor(private sanitizer: DomSanitizer,
         
         public patientsService: PatientsService,
         public medicineService: MedicineService,
@@ -388,7 +401,15 @@ filename:any=[];
     // }
    // sorted : []
     ngOnInit(): void {
-        this.formfields=true;
+
+          
+        // const viewer = new GcPdfViewer("#viewer", {
+        //     workerSrc: "//node_modules/@grapecity/gcpdfviewer/gcpdfviewer.worker.js",
+        //     restoreViewStateOnLoad: false
+        //   });
+        //   viewer.addDefaultPanels();
+        //   viewer.open("https://www.grapecity.com/documents-api-pdf/docs/offlinehelp.pdf");
+        //  this.formfields=true;
        // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
 debugger;
         this.doctors.sort();
@@ -534,6 +555,8 @@ debugger;
 
 
     }
+
+   
     today: Date = new Date();
     onDateChange(event: MatDatepickerInputEvent<Date>) {
         if (event.value < this.today) {
@@ -732,17 +755,45 @@ gethistory(){
     this.utilitiesService.getAllAppointments1().subscribe(
         (data) => {
             if (data) {
-              
+              debugger
                 if (this.roleID != 2) {
                     this.patientsappointments = data;
+                    this.patientsappointments = new MatTableDataSource(this.patientsappointments);
+
+                    this.patientsappointments.paginator = this.HistoryPaginator;
+        
+        
+                    this.spinner.hide();
                    
                 }
                 else {
                     // this.registrationID=this.loginDetails.registrationID;
-
+                    this.gethistory1();
                   
-                    this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
+                    //this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
                 }
+
+            }
+       
+          
+        },
+
+        () => {
+            this.spinner.hide();
+        }
+    );
+}
+gethistory1(){
+    this.utilitiesService.getAllAppointments2(this.registrationID).subscribe(
+        (data) => {
+            if (data) {
+              debugger
+               
+                    // this.registrationID=this.loginDetails.registrationID;
+                    this.patientsappointments = data;
+                  
+                    //this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
+                
 
             }
        
@@ -1046,6 +1097,14 @@ debugger
     }
     applyNetPrice(val) {
 
+if(val.value==6){
+debugger
+this.ModePrice=true
+}
+else{
+    this.ModePrice=false  
+}
+        
         if (this.roleID == '1') {
             if (val.modeofPaymentID != 5) {
                 var pricList = [];
@@ -1984,6 +2043,7 @@ debugger
 
         return this._formBuilder.group({
             medicine: [''],
+            medicine1: [''],
             dose: [''],
             when: [''],
             frequencyListMedication: [''],
@@ -2289,15 +2349,20 @@ change(){
             if (val.items[i].docType != null) {
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
-                     DocumentTypeID: val.items[i].docType.documentTypeID,
+                     //DocumentTypeID: val.items[i].docType.documentTypeID,
+
+                     DocumentTypeID: val.items[i].docType,
+
+
                     //  , DocTypeNAme: val.items[i].Image
-                     DocTypeNAme: "VitalsDocs\\" + val.items[i].Image.split("\\").pop()
+                     DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
             else {
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
-                    DocumentTypeID: undefined,
+                    // DocumentTypeID: undefined,
+                    DocumentTypeID:  val.items[i].docType,
                     //  , DocTypeNAme: val.items[i].Image
                      DocTypeNAme: "VitalsDocs\\"
                 });
@@ -2531,7 +2596,8 @@ change(){
                         this.items.push(this._formBuilder.group({
                             Image: [this.docsXml[i].docTypeNAme],
                             fileName: [this.docsXml[i].docTypeNAme],
-                            docType: [uom[0]],
+                            docType: [this.docsXml[i].documentTypeID],
+                           // docType: [uom[0]],
                         }));
                        
                     }
@@ -2610,6 +2676,15 @@ change(){
 
         //this.urls = [];
         let files = event.target.files;
+        
+        var reader = new FileReader();
+
+        reader.readAsDataURL(event.target.files[0]); // read file as data url
+  
+        reader.onload = (event) => { // called once readAsDataURL is completed
+      
+        }
+
         if (files) {
             for (let file of files) {
                 let reader = new FileReader();
@@ -2636,6 +2711,7 @@ change(){
 
         let fileToUpload = <File>fileList[0];
         const formData = new FormData();
+       
         formData.append('file', fileToUpload, fileToUpload.name);
         this.http.post(this.API_URL + 'PatientsAppointments/upload', formData, { reportProgress: true })
             .subscribe(data => {
@@ -2685,7 +2761,7 @@ change(){
                         if (this.patientHistory[i].vitalsID > 0) {
                             this.GetComplaintsListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
                             this.GetMedicineListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
-                            this.GetDocumentListXML(this.patientHistory[i].vitalsID, this.patientHistory[i]);
+                            this.GetDocumentListXML1(this.patientHistory[i].vitalsID, this.patientHistory[i],i);
 
                         }
 
@@ -2752,6 +2828,7 @@ change(){
                     }
                     history.medicineList = this.medicineList;
                     this.spinner.hide();
+                   this.createMedicationItem();
                 } else {
                     this.spinner.hide();
                 }
@@ -2759,9 +2836,50 @@ change(){
             () => { this.spinner.hide(); }
         );
     }
+    Viewfile(event,item){
+        debugger
+       
+        this.fileUrl = item.controls.fileName.value; 
+
+        let a =String.raw`\b1\c1\d1`; //Output a ="\b1\c1\d1"
+
+let b = a.split("\\");
+      let c=  this.fileUrl.split("\\");
+
+      if(c[0]=="VitalsDocs"){
+        this.fileUrl=c[1];
+      }
+        
+        //"wwwroot/SiteDocument/SiteDemo1/FileDocument.doc" static file path
+        this.utilitiesService.DocumentsDownload(this.fileUrl).subscribe(async (event) => {
+            debugger
+            let data = event as HttpResponse < Blob > ;
+            const downloadedFile = new Blob([data.body as BlobPart], {
+                type: data.body?.type
+            });
+            console.log("ddd", downloadedFile)
+            if (downloadedFile.type != "") {
+                const url = window.URL.createObjectURL(downloadedFile);
+        let tab = window.open();
+        tab.location.href = url;
+            }
+        });
+       
+        // this.utilitiesService.DocumentsDownload1(this.filename1).subscribe( (event) => {
+        //     debugger
+        //     let data = event as HttpResponse < Blob > ;
+        // const blob = new Blob([data.body as BlobPart]);
+
+       
+        // const url = window.URL.createObjectURL(blob);
+        // let tab = window.open();
+        // tab.location.href = url;
+        // });
+    }
     DownloadDocument(fileDownloadPath) {
         this.fileUrl = fileDownloadPath; //"wwwroot/SiteDocument/SiteDemo1/FileDocument.doc" static file path
         this.utilitiesService.DocumentsDownload(this.fileUrl).subscribe(async (event) => {
+            debugger
             let data = event as HttpResponse < Blob > ;
             const downloadedFile = new Blob([data.body as BlobPart], {
                 type: data.body?.type
@@ -2779,6 +2897,39 @@ change(){
             }
         });
     }
+    GetDocumentListXML1(val, history,k) {
+        
+        this.apptList.VitalsID = val;
+        this.utilitiesService.GetDocumentsXML(this.apptList).subscribe(
+            (data) => {
+                
+                if (data) {
+
+                    this.docsXml = data;
+                    this.docsList = [];
+                    this.labreportfiles = [];
+                    debugger
+                    for (var i = 0; i < this.docsXml.length; i++) {
+                        this.docsList.push(this.docsXml[i]);
+                        (this.docsList[i].docTypeNAme)=   (this.docsList[i].docTypeNAme.slice(11))
+                       // this.labreportfiles.push(this.docsList[i].docTypeNAme.slice(11))
+                        // var sf=this.docsList[i].docTypeNAme.slice(11)
+                        this.labreportfiles.push(this.docsList[i])
+                    }
+                    this.patientHistory[k].documents=this.labreportfiles;
+                    // var splitted = this.docsList[0].docTypeNAme.slice(11);
+                    this.fileUrl=this.docsList[0].docTypeNAme.slice(11);
+                    // this.filename=this.docsList[0].value.docTypeNAme;
+
+                    history.documents = this.docsList;
+                    this.spinner.hide();
+                } else {
+                    this.spinner.hide();
+                }
+            },
+            () => { this.spinner.hide(); }
+        );
+    }
     GetDocumentListXML(val, history) {
         
                 this.apptList.VitalsID = val;
@@ -2790,9 +2941,11 @@ change(){
                             this.docsXml = data;
                             this.docsList = [];
                             this.labreportfiles = [];
+                            debugger
                             for (var i = 0; i < this.docsXml.length; i++) {
                                 this.docsList.push(this.docsXml[i]);
                                 this.labreportfiles.push(this.docsList[i].docTypeNAme.slice(11))
+                               
                             }
                             // var splitted = this.docsList[0].docTypeNAme.slice(11);
                             this.fileUrl=this.docsList[0].docTypeNAme.slice(11);

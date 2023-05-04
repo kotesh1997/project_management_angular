@@ -169,10 +169,14 @@
 
                 <div class="col-lg-1">
                 </div>
-                <div class="col-lg-2" style="cursor: pointer;" (click)="appoinmentLink()">
-                    <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon>
+                <div class="col-lg-3" style="cursor: pointer;margin-top: 20px;" (click)="appoinmentLink()">
+                    <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
+                    <button class="px-6" mat-flat-button [color]="'primary'"                                         
+                    type="button" >
+                   Back
+               </button>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-5">
                     <label style="font-size: x-large;"><b>{{detailData.patient}}</b></label><br>
                     <mat-icon class="icon-size-3 text-current"> local_phone</mat-icon> {{detailData.mobile}} <mat-icon
                         class="icon-size-3 text-current"> contacts</mat-icon> {{detailData.gender}},{{detailData.age}} yrs

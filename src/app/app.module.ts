@@ -15,6 +15,9 @@ import { appRoutes } from 'app/app.routing';
 import { UtilitiesService } from './Services/utilities.service';
 import { ToastService } from './Services/toastservice';
 import { LoaderComponent } from './loader/loader.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
@@ -24,7 +27,7 @@ const routerConfig: ExtraOptions = {
     declarations: [AppComponent, LoaderComponent],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule, 
+        BrowserAnimationsModule, PdfViewerModule,
         RouterModule.forRoot(appRoutes, routerConfig),
 
         // Fuse, FuseConfig & FuseMockAPI
