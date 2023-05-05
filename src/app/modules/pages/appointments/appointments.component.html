@@ -677,7 +677,9 @@
                         </th>
                         <td mat-cell *matCellDef="let row">
                             <button mat-button>
-                                <div style="color: cornflowerblue" (click)="onRowClicked(row)">View</div>
+                                <div style="color: cornflowerblue" (click)="onRowClicked(row)"><mat-icon svgIcon="heroicons_solid:eye" #file
+                                    style="color:blue;">
+                               </mat-icon></div><!--view-->
                             </button>
                         </td>
                     </ng-container>
@@ -1986,10 +1988,15 @@
                                                     <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span><!--<span><input type="file" style="position: relative;bottom: 28px;left: 130px;"></span>-->
                                                     <span class="service_d" *ngFor="let value12 of item.documents"   >
                                                     <ul>
-                                                        <li >{{ value12.docTypeNAme}}</li>
+                                                        <li >{{ value12.docTypeNAme}}<mat-icon svgIcon="heroicons_solid:download" (click)="DownloadDocument(value12.docTypeNAme)" #file
+                                                            style="color:blue;width:80px;position:relative;top:5px;">
+                                                       </mat-icon></li> 
                                                         <!-- <li (click)="DownloadDocument(val)">{{val}}</li>  -->
                                                     </ul>  
-                                                    <button type="button" mat-raised-button color="primary" (click)="DownloadDocument(value12.docTypeNAme)">Download</button>
+                                                    <!-- <button type="button" mat-raised-button color="primary" (click)="DownloadDocument(value12.docTypeNAme)"></button> -->
+                                                    <!-- <mat-icon svgIcon="heroicons_solid:download" (click)="DownloadDocument(value12.docTypeNAme)" #file
+                                                         style="color:blue;width:80px;">
+                                                    </mat-icon> -->
 
                                                     <!-- <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span>
                                                     <span class="service_d" *ngFor="let val of labreportfiles"  >
