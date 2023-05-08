@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -50,7 +50,7 @@ declare const PDFObject: any;
     providers: [DatePipe],
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
-
+    searchmedicine: any=[];
     patientHistorys: any = [];
     ModePrice=false;
     myControl = new FormControl();
@@ -68,7 +68,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     fruits: any = [];
     allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
     frequencyList: any = [];
-
+    @Input() tooltip: string;
     medicine: any = [];
     frequencyListMedication: any = [];
     dose: any = [];
@@ -373,10 +373,29 @@ filename:any=[];
             () => { }
         );
     }
-    applyFilters() {
+    applyFilters() { 
+      
+        this.medicinePrescepList = this.search(this.searchKey);
+        }
         
-        this.medicinePrescepList.filter = this.searchKey.trim().toLowerCase();
-    }
+        
+
+        search(value: string) { 
+           if(value==""){
+            return  this.medicinePrescepList=this.searchmedicine;
+           }
+else{
+    let filter = value.toLowerCase();
+
+         
+          return this.medicinePrescepList.filter(option => (option.medicineName).toLowerCase().startsWith(filter));
+}
+      
+        }
+    // applyFilters() {
+      
+    //     this.medicinePrescepList.filter = this.searchKey.trim().toLowerCase();
+    // }
 
     remove(fruit: string): void {
         const index = this.fruits.indexOf(fruit);
@@ -402,7 +421,7 @@ filename:any=[];
    // sorted : []
     ngOnInit(): void {
 
-          
+       
         // const viewer = new GcPdfViewer("#viewer", {
         //     workerSrc: "//node_modules/@grapecity/gcpdfviewer/gcpdfviewer.worker.js",
         //     restoreViewStateOnLoad: false
@@ -556,7 +575,9 @@ debugger;
 
     }
 
-   
+    applysearch(){
+        this.mobNum=this.searchKey3;
+    }
     today: Date = new Date();
     onDateChange(event: MatDatepickerInputEvent<Date>) {
         if (event.value < this.today) {
@@ -2436,7 +2457,7 @@ change(){
                     // this.detailData.vitalId = this.afterSaveVitalId;
                     // this.onRowClicked(this.detailData)
                     this.fruits = [];
-                    this._snackBar.open('Vitals Added Successfully...!!', 'ok', {
+                    this._snackBar.open('SubmittedSuccessfully...!!', 'ok', {
                         horizontalPosition: this.horizontalPosition,
                         verticalPosition: this.verticalPosition,
                         "duration": 2000,
@@ -2990,6 +3011,9 @@ let b = a.split("\\");
                     })
                         this.medicinePrescepList = data;
                 }
+
+             
+              this.searchmedicine= this.medicinePrescepList; 
 
             },
 

@@ -135,9 +135,24 @@
 
                 <!-- Submit button -->
                 <button
+                class="fuse-mat-button-large w-full mt-6"
+                mat-flat-button
+                style="background-color: #ff7633" 
+                [disabled]="signInForm.disabled"
+                (click)="signIn()"
+            >
+                <span *ngIf="!signInForm.disabled"> Sign in </span>
+                <mat-progress-spinner
+                    *ngIf="signInForm.disabled"
+                    [diameter]="24"
+                    [mode]="'indeterminate'"
+                >
+                </mat-progress-spinner>
+            </button>
+                <!-- <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
-                    [color]="'primary'"
+                   [color]="'primary'" 
                     [disabled]="signInForm.disabled"
                     (click)="signIn()"
                 >
@@ -148,8 +163,8 @@
                         [mode]="'indeterminate'"
                     >
                     </mat-progress-spinner>
-                </button>
-
+                </button> -->
+                
                 <!-- Separator -->
                 <!--<div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>

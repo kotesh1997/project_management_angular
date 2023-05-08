@@ -495,7 +495,7 @@
 
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                        
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
@@ -510,12 +510,18 @@
                                     {{ item.name }}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> 
 
-                    </div>
+                    </div> -->
 
                   
                     <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Qualification</mat-label>
+                                <input matInput [formControlName]="'qualification'" />
+                            </mat-form-field>
+                        </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
                                 <mat-label>Institution</mat-label>

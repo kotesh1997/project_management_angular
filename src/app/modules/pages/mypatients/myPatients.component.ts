@@ -181,6 +181,7 @@ export class MyPatientsComponent implements AfterViewInit {
         
     }
     applyFilter() {
+        debugger
         this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
     }
 

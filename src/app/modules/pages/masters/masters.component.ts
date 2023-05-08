@@ -106,7 +106,7 @@ export class MastersComponent implements OnInit {
             qualification  : ['', ],
             aadharNumber  : ['', Validators.compose([Validators.required, Validators.minLength(12),Validators.maxLength(12)])],
             pancardNumber : ['', Validators.compose([Validators.required, Validators.minLength(10),Validators.maxLength(10)])],
-            specializations: ['', Validators.required],
+            specializations: ['', ],
             institution    : ['', ],
             status         : ['', Validators.required],
             aboutMe        : ['', ],
