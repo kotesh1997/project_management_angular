@@ -52,6 +52,7 @@ export class MastersComponent implements OnInit {
     specializationsList: any = [];
     specializations: any = [];
     status: any = [];
+    submitbtn:any;
     statusList: any = [];
     daysArr: any = [];
     timings: any = [];
@@ -86,6 +87,12 @@ export class MastersComponent implements OnInit {
     allSlots: any=[];
     actionName: string = 'Doctor'
     status1: any[];
+    Updatebtn: boolean;
+    submitButton1: boolean=false;
+    searchKey: string;
+    searchKey1: string;
+    searchKey2: string;
+    searchKey3: string;
     constructor(public patientsService: PatientsService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -98,14 +105,14 @@ export class MastersComponent implements OnInit {
         this.form = _formBuilder.group({
             name           : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             email          : ['', Validators.compose([Validators.required, emailValidator])],
-            mobile         : ['', Validators.required],
+            mobile         : ['',Validators.compose([ Validators.minLength(10),Validators.maxLength(10)])],
             password       : ['', Validators.required],
             confirmPassword: ['', Validators.required],
             gender         : ['', Validators.required],
             experience     : ['', Validators.required],
             qualification  : ['', ],
-            aadharNumber  : ['', Validators.compose([Validators.required, Validators.minLength(12),Validators.maxLength(12)])],
-            pancardNumber : ['', Validators.compose([Validators.required, Validators.minLength(10),Validators.maxLength(10)])],
+            aadharNumber  : ['', Validators.compose([ Validators.minLength(12),Validators.maxLength(12)])],
+            pancardNumber : ['', Validators.compose([ Validators.minLength(10),Validators.maxLength(10)])],
             specializations: ['', ],
             institution    : ['', ],
             status         : ['', Validators.required],
@@ -119,6 +126,7 @@ export class MastersComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.submitbtn=true;
         this.getRegisterationDetails();
         this.getGenders();
         this.getSpecializations();
@@ -154,6 +162,37 @@ export class MastersComponent implements OnInit {
         { "Timings": "05:30 PM" }, { "Timings": "06:00 PM" }, { "Timings": "06:30 PM" }, { "Timings": "07:00 PM" }, { "Timings": "07:30 PM" },
         { "Timings": "08:00 PM" }, { "Timings": "08:30 PM" }, { "Timings": "09:00 PM" }, { "Timings": "09:30 PM" }, { "Timings": "10:00 PM" },
         { "Timings": "10:30 PM" }, { "Timings": "11:00 PM" }, { "Timings": "11:30 PM" })
+       
+        var days=""
+        var today = (new Date()).getDay();
+        if(today==1){
+            days="SUNDAY"
+        }
+        else if(today==1){
+            days="MONDAY"
+        }
+        else if(today==2){
+            days="TUESDAY"
+        }
+        else if(today==3){
+            days="WEDNESDAY"
+        }
+        else if(today==4){
+            days="THURSDAY"
+        }
+        else if(today==5){
+            days="FRIDAY"
+        }
+        else if(today==6){
+            days="SATURDAY"
+        }
+        var data={
+            Name:days,
+            Value:today
+        }
+       
+       // this.day(data);
+    
     }
 
     getGenders() {
@@ -263,7 +302,9 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.roleID = '5';
     }
     addActionFormFrontDesk(val)
-    {
+    {this.Updatebtn=false;
+        this.submitbtn=true;
+
         this.actionName = 'Front Desk'
         this.form.reset();
         this.flag = '1';
@@ -282,7 +323,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.form.reset();
         this.flag = '1';
         this.roleID = '2';
-        this.actionName = 'Doctor';
+        this.actionName = 'New Doctor';
     }
      
     addUpdateRegDetails(val) {
@@ -307,7 +348,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
              ,Qualification  :val.qualification
              ,AadharNumber   :val.aadharNumber
              ,PancardNumber  :val.pancardNumber  
-            , SpecializationID:val.specializations
+            , SpecializationID:0
              ,Institution    :val.institution    
              ,StatusID         :val.status         
              ,AboutMe        :val.aboutMe        
@@ -346,22 +387,22 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         debugger;
         this.registrationID = val.RegistrationID
         this.flag = '2';
-        this.roleID=val.roleID;
+        this.roleID=(val.roleID).toString();
         if(this.roleID =='5')
         {
             this.actionName = 'Jr Doctor';
         }
-        else if(  this.roleID = '3')
+        else if(  this.roleID == '3')
         {
             this.actionName = 'Front Desk';
         }
-        else if(  this.roleID = '6')
+        else if(  this.roleID == '6')
         {
             this.actionName = 'Lab Assistant';
         }
-        else if(  this.roleID = '2')
+        else if(  this.roleID == '2')
         {
-            this.actionName = 'Doctor';
+            this.actionName = val.name;
         }
         this.registrationID = val.registrationID;
         this.form.controls['name'].setValue(val.name);
@@ -379,6 +420,9 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.form.controls['status'].setValue(val.statusID);
         this.form.controls['aboutMe'].setValue(val.aboutMe);
         this.form.controls['address'].setValue(val.address);
+
+        this.submitbtn=false;
+        this.Updatebtn=true;
     }
 
     deleteDoc(val) {
@@ -388,15 +432,15 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         {
             this.actionName = 'Jr Doctor';
         }
-        else if(  this.roleID = '3')
+        else if(  this.roleID == '3')
         {
             this.actionName = 'Front Desk';
         }
-        else if(  this.roleID = '6')
+        else if(  this.roleID == '6')
         {
             this.actionName = 'Lab Assistant';
         }
-        else if(  this.roleID = '2')
+        else if(  this.roleID == '2')
         {
             this.actionName = 'Doctor';
         }
@@ -448,7 +492,75 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         );
         
     }
+    public doFilter1 = (value, state) => {
+        debugger
+        var sd=value.trim().toLocaleLowerCase()
+            this.regDetails.filter = value.trim().toLocaleLowerCase()
+            // this.upcomingBookings.filter =  '';
+            // this.patientsappointments.filter = '';
+            this.searchKey3 = '';
+            var value1='';
+           
+            this.regDetailsJrList.filter = value1.trim().toLocaleLowerCase()
+            this.regDetailsFrontList.filter = value1.trim().toLocaleLowerCase()
+            this.regDetailsLabList.filter = value1.trim().toLocaleLowerCase()
 
+
+             this.searchKey2 = '';
+            this.searchKey1 = '';
+      
+    };
+    public doFilter2 = (value, state) => {
+        debugger
+        var sd=value.trim().toLocaleLowerCase()
+            this.regDetailsJrList.filter = value.trim().toLocaleLowerCase()
+            // this.upcomingBookings.filter =  '';
+            // this.patientsappointments.filter = '';
+
+             this.searchKey = '';
+             this.searchKey2 = '';
+            this.searchKey3 = '';
+            var value1='';
+           
+            this.regDetails.filter = value1.trim().toLocaleLowerCase()
+            this.regDetailsFrontList.filter = value1.trim().toLocaleLowerCase()
+            this.regDetailsLabList.filter = value1.trim().toLocaleLowerCase()
+
+      
+    };
+    public doFilter3 = (value, state) => {
+        debugger
+        var sd=value.trim().toLocaleLowerCase()
+            this.regDetailsFrontList.filter = value.trim().toLocaleLowerCase()
+            // this.upcomingBookings.filter =  '';
+            // this.patientsappointments.filter = '';
+             this.searchKey = '';
+             this.searchKey1 = '';
+             this.searchKey3 = '';
+             var value1='';
+           
+             this.regDetails.filter = value1.trim().toLocaleLowerCase()
+             this.regDetailsJrList.filter = value1.trim().toLocaleLowerCase()
+             this.regDetailsLabList.filter = value1.trim().toLocaleLowerCase()
+
+      
+    };
+    public doFilter4 = (value, state) => {
+        debugger
+        var sd=value.trim().toLocaleLowerCase()
+            this.regDetailsLabList.filter = value.trim().toLocaleLowerCase()
+            // this.upcomingBookings.filter =  '';
+            // this.patientsappointments.filter = '';
+             this.searchKey = '';
+             this.searchKey1 = '';
+             this.searchKey2 = '';
+             var value1='';
+           
+             this.regDetails.filter = value1.trim().toLocaleLowerCase()
+             this.regDetailsJrList.filter = value1.trim().toLocaleLowerCase()
+             this.regDetailsFrontList.filter = value1.trim().toLocaleLowerCase()
+      
+    };
     createItem(): FormGroup {
         return this._formBuilder.group({
             from: ['', Validators.required],
@@ -461,6 +573,9 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             from: ['', Validators.required],
             to: ['', Validators.required],
         });
+    }
+    chnaged(){
+       
     }
     addItem(): void {
         if (this.dayName == 'SUNDAY') {
@@ -492,6 +607,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             this.sat.push(this.createItem1());
         }
         this.submitButton=false;
+        this.submitButton1=true;
     }
     get sund(): FormArray {
         return this.slotsForm.get('sun') as FormArray;
@@ -541,58 +657,98 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     
 
     daysArray(val) {
-        
+        debugger
        // let itemArr = [];
         this.slotsArr = [];
 
         for (var i = 0; i < val.sun.length; i++) {
+            if(val.sun[0].from !=null ){
             this.slotsArr.push({
                   Day: 7
                 , Start: val.sun[i].from.Timings
                 , Ending: val.sun[i].to.Timings
             });
         }
+        else{
+            val.sun=[];
+        }
+        
+        }
         for (var i = 0; i < val.mon.length; i++) {
+            if(val.mon[0].from !=null ){
             this.slotsArr.push({
                 Day: 1
                 , Start: val.mon[i].from.Timings
                 , Ending: val.mon[i].to.Timings
             });
         }
+        else{
+            val.mon=[];
+        }
+        }
         for (var i = 0; i < val.tue.length; i++) {
+            if(val.tue[0].from !=null ){
+
             this.slotsArr.push({
                 Day: 2
                 , Start: val.tue[i].from.Timings
                 , Ending: val.tue[i].to.Timings
             });
         }
+        else{
+            val.tue=[];
+        }
+        }
         for (var i = 0; i < val.wed.length; i++) {
-            this.slotsArr.push({
-                Day: 3
-                , Start: val.wed[i].from.Timings
-                , Ending: val.wed[i].to.Timings
-            });
+            if(val.wed[0].from !=null ){
+                this.slotsArr.push({
+                    Day: 3
+                    , Start: val.wed[i].from.Timings
+                    , Ending: val.wed[i].to.Timings
+                });
+            }
+            else{
+                val.wed=[];
+            }
+          
         }
         for (var i = 0; i < val.thu.length; i++) {
+            if(val.thu[0].from !=null ){
+
             this.slotsArr.push({
                 Day: 4
                 , Start: val.thu[i].from.Timings
                 , Ending: val.thu[i].to.Timings
             });
         }
+        else{
+            val.thu=[];
+        }
+        }
         for (var i = 0; i < val.fri.length; i++) {
+            if(val.fri[0].from !=null ){
             this.slotsArr.push({
                 Day: 5
                 , Start: val.fri[i].from.Timings
                 , Ending: val.fri[i].to.Timings
             });
         }
+            else{
+                val.fri=[];
+            }
+        }
         for (var i = 0; i < val.sat.length; i++) {
+            if(val.sat[0].from !=null ){
+
             this.slotsArr.push({
                 Day: 6
                 , Start: val.sat[i].from.Timings
                 , Ending: val.sat[i].to.Timings
             });
+        }
+        else{
+            val.sat=[];
+        }
         }
        // this.slotsArr = [];
        // this.slotsArr = itemArr;
@@ -615,9 +771,9 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     this._snackBar.open('Slot added successfully ..!!', 'ok', {
                         "duration": 2000
                     });
-                    val.Name = 'MONDAY';
-                    val.Value = 1;
-                    this.day(val)
+                    // val.Name = 'MONDAY';
+                    // val.Value = 1;
+                    // this.day(val)
                 }
                 else {
                     this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
@@ -632,6 +788,64 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
 
     rowData(val) {
         debugger;
+        this.slotsForm = this._formBuilder.group({
+            //items: this._formBuilder.array([this.createItem()], [Validators.required]),
+            sun: this._formBuilder.array([]),
+            mon: this._formBuilder.array([]),
+            tue: this._formBuilder.array([]),
+            wed: this._formBuilder.array([]),
+            thu: this._formBuilder.array([]),
+            fri: this._formBuilder.array([]),
+            sat: this._formBuilder.array([]),
+        });
+     
+        this.slotsForm.reset({
+            sun: [],
+            mon: [],
+            tue: [],
+            wed: [],
+            thu: [],
+            fri: [],
+            sat: []
+          });
+        //   this.mon.setValue(null);
+        //   this.tue.setValue(null);
+        //   this.wed.setValue(null);
+        //   this.thu.setValue(null);
+        //   this.fri.setValue(null);
+        //   this.sat.setValue(null);
+        //   this.sun.setValue(null);
+       
+        this.sun = this.slotsForm.get('sun') as FormArray;
+        this.sun=this._formBuilder.array([]),
+        
+            this.mon = this.slotsForm.get('mon') as FormArray;
+            this.mon=this._formBuilder.array([]),
+       
+            this.tue = this.slotsForm.get('tue') as FormArray;
+            this.tue=this._formBuilder.array([]),
+        
+
+            this.wed = this.slotsForm.get('wed') as FormArray;
+            this.wed=this._formBuilder.array([]),
+        
+            this.thu = this.slotsForm.get('thu') as FormArray;
+            this.thu=this._formBuilder.array([]),
+        
+            this.fri = this.slotsForm.get('fri') as FormArray;
+            this.fri=this._formBuilder.array([]),
+        
+            this.sat = this.slotsForm.get('sat') as FormArray;
+            this.sat=this._formBuilder.array([]),
+        
+        // var days=""
+        // var today = (new Date()).getDay();
+        // if(today==1){
+        //     days="MONDAY"
+        // }
+        // if(today==1){
+        //     days="MONDAY"
+        // }
         this.doctorID = val.registrationID;
         this.slotsArrForChips = []
         this.slotsArrForChipsList = []
@@ -688,7 +902,6 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.thu= this.slotsForm.get('thu') as FormArray;
         this.fri = this.slotsForm.get('fri') as FormArray;
         this.sat = this.slotsForm.get('sat') as FormArray;
-
         const sunArr = <FormArray>this.slotsForm.controls.sun;
         const monArr = <FormArray>this.slotsForm.controls.mon;
         const tueArr = <FormArray>this.slotsForm.controls.tue;
@@ -723,6 +936,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 //     from: [st, Validators.required],
                 //     to: [to, Validators.required],
                 // }));
+          
                  this.mon.push(this._formBuilder.group({
                     from: [st, Validators.required],
                     to: [to, Validators.required],

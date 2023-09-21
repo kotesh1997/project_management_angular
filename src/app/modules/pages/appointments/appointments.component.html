@@ -1,3 +1,4 @@
+
 <div *ngIf="(Screen==1)" class="flex flex-col flex-auto min-w-0">
 
     <!-- <p-autoComplete [showEmptyMessage]="true" [suggestions]="filteredAppointments" (completeMethod)="filterAppointemnts($event)" field="mobile" [minLength]="1"></p-autoComplete> -->
@@ -19,7 +20,11 @@
                         <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
                       </select>
                     </mat-form-field> -->
-
+                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
+                            placeholder="Search Profile">
+                    </mat-form-field>
                     <mat-form-field class="col-span-2 flex flex-col" appearance="outline" *ngFor="let filter of filterSelectObj"
                         style="padding-left:0;">
                         <mat-label>Filter {{filter.name}}</mat-label>
@@ -33,6 +38,7 @@
 
                             </mat-select>
                     </mat-form-field>
+                  
                     <!-- <div class="col-span-2 items-center flex flex-col" style="
                     position: relative;
                     /* lp: '24%'; */
@@ -40,13 +46,27 @@
                     top: 30%;
                 "> <button mat-raised-button  color="warn" (click)="resetFilters()">Reset</button></div> -->
                   <!-- *ngIf="roleID == 1 || roleID == 3" -->
-                  <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                  <button class=" " style="margin-top: -1px;" 
+                 
+                      >
+                  
+                   <span (click)="resetFilters()">
+
+                     <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
+                      height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
+<span  (click)="resetFilters()" >
+<img width="48"  height="48"  style="max-width: 24%;display: inline;cursor: pointer;
+height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="synchronize--v1"/></span>
+                  </button> 
+                
+                <!-- <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                   style="position: relative;top: 22%;right: -30%; width: 175px;"
                       (click)="resetFilters()">
-                      
-                      <span class="ml-2">Reset</span>
-                  </button>
-             
+                      <i class="fas-regular fas-eraser"></i>
+                      <img width="16" height="16" src="https://img.icons8.com/officel/16/erase.png" alt="erase"/>
+                  </button>  -->
+                                   <!-- <span class="ml-2">Clear</span> -->
+
                         <button *ngIf="roleID !='2' "  class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                         style="position: relative;top: 24%;right: -10%;width: 175px;;"
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
@@ -58,290 +78,337 @@
 
            
             </div>
-            <table mat-table [dataSource]="todayBookings" matSort (matSortChange)="sortData($event)">
-                <ng-container matColumnDef="SL">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="patientARCID">
-                        <div class="row">
-                            <div class="col-lg-12">ID</div>
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{ element.patientARCID }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Patient">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Patient Details
+            
+<table class='table1' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
 
-                    </th>
-
-                    <td mat-cell *matCellDef="let element">
-                        <span><b>{{ element.patient | titlecase}}</b></span>
-                        ({{ element.gender | slice:0:1}}, {{ element.age }}y)
-                        <br />
-                        <!-- <mat-icon style="font-size: 20px ;"> call</mat-icon> -->
-                        {{ element.mobile }}
-                     
-                    </td>
-                </ng-container>
+    <ng-container matColumnDef="SL">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="patientARCID">
+            <div class="row">
+                <div class="col-lg-12">ID</div>
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            {{ element.patientARCID }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="Patient">
+        <th mat-header-cell *matHeaderCellDef>
+            Patient Details
+    
+        </th>
+    
+        <td mat-cell *matCellDef="let element">
+            <span><b>{{ element.patient | titlecase}}</b></span>
+            ({{ element.gender | slice:0:1}}, {{ element.age }}y)
+            <br />
+            <!-- <mat-icon style="font-size: 20px ;"> call</mat-icon> -->
+            {{ element.mobile }}
+         
+        </td>
+    </ng-container>
+    
+    
+    
+    
+    <ng-container matColumnDef="LastVisit">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Last Visit</div>
+    
+            </div>
+        </th>
+    
+        <td mat-cell *matCellDef="let element">
+            <span>{{ element.lastVisitDate | date }} {{ element.lastVisitDate | date:'HH:mm'  }}</span>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="Service">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Service Name</div>
+    
+            </div>
+        </th>
+    
+        <td mat-cell *matCellDef="let element">
+            <span>{{ element.serviceName }}</span>
+        </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Doctor">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Doctor</div>
+    
+            </div>
+        </th>
+    
+        <td mat-cell *matCellDef="let element">
+            <span>{{ element.doctor }}</span>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="Time">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Time</div>
+    
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+    
+            <span>{{ element.slotTime }}</span>
+        </td>
+    </ng-container>
+    
+    
+    <ng-container matColumnDef="WaitingTime">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Waiting Time</div>
+    
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.waitingTime !=0.00">
+                <b> {{ element.waitingTime  }} </b>
+                <!-- <b> {{ element.waitingTime | slice:0:4 }} </b> -->
+            </span>
+            <span *ngIf="element.waitingTime ==0">
+                -
+            </span>
+    
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="status">
+            <div class="row">
+                <div class="col-lg-12">Status</div>
+    
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.status =='Booked'" style="color: #146aa6;">
+                <b> {{ element.status }}</b>
+            </span>
+            <span *ngIf="element.status =='Completed'" style="color: green">
+                <b> {{ element.status }}</b>
+            </span>
+            <span *ngIf="element.status =='Arrived'" style="color: #ff4081">
+                <b> {{ element.status }}</b>
+            </span>
+    
+    
+    
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="VisitCount">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Visit Count#</div>
+    
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <span>
+                {{ element.visitCount }}
+            </span>
+    
+    
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="ReceiptToken">
+        <th mat-header-cell *matHeaderCellDef>
+            <div class="row">
+                <div class="col-lg-12">Token</div>
+    
+            </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <span>
+                {{ element.receiptToken }}
+            </span>
+    
+    
+        </td>
+    </ng-container>
+    
+    
+    <ng-container matColumnDef="Billing">
+        <th mat-header-cell *matHeaderCellDef>
+            Billing
+        </th>
+    
+        <td mat-cell *matCellDef="let element">
+            {{ element.payment }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="DuePayment">
+        <th mat-header-cell *matHeaderCellDef>
+            Due Payment
+        </th>
+    
+        <td mat-cell *matCellDef="let element" style="cursor: pointer;">
+    
+            <div *ngIf="(element.modeofPaymentID != 5) && (element.duePayment == null || element.duePayment == '0.00')">
               
+            <div style="color: green;">Paid</div>
+        </div>
+            <span *ngIf="(roleID=='1' ||roleID=='3')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
+                style="color: #ff4081;" (click)="appointmentDrawer.toggle();updateSelect(element)">
+                <mat-icon style="color: #ff4081;">payment</mat-icon>
+                Pay
+            </span>
+            <span *ngIf="(roleID=='5')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
+                style="color: #ff4081;">
+                <mat-icon style="color: #ff4081;">payment</mat-icon>
+                Pay
+            </span>
+            <span *ngIf="(roleID=='2')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
+            style="color: #ff4081;">
+            <mat-icon style="color: #ff4081;">payment</mat-icon>                            
+        </span>
+    
+            <span *ngIf="element.duePayment != null && element.duePayment != '0.00'"
+                style="color: #ff4081;"
+                (click)="appointmentDrawer.toggle();updateSelectDuePay(element)">
+                <mat-icon style="color: #ff4081;">payment</mat-icon>
+                <span> {{ element.duePayment }}</span>
+    
+            </span>
+    
+        </td>
+    </ng-container>
+    
+    
+    
+    <!-- *ngIf="roleID=='2'; else templateA" -->
+    
+    <ng-container matColumnDef="Actions"  >
+        <th   mat-header-cell *matHeaderCellDef>
+            Action
+        </th>
+    
+        <td  mat-cell *matCellDef="let element">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button> -->
+            
+            <mat-menu #menu="matMenu">
+              
+                <button mat-menu-item  *ngIf="roleID=='5' || roleID=='1'" (click)="onView(element)">
+                    <div >
+                    <mat-icon svgIcon="heroicons_solid:eye"></mat-icon>
+                    <span>View</span></div>
+                </button> 
+                <button   mat-menu-item (click)="appointmentDrawer.toggle();updateSelect(element)">
+                    <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
+                    <span>Edit</span>
+                </button>
+    
+                <button *ngIf=" roleID=='1'" mat-menu-item (click)="deleteAppointment(element)">
+                    <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </td>
+    </ng-container>
 
-                
-
-                <ng-container matColumnDef="Service">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Service Name</div>
-
-                        </div>
-                    </th>
-
-                    <td mat-cell *matCellDef="let element">
-                        <span>{{ element.serviceName }}</span>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Doctor">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Doctor</div>
-
-                        </div>
-                    </th>
-
-                    <td mat-cell *matCellDef="let element">
-                        <span>{{ element.doctor }}</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Time">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Time</div>
-
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-
-                        <span>{{ element.slotTime }}</span>
-                    </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="WaitingTime">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Waiting Time</div>
-
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.waitingTime !=0">
-                            <b> {{ element.waitingTime }} </b>
-                        </span>
-                        <span *ngIf="element.waitingTime ==0">
-                            -
-                        </span>
-
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header="status">
-                        <div class="row">
-                            <div class="col-lg-12">Status</div>
-
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.status =='Booked'" style="color: #4f46e5;">
-                            <b> {{ element.status }}</b>
-                        </span>
-                        <span *ngIf="element.status =='Completed'" style="color: green">
-                            <b> {{ element.status }}</b>
-                        </span>
-                        <span *ngIf="element.status =='Arrived'" style="color: #ff4081">
-                            <b> {{ element.status }}</b>
-                        </span>
-
-
-
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="VisitCount">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Visit Count#</div>
-
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span>
-                            {{ element.visitCount }}
-                        </span>
-
-
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="ReceiptToken">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <div class="row">
-                            <div class="col-lg-12">Token</div>
-
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span>
-                            {{ element.receiptToken }}
-                        </span>
-
-
-                    </td>
-                </ng-container>
-
-               
-                <ng-container matColumnDef="Billing">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Billing
-                    </th>
-
-                    <td mat-cell *matCellDef="let element">
-                        {{ element.payment }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="DuePayment">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Due Payment
-                    </th>
-
-                    <td mat-cell *matCellDef="let element" style="cursor: pointer;">
-
-                        <div *ngIf="(element.modeofPaymentID != 5) && (element.duePayment == null || element.duePayment == '0.00')">
-                          
-                        <div style="color: green;">Paid</div>
-                    </div>
-                        <span *ngIf="(roleID=='1' ||roleID=='3')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
-                            style="color: #ff4081;" (click)="appointmentDrawer.toggle();updateSelect(element)">
-                            <mat-icon style="color: #ff4081;">payment</mat-icon>
-                            Pay
-                        </span>
-                        <span *ngIf="(roleID=='5')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
-                            style="color: #ff4081;">
-                            <mat-icon style="color: #ff4081;">payment</mat-icon>
-                            Pay
-                        </span>
-                        <span *ngIf="(roleID=='2')  && element.modeofPaymentID == 5 && element.duePayment == '0.00'"
-                        style="color: #ff4081;">
-                        <mat-icon style="color: #ff4081;">payment</mat-icon>                            
-                    </span>
-
-                        <span *ngIf="element.duePayment != null && element.duePayment != '0.00'"
-                            style="color: #ff4081;"
-                            (click)="appointmentDrawer.toggle();updateSelectDuePay(element)">
-                            <mat-icon style="color: #ff4081;">payment</mat-icon>
-                            <span> {{ element.duePayment }}</span>
-
-                        </span>
-
-                    </td>
-                </ng-container>
-
-
-
-                <!-- *ngIf="roleID=='2'; else templateA" -->
-                <ng-container matColumnDef="Actions">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Actions
-                    </th>
-
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button [matMenuTriggerFor]="menu"
-                            aria-label="Example icon-button with a menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                          
-                            <button mat-menu-item  *ngIf="roleID=='5' || roleID=='1'" (click)="onView(element)">
-                                <div >
-                                <mat-icon svgIcon="heroicons_solid:eye"></mat-icon>
-                                <span>View</span></div>
-                            </button> 
-                            <button mat-menu-item (click)="appointmentDrawer.toggle();updateSelect(element)">
-                                <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
-                                <span>Edit</span>
-                            </button>
-
-                            <button mat-menu-item (click)="deleteAppointment(element)">
-                                <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
-                                <span>Delete</span>
-                            </button>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-                <!-- <ng-template #templateA>
-                    …
-                  </ng-template> -->
-
-                <ng-container matColumnDef="Vitals">
-                    <th mat-header-cell *matHeaderCellDef>
-
-                    </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-button *ngIf="roleID=='5' && row.vitalsID"
-                            (click)="vitalsDrawer.toggle();$event.stopPropagation()">
-                            <div *ngIf="row.vitalsID" style="color: green" (click)="setValues(row)">Update Vitals
-                            </div>
-                        </button>
-
-                        <button mat-button
-                            *ngIf="roleID=='5' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID"
-                            (click)="vitalsDrawer.toggle();$event.stopPropagation()">
-
-                            <div style="color: #ff4081"
-                                *ngIf="(row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID"
-                                (click)="rowData(row)">
-                                Add Vitals
-                            </div>
-                            <!-- <div *ngIf="!row.vitalsID" style="color: #ff4081" (click)="rowData(row)"> Add Vitals
-                        </div> -->
-                        </button>
-                        <button mat-button
-                            *ngIf="roleID=='2' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00')">
-                            <div style="color: cornflowerblue"
-                                *ngIf="row.doctorCompleted == null || row.doctorCompleted == 0"
-                                (click)="onRowClicked(row)">Start</div>
-                            <div *ngIf="row.doctorCompleted == 1" (click)="onRowClicked(row)">
-                                <mat-icon style="color: green"> check_circle</mat-icon>
-                            </div>
-                            <!-- <div style="color: cornflowerblue"
-                            *ngIf="row.doctorCompleted == 1"
-                            (click)="onRowClicked(row)">Print Prescreption</div> -->
-                        </button>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="View">
-                    <th mat-header-cell *matHeaderCellDef>
-
-                    </th>
-                    <td mat-cell *matCellDef="let row">
-
-                        <button mat-button *ngIf="roleID=='5' || roleID=='1'">
-                            <div style="color: cornflowerblue" (click)="onRowClicked(row)">Visits</div>
-
-                        </button>
-                        <button mat-button *ngIf="roleID=='2'">
-                            <div style="color: cornflowerblue" *ngIf="row.doctorCompleted == 1"
-                                (click)="onRowPrintPresecptionClicked(row)">Print </div>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+    <ng-container matColumnDef="History">
+        <th mat-header-cell *matHeaderCellDef>
+            History
+        </th>
+    
+        <td class="hovers" mat-cell *matCellDef="let element">
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button> -->
+            <button mat-button>
+                <div style="color: #146aa6" (click)="onRowClicked(element)"><mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View History'" svgIcon="heroicons_solid:eye" #file
+                    style="color:#146aa6">
+               </mat-icon></div><!--view-->
+            </button>
+          
+        </td>
+    </ng-container>
+    <!-- <ng-template #templateA>
+        …
+      </ng-template> -->
+    
+    <ng-container matColumnDef="Vitals">
+        <th mat-header-cell *matHeaderCellDef>
+    
+        </th>
+        <td mat-cell *matCellDef="let row">
+           
+            <button mat-button *ngIf="roleID=='5' && row.vitalsID"
+                (click)="vitalsDrawer.toggle();$event.stopPropagation()">
+                <div *ngIf="row.vitalsID" style="color: green" (click)="setValues(row)">Update Vitals
+                </div>
+            </button>
+    
+            <button mat-button
+                *ngIf="roleID=='5' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID"
+                (click)="vitalsDrawer.toggle();$event.stopPropagation()">
+    
+                <div style="color: #ff4081"
+                    *ngIf="(row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID"
+                    (click)="rowData(row)">
+                    Add Vitals
+                </div>
+                <!-- <div *ngIf="!row.vitalsID" style="color: #ff4081" (click)="rowData(row)"> Add Vitals
+            </div> -->
+            </button>
+            <!-- <button mat-button>
+                <div style="color: cornflowerblue"
+                    (click)="onRowClicked(row)">Start</div>
+                <div *ngIf="row.doctorCompleted == 1" (click)="onRowClicked(row)">
+                    <mat-icon style="color: green"> check_circle</mat-icon>
+                </div>
+             
+            </button> -->
+            <button mat-button
+                *ngIf="roleID=='2' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00')">
+                <div style="color: cornflowerblue"
+                    *ngIf="row.doctorCompleted == null || row.doctorCompleted == 0"
+                    (click)="onRowClicked(row)">Start</div>
+                <div *ngIf="row.doctorCompleted == 1" (click)="onRowClicked(row)">
+                    <mat-icon style="color: green"> check_circle</mat-icon>
+                </div>
+             
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="View">
+        <th mat-header-cell *matHeaderCellDef>
+    
+        </th>
+        <td mat-cell *matCellDef="let row">
+    
+            <button mat-button *ngIf="roleID=='5' || roleID=='1'">
+                <div style="color: cornflowerblue" (click)="onRowClicked(row)">Visits</div>
+    
+            </button>
+            <button mat-button *ngIf="roleID=='2'">
+                <div style="color: cornflowerblue" *ngIf="row.doctorCompleted == 1"
+                    (click)="onRowPrintPresecptionClicked(row)">Print </div>
+            </button>
+        </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    
+    
+        
+            
             <mat-paginator #Paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons>
             </mat-paginator>
         </mat-tab>
         <mat-tab label="Upcoming Bookings">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-6">
                     <mat-form-field class="search">
                         <mat-icon matPrefix>perm_identity</mat-icon>
@@ -350,17 +417,12 @@
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
-                    <!-- <button mat-flat-button  color="warn" (click)="resetFilters()" style="position:relative;left: -220px;top: 25;">Reset</button>
-                    <button class="fuse-mat-button-rounded" mat-flat-button [color]="'primary'"
-                        (click)="appointmentDrawer.toggle();actionFormName('New Appointment')" style="left: -120px;top:7px;position: relative;">
-                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                        <span class="ml-2" >New Appointment</span>
-                    </button> -->
+                  
                     <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                     style="position: relative;top: 8px;right: 9%; width: 170px;"
-                        (click)="resetFilters()">
+                        (click)="resetFilters1()">
                         
-                        <span class="ml-2">Reset</span>
+                        <span class="ml-2">Clear</span>
                     </button>
                           <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                           style="position: relative;top:-28px;right: -230px;width: 180px;"
@@ -369,8 +431,75 @@
                               <span class="ml-2">New Appointment</span>
                           </button>
                 </div>
-            </div>
-            <div class="example-container mat-elevation-z8">
+            </div> -->
+
+            <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+
+            
+                <mat-form-field class="col-span-2 search1" appearance="outline">
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
+                    placeholder="Search Profile">
+                </mat-form-field>
+              
+              <button class=" " style="margin-top: -1px;" 
+             
+                  >
+              
+               <span (click)="resetFilters1()">
+
+                 <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
+                  height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
+
+              </button> 
+            
+            
+
+                    <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                    style="position: relative;top: 24%;right: -10%;width: 175px;;"
+                        (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                        <span class="ml-2">New Appointment</span>
+                    </button>
+                    
+               
+            
+
+       
+        </div>
+            <!-- <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+
+              
+                <mat-form-field class=" col-span-2 search">
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
+                        placeholder="Search Profile">
+                </mat-form-field>
+              
+              <button class=" "  *ngIf="roleID == 1 || roleID == 3" style="margin-top: -1px;" 
+             
+                  >
+              
+               <span (click)="resetFilters1()">
+
+                 <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
+                  height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
+
+              </button> 
+            
+
+              <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+              style="position: relative;top:-28px;right: -230px;width: 180px;"
+                  (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
+                  <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                  <span class="ml-2">New Appointment</span>
+              </button>
+               
+            
+
+       
+        </div> -->
+            <div class="table1 example-container mat-elevation-z8">
                 <table mat-table [dataSource]="upcomingBookings" matSort>
                     <!-- Position Column -->
 
@@ -512,10 +641,7 @@
                                     <mat-icon svgIcon="heroicons_solid:pencil-eye"></mat-icon>
                                     <span>View</span></div>
                                 </button>
-                                <button mat-menu-item (click)="
-                                updateSelect(element);
-                                appointmentDrawer.toggle()
-                            ">
+                                <button mat-menu-item (click)="updateSelect(element);appointmentDrawer.toggle() ">
                                     <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
                                     <span>Edit</span>
                                 </button>
@@ -565,7 +691,7 @@
                     </button>
                 </div> -->
             </div>
-            <div class="example-container mat-elevation-z8">
+            <div class="table1 example-container mat-elevation-z8">
                 <table mat-table [dataSource]="patientsappointments" matSort>
                     <!-- Position Column -->
 
@@ -677,10 +803,11 @@
                         </th>
                         <td mat-cell *matCellDef="let row">
                             <button mat-button>
-                                <div style="color: cornflowerblue" (click)="onRowClicked(row)"><mat-icon svgIcon="heroicons_solid:eye" #file
-                                    style="color:blue;">
+                                <div style="color: #146aa6" (click)="onRowClicked(row)"><mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View'" svgIcon="heroicons_solid:eye" #file
+                                    style="color:#146aa6">
                                </mat-icon></div><!--view-->
                             </button>
+                          
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory; sticky: true"></tr>
@@ -723,9 +850,9 @@
 
                 <form class="p-4 bg-card rounded overflow-hidden" [formGroup]="horizontalStepperForm">
                     <mat-horizontal-stepper [linear]="false" #horizontalStepper>
-                        <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')"
+                        <mat-step class="bgcol" [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')"
                             #horizontalStepperStep1>
-                            <ng-template matStepLabel>Appointment Details</ng-template>
+                            <ng-template  matStepLabel>Appointment Details</ng-template>
                             <div class="row">
                                 <!-- <mat-form-field floatLabel="never" class="col-lg-12"
                                     *ngIf="actionName=='New Appointment'">
@@ -747,8 +874,8 @@
                                 <mat-form-field floatLabel="never" class="col-lg-12"
                                 *ngIf="actionName=='New Appointment'">
 
-                                <input type="text" [(ngModel)]="searchKey3" placeholder="Search Patient Profile"
-                                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                <input type="text"  [(ngModel)]="searchKey3" placeholder="Search Patient Profile"
+                                    aria-label="Number" (keyup)="applysearch()"   matInput [formControl]="myControl" [matAutocomplete]="auto">
                                 <mat-icon matPrefix>perm_identity</mat-icon>
                                 <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey3"
                                     (click)="onSearchClear()">
@@ -801,7 +928,8 @@
                             <div class="row">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Full Name</mat-label>
-                                    <input matInput [formControlName]="'firstName'" required [readonly]="isDuePay" [(ngModel)]="fName"/>
+                                    <input matInput [formControlName]="'firstName'" 
+                                    pattern="[a-zA-Z][a-zA-Z ]+" required [readonly]="isDuePay" [(ngModel)]="fName"/>
                                 </mat-form-field>
 
                                 <!-- <mat-form-field class="col-lg-4" appearance="outline">
@@ -811,7 +939,7 @@
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Mobile Number </mat-label>
                                     <!-- (keyup)="searchPatient($event.target.value)" -->
-                                    <input matInput [formControlName]="'mobNum'" pattern="[0-9]{10}" [(ngModel)]="mobNum" required [readonly]="isDuePay"  />
+                                    <input matInput [formControlName]="'mobNum'" pattern="[0-9]{10}"  [(ngModel)]="mobNum" required [readonly]="isDuePay"  />
                                     
                                  
                                 </mat-form-field>
@@ -821,7 +949,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="row">
-                                <mat-radio-group class="col-lg-4" [color]="'primary'" [formControlName]="'gender'"
+                                <mat-radio-group class="col-lg-4" [color]="'primary'" [formControlName]="'gender'" [(ngModel)]="Genderselected"
                                     required [disabled]="isDuePay">
                                     <mat-radio-button *ngFor="let item of genders" style="font-size: 11px"
                                         [value]="item.genderID">
@@ -843,21 +971,34 @@
                             </div>
 
                             <div class="flex justify-end" *ngIf="action != 'Update Existing Appointment'">
-                                <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="isNoSlot ||
+                                <!-- <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="isNoSlot ||
                                         (horizontalStepperStep1.stepControl
                                             .pristine ||
                                         horizontalStepperStep1.stepControl
                                             .invalid)
                                     " type="button" matStepperNext>
                                     Next
-                                </button>
+                                </button> -->
+                                <button  type="button"    [ngClass]="(horizontalStepperStep1.stepControl
+                                .invalid) ? 'btnnext' : 'btnnext1'"  [disabled]="isNoSlot ||
+                                (horizontalStepperStep1.stepControl
+                                    .pristine ||
+                                horizontalStepperStep1.stepControl
+                                    .invalid)" matStepperNext  >
+                                   Next
+                                   </button>
+                                   
                             </div>
                             <div class="flex justify-end" *ngIf="action == 'Update Existing Appointment'">
-                                <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="nextDisabled                                         
+                                <!-- <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="nextDisabled                                         
                                     " type="button" matStepperNext>
                                     Next
-                                </button>
+                                </button> -->
+                                <!-- <button  type="button" class=" btnadd1"  [disabled]="nextDisabled "  >
+                                   Next
+                                   </button> -->
                             </div>
+                          
                         </mat-step>
 
 
@@ -869,7 +1010,7 @@
                             <div class="row">
                                 <mat-form-field class="col-lg-12" appearance="outline">
                                     <mat-label>Select Service</mat-label>
-                                    <mat-select [formControlName]="'serviceName'" required [disabled]="isDuePay">
+                                    <mat-select (selectionChange)="EnableModeprice()"[formControlName]="'serviceName'" required [disabled]="isDuePay">
                                         <mat-option *ngFor="let item of services" [value]="item.serviceID">
                                             {{ item.serviceName }}
                                         </mat-option>
@@ -915,7 +1056,7 @@
 
                                 <mat-form-field class="col-lg-3" appearance="outline" *ngIf="roleID==1">
                                     <mat-label>Amount Paid</mat-label>
-                                    <input matInput [formControlName]="'amountPaid'" required [readonly]="isDuePay" />
+                                    <input matInput [formControlName]="'amountPaid'" [disabled]="amounttopaid" required [readonly]="amounttopaid" (selectionChange)="applyNetPrice1($event)"/>
                                 </mat-form-field>
                             </div>
 
@@ -939,15 +1080,23 @@
                                     matStepperPrevious>
                                     Back
                                 </button>
-                                <button class="px-8" mat-flat-button [color]="'primary'"
+                                <!-- <button class="px-8" mat-flat-button [color]="'primary'"
                                     (click)="addRegisterPatientAppointment(horizontalStepperForm.value);appointmentDrawer.close();ConfirmDialog.toggle()"
                                     [disabled]="
 
                                         horizontalStepperStep2.stepControl
                                             .invalid
                                     " type="button" matStepperNext>
-                                    <!-- Submit -->{{appointmentButton}}
-                                </button>
+                                    {{appointmentButton}}
+                                </button> -->
+                                <button  type="button"   
+                                (click)="addRegisterPatientAppointment(horizontalStepperForm.value);appointmentDrawer.close();ConfirmDialog.toggle()"
+                                 [ngClass]="(horizontalStepperStep2.stepControl
+                                .invalid) ? 'btnnext' : 'btnnext1'"  [disabled]="
+                                horizontalStepperStep2.stepControl
+                                    .invalid" matStepperNext  >
+                                    {{appointmentButton}}
+                                   </button>
                             </div>
                             <div class="flex justify-end" *ngIf="!isPriceTag">
                                 <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
@@ -1026,7 +1175,7 @@
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text_box">
                                                             <mat-form-field appearance="outline" >
                                                                 <mat-label>Weight in KG</mat-label>
-                                                                <input matInput [formControlName]="'weight'" />
+                                                                <input style="color: black;" matInput [formControlName]="'weight'" />
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text_box">
@@ -1037,7 +1186,7 @@
                                                             <mat-form-field class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                                             appearance="outline">
                                                             <mat-label>Blood Group</mat-label>
-                                                            <mat-select [formControlName]="'bloodGroup'">
+                                                            <mat-select style="color: black;" [formControlName]="'bloodGroup'">
                                                                 <mat-option *ngFor="let item of BloodGroup"
                                                                     [value]="item.ID">
                                                                     {{ item.ID }}
@@ -1048,7 +1197,7 @@
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Temperature in F</mat-label>
-                                                                <input matInput [formControlName]="'temp'" />
+                                                                <input style="color: black;" matInput [formControlName]="'temp'" />
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -1056,20 +1205,20 @@
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Serum Creatinine</mat-label>
-                                                                <input matInput [formControlName]="'serumCreatinine'" />
+                                                                <input style="color: black;" matInput [formControlName]="'serumCreatinine'" />
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Blood Pressure</mat-label>
-                                                                <input matInput [formControlName]="'bloodPressure'" />
+                                                                <input style="color: black;" matInput [formControlName]="'bloodPressure'" />
                                                            
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Pulse</mat-label>
-                                                                <input matInput [formControlName]="'pulse'" />
+                                                                <input style="color: black;" matInput [formControlName]="'pulse'" />
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -1078,19 +1227,19 @@
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>SpO2 %</mat-label>
-                                                                <input matInput [formControlName]="'SpO2'" />
+                                                                <input style="color: black;" matInput [formControlName]="'SpO2'" />
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>BMI</mat-label>
-                                                                <input matInput [formControlName]="'BMI'" />
+                                                                <input style="color: black;" matInput [formControlName]="'BMI'" />
                                                             </mat-form-field>
                                                         </div>
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Advice</mat-label>
-                                                                <input matInput [formControlName]="'advice'" />
+                                                                <input style="color: black;"matInput [formControlName]="'advice'" />
                                                             </mat-form-field>
                                                         </div>
     
@@ -1146,7 +1295,7 @@
                                                                         <mat-icon>cancel</mat-icon>
                                                                     </button>
                                                                 </mat-chip>
-                                                                <input #fruitInput [formControl]="fruitCtrl"
+                                                                <input style="color: black;" #fruitInput [formControl]="fruitCtrl"
                                                                     [matAutocomplete]="auto"
                                                                     [matChipInputFor]="chipList"
                                                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -1218,6 +1367,7 @@
                                                                 </p>
                                                             </div>-->
                                                     </div>
+                                                 
                                                     <!--<div class="row">
                                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                 <label for="colFormLabelSm0"
@@ -1290,7 +1440,7 @@
                                                                     </mat-form-field> -->
                                                                     <mat-form-field appearance="outline">
                                                                        
-                                                                        <input matInput [formControlName]="'docType'" />
+                                                                        <input style="color: black;" matInput [formControlName]="'docType'" />
                                                                     </mat-form-field>
                                                                 </div>
 
@@ -1298,7 +1448,7 @@
                                                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                     <div class="header-icon" (click)="file.click()"
                                                                         style=" margin-left: -19px; width: 100%; ">
-                                                                        <button type="button" class="btn btn-primary"
+                                                                        <button type="button" class="btn btn-primary" 
                                                                             style="width: 100%; height: 57px !important; border-radius:5px;">
 
                                                                             <span style="font-size:20px;">📎</span> File
@@ -1319,7 +1469,7 @@
 
                                                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                                                     <div>
-                                                                        <input autocomplete="off"
+                                                                        <input style="color: black;" autocomplete="off"
                                                                             class="form-control py-2 border-right-0 border"
                                                                             formControlName="fileName" readonly
                                                                             style="height: 57px !important;">
@@ -1343,6 +1493,7 @@
                                                             </div>
                                                             <br />
                                                         </ng-container>
+                                                      
                                                     </div>
 
 
@@ -1577,7 +1728,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="scheduler-border" [formGroup]="vitalsForm">
-                                                <div class="row">
+                                                <div class="row"*ngIf="roleID !='2' ">
                                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                         <label for="colFormLabelSm0" class="col-form-label ">Document
                                                             Name</label>
@@ -1599,12 +1750,26 @@
 
 
                                                 </div>
+                                                <div class="row"*ngIf="roleID =='2' ">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                        <label for="colFormLabelSm0" class="col-form-label ">Document
+                                                            Name</label>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                        <label for="colFormLabelSm1" class="col-form-label ">
+                                                             File Name
+                                                        </label>
+                                                    </div>
+                                                  
+
+
+                                                </div>
 
 
 
                                                 <div formArrayName="items"
                                                     *ngFor="let item of vitalsForm.get('items')['controls']; let i = index;">
-                                                    <ng-container [formGroupName]="i">
+                                                    <ng-container [formGroupName]="i"*ngIf="roleID !='2' ">
                                                         <div class="row">
                                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                 <!-- <mat-form-field appearance="outline">
@@ -1666,8 +1831,55 @@
                                                                 <button type="button">
 
                                                                     <mat-icon svgIcon="heroicons_solid:eye" #file
-                                                                        (click)="Viewfile($event,item)" style="color:blue;">
+                                                                        (click)="Viewfile($event,item)" style="color:#146aa6">
                                                                     </mat-icon>
+                                                                </button>
+                           
+                                                            </div>
+                                                            <div id="pdfContainer"></div>
+                                                            <!-- <div id="viewer">
+                                                            </div> -->
+                                                            <!-- <iframe [src]="url" width="100%" height="300">
+
+                                                            </iframe> -->
+
+
+                                             <!-- <iframe src="https://research.google.com/pubs/archive/44678.pdf" width="100%" height="300"></iframe> -->
+<!-- 
+                                                            <pdf-viewer
+                                                            
+                                                            src="https://research.google.com/pubs/archive/44678.pdf"
+                                                            [render-text]="true"
+                                                            [original-size]="false"
+                                                            style="width: 800px; height: 600px;display:block"
+                                                            ></pdf-viewer> -->
+                                                        </div>
+                                                        <br />
+                                                    </ng-container>
+                                                    <ng-container [formGroupName]="i"*ngIf="roleID =='2' ">
+                                                        <div class="row">
+                                                        
+
+
+                                                    
+                                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                               
+                                                                <mat-form-field appearance="outline">
+                                                                    <input [ disabled matInput [formControlName]="'docType'" />
+                                                                </mat-form-field>
+                                                            </div>
+
+
+
+
+                                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12"
+                                                                style="padding-top: 16px; ">
+
+                                                              
+
+                                                                <button type="button" #file (click)="Viewfile($event,item)" style="color:#146aa6">
+                                                                                View File
+                                                                   
                                                                 </button>
                            
                                                             </div>
@@ -1710,28 +1922,46 @@
                                                 <th>When</th>
                                                 <th>Frequency</th>
                                                 <th>Duration</th>
-                                                <th>Notes</th>
+                                                <!-- <th>Notes</th> -->
                                                 <th></th>
                                             </tr>
+                                          
                                             <tr formArrayName="medicationitems"
                                                 *ngFor="let item of vitalsForm.get('medicationitems')['controls']; let j = index;">
                                                 <ng-container [formGroupName]="j">
+                                                  
                                                     <td  >
                                                          <mat-form-field appearance="outline">
                                                             <mat-label>medicine</mat-label>
 
-                                                            <mat-select [formControlName]="'medicine'" [dataSource]="patientsappointment">
+                                                            <mat-select (selectionChange)="selectmed()" [formControlName]="'medicine'" [dataSource]="patientsappointment">
                                                                 <mat-form-field *ngIf="formfields" class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
                                                                     <mat-icon   class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                                                    <input [formControlName]="'medicine1'"  matInput [(ngModel)]="searchKey" placeholder="Search a Patient  Appointment Date"
-                                                                    autocomplete="off" (keyup)="applyFilters()"  />  </mat-form-field>
+
+                                                                    <input [formControlName]="'medicine1'"  matInput #event placeholder="Search a Medicine"
+                                                                    autocomplete="off" (keyup)="applyFilters($event)"  />  </mat-form-field>
+
                                                                 <mat-option *ngFor="let item of medicinePrescepList" class="medication" 
-                                                                    [value]="item.medicineName" >
+                                                                    [value]="item.medicineName"  >
                                                                     <h4 mat-line> {{ item.medicineName }}</h4>
                                                                     <p mat-line>Composition - {{ item.composition }}</p>                                                                  
                                                                    
                                                                 </mat-option>
                                                             </mat-select>
+                                                            <!-- <mat-select (selectionChange)="selectmed()" [formControlName]="'medicine'" [dataSource]="patientsappointment">
+                                                                <mat-form-field *ngIf="formfields" class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-60 ml-3">
+                                                                    <mat-icon   class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+
+                                                                    <input [formControlName]="'medicine1'"  matInput [(ngModel)]="searchKey" placeholder="Search a Medicine"
+                                                                    autocomplete="off" (keyup)="applyFilters()"  />  </mat-form-field>
+
+                                                                <mat-option *ngFor="let item of medicinePrescepList" class="medication" 
+                                                                    [value]="item.medicineName" (change)="selectmed()" >
+                                                                    <h4 mat-line> {{ item.medicineName }}</h4>
+                                                                    <p mat-line>Composition - {{ item.composition }}</p>                                                                  
+                                                                   
+                                                                </mat-option>
+                                                            </mat-select> -->
                                                         </mat-form-field> 
 
                                                         <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -1743,7 +1973,7 @@
                                                         </div> -->
 
                                                     </td>
-                                                   
+                                                  
 
                                                     <td>
                                                         <mat-form-field appearance="outline">
@@ -1789,13 +2019,15 @@
                                                             </mat-select>
                                                         </mat-form-field>
                                                     </td>
-                                                    <td>
+                                                   
+                                                    <!-- <td>
 
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Notes</mat-label>
-                                                            <input matInput [formControlName]="'notes'" />
+                                                            <textarea matInput [formControlName]="'notes'" ></textarea>
                                                         </mat-form-field>
-                                                    </td>
+                                                    </td> -->
+                                                   
                                                 <!---  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                         <mat-form-field appearance="outline">
                                                             <mat-label>Advice</mat-label>
@@ -1819,7 +2051,7 @@
                                                     <br />
                                                 </ng-container>
                                             </tr>
-
+                                     
 
                                         </table>
                                      
@@ -1931,6 +2163,13 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <p class="date_1"> {{item.serviceDate | date : 'd MMMM'}}</p>
+                                                               
+                                                                <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-start"  mat-flat-button [color]="'primary'"
+                                                              style="    margin-top: 10px;
+                                                              margin-left: 92px;"
+                                                                    (click)="onRowClicked1(item)">
+                                                                    <span class="ml-2">Receipt</span>
+                                                                </button>
 
                             </div>
 
@@ -1988,7 +2227,7 @@
                                                     <span class="service" style="padding-left:50;left: 30px;margin-left: 20px;">Lab Report : </span><!--<span><input type="file" style="position: relative;bottom: 28px;left: 130px;"></span>-->
                                                     <span class="service_d" *ngFor="let value12 of item.documents"   >
                                                     <ul>
-                                                        <li >{{ value12.docTypeNAme}}<mat-icon svgIcon="heroicons_solid:download" (click)="DownloadDocument(value12.docTypeNAme)" #file
+                                                        <li >{{ value12.docTypeNAme}}<mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'download'" svgIcon="heroicons_solid:download" (click)="DownloadDocument(value12.docTypeNAme)" #file
                                                             style="color:blue;width:80px;position:relative;top:5px;">
                                                        </mat-icon></li> 
                                                         <!-- <li (click)="DownloadDocument(val)">{{val}}</li>  -->
@@ -2290,8 +2529,10 @@
                                             <th style="width: 20%;">Duration</th>
                                            
                                         </tr>
-                                       
-                                        <tr *ngFor="let medList of vitalsForm.value.medicationitems" class="td_table2">
+                                       <ng-container *ngFor="let medList of vitalsForm.value.medicationitems">
+
+                                      
+                                        <tr   class="td_table2">
                                             <td style="width: 20%;"><span class="service">{{medList.medicine}}</span><br />  
                                                 <span class="serviceFont" *ngFor="let item of medicinePrescepList">
                                                     <div *ngIf="item.medicineName == medList.medicine">    
@@ -2300,25 +2541,35 @@
                                                 </span>
                                                <!-- <span class="service"> Composition - {{medList.medicine}}    </span>                                          -->
                                             </td>
-                                            <td style="width: 20%;text-align: center;">{{medList.dose}}</td>
-                                            <td style="width: 20%; text-align: center;">{{medList.when}}</td>
-                                            <td style="width: 20%;text-align: center;">{{medList.frequencyListMedication}}</td>
-                                            <td style="width: 20%;text-align: center;">{{medList.duration}}</td>
+                                            <td style="width: 20%;">{{medList.dose}}</td>
+                                            <td style="width: 20%; ">{{medList.when}}</td>
+                                            <td style="width: 20%;">{{medList.frequencyListMedication}}</td>
+                                            <td style="width: 20%;">{{medList.duration}}</td>
+                                           
+                                          
                                          <!---   <td>{{medList.notes}}</td>-->
                                         </tr>
+                                       <!-- <tr>
+                                        <td  >
+                                        <b >Notes:</b>
+                                    </td>
+                                        <td colspan="4" style="text-align: start;" >
+                                        {{medList.notes}}
+                                    </td>
+                                       </tr> -->
+                                       
+                                    </ng-container>
                                     </table>
 
                                 </td>
                             </tr>
                         </table>
                           <table class="Payment_method_bgmcolr">
-                            <tr>
+                            <!-- <tr>
                                 <td class="Payment_row">
                                     <table id="">
                                             <p><b>Notes</b></p>
-                                        <!-- <tr *ngFor="let medList of vitalsForm.value.medicationitems " class="td_table2"  class="table table-borderless">
-                                            <td>{{medList.notes}}</td>
-                                        </tr> -->
+                                     
                                         <tr *ngFor="let medList of vitalsForm.value.medicationitems let i = index;"  >
                                           
                                             <td align="left">
@@ -2329,7 +2580,7 @@
                                     </table>
 
                                 </td>
-                            </tr> 
+                            </tr>  -->
                             <tr>
                                 <td class="Payment_row">
                                     <table id="Advise"  >

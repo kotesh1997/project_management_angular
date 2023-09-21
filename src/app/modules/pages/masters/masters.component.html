@@ -5,14 +5,25 @@
         <mat-tab label="Doctor">
             <div class="flex items-right mt-12 sm:mt-0 sm:ml-2 space-x-3">
 
-                <button class="fuse-mat-button-rounded mb-2 " mat-flat-button [color]="'primary'"
-                    (click)="drawer.toggle();openAddForm()">
+                <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+
+                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
+                            placeholder="Search Profile">
+                    </mat-form-field>
+                   
+                    <button class="fuse-mat-button-rounded  " mat-flat-button [color]="'primary'"
+                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 24%;right: -10%;width: 175px;;">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Doctor</span>
                 </button>
             </div>
+
+             
+            </div>
             <div class="example-container mat-elevation-z8">
-                <table mat-table [dataSource]="regDetails">
+                <table class="table1" mat-table [dataSource]="regDetails">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
                             Name
@@ -90,12 +101,22 @@
                         <th mat-header-cell *matHeaderCellDef>
                         </th>
                         <td mat-cell *matCellDef="let row">
+                            <div (click)="rowData(row)">
+                            <!-- <button class="fuse-mat-button-rounded mb-2" (click)="scheduleDrawer.toggle();$event.stopPropagation()"(click)="rowData(row)" mat-flat-button [color]="'primary'">
+                                <mat-icon  class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                                <span class="ml-2">Add Slots</span>
+                            </button> -->
+                            <button  type="button" class="btn  btnadd1" (click)="scheduleDrawer.toggle();$event.stopPropagation()"(click)="rowData(row)"  style="font-weight: 500;  border-radius: 50px;width: auto;">
+                             <span style="font-size: 18px;
+                             font-weight: 600;">+</span> &nbsp; Add Slots
+                            </button>
+                        </div>
                             <!-- <button mat-button style="color: #ff4081"
                                 (click)="scheduleDrawer.toggle();$event.stopPropagation()"></button> -->
-                                <div (click)="rowData(row)"><mat-icon svgIcon="heroicons_solid:plus"  (click)="scheduleDrawer.toggle();$event.stopPropagation()"
+                                <!-- <div (click)="rowData(row)"><mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'Add'" svgIcon="heroicons_solid:plus"  (click)="scheduleDrawer.toggle();$event.stopPropagation()"
                                     style="color:#ff7b00;width: 80px;">
 
-                               </mat-icon></div>
+                               </mat-icon></div> -->
                             
                         </td>
                     </ng-container>
@@ -121,10 +142,22 @@
 
             <div class="flex items-center mt-12 sm:mt-0 sm:ml-2 space-x-3">
 
-                <button class="fuse-mat-button-rounded mb-2" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                    <span class="ml-2">New Asst Doctor</span>
-                </button>
+
+
+                <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+
+                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter2(searchKey1,1)"
+                            placeholder="Search Profile">
+                    </mat-form-field>
+                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 24%;right: -10%;width: 175px;;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                        <span class="ml-2">New Asst Doctor</span>
+                    </button>
+                   
+            </div>
+               
             </div>
                 <div class="example-container mat-elevation-z8">
                     <table mat-table [dataSource]="regDetailsJrList">
@@ -220,11 +253,21 @@
         </mat-tab>
         <mat-tab label="Front Desk">
             <div class="flex items-center mt-12 sm:mt-0 sm:ml-2 space-x-3">
+                <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
-                <button class="fuse-mat-button-rounded mb-2" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                    <span class="ml-2">New Front Desk</span>
-                </button>
+                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter3(searchKey2,1)"
+                            placeholder="Search Profile">
+                    </mat-form-field>
+                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 24%;right: -10%;width: 175px;;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                        <span class="ml-2">New Front Desk</span>
+                    </button>
+               
+                   
+            </div>
+              
             </div>
             <div class="example-container mat-elevation-z8">
                 <table mat-table [dataSource]="regDetailsFrontList">
@@ -319,11 +362,21 @@
         </mat-tab>
         <mat-tab label="Lab Assistant">
             <div class="flex items-center mt-12 sm:mt-0 sm:ml-2 space-x-3">
+                <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
-                <button class="fuse-mat-button-rounded mb-2" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                    <span class="ml-2">Lab Assistant</span>
-                </button>
+                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey3" (keyup)="doFilter4(searchKey3,1)"
+                            placeholder="Search Profile">
+                    </mat-form-field>
+                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 24%;right: -10%;width: 175px;;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                        <span class="ml-2">Lab Assistant</span>
+                    </button>
+                  
+               
+            </div>
+              
             </div>
             <div class="example-container mat-elevation-z8">
                 <table mat-table [dataSource]=" regDetailsLabList">
@@ -438,11 +491,11 @@
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
                                 <mat-label>Name</mat-label>
-                                <input matInput [formControlName]="'name'" required />
+                                <input matInput [formControlName]="'name'" required pattern="[a-zA-Z][a-zA-Z ]+" />
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" >
                                 <mat-label>Mobile</mat-label>
                                 <input matInput [formControlName]="'mobile'" required />
                             </mat-form-field>
@@ -458,13 +511,13 @@
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
                                 <mat-label>Password</mat-label>
-                                <input matInput [formControlName]="'password'" required />
+                                <input type="password" matInput [formControlName]="'password'" required />
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
                                 <mat-label>Confirm Password</mat-label>
-                                <input matInput [formControlName]="'confirmPassword'" required />
+                                <input type="password" matInput [formControlName]="'confirmPassword'" required />
                             </mat-form-field>
                         </div>
                         <mat-radio-group class="col-lg-4" [color]="'primary'" [formControlName]="'gender'" required>
@@ -555,11 +608,25 @@
                         </mat-form-field>
                     </div>
                 </fieldset>
-                <div class="flex justify-end">
-                    <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+                <div *ngIf="submitbtn" class="flex justify-end">
+                    <!-- <button class="px-8" mat-flat-button [color]="'primary'" (click)="
                                         addUpdateRegDetails(form.value);drawer.close();" [disabled]="form.invalid"
                         type="button">
                         Submit
+                    </button> -->
+                    <button  type="button"    style="cursor: pointer;"
+                    [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"  (click)="
+                   addUpdateRegDetails(form.value);drawer.close();" [disabled]="form.invalid"   >
+                   Submit
+                      </button>
+
+                    
+                </div>
+                <div *ngIf="Updatebtn" class="flex justify-end">
+                    <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+                                        addUpdateRegDetails(form.value);drawer.close();" [disabled]="form.invalid"
+                        type="button">
+                        Update
                     </button>
                 </div>
             </div>
@@ -586,8 +653,11 @@
                         <li *ngFor="let item of daysArr" (click)="day(item)">
                             <div class="weekDays-selector">
                                 <input type="radio" id="{{item.id}}" class="weekday" />
-                                <label [ngClass]="{'active': item.Name === dayName}"
-                                       for="{{item.id}}">{{item.Name}}</label>
+                                <!-- <span [ngClass]="item.Name === dayName ? 'day1' :'active1'">  <label  [ngClass]="{'active': item.Name === dayName}" 
+                                    for="{{item.id}}">{{item.Name}}</label></span> -->
+                                    <label  [ngClass]="{'active': item.Name === dayName}" 
+                                    for="{{item.id}}">{{item.Name}}</label>
+                               
                             </div>
                         </li>
                     </ul>
@@ -601,11 +671,11 @@
             </div>
         </div> -->
                     <br />
-                    <h2 class="day" *ngIf="slotsArrForChips.length>0">Available Slots for {{dayName}}</h2>
-                    <h2 class="day" *ngIf="slotsArrForChips.length==0">No Slots Available for {{dayName}}</h2>
+                    <!-- <h2 class="day" *ngIf="slotsArrForChips.length>0">Available Slots for {{dayName}}</h2>
+                    <h2  class="day" *ngIf="slotsArrForChips.length==0">No Slots Available for {{dayName}}</h2> -->
                     <span *ngFor="let item of slotsArrForChips">
 
-                        <span class="chip" *ngIf="dayID==item.day">
+                        <span class=" bgcol chip" *ngIf="dayID==item.day">
 
 
                             {{item.start}} - {{item.ending}}
@@ -631,17 +701,40 @@
                            
 
 
-                                <button type="button" class="btn btn-primary btn-sm mr-1" (click)="addItem()" style="font-weight: 600; margin-top: 6px; margin-left: 2px; border-radius: 50px;">
+                                <button  type="button" class="btn btn-primary btn-sm mr-1" (click)="addItem()" style="font-weight: 600; margin-top: 6px; margin-left: 2px; border-radius: 50px;width: auto;">
                                     + Add Slots
                                 </button>
                             
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="flex justify-end">
-            <button class="px-8" mat-flat-button [color]="'primary'" (click)="addSlots(slotsForm.value);"
-                    [disabled]="slotsForm.invalid || submitButton " type="button">
-                                    Submit
-                                </button>
+           
+                               
+                                  
+                                    <!-- <button  class="px-8" mat-raised-button [color]="'primary'" (click)="addSlots(slotsForm.value);" 
+                                    [ngClass]="(slotsForm.invalid || submitButton) ? 'mat-flat-button' : 'mat-raised-button'" type="button">
+                                                    Submit
+                                                </button> -->
+                                    <!-- <button  class="px-8" mat-raised-button [color]="'primary'" (click)="drawer.close();addSlots(slotsForm.value);"
+                                    [disabled]="slotsForm.invalid || submitButton " type="button">
+                                                    Submit
+                                                </button> -->
+                                                <button  type="button"    style="cursor: pointer;"
+                                                [ngClass]="(slotsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
+                                                addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid  || submitButton "  >
+                                               Submit
+                                                  </button>
+                                                <!-- <button class="px-8"  style="cursor: pointer;"mat-flat-button  [color]="'primary'" [ngClass]="(slotsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
+                                                addSlots(slotsForm.value);scheduleDrawer.close();" 
+                                type="button">
+                                Submit
+                            </button> -->
+                                                <!-- <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+                                                addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid || submitButton "
+                                type="button">
+                                Submit
+                            </button> -->
+                               
                             </div>
                         </div>
                     </div>
@@ -668,7 +761,7 @@
                                     </mat-form-field>
                                     <mat-form-field class="col-lg-5 col-md-6 col-sm-12 col-xs-12" appearance="outline">
                                         <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'">
+                                        <mat-select (selectionChange)="chnaged()" [formControlName]="'to'">
                                             <mat-option *ngFor="let item of timings" [value]="item">
                                                 {{ item.Timings }}
                                             </mat-option>
@@ -684,7 +777,7 @@
 
 
                                 </div>
-                                <br />
+                            
                             </ng-container>
                         </div>
                     </div>
@@ -718,7 +811,7 @@
 
 
                                 </div>
-                                <br />
+                            
                             </ng-container>
                         </div>
                     </div>
@@ -752,7 +845,7 @@
 
 
                                 </div>
-                                <br />
+                              
                             </ng-container>
                         </div>
                     </div>
@@ -786,7 +879,7 @@
 
 
                                 </div>
-                                <br />
+                                
                             </ng-container>
                         </div>
                     </div>
@@ -820,7 +913,7 @@
 
 
                                 </div>
-                                <br />
+                           
                             </ng-container>
                         </div>
                     </div>
@@ -854,15 +947,15 @@
 
 
                                 </div>
-                                <br />
+                              
                             </ng-container>
                         </div>
                     </div>
                     <div *ngIf="dayName=='SATURDAY'">
-                        <div formArrayName="sat" *ngFor="let item of slotsForm.get('sat')['controls']; let i = index;">
+                        <div    style="margin-bottom: -40px;"  formArrayName="sat" *ngFor="let item of slotsForm.get('sat')['controls']; let i = index;">
                             <ng-container [formGroupName]="i">
                                 <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12" appearance="outline">
+                                  <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12" appearance="outline">
                                         <mat-label>Select from timing</mat-label>
                                         <mat-select [formControlName]="'from'">
                                             <mat-option *ngFor="let item of timings" [value]="item">
@@ -870,14 +963,14 @@
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12" appearance="outline">
+                                      <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12" appearance="outline">
                                         <mat-label>Select to timing</mat-label>
                                         <mat-select [formControlName]="'to'">
                                             <mat-option *ngFor="let item of timings" [value]="item">
                                                 {{ item.Timings }}
                                             </mat-option>
                                         </mat-select>
-                                    </mat-form-field>
+                                    </mat-form-field> 
 
                                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 16px;">
                                         <button type="button">
@@ -888,7 +981,7 @@
 
 
                                 </div>
-                                <br />
+                            
                             </ng-container>
                         </div>
                     </div>

@@ -122,6 +122,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 filename:any=[];
 
     patientsappointments: any = [];
+    todaysbooked: any = [];
     filterPatientappointments: any = [];
     searchKey1: string;
     searchKey2: string;
@@ -204,6 +205,10 @@ filename:any=[];
     isLoading: boolean;
     pdfData: string;
     filename1: string;
+    medicinePrescepList1: any=[];
+    Genderselected: any;
+    filedisble: boolean;
+    amounttopaid: boolean;
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -233,11 +238,11 @@ filename:any=[];
             //   columnProp: 'patientARCID',
             //   options: []
             // }, 
-            {
-                name: 'Patient NAME',
-                columnProp: 'patient',
-                options: []
-            },
+            // {
+            //     name: 'Patient NAME',
+            //     columnProp: 'patient',
+            //     options: []
+            // },
             //{
             //   name: 'USERNAME',
             //   columnProp: 'username',
@@ -291,6 +296,7 @@ filename:any=[];
         'SL',
         'Patient',
         'Service',
+        'LastVisit',
         'Doctor',
         'Time',
         'WaitingTime',
@@ -300,7 +306,8 @@ filename:any=[];
         'Billing',
         'Actions',
         'Vitals',
-        'View'
+        'View',
+        'History'
     ];
     displayedColumnsHistory: string[] = [
         'SL',
@@ -373,9 +380,18 @@ filename:any=[];
             () => { }
         );
     }
-    applyFilters() { 
-      
-        this.medicinePrescepList = this.search(this.searchKey);
+    selectmed(){
+        debugger
+        this.medicinePrescepList=this.searchmedicine;
+        // this.searchKey=""
+        // this.applyFilters("")
+    }
+    applyFilters(event:any) { 
+        debugger
+        event.target.value;
+       var data = this.search(event.target.value);
+        this.medicinePrescepList=data
+        // this.medicinePrescepList = this.search(this.searchKey);
         }
         
         
@@ -420,7 +436,7 @@ else{
     // }
    // sorted : []
     ngOnInit(): void {
-
+        this.filedisble=true;
        
         // const viewer = new GcPdfViewer("#viewer", {
         //     workerSrc: "//node_modules/@grapecity/gcpdfviewer/gcpdfviewer.worker.js",
@@ -476,7 +492,7 @@ debugger;
                     skipPayment: [''],
                     netPrice: [''],
                     duePayment: [''],
-                    modeOfPayment: ['']
+                    modeOfPayment: ['',Validators.required]
 
                 }),
             });
@@ -503,7 +519,7 @@ debugger;
                     skipPayment: [''],
                     netPrice: [''],
                     duePayment: [''],
-                    modeOfPayment: ['']
+                    modeOfPayment: ['',Validators.required]
 
                 }),
             });
@@ -531,15 +547,15 @@ debugger;
 
         if (this.roleID == '1') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
-                 'Actions', 'View'
+                'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+                 'Actions', 'View','History'
             ];
         }
         else if (this.roleID == '2') {
             this.displayedColumns = [
                 'SL', 'Patient', 
-                'Service','Doctor', 'Time', 'WaitingTime', 'Status', 'VisitCount',
-                 'Vitals', 'View'
+                'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
+                 'Vitals', 'View','History'
             ];
             this.displayedColumnsUpcoming = [
                 'SL',
@@ -555,14 +571,14 @@ debugger;
         }
         else if (this.roleID == '3') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service', 'Time', 'WaitingTime', 'Status', 'VisitCount',
-                 'Actions',
+                'SL', 'Patient', 'Service', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
+                 'History'
             ];
         }
         else if (this.roleID == '5') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service', 'Time', 'WaitingTime', 'Status', 'VisitCount',
-                 'Vitals', 'View'
+                'SL', 'Patient', 'Service','LastVisit', 'Time', 'WaitingTime', 'Status', 'VisitCount',
+                 'Vitals', 'View','History'
             ];
         }
 
@@ -593,10 +609,17 @@ debugger;
        // localStorage.removeItem('loginDetails');
     }
     filterChange(filter, event) {
-        //let filterValues = {}
-        // this.filterValues[filter.columnProp] = event.target.value.trim().toLowerCase()
-        this.filterValues[filter.columnProp] = event.value.toLowerCase()
-        this.todayBookings.filter = JSON.stringify(this.filterValues)
+       
+        var sd=event.value.trim().toLocaleLowerCase()
+        
+        this.todayBookings.filter = event.value.trim().toLocaleLowerCase()
+        this.todaysbooked.filter = event.value.trim().toLocaleLowerCase()
+        this.upcomingBookings.filter =  '';
+        this.patientsappointments.filter = '';
+        this.searchKey1 = '';
+        this.searchKey2 = '';
+        // this.filterValues[filter.columnProp] = event.value.toLowerCase()
+        // this.todayBookings.filter = JSON.stringify(this.filterValues)
     }
 
 
@@ -740,6 +763,50 @@ debugger;
         }
     }
 
+
+    onRowClicked1(row){
+    debugger
+
+    this.todayDataSourcePrintBookings=[];
+        this.date = new Date();
+        this.date.setHours(0, 0, 0, 0);
+        let todayDate1 = this.datepipe.transform(this.date, 'dd MMM yyyy');
+
+        this.todayDataSourcePrintBookings.push(row);
+        this.todayDataSourcePrintBookings.forEach(function(e){
+            if (typeof e === "object" ){
+              e["patient"] = row.patientName
+            }
+          });
+        //this.todayDataSourcePrintBookings[0].patient=row.patientName
+        
+        this.receiptToken= this.todayDataSourcePrintBookings[0].receiptToken;
+        // this.todayDataSourcePrintBookings[0].modeofPaymentID=row.modeofPaymentID
+        // this.todayDataSourcePrintBookings[0].serviceName=row.serviceName
+        // this.todayDataSourcePrintBookings[0].receiptToken=row.receiptToken
+        // this.todayDataSourcePrintBookings[0].appointmentDate=row.appointmentdate
+        // this.todayDataSourcePrintBookings[0].patient=row.patientName
+        // this.todayDataSourcePrintBookings[0].payment=row.payment
+      debugger
+      this.openCompanyDetailsDialog();
+       // this.todayDataSourcePrintBookings = this.patientHistory.filter((a) => a.receiptToken == row.receiptToken && a.serviceDate == row.appointmentdate);
+        // if(this.todayDataSourcePrintBookings.length>0)
+        // {
+        // if (this.todayDataSourcePrintBookings[0].modeofPaymentID != 5 && (this.todayDataSourcePrintBookings[0].duePayment == null ||
+        //     this.todayDataSourcePrintBookings[0].duePayment == '0.00')) {
+
+        //     this.openCompanyDetailsDialog();
+        //  }
+        // }
+    
+    }
+
+    // this.todayBookings.filterPredicate = this.createFilter();
+
+    // this.filterSelectObj.filter((o) => {
+    //     o.options = this.getFilterObject(this.todayDataSourceBookings, o.columnProp);
+    // });
+    //}
     onRowPrintPresecptionClicked(row) {
         
         if (row.vitalsID) {
@@ -847,7 +914,16 @@ gethistory1(){
                        // this.patientsappointments = data;
                         //Today Bookings
                         this.todayDataSourceBookings = data.filter((a) => a.serviceDate == todayDate);
-                        
+                        for(var i=0;i<this.todayDataSourceBookings.length;i++){
+                            if(this.todayDataSourceBookings[i].waitingTime>0){
+                                const t12: any=  this.todayDataSourceBookings[i].waitingTime.split('.');
+                                this.todayDataSourceBookings[i].waitingTime= t12[0]+":"+t12[1]
+                            }
+                         
+                        }
+
+
+                       
 
                         this.selection = new Set < this.todayDataSourceBookings > (true);
                         //Future Bookings
@@ -875,6 +951,11 @@ gethistory1(){
                 this.todayDataSourceBookings.sort((a, b) => (a.status < b.status ? -1 : 1));
                 this.todayBookings = new MatTableDataSource(this.todayDataSourceBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
+                this.todaysbooked = new MatTableDataSource(this.todayDataSourceBookings);
+
+                this.todaysbooked.paginator = this.paginator;
+    
+                
                // this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
 
@@ -916,13 +997,29 @@ gethistory1(){
 
     // Reset table filters
     resetFilters() {
+        debugger
         this.filterValues = {}
         this.filterSelectObj.forEach((value, key) => {
             value.modelValue = undefined;
         })
-        this.todayBookings.filter = "";
-    }
+        this.todaysbooked.filter = "";
+        this.searchKey='';
 
+        this.todaysbooked.filter = this.searchKey.trim().toLocaleLowerCase()
+
+    }
+    resetFilters1() {
+        debugger
+        this.filterValues = {}
+        this.filterSelectObj.forEach((value, key) => {
+            value.modelValue = undefined;
+        })
+        this.upcomingBookings.filter = "";
+        this.searchKey1='';
+
+        this.upcomingBookings.filter = this.searchKey1.trim().toLocaleLowerCase()
+
+    }
 
     sortData(sort: MatSort) {
         
@@ -1116,14 +1213,65 @@ debugger
                     
         this.step2.controls['price'].setValue(2);
     }
+    applyNetPrice1(val) {
+
+        debugger
+        const modeOfPaymentControl = this.horizontalStepperForm
+        .get('step2')
+        .get('modeOfPayment');
+        if (val.value<=0) {
+            // Remove the Validators.required validator
+          
+            modeOfPaymentControl.clearValidators();
+            modeOfPaymentControl.updateValueAndValidity(); 
+          } else {
+            // Add the Validators.required validator back
+            modeOfPaymentControl.setValidators([Validators.required]);
+            modeOfPaymentControl.updateValueAndValidity(); 
+
+          }
+        }
+
+
+        EnableModeprice(){
+            this.ModePrice=false
+        }
     applyNetPrice(val) {
+
+        debugger
+        const Amounttopay = this.horizontalStepperForm
+        .get('step2')
+        .get('amountPaid');
+        const modeOfPaymentControl = this.horizontalStepperForm
+        .get('step2')
+        .get('modeOfPayment');
+        if (val.value==6) {
+            // Remove the Validators.required validator
+          
+            modeOfPaymentControl.clearValidators();
+            modeOfPaymentControl.updateValueAndValidity(); 
+          } else {
+            // Add the Validators.required validator back
+            modeOfPaymentControl.setValidators([Validators.required]);
+            modeOfPaymentControl.updateValueAndValidity(); 
+
+          }
+
 
 if(val.value==6){
 debugger
+this.amounttopaid=true;
+Amounttopay.clearValidators();
+Amounttopay.updateValueAndValidity(); 
 this.ModePrice=true
 }
 else{
     this.ModePrice=false  
+    this.amounttopaid=false;
+
+    this.amounttopaid=true;
+Amounttopay.setValidators([Validators.required]);
+Amounttopay.updateValueAndValidity(); 
 }
         
         if (this.roleID == '1') {
@@ -1165,10 +1313,13 @@ else{
     fName:any;
     age:any;
     applyFilter(val) {
+        debugger
         console.log(val);
         this.fName = val.value.patientName;
         this.mobNum = val.value.mobile;
         this.age = val.value.age;
+        this.patientID=val.value.patientID;
+        this.Genderselected=val.value.genderID
         val = val.trim(); // Remove whitespace
         val = val.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = val;
@@ -1201,6 +1352,7 @@ else{
             );
     }
     public doFilter = (value, state) => {
+        debugger
         if (state == 1) {
             this.todayBookings.filter = value.trim().toLocaleLowerCase();
             this.upcomingBookings.filter = '';
@@ -1220,6 +1372,18 @@ else{
             this.searchKey1 = '';
             this.searchKey = '';
         }
+    };
+    public doFilter1 = (value, state) => {
+        debugger
+        var sd=value.trim().toLocaleLowerCase()
+        
+            this.todayBookings.filter = value.trim().toLocaleLowerCase()
+            this.todaysbooked.filter = value.trim().toLocaleLowerCase()
+            this.upcomingBookings.filter =  '';
+            this.patientsappointments.filter = '';
+            this.searchKey1 = '';
+            this.searchKey2 = '';
+      
     };
     addUpdateAppointments(val) {
         ;
@@ -1370,7 +1534,9 @@ else{
     }
 
     addRegisterPatientAppointment(val) {
-        
+        debugger
+
+
         this.appt.AppointmentID = Number(this.appointID);
         this.appt.registrationID = Number(val.step1.docName);  //
         this.appt.PatientID = Number(this.patientID);  //
@@ -1394,7 +1560,19 @@ else{
                 this.appt.DiscountID = Number(val.step2.discount);
                 if (this.appt.DiscountID == 0) {
                     this.appt.DiscountID = 6;
+
                 }
+                if (this.appt.DiscountID == 6) {
+                    
+
+                    if(this.appt.PriceID==2){
+                        val.step2.amountPaid=700
+                    }
+                    if(this.appt.PriceID==7){
+                        val.step2.amountPaid=500
+                    }
+                }
+
                 this.appt.Payment = (val.step2.amountPaid);  //
             }
             else {
@@ -1448,6 +1626,9 @@ else{
         let arr = [];
         arr.push(this.appt);
         this.receiptToken = 0;
+        if(this.appt.modeofPaymentID==null){
+            this.appt.modeofPaymentID=6
+        }
         this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
 
             if (data) {
@@ -2090,7 +2271,7 @@ change(){
        
          this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
          this.medicationitems.push(this.createMedicationItem());
-         this.applyFilters();
+         this.applyFilters("");
          this.change();
         // medicationitems1.push(
         //     this._formBuilder.group({
@@ -2207,7 +2388,7 @@ change(){
     }
 
     getSlotsWithDocID(val) {
-        
+        debugger
         this.selectedDate = this.step1.get('appDate').value
         var d = new Date(this.selectedDate);
         var n = d.getDay();
@@ -2219,7 +2400,7 @@ change(){
         this.utilitiesService.addUpdateVitals(arr, url).subscribe(
             (data) => {
                 if (data) {
-
+debugger
                     this.slotsArr = data;
                     if (this.slotsArr.length == 0) {
                         //this.slotsArr[0].slot="No Slot";
@@ -2284,7 +2465,7 @@ change(){
         this.utilitiesService.addUpdateVitals(arr, url).subscribe(
             (data) => {
                 if (data) {
-
+debugger
                     this.slotsArr = data;
                     if (this.slotsArr.length == 0) {
                         //this.slotsArr[0].slot="No Slot";
@@ -2457,7 +2638,7 @@ change(){
                     // this.detailData.vitalId = this.afterSaveVitalId;
                     // this.onRowClicked(this.detailData)
                     this.fruits = [];
-                    this._snackBar.open('SubmittedSuccessfully...!!', 'ok', {
+                    this._snackBar.open('Submitted Successfully...!!', 'ok', {
                         horizontalPosition: this.horizontalPosition,
                         verticalPosition: this.verticalPosition,
                         "duration": 2000,
@@ -2984,7 +3165,7 @@ let b = a.split("\\");
     appoinmentLink() {
         //this._router.navigate(['/Appointments']);
         this.Screen = 1;
-        this.ngOnInit();
+       // this.ngOnInit();
     }
 
     GetMedicineData() {
@@ -3014,6 +3195,8 @@ let b = a.split("\\");
 
              
               this.searchmedicine= this.medicinePrescepList; 
+              this.medicinePrescepList1= this.medicinePrescepList; 
+
 
             },
 

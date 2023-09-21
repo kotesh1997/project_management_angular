@@ -2,6 +2,44 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+.table1 tr {
+    transition: background 0.2s ease-in  !important;
+}
+
+.table1 tr:nth-child(even) {
+    background: rgb(221, 217, 217) !important;
+}
+
+.table1 tr:hover {
+    background: rgb(179, 240, 182) !important;
+   // cursor: pointer !important;
+}
+
+// table tr {
+//     transition: background 0.2s ease-in  !important;
+// }
+
+// table tr:nth-child(even) {
+//     background: rgb(221, 217, 217) !important;
+// }
+
+// table tr:hover {
+//     background: rgb(179, 240, 182) !important;
+//     cursor: pointer !important;
+// }
+    // table {
+    //   border-collapse: collapse !important;
+    //   width: 100%;
+    // }
+    
+    // th, td {
+    //   padding: 8px;
+    //   text-align: left;
+    //   border-bottom: 1px solid #ddd !important;
+    // }
+    
+    // tr:hover {background-color: coral !important;}
+  
 .mat-simple-snackbar-action {
     flex-shrink: 0;
     margin: -8px -8px -8px 8px;

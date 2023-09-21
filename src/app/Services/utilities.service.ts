@@ -302,19 +302,38 @@ export class UtilitiesService {
 
     addRegisterPatientAppointment(data) {
         debugger;
-        if (data.Action == 'New Appointment') {   //Patient not exisiting condition
+
+        if(data.PatientID>0){
+        if(data.Action != 'Update Existing Appointment'){
+            data.Action='Patient Exists save new appointment'
+            var url = 'PatientsAppointments/AddUpdateAppointment/';
+        }
+        else{
+            var url = 'PatientsAppointments/AddUpdateAppointment/';
+        }
+
+           
+        }           
+
+        else {
             var url = 'Patients/AddRegisterPatientAppointment/';
 
-        }
-        else if (data.Action == 'Update Existing Appointment' || data.Action=='Patient Exists save new appointment') {
-            var url = 'PatientsAppointments/AddUpdateAppointment/';
 
         }
+        // if (data.Action == 'New Appointment' ) {   //Patient not exisiting condition
+        //     //var url = 'PatientsAppointments/AddUpdateAppointment/';
+        //      var url = 'Patients/AddRegisterPatientAppointment/';
+
+        // }
+        // else if (data.Action == 'Update Existing Appointment' || data.Action=='Patient Exists save new appointment') {
+        //     var url = 'PatientsAppointments/AddUpdateAppointment/';
+
+        // }
        
-        else {
-            var url = 'PatientsAppointments/AddUpdateAppointment/';
+        // else {
+        //     var url = 'PatientsAppointments/AddUpdateAppointment/';
 
-        }
+        // }
         return this.http
             .post(this.API_URL + url,data)
             .pipe(
