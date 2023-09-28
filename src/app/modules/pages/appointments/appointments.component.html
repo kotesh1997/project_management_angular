@@ -21,6 +21,7 @@
                       </select>
                     </mat-form-field> -->
                     <mat-form-field class="col-span-2 search1" appearance="outline">
+
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
                             placeholder="Search Profile">
@@ -51,9 +52,8 @@
                       >
                   
                    <span (click)="resetFilters()">
-
-                     <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
-                      height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
+                     <img width="48" height="48"  style="max-width: 33%;display: inline;margin-right: 21px;cursor: pointer;margin-top: -7px;
+                      height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/></span> 
 <span  (click)="resetFilters()" >
 <img width="48"  height="48"  style="max-width: 24%;display: inline;cursor: pointer;
 height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="synchronize--v1"/></span>
@@ -135,7 +135,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
         </td>
     </ng-container>
     
-    <ng-container matColumnDef="Doctor">
+    <ng-container style="margin: auto;" matColumnDef="Doctor">
         <th mat-header-cell *matHeaderCellDef>
             <div class="row">
                 <div class="col-lg-12">Doctor</div>
@@ -147,7 +147,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
             <span>{{ element.doctor }}</span>
         </td>
     </ng-container>
-    <ng-container matColumnDef="Time">
+    <ng-container style="margin: auto;"  matColumnDef="Time">
         <th mat-header-cell *matHeaderCellDef>
             <div class="row">
                 <div class="col-lg-12">Time</div>
@@ -370,7 +370,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
             </button> -->
             <button mat-button
                 *ngIf="roleID=='2' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00')">
-                <div style="color: cornflowerblue"
+                <div style="color: cornflowerblue;cursor: pointer;"
                     *ngIf="row.doctorCompleted == null || row.doctorCompleted == 0"
                     (click)="onRowClicked(row)">Start</div>
                 <div *ngIf="row.doctorCompleted == 1" (click)="onRowClicked(row)">
@@ -408,6 +408,11 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
             </mat-paginator>
         </mat-tab>
         <mat-tab label="Upcoming Bookings">
+            
+
+                  
+               
+        
             <!-- <div class="row">
                 <div class="col-lg-6">
                     <mat-form-field class="search">
@@ -448,8 +453,8 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
               
                <span (click)="resetFilters1()">
 
-                 <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
-                  height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
+                 <img width="48" height="48"  style="max-width: 33%;display: inline;margin-right: 21px;cursor: pointer;margin-top: -7px;
+                  height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/></span> 
 
               </button> 
             
@@ -893,8 +898,8 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                             <div class="row" style="padding-top: 15px;">
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Select Date</mat-label>
-                                    <input matInput [matDatepicker]="picker" [formControlName]="'appDate'" [min]="yesterday"
-                                        [readonly]="isDuePay" required />
+                                    <input matInput [matDatepicker]="picker"  [formControlName]="'appDate'" [min]="yesterday"
+                                        [readonly]="isDuePay" required (dateChange)="onDateChanged($event)"/>
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker ></mat-datepicker>
                                 </mat-form-field>
@@ -1056,7 +1061,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
 
                                 <mat-form-field class="col-lg-3" appearance="outline" *ngIf="roleID==1">
                                     <mat-label>Amount Paid</mat-label>
-                                    <input matInput [formControlName]="'amountPaid'" [disabled]="amounttopaid" required [readonly]="amounttopaid" (selectionChange)="applyNetPrice1($event)"/>
+                                    <input matInput  [formControlName]="'amountPaid'" [disabled]="amounttopaid" required [readonly]="amounttopaid" (selectionChange)="applyNetPrice1($event)"/>
                                 </mat-form-field>
                             </div>
 
@@ -1504,10 +1509,14 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                                     </div>
                                 </div>
                                 <!-- [disabled]="vitalsForm.invalid" -->
-                                <button class="px-8" mat-flat-button [color]="'primary'" (click)="
-                                  addUpdateVitals(vitalsForm.value);vitalsDrawer.close();" type="button">
-                                    Submit
-                                </button>
+                                <div class="flex justify-end">
+                                    <button  type="button"    style="cursor: pointer;"
+                                    [ngClass]="(vitalsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
+                                    addUpdateVitals(vitalsForm.value);vitalsDrawer.close();"[disabled]="vitalsForm.invalid">
+                                      Submit
+                                  </button>
+                                </div>
+                            
                             </div>
                             <div class="tab-pane" id="tab_default_2">
                                 <div>Test</div>
@@ -2061,8 +2070,9 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                                         <table>
                                             <tr>
 
-                                                <td> <button type="button" mat-button matDialogClose
-                                                        (click)="closePresceptionDetailsDialog()">Cancel</button>
+                                                <td>
+                                                     <!-- <button type="button" mat-button matDialogClose
+                                                        (click)="closePresceptionDetailsDialog()">Cancel</button> -->
                                                     <button type="button" mat-raised-button color="accent"
                                                         (click)="ViewPrescption('component2')">View</button>
                                                 </td>
@@ -2145,7 +2155,12 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                                        
                                     </div>
                                     <div class="flex justify-end">
-                                        <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+                                        <!-- <button  type="button"    style="cursor: pointer;"
+                                        [ngClass]="(vitalsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
+                                        addUpdateVitals(vitalsForm.value);"[disabled]="vitalsForm.invalid">
+                                          Submit
+                                      </button> -->
+                                       <button class="px-8" mat-flat-button [color]="'primary'" (click)="
         addUpdateVitals(vitalsForm.value);" type="button">
                                             Submit
                                         </button>
@@ -2449,7 +2464,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
         </fieldset>
     </mat-dialog-content>
     <mat-dialog-actions class="border-top" style="float: right;
-    padding-bottom: 15px;">
+    padding-bottom: 15px;    margin-bottom: 5px;">
         <button type="button" mat-button matDialogClose (click)="closeCompanyDetailsDialog()">Cancel</button>
         <button type="button" mat-raised-button color="accent" (click)="print('component1')">View</button>
     </mat-dialog-actions>
@@ -2645,8 +2660,8 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
         </fieldset>
     </mat-dialog-content>
     <mat-dialog-actions style="float:right;">
-        <button type="button" mat-button matDialogClose (click)="closePrecesptionDialog()">Cancel</button>
-        <button type="button" mat-raised-button color="accent" (click)="printPresecption('component2')">Print</button>
+        <button style="    margin-bottom: 19px;" type="button" mat-button matDialogClose (click)="closePrecesptionDialog()">Cancel</button>
+        <button style="    margin-bottom: 19px;" type="button" mat-raised-button color="accent" (click)="printPresecption('component2')">Print</button>
     </mat-dialog-actions>
     <!-- </form> -->
 </ng-template>

@@ -209,6 +209,9 @@ filename:any=[];
     Genderselected: any;
     filedisble: boolean;
     amounttopaid: boolean;
+    amoutpaids: number;
+    currentTimes: string;
+    doctrids: any;
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -465,6 +468,7 @@ debugger;
         this.getDiscounts();
         this.getAllPatients();
         this.GetMedicineData();
+        
         this.btnText = 'Register';
         this.detailData = [];
         // this.isChecked=false;
@@ -588,7 +592,7 @@ debugger;
         //   );
 
 
-
+        this.amoutpaids=700;
     }
 
     applysearch(){
@@ -710,7 +714,7 @@ debugger;
         this.duration.push({ ID: 2, label: '10 Days' })
         this.duration.push({ ID: 2, label: '1 Week' })
         this.duration.push({ ID: 2, label: '2 Weeks' })
-        this.duration.push({ ID: 2, label: '1 Months' })
+        this.duration.push({ ID: 2, label: '1 Month' })
         this.duration.push({ ID: 2, label: '2 Months' })
         this.duration.push({ ID: 2, label: '3 Months' })
 
@@ -1200,6 +1204,8 @@ debugger
         this.horizontalStepper.selectedIndex = 0;
         this.step1.controls['mobNum'].enable();
         this.step1.controls['appDate'].setValue(new Date());
+         this.step2.controls['amountPaid'].setValue(700);
+
         this.appointmentButton = 'Create Appointment';
         // this.horizontalStepperForm = this._formBuilder.group({
         //     step1: this._formBuilder.group({
@@ -1214,6 +1220,11 @@ debugger
         this.step2.controls['price'].setValue(2);
     }
     applyNetPrice1(val) {
+
+
+
+
+
 
         debugger
         const modeOfPaymentControl = this.horizontalStepperForm
@@ -1247,7 +1258,8 @@ debugger
         .get('modeOfPayment');
         if (val.value==6) {
             // Remove the Validators.required validator
-          
+            this.step2.controls['amountPaid'].setValue(0);
+
             modeOfPaymentControl.clearValidators();
             modeOfPaymentControl.updateValueAndValidity(); 
           } else {
@@ -1260,16 +1272,26 @@ debugger
 
 if(val.value==6){
 debugger
+this.step2.controls['discount'].setValue(6);
+
 this.amounttopaid=true;
 Amounttopay.clearValidators();
 Amounttopay.updateValueAndValidity(); 
 this.ModePrice=true
 }
 else{
+    if(val.value==7){
+        this.step2.controls['amountPaid'].setValue(500);
+
+    }
+    if(val.value==2){
+        this.step2.controls['amountPaid'].setValue(700);
+
+    }
     this.ModePrice=false  
     this.amounttopaid=false;
 
-    this.amounttopaid=true;
+    // this.amounttopaid=true;
 Amounttopay.setValidators([Validators.required]);
 Amounttopay.updateValueAndValidity(); 
 }
@@ -1304,6 +1326,120 @@ Amounttopay.updateValueAndValidity();
             }
 
         }
+
+
+
+
+// 0==6
+// 10==1
+// 20==2
+// 25==3
+// 30==4
+// 40==5
+
+// 500==7
+// 700==2
+// 0==6
+
+    var prices  = this.horizontalStepperForm
+    .get('step2')
+    .get('price').value;
+    var disc  = this.horizontalStepperForm
+    .get('step2')
+    .get('discount').value;
+if(disc==1){
+    var amtpaid=0;
+    if(prices==2){
+
+        amtpaid= (10 / 100) * 700
+        amtpaid=  700- amtpaid ;
+
+            }
+    else if(prices==7){
+
+         amtpaid= (10 / 100) * 500
+         amtpaid=  500- amtpaid ;
+
+            }
+
+            this.step2.controls['amountPaid'].setValue(amtpaid);
+
+}
+if(disc==2){
+    var amtpaid=0;
+    if(prices==2){
+
+         amtpaid= (20 / 100) * 700;
+         amtpaid=  700- amtpaid ;
+            }
+    else if(prices==7){
+
+         amtpaid= (20 / 100) * 500
+         amtpaid=  500- amtpaid ;
+
+        
+            }
+            this.step2.controls['amountPaid'].setValue(amtpaid);
+
+}
+if(disc==3){
+    var amtpaid=0;
+    if(prices==2){
+
+         amtpaid= (25 / 100) * 700
+         amtpaid=  700- amtpaid ;
+
+            }
+    else if(prices==7){
+
+         amtpaid= (25 / 100) * 500
+         amtpaid=  500- amtpaid ;
+
+            }
+            this.step2.controls['amountPaid'].setValue(amtpaid);
+
+}
+if(disc==4){
+    var amtpaid=0;
+    if(prices==2){
+
+         amtpaid= (30 / 100) * 700
+         amtpaid=  700- amtpaid ;
+
+            }
+    else if(prices==7){
+
+         amtpaid= (30 / 100) * 500
+         amtpaid=  500- amtpaid ;
+
+            }
+            this.step2.controls['amountPaid'].setValue(amtpaid);
+
+}
+if(disc==5){
+    var amtpaid=0;
+    if(prices==2){
+
+         amtpaid= (40 / 100) * 700
+         amtpaid=  700- amtpaid ;
+
+            }
+    else if(prices==7){
+
+         amtpaid= (40 / 100) * 500
+         amtpaid=  500- amtpaid ;
+
+            }
+            this.step2.controls['amountPaid'].setValue(amtpaid);
+
+}
+
+   
+
+
+
+
+
 
         // Number(this.horizontalStepperForm.value.step2.price);
     }
@@ -2302,6 +2438,17 @@ change(){
             this.medicationitems.removeAt(idx);
         }
     }
+    closePresceptionDetailsDialog(){
+       for(var i=0;i<=this.medicationitems.length;i++){
+        this.medicationitems.removeAt(i);
+
+       }
+    //    this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
+    //    this.medicationitems.push(this.createMedicationItem());
+
+       // this.medicationitems= this._formBuilder.array([this.createMedicationItem()]);
+       
+    }
     validatepri1(e: any) {
         let input;
         input = String.fromCharCode(e.which);
@@ -2386,12 +2533,27 @@ change(){
             this.isNoSlot = false;
         }
     }
-
+    onDateChanged(event: any) {
+        // Handle the date change event here
+        const selectedDate = event.value; // The selected date
+        console.log('Selected Date:', selectedDate);
+        this.getSlotsWithDocID(this.doctrids)
+        // Add your logic here to respond to the date change
+        // For example, you can update other properties or perform actions.
+      }
     getSlotsWithDocID(val) {
         debugger
+        this.doctrids=val;
         this.selectedDate = this.step1.get('appDate').value
         var d = new Date(this.selectedDate);
         var n = d.getDay();
+       
+        const hours = d.getHours().toString().padStart(2, '0');
+        const minutes = d.getMinutes().toString().padStart(2, '0');
+        const seconds = d.getSeconds().toString().padStart(2, '0');
+    
+        // Create a formatted time string
+        this.currentTimes = `${hours}:${minutes}:${seconds}`;
         let arr = [];
         arr.push({
             DoctorID: val
@@ -2439,6 +2601,58 @@ debugger
                                 }
                             }
                         }
+                       debugger
+
+
+                       
+                        var d2 = new Date(this.selectedDate);
+                        var n1 = d2.getDate();
+                       var n2 = d2.getFullYear();
+                       var n3 = d2.getMonth();
+                        var d1 = new Date();
+                        var n12 = d1.getDate();
+                        var n22 = d1.getFullYear();
+                        var n33 = d1.getMonth();
+                        debugger
+                        if(n1==n12 && n2==n22 && n3==n33){
+
+                            var slotsArr12=[];
+                            slotsArr12=this.slotsArr;
+                            this.slotsArr=[];
+                            for (var j = 0; j < slotsArr12.length;  j++) {
+    
+                                const timeString = slotsArr12[j].slot;
+                                const timeParts = timeString.match(/(\d+):(\d+)([APap][Mm])/); // Use a regular expression to extract time components
+                                
+                                if (timeParts) {
+                                  let hours = parseInt(timeParts[1], 10);
+                                  const minutes = parseInt(timeParts[2], 10);
+                                  const ampm = timeParts[3].toLowerCase();
+                                
+                                  if (ampm === "pm" && hours !== 12) {
+                                    hours += 12; // Convert to 24-hour format if it's PM
+                                  } else if (ampm === "am" && hours === 12) {
+                                    hours = 0; // Midnight (12:00 AM) is 0 in 24-hour format
+                                  }
+                                
+                                  // Create a Date object with the extracted hours and minutes
+                                  const dates3 = new Date();
+                                  dates3.setHours(hours);
+                                  dates3.setMinutes(minutes);
+                                    if(dates3>d1){
+                                this.slotsArr.push(slotsArr12[j])
+                                    }
+    
+                                debugger
+                                  console.log(dates3);
+                                } 
+                                
+                                
+                                
+                            }
+                        }
+
+
 
                     }
                 }
@@ -2948,9 +3162,9 @@ debugger
         var url = 'PatientsAppointments/PatientHistory/';
         
         this.utilitiesService.CRUD(arr, url).subscribe(
-           
+          
             (data) => {
-                
+                debugger
                 if (data) {
 
                     const dateforToday = new Date();
@@ -2988,10 +3202,16 @@ debugger
                     this.complaintsXMLList = data;
                     if (this.complaintsXMLList.length > 0) {
                         for (var i = 0; i < this.complaintsXMLList.length; i++) {
-                            if (s == "")
-                                data[i].complaintName;
-                            else
-                                s = s + ',' + data[i].complaintName;
+                            if (this.complaintsXMLList.length==1)
+                               s= data[i].complaintName;
+                            else if( i==(this.complaintsXMLList.length-1)){
+                                s = s  + data[i].complaintName;
+                            }
+                            else{
+                                s = s  + data[i].complaintName + ',';
+
+                            }
+                               
                         }
                         history.complaintName = s;
                     }
@@ -3163,6 +3383,7 @@ let b = a.split("\\");
                 );
             }
     appoinmentLink() {
+        this.gethistory()
         //this._router.navigate(['/Appointments']);
         this.Screen = 1;
        // this.ngOnInit();

@@ -139,7 +139,7 @@
                     
                 </fieldset>
                 <div class="flex justify-end">
-                    <button class="px-8" mat-flat-button [color]="'primary'" (click)="
+                    <button class="px-8" type="button"    style="cursor: pointer;"   [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"(click)="
                                         addUpdateMedicineDetails(form.value);drawer.close();" [disabled]="form.invalid"
                         type="button">
                         Submit

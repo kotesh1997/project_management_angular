@@ -324,6 +324,8 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.flag = '1';
         this.roleID = '2';
         this.actionName = 'New Doctor';
+        this.submitbtn=true;
+        this.Updatebtn=false;
     }
      
     addUpdateRegDetails(val) {
@@ -973,6 +975,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 }));
             }
         }
+
     }
 }
 
