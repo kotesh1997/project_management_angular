@@ -3,8 +3,8 @@
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
-        <div class="row">
-            <div class="col-lg-2">
+        <div class="flex items-center">
+            <div class="col-lg col-md mr-1 mt-3">
                 <!-- <mat-form-field floatLabel="never" class="search">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
                         autocomplete="off" (keyup)="applyFilter()" />
@@ -14,7 +14,7 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field> -->
-                <mat-form-field class="col-lg-4" class="search">
+                <mat-form-field  style="width: 140px;" class="search">
                     <!-- <mat-label>Select Date</mat-label> -->
                     <input matInput [matDatepicker]="picker1"  placeholder="Select From Date" [(ngModel)]="appFromDate"  (dateChange)="onDateChange($event)"
                          required />
@@ -22,8 +22,8 @@
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
-                <div class="col-lg-2">
-                <mat-form-field class="col-lg-4" class="search">
+                <div class="col-lg col-md mr-1 mt-3">
+                <mat-form-field style="width: 140px;" class="search">
                     <!-- <mat-label>Select Date</mat-label> -->
                     <input matInput [matDatepicker]="picker2" placeholder="Select To Date" [(ngModel)]="appToDate" 
                           />
@@ -32,34 +32,35 @@
                 </mat-form-field>
                 
             </div>
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-1">
+
+            <div class="col-lg col-md mt-1">
                 <button mat-raised-button color="primary" (click)="GetPatientData(appFromDate,appToDate)">
                     Search
                   </button>
                  
                   
             </div>
-            <div class="col-lg-2">
-                <button mat-raised-button color="primary" (click)="ExportTOExcel()" >
-                    Export as Excel
-                  </button>
-                 
-                  
-            </div>
+
            
-            <div class="col-lg-2">
-           
-              <button mat-raised-button color="primary" (click)="exportpdf()" >
-                Export as PDF
-              </button>
-            </div>
-           
-            <div class="col-lg-2">
+            <div class="col-lg-2 mb-2 justify-end" style="margin-left: 726px;" >
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>
-                </div>
+
+                <div class="flex mx-2">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()">
+                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                      </button>
+                    </div>
+                  
+                    <div class="">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()">
+                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  
+             </div>
             <!-- <div class="col-lg-9" style="text-align: end;">
                 <button class="fuse-mat-button-rounded mt-2" mat-flat-button [color]="'primary'"
                 (click)="patientDrawer.toggle()">

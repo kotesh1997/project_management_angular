@@ -412,7 +412,7 @@ body .light .mat-flat-button.mat-warn,
 body .light .mat-raised-button.mat-warn,
 body .light .mat-fab.mat-warn,
 body .light .mat-mini-fab.mat-warn {
-    background-color: #4f46e5;
+    // background-color: #4f46e5;
     height: 0.5rem !important;
     padding: 0;
 }
@@ -457,4 +457,11 @@ body .light .mat-mini-fab.mat-warn {
    // line-height: 1 !important;
  
 }
+
+.circular-button {
+    border-radius: 50%;
+    width: 48px; /* Optional: Adjust the width and height as needed */
+    height: 48px; /* Optional: Adjust the width and height as needed */
+  }
+  
   

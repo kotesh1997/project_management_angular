@@ -23,7 +23,7 @@
              
             </div>
             <div class="example-container mat-elevation-z8">
-                <table class="table1" mat-table [dataSource]="regDetails">
+                <table class="table1" mat-table [dataSource]="regDetails1">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
                             Name
@@ -124,6 +124,9 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 </table>
+
+                <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons>
+                </mat-paginator>
 
             </div>
         </mat-tab>

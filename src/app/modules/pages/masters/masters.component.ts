@@ -35,6 +35,13 @@ import { map, startWith } from 'rxjs/operators';
     providers: [DatePipe],
 })
 export class MastersComponent implements OnInit {
+
+    // @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+//   @ViewChild('paginatorPageSize') paginatorPageSize: MatPaginator;
+//   dataSourceWithPageSize = new MatTableDataSource<any>;
+
     horizontalPosition: MatSnackBarHorizontalPosition = 'start';
     verticalPosition: MatSnackBarVerticalPosition = 'bottom';
     displayedColumns: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
@@ -46,6 +53,9 @@ export class MastersComponent implements OnInit {
     regDetailsJrList: any = [];
     regDetailsFrontList: any = [];
     regDetailsLabList: any = [];
+
+    regDetails1 = new MatTableDataSource(this.regDetailsLabList);
+
     regDetails: any = [];
     totalRegDetails:any=[];
     genders: any = [];
@@ -267,7 +277,8 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 if (data) {                    
                     this.totalRegDetails = data;
                     this.regDetails= this.totalRegDetails.filter((a) => a.roleID == 2);                   
-                    this.regDetails = new MatTableDataSource(this.regDetails);
+                    this.regDetails1 = new MatTableDataSource(this.regDetails);
+                    this.regDetails1.paginator = this.paginator;
                     this.regDetails.sort = this.sort;
 
                     this.regDetailsJrList = this.totalRegDetails.filter((a) => a.roleID == 5);
@@ -290,8 +301,14 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 }
             },
 
+
+
             () => { }
         );
+
+        // this.patientsappointments = new MatTableDataSource(this.patientHistory);
+        // this.patientsappointments.paginator = this.paginator;
+
     }
 
     addActionForm(val)

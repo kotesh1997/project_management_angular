@@ -680,12 +680,12 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
         </mat-tab>
         <mat-tab label="History">
             <div class="row">
-                <div class="col-lg-6">
-                    <mat-form-field class="search">
+                <div class="col-lg-8">
+                    <!-- <mat-form-field class="search">
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2,3)"
-                            placeholder="Search Profile">
-                    </mat-form-field>
+                            placeholder="Search Profileeeeeeee">
+                    </mat-form-field> -->
                 </div>
                 <!-- <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
                     <button mat-flat-button  color="warn" (click)="resetFilters()" style="position:relative;left: -220px;top: 25;">Reset</button>
@@ -696,6 +696,18 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                     </button>
                 </div> -->
             </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+
+                <mat-form-field class="col-span-2 search1" appearance="outline">
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2,3)"
+                        placeholder="Search Profile">
+                </mat-form-field>
+       
+        </div>
+
+
             <div class="table1 example-container mat-elevation-z8">
                 <table mat-table [dataSource]="patientsappointments" matSort>
                     <!-- Position Column -->
@@ -1546,24 +1558,45 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
             <div class="col-lg-4">
                 <div class="col-lg-1">
                 </div>
-                <div class="col-lg-3" style="cursor: pointer;margin-top: 20px;" (click)="appoinmentLink()">
+                <div class="col-lg-1" style="cursor: pointer;margin-top: 20px;" (click)="appoinmentLink()">
                     <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
                     <!-- <button type="button" class="btn btn-primary btn-sm mr-1"  style="width: 100%;  border-radius:5px;"
                                                                 (click)="appoinmentLink()">
                                                                 Back
                                                             </button> -->
-                                                            <button class="px-6" mat-flat-button [color]="'primary'"                                         
+                                                            <!-- <button class="px-6" mat-flat-button [color]="'primary'"                                         
                                                              type="button" >
                                                             Back
-                                                        </button>
+                                                        </button> -->
                 </div>
-                <div class="col-lg-5">
+                <!-- <div class="col-lg-5">
                     <label style="font-size: x-large;"><b>{{detailData.patient}}</b></label><br>
                     <mat-icon class="icon-size-3 text-current"> local_phone</mat-icon> {{detailData.mobile}} <mat-icon
                         class="icon-size-3 text-current"> contacts</mat-icon> {{detailData.gender}},{{detailData.age}}
                     yrs
+                </div> -->
+                <!-- <div class="col-lg-5 align-items-center">
+                   <span> <mat-icon class="text-current" svgIcon="heroicons_solid:user-circle"></mat-icon> </span>
+                    <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>
+                    <mat-icon class="icon-size-3 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
+                </div> -->
+                <div class="col-lg-5">
+                    <div  style="display: flex; align-items: center;">
+                        <span> <mat-icon class="text-current" svgIcon="heroicons_outline:user-circle"></mat-icon> </span>
+                        <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                    <mat-icon class="mr-1 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
+                    </div>
+
                 </div>
+                
                 <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
+                <button (click)="appoinmentLink()" class="px-6 backBtn" mat-flat-button [color]="'primary'" type="button">
+                    <mat-icon class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>
+                    Back
+                  </button>
+                  
 
             </div>
 
@@ -2173,6 +2206,11 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                     </mat-tab>
                     
                     <mat-tab label="Previous Visit">
+
+                        <!-- <button class="px-6 justify-end" mat-flat-button [color]="'primary'"                                         
+                        type="button" >
+                       Back
+                   </button> -->
 
                         <div class="row" *ngFor="let item of patientHistory">
 
