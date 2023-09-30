@@ -15,6 +15,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import * as XLSX from 'xlsx';
+import { jsPDF } from "jspdf";
+
+import autoTable from 'jspdf-autotable'
+
 import { GcPdfViewer } from '@grapecity/gcpdfviewer';
 import {
     FormBuilder,
@@ -74,6 +79,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     dose: any = [];
     when: any = [];
     duration: any = [];
+    @ViewChild('Histable') table: ElementRef;
 
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild("myNameElem") myNameElem: ElementRef;
@@ -116,6 +122,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     mobNum: string;
 
     todayDataSourceBookings: any = [];
+    todayDataSourceBookings1: any = [];
     todayDataSourcePrintBookings: any = [];
     upcomingDataSourceBookings: any = [];
 
@@ -170,6 +177,8 @@ filename:any=[];
     form: any;
     fileName: any;
     patientHistory: any = [];
+    patientsappointment1 :any = [];
+
     patientsappointment = new MatTableDataSource(this.todayDataSourceBookings);
     patientHistoryList: any = [];
     filteredAppointments: any = [];
@@ -212,6 +221,9 @@ filename:any=[];
     amoutpaids: number;
     currentTimes: string;
     doctrids: any;
+    upcomings: boolean;
+    Histories: boolean;
+    Todays: boolean;
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -315,11 +327,16 @@ filename:any=[];
     displayedColumnsHistory: string[] = [
         'SL',
         'Patient',
-        // 'Service',
+        // 'Service',1
         // 'Doctor',
         // 'Time',
         'VisitCount',
         'View'
+    ];
+    displayedColumnsHistory1: string[] = [
+        'serviceDate',
+        'Amount',
+        'View',
     ];
     displayedColumnsUpcoming: string[] = [
         'SL',
@@ -337,6 +354,8 @@ filename:any=[];
     // @ViewChild(MatPaginator) HistoryPaginator: MatPaginator;
     //@ViewChild('MatPaginator1') upcomingPaginator: MatPaginator;
     @ViewChild('HistoryPaginator') HistoryPaginator: MatPaginator;
+    @ViewChild('HistoryPaginator1') HistoryPaginator1: MatPaginator;
+
 
     // @ViewChild('paginator', {static: true}) paginator: MatPaginator;
     @ViewChild('upcomingPaginator', { static: true }) upcomingPaginator: MatPaginator;
@@ -850,6 +869,13 @@ gethistory(){
               debugger
                 if (this.roleID != 2) {
                     this.patientsappointments = data;
+
+                    if(this.patientsappointments.length>0){
+                        this.Histories=true
+                    }
+                    else{
+                        this.Histories=false
+                    }
                     this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
                     this.patientsappointments.paginator = this.HistoryPaginator;
@@ -875,6 +901,49 @@ gethistory(){
         }
     );
 }
+exportpdf(){
+    debugger
+      var prepare=[];
+    this.patientsappointments.filteredData.forEach(e=>{
+      var tempObj =[];
+      tempObj.push(e.appointmentID);
+      tempObj.push(e.patient);
+      tempObj.push( e.gender);
+      tempObj.push( e.mobile);
+      tempObj.push(e.visitCount);
+      prepare.push(tempObj);
+
+    });
+    const doc = new jsPDF();
+    autoTable(doc,{
+        head: [['AppointmentID','Patient Name ',' Gender','Phone Number','Visit Count']],
+        body: prepare
+    });
+    doc.save('Reports' + '.pdf');
+  
+    // const doc = new jsPDF("p", "pt", "a4");
+    // const source = document.getElementById("table1");
+    // // doc.text("Test", 40, 20);
+    // doc.setFontSize(20)
+    // doc.html(source, {
+    //   callback: function(pdf) {
+    //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+    //   }
+    // });
+}
+ExportTOExcel() {
+
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    //let bur=XLSX.write(wb,{cellStyles:})
+
+
+    /* save to file */
+    XLSX.writeFile(wb, 'SheetJS.xlsx');
+
+}
 gethistory1(){
     this.utilitiesService.getAllAppointments2(this.registrationID).subscribe(
         (data) => {
@@ -883,7 +952,12 @@ gethistory1(){
                
                     // this.registrationID=this.loginDetails.registrationID;
                     this.patientsappointments = data;
-                  
+                    if(this.patientsappointments.length>0){
+                        this.Histories=true
+                    }
+                    else{
+                        this.Histories=false
+                    }
                     //this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
                 
 
@@ -953,6 +1027,20 @@ gethistory1(){
                     );
                 }
                 this.todayDataSourceBookings.sort((a, b) => (a.status < b.status ? -1 : 1));
+                if(this.upcomingBookings.length>0){
+                    this.upcomings=true
+                }
+                else{
+                    this.upcomings=false
+                }
+                if(this.todayDataSourceBookings.length>0){
+                    this.Todays=true
+                }
+                else{
+                    this.Todays=false
+                }
+
+
                 this.todayBookings = new MatTableDataSource(this.todayDataSourceBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
                 this.todaysbooked = new MatTableDataSource(this.todayDataSourceBookings);
@@ -965,6 +1053,8 @@ gethistory1(){
 
                 this.todayBookings.paginator = this.paginator;
                 this.upcomingBookings.paginator = this.upcomingPaginator;
+
+               
                // this.patientsappointments.paginator = this.HistoryPaginator;
 
                 if (this.receiptToken > 0) {
@@ -2894,6 +2984,9 @@ debugger
                         //All Bookings
                         // this.patientsappointments = data.filter((a) => new Date(a.serviceDate) < new Date(dateforToday));
                         this.patientsappointments = data;
+
+                       
+                        
                         // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i); 
                     }
                     else {
@@ -2905,6 +2998,7 @@ debugger
                         this.upcomingBookings = data.filter((a) => new Date(a.serviceDate) > new Date(dateforToday) && a.doctorID == this.registrationID);
                         //All Bookings
                         this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
+                      
                     }
 
                     // //Today Bookings
@@ -2925,6 +3019,7 @@ debugger
                 this.todayBookings = new MatTableDataSource(this.todayBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
                 this.patientsappointments = new MatTableDataSource(this.patientsappointments);
+               
                 this.detailData.vitalID = this.afterSaveVitalId;
                 if (this.roleID == 2) {
                     this.onRowClickedAfterSAve(this.detailData);
@@ -3182,6 +3277,12 @@ debugger
                         }
 
                     }
+                    debugger
+                    this.patientsappointment1 =data;
+                    this.patientsappointment1 = new MatTableDataSource(this.patientsappointment1);
+                    this.patientsappointment1.paginator = this.HistoryPaginator1;
+
+
                 } else {
                 }
             },

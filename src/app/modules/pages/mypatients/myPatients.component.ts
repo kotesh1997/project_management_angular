@@ -33,6 +33,7 @@ export class MyPatientsComponent implements AfterViewInit {
         {value: '3', viewValue: 'Tomorrow'},
       ];    
     horizontalStepperForm: FormGroup;
+    peteintapp: boolean;
     constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
     ) { }
 
@@ -126,6 +127,13 @@ export class MyPatientsComponent implements AfterViewInit {
                         this.patientHistory = data;
                 }
 
+
+                if(this.patientHistory.length>0){
+                    this.peteintapp=true
+                }
+                else{
+                    this.peteintapp=false
+                }
                 this.patientsappointments = new MatTableDataSource(this.patientHistory);
 
 

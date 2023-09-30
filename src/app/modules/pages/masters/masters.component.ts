@@ -103,6 +103,10 @@ export class MastersComponent implements OnInit {
     searchKey1: string;
     searchKey2: string;
     searchKey3: string;
+    labassts: boolean;
+    frontdesks: boolean;
+    assdoctortab: boolean;
+    doctortab: boolean;
     constructor(public patientsService: PatientsService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -276,20 +280,45 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             (data) => {
                 if (data) {                    
                     this.totalRegDetails = data;
-                    this.regDetails= this.totalRegDetails.filter((a) => a.roleID == 2);                   
+                    this.regDetails= this.totalRegDetails.filter((a) => a.roleID == 2); 
+                    if(this.regDetails.length>0){
+                        this.doctortab=true
+                    }
+                    else{
+                        this.doctortab=false
+                    }
+                    
                     this.regDetails1 = new MatTableDataSource(this.regDetails);
                     this.regDetails1.paginator = this.paginator;
                     this.regDetails.sort = this.sort;
 
                     this.regDetailsJrList = this.totalRegDetails.filter((a) => a.roleID == 5);
+                    if(this.regDetailsJrList.length>0){
+                        this.assdoctortab=true
+                    }
+                    else{
+                        this.assdoctortab=false
+                    }
                     this.regDetailsJrList = new MatTableDataSource(this.regDetailsJrList);
                     this.regDetailsJrList.sort = this.sort;
 
                     this.regDetailsFrontList = this.totalRegDetails.filter((a) => a.roleID == 3);
+                    if(this.regDetailsFrontList.length>0){
+                        this.frontdesks=true
+                    }
+                    else{
+                        this.frontdesks=false
+                    }
                     this.regDetailsFrontList = new MatTableDataSource(this.regDetailsFrontList);
                     this.regDetailsFrontList.sort = this.sort;
 
                     this.regDetailsLabList = this.totalRegDetails.filter((a) => a.roleID == 6);
+                    if(this.regDetailsLabList.length>0){
+                        this.labassts=true
+                    }
+                    else{
+                        this.labassts=false
+                    }
                     this.regDetailsLabList = new MatTableDataSource(this.regDetailsLabList);
                     this.regDetailsLabList.sort = this.sort;
 

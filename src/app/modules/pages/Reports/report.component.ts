@@ -32,6 +32,7 @@ import {
 })
 export class ReportComponent implements OnInit {
     horizontalStepperForm: FormGroup;
+    Repdata: boolean;
     constructor(public reportService: ReportService, private _matDialog: MatDialog, private dateAdapter: DateAdapter<Date>,
         private utilitiesService: UtilitiesService, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder) {
 
@@ -165,6 +166,12 @@ exportpdf(){
                         this.patientsappointments = data;
                     }
                     this.patientList = data;
+                    if(this.patientsappointments.length>0){
+                        this.Repdata=true
+                    }
+                    else{
+                        this.Repdata=false
+                    }
 
                     this.patientsappointments = new MatTableDataSource(this.patientsappointments);                   
                     this.patientsappointments.sort = this.sort;

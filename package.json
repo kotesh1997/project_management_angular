@@ -41,6 +41,7 @@
         "crypto-js": "3.3.0",
         "file-saver": "^2.0.5",
         "git": "^0.1.5",
+        "heroicons": "^2.0.18",
         "highlight.js": "11.2.0",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.28",

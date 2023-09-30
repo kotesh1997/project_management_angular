@@ -72,7 +72,7 @@
 
         </div>
 
-        <div  class="example-container mat-elevation-z8" #TABLE>
+        <div *ngIf="Repdata" class="example-container mat-elevation-z8" #TABLE>
             <table class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
@@ -176,6 +176,24 @@
             </table>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="500" showFirstLastButtons></mat-paginator>
             
+        </div>
+
+        <div  *ngIf="!Repdata" style="text-align: center;">
+                
+
+
+            <div class="center-container">
+                <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+            </div>
+<br>
+<div class="center-container1">
+<h2 style="color: #146aa6;    margin-top: -59px;">
+<b>No Report  data  Found </b> 
+</h2>
+</div>
+            <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
         </div>
     </div>
 </div>

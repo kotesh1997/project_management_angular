@@ -29,6 +29,7 @@ import {
 export class MedicineComponent implements OnInit {
     horizontalStepperForm: FormGroup;
     public form: FormGroup;
+    medlist: boolean;
     constructor(public medicineService: MedicineService, 
         private _matDialog: MatDialog,
         private _snackBar: MatSnackBar,
@@ -123,7 +124,12 @@ export class MedicineComponent implements OnInit {
                     })
                     this.medicineList = data;
                 }
-
+                if(this.medicineList.length>0){
+                    this.medlist=true
+                }
+                else{
+                    this.medlist=false
+                }
                
                 // this.patientsappointments = this.patientsappointments.filter(
                 //     (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient )  === i

@@ -8,7 +8,7 @@
 
         <mat-tab label="Today">
           
-            <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
+            <div class="row">
 
               
                     <!-- <mat-form-field  class="col-lg-2" appearance="outline" *ngFor="let filter of filterSelectObj" style="margin-left: 15px;">
@@ -20,14 +20,15 @@
                         <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
                       </select>
                     </mat-form-field> -->
-                    <mat-form-field class="col-span-2 search1" appearance="outline">
+                    <div class="flex justify-start ml-8">
+                    <mat-form-field class=" search1 mr-2" style="width: 320px;" appearance="outline">
 
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
                             placeholder="Search Profile">
                     </mat-form-field>
-                    <mat-form-field class="col-span-2 flex flex-col" appearance="outline" *ngFor="let filter of filterSelectObj"
-                        style="padding-left:0;">
+                    <mat-form-field  class="flex flex-col ml-2"   appearance="outline" *ngFor="let filter of filterSelectObj"
+                        style="padding-left:0;width: 320px;">
                         <mat-label>Filter {{filter.name}}</mat-label>
 
                         <mat-select matNativeControl [(ngModel)]="filter.modelValue" name="{{filter.columnProp}}"
@@ -47,17 +48,37 @@
                     top: 30%;
                 "> <button mat-raised-button  color="warn" (click)="resetFilters()">Reset</button></div> -->
                   <!-- *ngIf="roleID == 1 || roleID == 3" -->
-                  <button class=" " style="margin-top: -1px;" 
-                 
-                      >
+
+                  
                   
                    <span (click)="resetFilters()">
-                     <img width="48" height="48"  style="max-width: 33%;display: inline;margin-right: 21px;cursor: pointer;margin-top: -7px;
-                      height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/></span> 
-<span  (click)="resetFilters()" >
-<img width="48"  height="48"  style="max-width: 24%;display: inline;cursor: pointer;
-height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="synchronize--v1"/></span>
-                  </button> 
+
+                     <!-- <img width="48" height="48"  style="cursor: pointer;
+                      height: 40px;opacity: 0.5;margin-top: 11px;margin-left: 2px;" src="assets/images/logo/filter.svg" alt="clear-filters"/> -->
+                                      <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+                <!-- <mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'Clear'" style="cursor: pointer;
+                height: 40px;opacity: 0.8;margin-top: 11px;margin-left: 2px;width: 40px;" svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
+<button [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'Clear'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
+height: 35px;margin-top: 14px;margin-left: 10px;" >
+<mat-icon svgIcon="mat_outline:clear"></mat-icon>
+</button>
+                     <!-- <img width="48" height="48"  style="max-width: 33%;display: inline;margin-right: 21px;cursor: pointer;margin-top: -7px;
+                      height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/>
+                       -->
+                    </span> 
+                        <span  (click)="resetFilters()" >
+
+                            <button [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'Refresh'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
+                            height: 35px;margin-top: 14px;margin-left: 10px;" >
+                                <mat-icon svgIcon="mat_outline:refresh"></mat-icon>
+                            </button>
+                        <!-- <img  [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'Refresh'" width="48"  height="48"  style="cursor: pointer;opacity: 0.5;
+                        height: 35px;margin-top: 12px;margin-left: 2px;" src="assets/images/logo/refresh.svg" alt="synchronize--v1"/> -->
+                        <!-- <img width="48"  height="48"  style="max-width: 24%;display: inline;cursor: pointer;
+                        height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="synchronize--v1"/> -->
+                        </span>
+                  
                 
                 <!-- <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                   style="position: relative;top: 22%;right: -30%; width: 175px;"
@@ -66,20 +87,23 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                       <img width="16" height="16" src="https://img.icons8.com/officel/16/erase.png" alt="erase"/>
                   </button>  -->
                                    <!-- <span class="ml-2">Clear</span> -->
+                                </div>
 
-                        <button *ngIf="roleID !='2' "  class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
-                        style="position: relative;top: 24%;right: -10%;width: 175px;;"
+                                <div class="flex justify-end mr-8" style="margin-top: -58px;">
+                        <button  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                       
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                             <span class="ml-2">New Appointment</span>
                         </button>
                    
                 
-
+                    </div>
            
             </div>
-            
-<table class='table1' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
+            <div *ngIf="Todays " >
+
+<table class='table1 mt-4' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
 
     <ng-container matColumnDef="SL">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="patientARCID">
@@ -400,6 +424,26 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
+            </div>
+    <div  *ngIf="!Todays" style="text-align: center;">
+                
+
+        
+
+        <div class="center-container">
+            <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+        </div>
+<br>
+<div class="center-container1">
+<h2 style="color: #146aa6;    margin-top: -59px;">
+<b>No Today's Booked  Found </b> 
+</h2>
+</div>
+        <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
+    </div>
     
     
         
@@ -437,7 +481,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                           </button>
                 </div>
             </div> -->
-
+<!-- 
             <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
             
@@ -447,9 +491,7 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                     placeholder="Search Profile">
                 </mat-form-field>
               
-              <button class=" " style="margin-top: -1px;" 
-             
-                  >
+              <button class=" " style="margin-top: -1px;">
               
                <span (click)="resetFilters1()">
 
@@ -466,12 +508,47 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Appointment</span>
                     </button>
-                    
-               
-            
 
+        </div> -->
+
+<div class="row " >
+    <div class="  ">
+
+ <span class="flex justify-start ml-4">
+    <mat-form-field style="width: 320px;" class="col-span-2 search1" appearance="outline">
+        <mat-icon matPrefix>perm_identity</mat-icon>
+        <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
+        placeholder="Search Profile">
+    </mat-form-field>
+
+ </span>
+ 
+   
+  
+
+
+</div>
+<div class=" ">
+
+    <span class="flex justify-end mr-8" style="margin-top: -58px">
+        <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded  "  mat-flat-button [color]="'primary'"
        
-        </div>
+        (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
+        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+        <span class="ml-2">New Appointment</span>
+    </button>
+    </span>
+      
+    </div>
+</div>
+
+
+  
+  
+  
+  
+  
+       
             <!-- <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
               
@@ -504,7 +581,8 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
 
        
         </div> -->
-            <div class="table1 example-container mat-elevation-z8">
+       
+            <div *ngIf="upcomings " class="table1 example-container mat-elevation-z8 mt-4">
                 <table mat-table [dataSource]="upcomingBookings" matSort>
                     <!-- Position Column -->
 
@@ -677,6 +755,25 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                     showFirstLastButtons>
                 </mat-paginator>
             </div>
+
+            <div  *ngIf="!upcomings" style="text-align: center;">
+                
+
+
+                <div class="center-container">
+                    <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+                </div>
+<br>
+<div class="center-container1">
+    <h2 style="color: #146aa6;    margin-top: -59px;">
+    <b>No Upcoming Bookings Found </b> 
+    </h2>
+</div>
+                <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
+            </div>
+
         </mat-tab>
         <mat-tab label="History">
             <div class="row">
@@ -704,11 +801,31 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                     <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2,3)"
                         placeholder="Search Profile">
                 </mat-form-field>
+
+
+
+                <div class="col-lg-2 mb-2 justify-end" style="margin-left: 926px;margin-top: 18px;" >
+                  
+                    <div class="flex mx-2">
+                        <div class="mr-1">
+                          <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()">
+                            <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                          </button>
+                        </div>
+                      
+                        <div class="ml-2">
+                          <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()">
+                            <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                      
+                 </div>
        
         </div>
 
 
-            <div class="table1 example-container mat-elevation-z8">
+            <div *ngIf="Histories" class="table1 example-container mat-elevation-z8" #Histable>
                 <table mat-table [dataSource]="patientsappointments" matSort>
                     <!-- Position Column -->
 
@@ -835,6 +952,24 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                 <mat-paginator #HistoryPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"
                     showFirstLastButtons>
                 </mat-paginator>
+            </div>
+
+            <div  *ngIf="!Histories" style="text-align: center;">
+                
+
+
+                <div class="center-container">
+                    <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+                </div>
+<br>
+<div class="center-container1">
+    <h2 style="color: #146aa6;    margin-top: -59px;">
+    <b>No History  Found </b> 
+    </h2>
+</div>
+                <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
             </div>
         </mat-tab>
 
@@ -1583,19 +1718,23 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                 <div class="col-lg-5">
                     <div  style="display: flex; align-items: center;">
                         <span> <mat-icon class="text-current" svgIcon="heroicons_outline:user-circle"></mat-icon> </span>
-                        <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
+                        <label style="font-size: 18px;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
                     </div>
                     <div style="display: flex; align-items: center;">
-                    <mat-icon class="mr-1 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
+                    <mat-icon class="mr-1 text-current" svgIcon="heroicons_solid:phone"></mat-icon> {{detailData.mobile}} 
                     </div>
 
                 </div>
-                
-                <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
-                <button (click)="appoinmentLink()" class="px-6 backBtn" mat-flat-button [color]="'primary'" type="button">
+                             <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
+                <span (click)="appoinmentLink()"class="px-6 backBtn" style="color: #146aa6;display: flex;cursor: pointer;">
+                    <mat-icon (click)="appoinmentLink()" style="margin-right: 8px;"  class="icon-size-5"class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
+                   <button type="button" (click)="appoinmentLink()" style="font-size: 18px;cursor: pointer;margin-left: 5px;">Back</button>  
+                </span>
+               
+                <!-- <button (click)="appoinmentLink()" class="px-6 backBtn" mat-flat-button [color]="'primary'" type="button">
                     <mat-icon class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>
                     Back
-                  </button>
+                  </button> -->
                   
 
             </div>
@@ -2217,12 +2356,12 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <p class="date_1"> {{item.serviceDate | date : 'd MMMM'}}</p>
                                                                
-                                                                <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-start"  mat-flat-button [color]="'primary'"
+                                                                <!-- <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-start"  mat-flat-button [color]="'primary'"
                                                               style="    margin-top: 10px;
                                                               margin-left: 92px;"
                                                                     (click)="onRowClicked1(item)">
                                                                     <span class="ml-2">Receipt</span>
-                                                                </button>
+                                                                </button> -->
 
                             </div>
 
@@ -2353,6 +2492,103 @@ height: 35px;" src="https://img.icons8.com/color/48/synchronize--v1.png" alt="sy
                             </div>
                         </div>
                     </mat-tab>
+                    <mat-tab label="Payments">
+
+                           
+                                     
+                         <div class="row" >
+
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                          
+
+                            </div>
+
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                <mat-accordion class="example-headers-align" multi>
+                                    <mat-expansion-panel [expanded]="true">
+                                        <mat-expansion-panel-header>
+                                           
+                                         
+
+
+
+                                        </mat-expansion-panel-header>
+
+
+                                        <div class="row">
+                                                
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                               
+                                                            <div class="table1  example-container mat-elevation-z8">
+                                                                <table mat-table [dataSource]="patientsappointment1" matSort>
+                                                                    <!-- Position Column -->
+                                                
+                                                                    <ng-container matColumnDef="serviceDate">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                            Receipt Date
+                                                                        </th>
+                                                                        <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element">
+                                                                            {{element.serviceDate |date}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="Amount">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                         Amount
+                                                                        </th>
+                                                                        <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element">
+                                                                            <a (click)="onRowClicked1(element)" >
+                                                                                {{element.payment }}
+
+                                                                            </a>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                     <ng-container matColumnDef="View">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                            View Receipt
+                                                                        </th>
+                                                                        <td (click)="onRowClicked1(element)" style="height: 48px;font-size: unset;text-align: center;cursor: pointer;" mat-cell *matCellDef="let element">
+                                                                         
+                                                                            <mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View Receipt'" svgIcon="heroicons_solid:eye" 
+                                                                            style="color:#146aa6">
+                                                                       </mat-icon>
+                                                                           
+                                                                        </td>
+                                                                    </ng-container>
+                                                                  
+                                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory1; sticky: true"></tr>
+                                        <!--<tr mat-row
+                                        *matRowDef="let row; columns: displayedColumns"></tr>-->
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory1;"></tr>
+                                                                   
+                                                                </table>
+                                                                <mat-paginator #HistoryPaginator1 [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"
+                                                                    showFirstLastButtons>
+                                                                </mat-paginator>
+                                                            </div>
+                                    
+                                                          
+                    
+                                            </div>
+
+                                       
+
+                     </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                        </div> 
+                     
+                    </mat-tab>
+                    <mat-tab label="Lab ">
+
+                           
+                     
+                    
+                   </mat-tab>
+                    <span (click)="appoinmentLink()"class="px-6 backBtn" style="color: #146aa6;display: flex;cursor: pointer;">
+                        <mat-icon (click)="appoinmentLink()" style="margin-right: 8px;" class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
+                       <button type="button" (click)="appoinmentLink()" style="font-size: 18px;cursor: pointer;margin-left: 5px;">Back</button>  
+                    </span>
                 </mat-tab-group>
             </div>
         </div>

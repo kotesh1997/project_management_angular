@@ -22,7 +22,7 @@
 
              
             </div>
-            <div class="example-container mat-elevation-z8">
+            <div  *ngIf="doctortab" class="example-container mat-elevation-z8">
                 <table class="table1" mat-table [dataSource]="regDetails1">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
@@ -129,6 +129,23 @@
                 </mat-paginator>
 
             </div>
+            <div  *ngIf="!doctortab" style="text-align: center;">
+                
+
+
+                <div class="center-container">
+                    <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+                </div>
+<br>
+<div class="center-container1">
+    <h2 style="color: #146aa6;    margin-top: -59px;">
+    <b>No  doctor data  Found </b> 
+    </h2>
+</div>
+                <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
+            </div>
         </mat-tab>
 
         <!-- <mat-tab label="Nurse">
@@ -162,7 +179,7 @@
             </div>
                
             </div>
-                <div class="example-container mat-elevation-z8">
+                <div *ngIf="assdoctortab" class="example-container mat-elevation-z8">
                     <table mat-table [dataSource]="regDetailsJrList">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef>
@@ -252,6 +269,23 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                     </table>    
                 </div>
+                <div  *ngIf="!assdoctortab" style="text-align: center;">
+                
+
+
+                    <div class="center-container">
+                        <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+    
+                    </div>
+    <br>
+    <div class="center-container1">
+        <h2 style="color: #146aa6;    margin-top: -59px;">
+        <b>No Asst doctor data  Found </b> 
+        </h2>
+    </div>
+                    <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+    
+                </div>
            
         </mat-tab>
         <mat-tab label="Front Desk">
@@ -272,7 +306,7 @@
             </div>
               
             </div>
-            <div class="example-container mat-elevation-z8">
+            <div  *ngIf="frontdesks" class="example-container mat-elevation-z8">
                 <table mat-table [dataSource]="regDetailsFrontList">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
@@ -362,6 +396,24 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                 </table>    
             </div>
+
+            <div  *ngIf="!frontdesks" style="text-align: center;">
+                
+
+
+                <div class="center-container">
+                    <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+                </div>
+<br>
+<div class="center-container1">
+    <h2 style="color: #146aa6;    margin-top: -59px;">
+    <b>No Front Desk data  Found </b> 
+    </h2>
+</div>
+                <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
+            </div>
         </mat-tab>
         <mat-tab label="Lab Assistant">
             <div class="flex items-center mt-12 sm:mt-0 sm:ml-2 space-x-3">
@@ -381,7 +433,7 @@
             </div>
               
             </div>
-            <div class="example-container mat-elevation-z8">
+            <div *ngIf="labassts" class="example-container mat-elevation-z8">
                 <table mat-table [dataSource]=" regDetailsLabList">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
@@ -470,6 +522,23 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                 </table>    
+            </div>
+            <div  *ngIf="!labassts" style="text-align: center;">
+                
+
+
+                <div class="center-container">
+                    <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+
+                </div>
+<br>
+<div class="center-container1">
+    <h2 style="color: #146aa6;    margin-top: -59px;">
+    <b>No Lab Asst  data  Found </b> 
+    </h2>
+</div>
+                <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
+
             </div>
         </mat-tab>
     </mat-tab-group>
