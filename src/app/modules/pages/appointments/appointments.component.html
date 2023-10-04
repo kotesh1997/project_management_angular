@@ -3,7 +3,7 @@
 
     <!-- <p-autoComplete [showEmptyMessage]="true" [suggestions]="filteredAppointments" (completeMethod)="filterAppointemnts($event)" field="mobile" [minLength]="1"></p-autoComplete> -->
 
-
+   
     <mat-tab-group>
 
         <mat-tab label="Today">
@@ -89,8 +89,8 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                    <!-- <span class="ml-2">Clear</span> -->
                                 </div>
 
-                                <div class="flex justify-end mr-8" style="margin-top: -58px;">
-                        <button  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                                <div class="flex justify-end mr-8" >
+                        <button style="margin-top: -58px;"  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                        
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -101,9 +101,10 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     </div>
            
             </div>
+          
             <div *ngIf="Todays " >
 
-<table class='table1 mt-4' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
+<table class='table1 ' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
 
     <ng-container matColumnDef="SL">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="patientARCID">
@@ -446,10 +447,12 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
     </div>
     
     
-        
+    <div [ngClass]="{'hidediv': Todays, 'showdic': !Todays}">
+
             
-            <mat-paginator #Paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons>
+            <mat-paginator #Paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons>
             </mat-paginator>
+            </div>
         </mat-tab>
         <mat-tab label="Upcoming Bookings">
             
@@ -530,8 +533,8 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 </div>
 <div class=" ">
 
-    <span class="flex justify-end mr-8" style="margin-top: -58px">
-        <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded  "  mat-flat-button [color]="'primary'"
+    <span class="flex justify-end mr-8" >
+        <button  style="margin-top: -58px"*ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded  "  mat-flat-button [color]="'primary'"
        
         (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -582,7 +585,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
        
         </div> -->
        
-            <div *ngIf="upcomings " class="table1 example-container mat-elevation-z8 mt-4">
+            <div *ngIf="upcomings " class="table1 example-container mat-elevation-z8 ">
                 <table mat-table [dataSource]="upcomingBookings" matSort>
                     <!-- Position Column -->
 
@@ -719,11 +722,13 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-button *ngIf="roleID=='5' || roleID=='1'">
-                                <div mat-menu-item (click)="onRowClicked(row)">
-                                    <mat-icon svgIcon="heroicons_solid:pencil-eye"></mat-icon>
-                                    <span>View</span></div>
+                                <button mat-menu-item *ngIf="roleID=='5' || roleID=='1'" (click)="onRowClicked(element)">
+                                
+                                    <mat-icon svgIcon="heroicons_solid:eye"></mat-icon>
+                                  
+                                    <span>View</span>
                                 </button>
+                              
                                 <button mat-menu-item (click)="updateSelect(element);appointmentDrawer.toggle() ">
                                     <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
                                     <span>Edit</span>
@@ -751,9 +756,13 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsUpcoming; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsUpcoming"></tr>
                 </table>
+                <div [ngClass]="{'hidediv': upcomings, 'showdic': !upcomings}">
+
                 <mat-paginator #upcomingPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5"
                     showFirstLastButtons>
                 </mat-paginator>
+
+            </div>
             </div>
 
             <div  *ngIf="!upcomings" style="text-align: center;">
@@ -825,8 +834,8 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
         </div>
 
 
-            <div *ngIf="Histories" class="table1 example-container mat-elevation-z8" #Histable>
-                <table mat-table [dataSource]="patientsappointments" matSort>
+            <div  class="table1 example-container mat-elevation-z8" >
+                <table *ngIf="Histories" mat-table [dataSource]="patientsappointments" matSort>
                     <!-- Position Column -->
 
                     <ng-container matColumnDef="SL">
@@ -949,9 +958,12 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     *matRowDef="let row; columns: displayedColumns"></tr>-->
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory;"></tr>
                 </table>
-                <mat-paginator #HistoryPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"
-                    showFirstLastButtons>
-                </mat-paginator>
+              <div [ngClass]="{'hidediv': Histories, 'showdic': !Histories}">
+                <mat-paginator   #HistoryPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" 
+                showFirstLastButtons>
+
+            </mat-paginator>
+        </div>
             </div>
 
             <div  *ngIf="!Histories" style="text-align: center;">
@@ -1715,10 +1727,10 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>
                     <mat-icon class="icon-size-3 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
                 </div> -->
-                <div class="col-lg-5">
+                <div class="col-lg-8">
                     <div  style="display: flex; align-items: center;">
                         <span> <mat-icon class="text-current" svgIcon="heroicons_outline:user-circle"></mat-icon> </span>
-                        <label style="font-size: 18px;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
+                        <label class="text-2xl"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
                     </div>
                     <div style="display: flex; align-items: center;">
                     <mat-icon class="mr-1 text-current" svgIcon="heroicons_solid:phone"></mat-icon> {{detailData.mobile}} 
@@ -2350,9 +2362,11 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                         type="button" >
                        Back
                    </button> -->
+               
 
-                        <div class="row" *ngFor="let item of patientHistory">
-
+                   <div *ngIf="previousdata">
+                        <div class="row"  *ngFor="let item of patientHistory">
+                          
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <p class="date_1"> {{item.serviceDate | date : 'd MMMM'}}</p>
                                                                
@@ -2491,6 +2505,68 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                 </mat-accordion>
                             </div>
                         </div>
+                    </div>
+                        <div  *ngIf="!previousdata" >
+                
+
+                            <div class="row" >
+
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                              
+    
+                                </div>
+    
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                    <mat-accordion class="example-headers-align" multi>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header>
+                                               
+                                            </mat-expansion-panel-header>
+    
+    
+                                            <div class="row">
+                                                    
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                   
+                                                                <div class="table1  example-container mat-elevation-z8">
+                                                                    <div class="center-container3">
+                                                                        <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+                                                            
+                                                                    </div>
+                                                            <br>
+                                                            <div class="center-container5">
+                                                            <h2 style="color: #146aa6; margin-top: -170px;  ">
+                                                            <b>No Previous Data  Found </b> 
+                                                            </h2>
+                                                            </div>
+                                                                </div>
+                                        
+                                                              
+                        
+                                                </div>
+    
+                                           
+    
+                         </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            </div> 
+
+                            <!-- <div class="center-container">
+                                <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
+                    
+                            </div>
+                    <br>
+                    <div class="center-container1">
+                    <h2 style="color: #146aa6;    margin-top: -59px;">
+                    <b>No Previous Data  Found </b> 
+                    </h2>
+                    </div> -->
+                           
+                        </div>
+
+
                     </mat-tab>
                     <mat-tab label="Payments">
 
@@ -2581,7 +2657,85 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     </mat-tab>
                     <mat-tab label="Lab ">
 
-                           
+                        <div class="row" >
+
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                          
+
+                            </div>
+
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                                <mat-accordion class="example-headers-align" multi>
+                                    <mat-expansion-panel [expanded]="true">
+                                        <mat-expansion-panel-header>
+                                           
+                                         
+
+
+
+                                        </mat-expansion-panel-header>
+
+
+                                        <div class="row">
+                                                
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                               
+                                                            <div class="table1  example-container mat-elevation-z8">
+                                                                <!-- <table mat-table [dataSource]="patientsappointment1" matSort>
+                                                
+                                                                    <ng-container matColumnDef="serviceDate">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                            Receipt Date
+                                                                        </th>
+                                                                        <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element">
+                                                                            {{element.serviceDate |date}}
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="Amount">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                         Amount
+                                                                        </th>
+                                                                        <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element">
+                                                                            <a (click)="onRowClicked1(element)" >
+                                                                                {{element.payment }}
+
+                                                                            </a>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                     <ng-container matColumnDef="View">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                            View Receipt
+                                                                        </th>
+                                                                        <td (click)="onRowClicked1(element)" style="height: 48px;font-size: unset;text-align: center;cursor: pointer;" mat-cell *matCellDef="let element">
+                                                                         
+                                                                            <mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View Receipt'" svgIcon="heroicons_solid:eye" 
+                                                                            style="color:#146aa6">
+                                                                       </mat-icon>
+                                                                           
+                                                                        </td>
+                                                                    </ng-container>
+                                                                  
+                                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory1; sticky: true"></tr>
+                                       
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory1;"></tr>
+                                                                   
+                                                                </table>
+                                                                <mat-paginator #HistoryPaginator1 [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"
+                                                                    showFirstLastButtons>
+                                                                </mat-paginator> -->
+                                                            </div>
+                                    
+                                                          
+                    
+                                            </div>
+
+                                       
+
+                     </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                        </div> 
                      
                     
                    </mat-tab>

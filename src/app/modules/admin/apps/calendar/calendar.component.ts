@@ -107,7 +107,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
      * On init
      */
     ngOnInit(): void
-    {
+    {debugger
         this.getAllAppointments();
         // Create the event form
         this.eventForm = this._formBuilder.group({
@@ -1020,6 +1020,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     getAllAppointments() {
+        debugger
         this.utilitiesService.getAllAppointments().subscribe(
             (data) => {
                 if (data) {
@@ -1028,6 +1029,19 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
                     var dt1 = data[0].serviceDate + data[0].slotTime
                     var dt = new Date(data[0].createdDate + data[0].slotTime)
                     for (var i = 0; i < data.length; i++) {
+                        const inputDate = new Date(data[i].appointmentDate);
+
+                        // Format the Date object into the desired format "YYYY-MM-DDTHH:mm:ss.sss"
+                        const formattedDate = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1)
+                          .toString()
+                          .padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}T${inputDate
+                          .getHours()
+                          .toString()
+                          .padStart(2, '0')}:${inputDate.getMinutes().toString().padStart(2, '0')}:${inputDate
+                          .getSeconds()
+                          .toString()
+                          .padStart(2, '0')}.${inputDate.getMilliseconds()}`;
+
                         this.allAppointments.push({
                             appointmentID: data[i].appointmentID,
                             id: 'd2220429-9214-4c4b-9da6-f8da2fbfd507',
@@ -1037,8 +1051,8 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
 
                             title: data[i].patient,
                             description: data[i].serviceName,
-                            start: data[i].createdDate, // First Tuesday of the current month at 10:00
-                            end: data[i].createdDate, // End of the times
+                            start: formattedDate, // First Tuesday of the current month at 10:00
+                            end: formattedDate, // End of the times
                             duration: 0, // Minutes
                             allDay: false,
                             recurrence: 'FREQ=MONTHLY;INTERVAL=1;BYDAY=1TU'

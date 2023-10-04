@@ -22,8 +22,8 @@
 
              
             </div>
-            <div  *ngIf="doctortab" class="example-container mat-elevation-z8">
-                <table class="table1" mat-table [dataSource]="regDetails1">
+            <div   class="example-container mat-elevation-z8">
+                <table class="table1"   *ngIf="doctortab"class="table1" mat-table [dataSource]="regDetails1">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
                             Name
@@ -124,10 +124,11 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 </table>
+                <div [ngClass]="{'hidediv': doctortab, 'showdic': !doctortab}">
 
-                <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons>
+                <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons>
                 </mat-paginator>
-
+            </div>
             </div>
             <div  *ngIf="!doctortab" style="text-align: center;">
                 
@@ -179,8 +180,8 @@
             </div>
                
             </div>
-                <div *ngIf="assdoctortab" class="example-container mat-elevation-z8">
-                    <table mat-table [dataSource]="regDetailsJrList">
+                <div  class="example-container mat-elevation-z8">
+                    <table class="table1"  *ngIf="assdoctortab" mat-table [dataSource]="regDetailsJrList">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef>
                                 Name
@@ -267,7 +268,13 @@
     
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                    </table>    
+                    </table> 
+                    <div [ngClass]="{'hidediv': assdoctortab, 'showdic': !assdoctortab}">
+
+            
+                        <mat-paginator #Assdocpag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons>
+                        </mat-paginator>
+                        </div>   
                 </div>
                 <div  *ngIf="!assdoctortab" style="text-align: center;">
                 
@@ -306,8 +313,8 @@
             </div>
               
             </div>
-            <div  *ngIf="frontdesks" class="example-container mat-elevation-z8">
-                <table mat-table [dataSource]="regDetailsFrontList">
+            <div class="example-container mat-elevation-z8">
+                <table class="table1"   *ngIf="frontdesks"  class="table1" mat-table [dataSource]="regDetailsFrontList" matSort>
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
                             Name
@@ -394,7 +401,14 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                </table>    
+                </table> 
+               
+    <div [ngClass]="{'hidediv': frontdesks, 'showdic': !frontdesks}">
+
+            
+        <mat-paginator #Frontdeskpag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons>
+        </mat-paginator>
+        </div>
             </div>
 
             <div  *ngIf="!frontdesks" style="text-align: center;">
@@ -433,8 +447,8 @@
             </div>
               
             </div>
-            <div *ngIf="labassts" class="example-container mat-elevation-z8">
-                <table mat-table [dataSource]=" regDetailsLabList">
+            <div  class="example-container mat-elevation-z8">
+                <table class="table1" *ngIf="labassts" mat-table [dataSource]=" regDetailsLabList">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
                             Name
@@ -521,7 +535,13 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                </table>    
+                </table>  
+                <div [ngClass]="{'hidediv': labassts, 'showdic': !labassts}">
+
+            
+                    <mat-paginator #LabAsspag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons>
+                    </mat-paginator>
+                    </div>   
             </div>
             <div  *ngIf="!labassts" style="text-align: center;">
                 

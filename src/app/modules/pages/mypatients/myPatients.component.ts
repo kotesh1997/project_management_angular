@@ -33,7 +33,7 @@ export class MyPatientsComponent implements AfterViewInit {
         {value: '3', viewValue: 'Tomorrow'},
       ];    
     horizontalStepperForm: FormGroup;
-    peteintapp: boolean;
+    peteintapp: boolean=true;
     constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
     ) { }
 

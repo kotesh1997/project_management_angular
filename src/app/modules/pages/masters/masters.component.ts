@@ -37,6 +37,11 @@ import { map, startWith } from 'rxjs/operators';
 export class MastersComponent implements OnInit {
 
     // @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('Frontdeskpag') Frontdeskpag: MatPaginator;
+    @ViewChild('Assdocpag') Assdocpag: MatPaginator;
+
+    @ViewChild('LabAsspag') LabAsspag: MatPaginator;
+
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 //   @ViewChild('paginatorPageSize') paginatorPageSize: MatPaginator;
@@ -103,10 +108,10 @@ export class MastersComponent implements OnInit {
     searchKey1: string;
     searchKey2: string;
     searchKey3: string;
-    labassts: boolean;
-    frontdesks: boolean;
-    assdoctortab: boolean;
-    doctortab: boolean;
+    labassts: boolean=true;
+    frontdesks: boolean=true;
+    assdoctortab: boolean=true;
+    doctortab: boolean=true;
     constructor(public patientsService: PatientsService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -119,7 +124,10 @@ export class MastersComponent implements OnInit {
         this.form = _formBuilder.group({
             name           : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             email          : ['', Validators.compose([Validators.required, emailValidator])],
-            mobile         : ['',Validators.compose([ Validators.minLength(10),Validators.maxLength(10)])],
+            mobile         : ['', [
+                Validators.required, // Required field
+                Validators.pattern(/^[0-9]{10}$/) // Matches a 10-digit number
+              ]],
             password       : ['', Validators.required],
             confirmPassword: ['', Validators.required],
             gender         : ['', Validators.required],
@@ -301,6 +309,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     }
                     this.regDetailsJrList = new MatTableDataSource(this.regDetailsJrList);
                     this.regDetailsJrList.sort = this.sort;
+                    this.regDetailsJrList.paginator = this.Assdocpag;
 
                     this.regDetailsFrontList = this.totalRegDetails.filter((a) => a.roleID == 3);
                     if(this.regDetailsFrontList.length>0){
@@ -311,6 +320,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     }
                     this.regDetailsFrontList = new MatTableDataSource(this.regDetailsFrontList);
                     this.regDetailsFrontList.sort = this.sort;
+                     this.regDetailsFrontList.paginator = this.Frontdeskpag;
 
                     this.regDetailsLabList = this.totalRegDetails.filter((a) => a.roleID == 6);
                     if(this.regDetailsLabList.length>0){
@@ -321,6 +331,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     }
                     this.regDetailsLabList = new MatTableDataSource(this.regDetailsLabList);
                     this.regDetailsLabList.sort = this.sort;
+                    this.regDetailsLabList.paginator = this.LabAsspag;
 
                     
                 } else {
@@ -543,7 +554,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     public doFilter1 = (value, state) => {
         debugger
         var sd=value.trim().toLocaleLowerCase()
-            this.regDetails.filter = value.trim().toLocaleLowerCase()
+            this.regDetails1.filter = value.trim().toLocaleLowerCase()
             // this.upcomingBookings.filter =  '';
             // this.patientsappointments.filter = '';
             this.searchKey3 = '';

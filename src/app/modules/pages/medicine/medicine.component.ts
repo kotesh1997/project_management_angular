@@ -29,7 +29,7 @@ import {
 export class MedicineComponent implements OnInit {
     horizontalStepperForm: FormGroup;
     public form: FormGroup;
-    medlist: boolean;
+    medlist: boolean=true;
     constructor(public medicineService: MedicineService, 
         private _matDialog: MatDialog,
         private _snackBar: MatSnackBar,
@@ -152,6 +152,8 @@ export class MedicineComponent implements OnInit {
 
     addUpdateMedicineDetails(val) {
         debugger;
+        this.msg = this.actionName + ' data added successfully ..!!';
+
         if (this.flag == '1') {
             this.msg = this.actionName + ' data added successfully ..!!';
         }

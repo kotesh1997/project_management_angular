@@ -221,9 +221,11 @@ filename:any=[];
     amoutpaids: number;
     currentTimes: string;
     doctrids: any;
-    upcomings: boolean;
-    Histories: boolean;
-    Todays: boolean;
+    upcomings: boolean=true;
+    Histories: boolean=true;
+    Todays: boolean=true;
+    hidePaginator: boolean;
+    previousdata: boolean=true;
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -349,6 +351,7 @@ filename:any=[];
         'Billing',
         'Actions'
     ];
+
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     // @ViewChild(MatPaginator) HistoryPaginator: MatPaginator;
@@ -356,6 +359,7 @@ filename:any=[];
     @ViewChild('HistoryPaginator') HistoryPaginator: MatPaginator;
     @ViewChild('HistoryPaginator1') HistoryPaginator1: MatPaginator;
 
+    @ViewChild('HistoryPaginator12') HistoryPaginator12: MatPaginator;
 
     // @ViewChild('paginator', {static: true}) paginator: MatPaginator;
     @ViewChild('upcomingPaginator', { static: true }) upcomingPaginator: MatPaginator;
@@ -501,7 +505,10 @@ debugger;
                     docName: ['', Validators.required],
                     firstName: ['', Validators.required],
                    // lastName: [''],
-                    mobNum: ['', Validators.required],
+                    mobNum: ['', [
+                        Validators.required, // Required field
+                        Validators.pattern(/^[0-9]{10}$/) // Matches a 10-digit number
+                      ]],
                     gender: ['', Validators.required],
                     age: ['', Validators.required],
                     status: [''],
@@ -528,7 +535,10 @@ debugger;
                     docName: ['', Validators.required],
                     firstName: ['', Validators.required],
                    // lastName: [''],
-                    mobNum: ['', Validators.required],
+                    mobNum: ['',  [
+                        Validators.required, // Required field
+                        Validators.pattern(/^[0-9]{10}$/) // Matches a 10-digit number
+                      ]],
                     gender: ['', Validators.required],
                     age: ['', Validators.required],
                     status: [''],
@@ -756,7 +766,7 @@ debugger;
     }
 
     onRowClicked(row) {
-        
+        debugger
         // this.rowClickedData=row;
         this.Screen = 2;
         this.detailData = row;
@@ -868,7 +878,7 @@ gethistory(){
             if (data) {
               debugger
                 if (this.roleID != 2) {
-                    this.patientsappointments = data;
+                   this.patientsappointments = data;
 
                     if(this.patientsappointments.length>0){
                         this.Histories=true
@@ -3251,7 +3261,7 @@ debugger
 
 
     viewHistory(val) {
-
+        this.previousdata=true;
         let arr = [];
         arr.push({ PatientID: Number(val.patientID) })
         var url = 'PatientsAppointments/PatientHistory/';
@@ -3264,7 +3274,16 @@ debugger
 
                     const dateforToday = new Date();
                     this.patientHistory = data;
+                    
+
                     this.patientHistory = this.patientHistory.filter((a) => new Date(a.serviceDate) <= new Date(dateforToday));
+                    
+                    if(this.patientHistory.length>0){
+                        this.previousdata=true;
+                    }
+                    else{
+                        this.previousdata=false;
+                    }
                     // this.patientHistoryList = data;
                     // this.patientHistory.splice(0, 1); -- If you need to splice today data in Previous Visit tab 
                     // this.patientHistoryList.splice(0, 1);
@@ -3279,6 +3298,7 @@ debugger
                     }
                     debugger
                     this.patientsappointment1 =data;
+
                     this.patientsappointment1 = new MatTableDataSource(this.patientsappointment1);
                     this.patientsappointment1.paginator = this.HistoryPaginator1;
 

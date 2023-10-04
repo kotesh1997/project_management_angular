@@ -72,8 +72,8 @@
 
         </div>
 
-        <div *ngIf="Repdata" class="example-container mat-elevation-z8" #TABLE>
-            <table class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
+        <div  class="example-container mat-elevation-z8" #TABLE>
+            <table *ngIf="Repdata"class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -161,7 +161,7 @@
                 </ng-container>      
                 <ng-container matColumnDef="ModeofPayment">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Modeo f Payment
+                        Mode f Payment
                     </th>
                     <td mat-cell *matCellDef="let element">
                       <b>  {{ element.modeofPayment }}</b>

@@ -32,7 +32,7 @@ import {
 })
 export class ReportComponent implements OnInit {
     horizontalStepperForm: FormGroup;
-    Repdata: boolean;
+    Repdata: boolean=true;
     constructor(public reportService: ReportService, private _matDialog: MatDialog, private dateAdapter: DateAdapter<Date>,
         private utilitiesService: UtilitiesService, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder) {
 
@@ -73,20 +73,24 @@ exportpdf(){
       var tempObj =[];
       tempObj.push(e.patientARCID);
       tempObj.push(e.appointmentID);
+      tempObj.push(e.patient);
+      tempObj.push(e.gender);
+
+
       tempObj.push( e.age);
       tempObj.push( e.mobile);
       tempObj.push( e.serviceName);
       tempObj.push(e.serviceDate);
-      tempObj.push(e.visitCount);
       tempObj.push(e.payment);
       
       tempObj.push(e.modeofPayment);
       prepare.push(tempObj);
     });
+  
     const doc = new jsPDF();
     autoTable(doc,{
-        head: [['Patient ARCID',' SL','Patient Name & Gender','Phone Number',' Service Name','Last Visit','Visit Count','Payment','ModeofPayment']],
-        body: prepare
+        head: [['Patient ARCID',' SL','Name','Gender','Age','Mobile',' Service Name','Last Visit','Payment','Modeof Payment']],
+        body: prepare,
     });
     doc.save('Reports' + '.pdf');
   
