@@ -87,7 +87,7 @@
                     placeholder="Search Profile">
             </mat-form-field> -->
 
-            <mat-form-field floatLabel="never" class="col-span-2 search1"  appearance="outline">
+            <mat-form-field floatLabel="never" class="col-span-2 search1 custom-background"  appearance="outline">
                 <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
                     autocomplete="off" (keyup)="applyFilter()" />
                 <mat-icon matPrefix>search</mat-icon>
@@ -97,7 +97,7 @@
                 </button>
             </mat-form-field>
 
-            <mat-form-field class="col-span-2 flex flex-col" appearance="outline" *ngFor="let filter of filterSelectObj"
+            <mat-form-field class="col-span-2 flex flex-col custom-background" appearance="outline" *ngFor="let filter of filterSelectObj"
             style="padding-left:0;">
             <mat-label>Filter {{filter.name}}</mat-label>
 
@@ -111,11 +111,11 @@
                 </mat-select>
         </mat-form-field>
 
-        <mat-form-field  class="col-span-2 flex flex-col" 
+        <mat-form-field  class="col-span-2 flex flex-col custom-background" 
         style="padding-left:0;" appearance="outline">
             <!-- <mat-label>Select Day</mat-label> -->
             
-            <mat-select matNativeControl (selectionChange)="OnDaySelect($event.value)"  name="filterdayval" >
+            <mat-select matNativeControl (selectionChange)="OnDaySelect($event.value)"   name="filterdayval" >
               <mat-option *ngFor="let day of days" [value]="day.value">
                 {{day.viewValue}}
               </mat-option>

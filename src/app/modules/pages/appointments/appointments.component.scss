@@ -1370,6 +1370,16 @@ body .light .mat-mini-fab.mat-warn {
 .backBtn {
      position: absolute;
     top: 73px;
-    left: 1170px;
+    left: 980px;
     z-index: 100; 
 }
+
+/* Add this style to set the background color to white */
+.custom-background .mat-form-field-wrapper {
+    background-color: white;
+    height: 35px;
+}
+
+// .custom-background .mat-form-field-underline {
+//     background-color: white;
+// }

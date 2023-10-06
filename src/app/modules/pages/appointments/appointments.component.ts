@@ -79,7 +79,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     dose: any = [];
     when: any = [];
     duration: any = [];
-    @ViewChild('Histable') table: ElementRef;
+    @ViewChild('TABLE') table: ElementRef;
 
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild("myNameElem") myNameElem: ElementRef;
@@ -336,6 +336,7 @@ filename:any=[];
         'View'
     ];
     displayedColumnsHistory1: string[] = [
+        'sno',
         'serviceDate',
         'Amount',
         'View',
@@ -363,7 +364,6 @@ filename:any=[];
 
     // @ViewChild('paginator', {static: true}) paginator: MatPaginator;
     @ViewChild('upcomingPaginator', { static: true }) upcomingPaginator: MatPaginator;
-
     @ViewChild('appointmentForm') myForm: NgForm;
     searchKey: string;
 
@@ -461,6 +461,11 @@ else{
     //     return this.complaints.filter(fruit => fruit.complaintName.toLowerCase().includes(filterValue));
     // }
    // sorted : []
+
+   ngAfterViewInit() {
+    this.todayBookings.sort = this.sort;
+}
+ 
     ngOnInit(): void {
         this.filedisble=true;
        
@@ -942,15 +947,12 @@ exportpdf(){
     // });
 }
 ExportTOExcel() {
+    debugger
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    //let bur=XLSX.write(wb,{cellStyles:})
-
-
-    /* save to file */
     XLSX.writeFile(wb, 'SheetJS.xlsx');
 
 }
@@ -2443,9 +2445,7 @@ debugger
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
-    ngAfterViewInit() {
-        this.todayBookings.sort = this.sort;
-    }
+   
 
     //==================Code related to Vitals======================//
 

@@ -466,4 +466,7 @@ body .light .mat-mini-fab.mat-warn {
     height: 48px; /* Optional: Adjust the width and height as needed */
   }
   
-  
+  .custom-background .mat-form-field-wrapper {
+    background-color: white;
+    height: 35px;
+}

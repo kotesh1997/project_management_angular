@@ -4,16 +4,21 @@
     <div class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
         <div class="flex items-center">
-            <div class="col-lg col-md mr-1 mt-3">
-                <!-- <mat-form-field floatLabel="never" class="search">
-                    <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
+            <div class=" flex flex-cols col-lg col-md mr-1 mt-3">
+                <mat-form-field floatLabel="never" class="search custom-background">
+                    <input matInput [(ngModel)]="searchKey" placeholder="Search"
                         autocomplete="off" (keyup)="applyFilter()" />
                     <mat-icon matPrefix>search</mat-icon>
                     <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
                         (click)="onSearchClear()">
                         <mat-icon>close</mat-icon>
                     </button>
-                </mat-form-field> -->
+                </mat-form-field> &nbsp;&nbsp;
+                <!-- <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <input matInput type="text"  [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2, 3)" placeholder="Search Profile">
+                  </mat-form-field> -->
+               
                 <mat-form-field  style="width: 140px;" class="search">
                     <!-- <mat-label>Select Date</mat-label> -->
                     <input matInput [matDatepicker]="picker1"  placeholder="Select From Date" [(ngModel)]="appFromDate"  (dateChange)="onDateChange($event)"
@@ -42,11 +47,11 @@
             </div>
 
            
-            <div class="col-lg-2 mb-2 justify-end" style="margin-left: 726px;" >
+            <div class="col-lg-2 mb-2 justify-end" style="margin-left: 580px;" >
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>
 
-                <div class="flex mx-2">
+                <!-- <div class="flex mx-2">
                     <div class="mr-1">
                       <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()">
                         <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
@@ -58,7 +63,20 @@
                         <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                       </button>
                     </div>
+                  </div> -->
+                  <div class="flex mx-2">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                      </button>
+                    </div>
+                    <div class="">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()" matTooltip="Export To PDF">
+                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                      </button>
+                    </div>
                   </div>
+                  
                   
              </div>
             <!-- <div class="col-lg-9" style="text-align: end;">

@@ -21,13 +21,13 @@
                       </select>
                     </mat-form-field> -->
                     <div class="flex justify-start ml-8">
-                    <mat-form-field class=" search1 mr-2" style="width: 320px;" appearance="outline">
+                    <mat-form-field class=" search1 mr-2 custom-background" style="width: 320px;" appearance="outline">
 
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
                             placeholder="Search Profile">
                     </mat-form-field>
-                    <mat-form-field  class="flex flex-col ml-2"   appearance="outline" *ngFor="let filter of filterSelectObj"
+                    <mat-form-field  class="flex flex-col ml-2 custom-background"   appearance="outline" *ngFor="let filter of filterSelectObj"
                         style="padding-left:0;width: 320px;">
                         <mat-label>Filter {{filter.name}}</mat-label>
 
@@ -90,7 +90,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                 </div>
 
                                 <div class="flex justify-end mr-8" >
-                        <button style="margin-top: -58px;"  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                        <button style="margin-top: -42px;"  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                        
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -102,9 +102,9 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
            
             </div>
           
-            <div *ngIf="Todays " >
-
-<table class='table1 ' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
+            <div *ngIf="Todays"  >
+                <div  class="example-container mat-elevation-z8" #TABLE>
+        <table class='table1 ' mat-table [dataSource]="todaysbooked" matSort (matSortChange)="sortData($event)">
 
     <ng-container matColumnDef="SL">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="patientARCID">
@@ -424,7 +424,8 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        </table>
+        </div>
 
             </div>
     <div  *ngIf="!Todays" style="text-align: center;">
@@ -518,7 +519,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
     <div class="  ">
 
  <span class="flex justify-start ml-4">
-    <mat-form-field style="width: 320px;" class="col-span-2 search1" appearance="outline">
+    <mat-form-field style="width: 320px;" class="col-span-2 search1 custom-background" appearance="outline">
         <mat-icon matPrefix>perm_identity</mat-icon>
         <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
         placeholder="Search Profile">
@@ -805,17 +806,23 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 
             <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
-                <mat-form-field class="col-span-2 search1" appearance="outline">
+                <!-- <mat-form-field class="col-span-2 search1" appearance="outline">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2,3)"
                         placeholder="Search Profile">
-                </mat-form-field>
-
-
-
-                <div class="col-lg-2 mb-2 justify-end" style="margin-left: 926px;margin-top: 18px;" >
+                </mat-form-field> -->
+                <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                    <mat-icon matPrefix>perm_identity</mat-icon>
+                    <input matInput type="text"  [(ngModel)]="searchKey2" (keyup)="doFilter(searchKey2, 3)" placeholder="Search Profile">
+                  </mat-form-field>
                   
-                    <div class="flex mx-2">
+                 
+                
+
+
+                <div class="col-lg-2 mb-2 justify-end" style="margin-left: 800px;margin-top: 18px;" >
+                  
+                    <!-- <div class="flex mx-2">
                         <div class="mr-1">
                           <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()">
                             <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
@@ -824,6 +831,18 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                       
                         <div class="ml-2">
                           <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()">
+                            <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                          </button>
+                        </div>
+                      </div> -->
+                      <div class="flex mx-2">
+                        <div class="mr-1">
+                          <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                            <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                          </button>
+                        </div>
+                        <div class="">
+                          <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()" matTooltip="Export To PDF">
                             <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                           </button>
                         </div>
@@ -1727,10 +1746,11 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                     <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>
                     <mat-icon class="icon-size-3 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
                 </div> -->
-                <div class="col-lg-8">
+                <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-4 px-6 md:px-8 ">
+                    
                     <div  style="display: flex; align-items: center;">
                         <span> <mat-icon class="text-current" svgIcon="heroicons_outline:user-circle"></mat-icon> </span>
-                        <label class="text-2xl"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
+                        <label class="text-2xl p-2"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>    
                     </div>
                     <div style="display: flex; align-items: center;">
                     <mat-icon class="mr-1 text-current" svgIcon="heroicons_solid:phone"></mat-icon> {{detailData.mobile}} 
@@ -1738,7 +1758,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 
                 </div>
                              <!-- <mat-icon class="icon-size-14 text-current"> arrow_left</mat-icon> -->
-                <span (click)="appoinmentLink()"class="px-6 backBtn" style="color: #146aa6;display: flex;cursor: pointer;">
+                <span (click)="appoinmentLink()"class="px-6 py-8 backBtn" style="color: #146aa6;display: flex;cursor: pointer;">
                     <mat-icon (click)="appoinmentLink()" style="margin-right: 8px;"  class="icon-size-5"class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
                    <button type="button" (click)="appoinmentLink()" style="font-size: 18px;cursor: pointer;margin-left: 5px;">Back</button>  
                 </span>
@@ -1762,7 +1782,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 
             <div class="col-lg-12">
                
-                <mat-tab-group mat-align-tabs="center">
+                <mat-tab-group >
 
                     <mat-tab label="Today" *ngIf="roleID=='2'">
                         <div class="row d-flex " class="panelLabel ">
@@ -2367,8 +2387,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                    <div *ngIf="previousdata">
                         <div class="row"  *ngFor="let item of patientHistory">
                           
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                <p class="date_1"> {{item.serviceDate | date : 'd MMMM'}}</p>
+                            <div class="mat-accordion max-w-4xl mt-4 ng-star-inserted">
                                                                
                                                                 <!-- <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-start"  mat-flat-button [color]="'primary'"
                                                               style="    margin-top: 10px;
@@ -2381,16 +2400,16 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                                 <mat-accordion class="example-headers-align" multi>
-                                    <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <span class="doctr">
-                                                    {{item.doctorName}}
-                                                </span>
+                                {{item.doctorName}} &nbsp; </span> <span class="text-current pt-0.5 text-2xl">On &nbsp; {{item.serviceDate | date : 'd MMMM'}}</span>           
+                                   
                                             </mat-panel-title>
-                                            <mat-panel-description>
+                                            <!-- <mat-panel-description>
                                                 See More
-                                            </mat-panel-description>
+                                            </mat-panel-description> -->
 
 
 
@@ -2574,7 +2593,8 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                      
                          <div class="row" >
 
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="mat-accordion max-w-4xl mt-4 ng-star-inserted">
+                                
                           
 
                             </div>
@@ -2598,7 +2618,13 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                                             <div class="table1  example-container mat-elevation-z8">
                                                                 <table mat-table [dataSource]="patientsappointment1" matSort>
                                                                     <!-- Position Column -->
-                                                
+                                                                    <ng-container matColumnDef="sno">
+                                                                        <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
+                                                                            S.No
+                                                                        </th>
+                                                                        <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+
+                                                                    </ng-container>
                                                                     <ng-container matColumnDef="serviceDate">
                                                                         <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
                                                                             Receipt Date
@@ -2609,11 +2635,13 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                                                     </ng-container>
                                                                     <ng-container matColumnDef="Amount">
                                                                         <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
-                                                                         Amount
+                                                                           <!-- <span class="pt-1"><i class="material-icons">[attach_money]</i></span> -->
+                                                                         Amount &nbsp;<i class="material-icons">(</i> ₹ <i class="material-icons">)</i>
+
                                                                         </th>
                                                                         <td style="height: 48px;font-size: unset;text-align: center;" mat-cell *matCellDef="let element">
                                                                             <a (click)="onRowClicked1(element)" >
-                                                                                {{element.payment }}
+                                                                                {{element.payment }}.00
 
                                                                             </a>
                                                                         </td>
@@ -2659,7 +2687,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 
                         <div class="row" >
 
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="mat-accordion max-w-4xl mt-4 ng-star-inserted">
                           
 
                             </div>
@@ -2739,10 +2767,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                      
                     
                    </mat-tab>
-                    <span (click)="appoinmentLink()"class="px-6 backBtn" style="color: #146aa6;display: flex;cursor: pointer;">
-                        <mat-icon (click)="appoinmentLink()" style="margin-right: 8px;" class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
-                       <button type="button" (click)="appoinmentLink()" style="font-size: 18px;cursor: pointer;margin-left: 5px;">Back</button>  
-                    </span>
+                  
                 </mat-tab-group>
             </div>
         </div>

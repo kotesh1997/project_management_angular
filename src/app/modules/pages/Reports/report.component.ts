@@ -110,12 +110,41 @@ exportpdf(){
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-        //let bur=XLSX.write(wb,{cellStyles:})
-
-
-        /* save to file */
         XLSX.writeFile(wb, 'SheetJS.xlsx');
 
+    }
+    createFilter() {
+        let filterFunction = function (data: any, filter: string): boolean {
+            let searchTerms = JSON.parse(filter);
+            let isFilterSet = false;
+            for (const col in searchTerms) {
+                if (searchTerms[col].toString() !== '') {
+                    isFilterSet = true;
+                } else {
+                    delete searchTerms[col];
+                }
+            }
+
+            console.log(searchTerms);
+
+            let nameSearch = () => {
+                let found = false;
+                if (isFilterSet) {
+                    for (const col in searchTerms) {
+                        searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
+                            if (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet) {
+                                found = true
+                            }
+                        });
+                    }
+                    return found
+                } else {
+                    return true;
+                }
+            }
+            return nameSearch()
+        }
+        return filterFunction
     }
 
 

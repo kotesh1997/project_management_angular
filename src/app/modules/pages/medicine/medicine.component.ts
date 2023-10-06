@@ -19,6 +19,8 @@ import {
     NgForm,
      FormArray
 } from '@angular/forms';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
     selector: 'app-medicine',
     templateUrl: './medicine.component.html',
@@ -30,6 +32,7 @@ export class MedicineComponent implements OnInit {
     horizontalStepperForm: FormGroup;
     public form: FormGroup;
     medlist: boolean=true;
+    patientsappointments: any;
     constructor(public medicineService: MedicineService, 
         private _matDialog: MatDialog,
         private _snackBar: MatSnackBar,
@@ -84,6 +87,36 @@ export class MedicineComponent implements OnInit {
         
         }
         
+   exportpdf(){
+            debugger
+              var prepare=[];
+            this.patientsappointments.filteredData.forEach(e=>{
+              var tempObj =[];
+              tempObj.push(e.appointmentID);
+              tempObj.push(e.patient);
+              tempObj.push( e.gender);
+              tempObj.push( e.mobile);
+              tempObj.push(e.visitCount);
+              prepare.push(tempObj);
+        
+            });
+            const doc = new jsPDF();
+            autoTable(doc,{
+                head: [['AppointmentID','Patient Name ',' Gender','Phone Number','Visit Count']],
+                body: prepare
+            });
+            doc.save('Reports' + '.pdf');
+          
+            // const doc = new jsPDF("p", "pt", "a4");
+            // const source = document.getElementById("table1");
+            // // doc.text("Test", 40, 20);
+            // doc.setFontSize(20)
+            // doc.html(source, {
+            //   callback: function(pdf) {
+            //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+            //   }
+            // });
+        }
   
 
     ngOnInit(): void {
