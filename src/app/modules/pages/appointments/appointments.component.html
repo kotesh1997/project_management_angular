@@ -90,7 +90,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                 </div>
 
                                 <div class="flex justify-end mr-8" >
-                        <button style="margin-top: -42px;"  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
+                        <button style="margin-top: -39px;"  *ngIf="roleID !='2' "  class="fuse-mat-button-rounded flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                        
                             (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -535,7 +535,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
 <div class=" ">
 
     <span class="flex justify-end mr-8" >
-        <button  style="margin-top: -58px"*ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded  "  mat-flat-button [color]="'primary'"
+        <button  style="margin-top: -39px"*ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded  "  mat-flat-button [color]="'primary'"
        
         (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -2404,7 +2404,7 @@ height: 35px;margin-top: 14px;margin-left: 10px;" >
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <span class="doctr">
-                                {{item.doctorName}} &nbsp; </span> <span class="text-current pt-0.5 text-2xl">On &nbsp; {{item.serviceDate | date : 'd MMMM'}}</span>           
+                                {{item.doctorName}} &nbsp; </span> <span class="text-current pt-0.5 text-1xl">On {{item.serviceDate | date : 'd MMMM'}}</span>           
                                    
                                             </mat-panel-title>
                                             <!-- <mat-panel-description>

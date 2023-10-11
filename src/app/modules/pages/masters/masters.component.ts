@@ -35,6 +35,8 @@ import { map, startWith } from 'rxjs/operators';
     providers: [DatePipe],
 })
 export class MastersComponent implements OnInit {
+ 
+    
 
     // @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('Frontdeskpag') Frontdeskpag: MatPaginator;
@@ -120,7 +122,9 @@ export class MastersComponent implements OnInit {
         private toastService: ToastService,
         private _snackBar: MatSnackBar,
         private generalService: GeneralService,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private fb: FormBuilder) {
+            
         this.form = _formBuilder.group({
             name           : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             email          : ['', Validators.compose([Validators.required, emailValidator])],
@@ -148,6 +152,14 @@ export class MastersComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        // if(this.mon == null){
+        //     this.addItem()
+        // }
+
+        // this.addItem();
+
+
+        
         this.submitbtn=true;
         this.getRegisterationDetails();
         this.getGenders();
@@ -637,6 +649,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
        
     }
     addItem(): void {
+        debugger
         if (this.dayName == 'SUNDAY') {
             this.sun = this.slotsForm.get('sun') as FormArray;
             this.sun.push(this.createItem1());
@@ -689,31 +702,54 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     get satd(): FormArray {
         return this.slotsForm.get('sat') as FormArray;
     }
-    DeleteItem(idx: number) {
-        debugger;
-            if (this.dayName == 'SUNDAY') {
-                    this.sun.removeAt(idx);
-            }
-            else if (this.dayName == 'MONDAY') {
-                    this.mon.removeAt(idx);
-            }
-            else if (this.dayName == 'TUESDAY') {
-                    this.tue.removeAt(idx);
-            }
-            else if (this.dayName == 'WEDNESDAY') {
-                    this.wed.removeAt(idx);
-            }
-            else if (this.dayName == 'THURSDAY') {
-                    this.thu.removeAt(idx);
-            }
-            else if (this.dayName == 'FRIDAY') {
-                    this.fri.removeAt(idx);
-            }
-            else if (this.dayName == 'SATURDAY') {
-                    this.sat.removeAt(idx);
-            }
-    }
-    
+    // DeleteItem(idx: number) {
+    //     debugger;
+    //         if (this.dayName == 'SUNDAY') {
+    //                 this.sun.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'MONDAY') {
+    //                 this.mon.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'TUESDAY') {
+    //                 this.tue.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'WEDNESDAY') {
+    //                 this.wed.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'THURSDAY') {
+    //                 this.thu.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'FRIDAY') {
+    //                 this.fri.removeAt(idx);
+    //         }
+    //         else if (this.dayName == 'SATURDAY') {
+    //                 this.sat.removeAt(idx);
+    //         }
+    // }
+    DeleteItem(idx: number): void {
+        // Display a confirmation dialog
+        const isConfirmed = window.confirm('Are you sure you want to delete this item?');
+      
+        // If the user confirms, delete the item
+        if (isConfirmed) {
+          if (this.dayName == 'SUNDAY') {
+            this.sun.removeAt(idx);
+          } else if (this.dayName == 'MONDAY') {
+            this.mon.removeAt(idx);
+          } else if (this.dayName == 'TUESDAY') {
+            this.tue.removeAt(idx);
+          } else if (this.dayName == 'WEDNESDAY') {
+            this.wed.removeAt(idx);
+          } else if (this.dayName == 'THURSDAY') {
+            this.thu.removeAt(idx);
+          } else if (this.dayName == 'FRIDAY') {
+            this.fri.removeAt(idx);
+          } else if (this.dayName == 'SATURDAY') {
+            this.sat.removeAt(idx);
+          }
+        }
+      }
+      
 
     daysArray(val) {
         debugger
@@ -847,6 +883,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
 
     rowData(val) {
         debugger;
+
         this.slotsForm = this._formBuilder.group({
             //items: this._formBuilder.array([this.createItem()], [Validators.required]),
             sun: this._formBuilder.array([]),
@@ -896,6 +933,9 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         
             this.sat = this.slotsForm.get('sat') as FormArray;
             this.sat=this._formBuilder.array([]),
+
+        // this.addItem();
+
         
         // var days=""
         // var today = (new Date()).getDay();
@@ -912,6 +952,8 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         val.Name = 'MONDAY';
         val.Value = 1;
         this.day(val)
+
+       
     }
     day(val) {
         debugger;
@@ -1032,6 +1074,8 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 }));
             }
         }
+
+        this.addItem();
 
     }
 }

@@ -1,58 +1,39 @@
 <div *ngIf="(Screen==1)" class="flex flex-cols flex-auto min-w-0">
 <div class="flex flex-cols flex-auto min-w-0">
     <!-- Main -->
-    <div class="flex-auto p-9 sm:p-10" >
+    <div class="flex-auto p-9 " >
         <!-- CONTENT GOES HERE -->
-        <div class="row">
-            <div class="col-lg-3 pt-10">
-                <mat-form-field floatLabel="never" class="search">
+        <div class="flex flex-cols justify-between h-8">
+         
+                <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
-                        autocomplete="off" (keyup)="applyFilter()" />
-                    <mat-icon matPrefix>search</mat-icon>
-                    <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
-                        (click)="onSearchClear()">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-form-field>                 
-            </div>
-            <div class="flex  mx-2" style="padding-left: 850px;">
-                <div class="mr-1">
-                  <button class="mt-12" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
-                    <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
-                  </button>
-                </div>
-                <div class="">
-                  <button class="mt-12" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()" matTooltip="Export To PDF">
-                    <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
-                  </button>
-                </div>
-              </div>
-           <!-- <div class="col-lg-2">
-               
-                  <button mat-raised-button color="primary" >
-                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:document'"></mat-icon>
-                    Export as PDF
-                  </button>
-            
-                  
-                 
-                  
-            </div>  -->
-            <div class="col-lg-1 " style="float: right;position: relative;left: -270px; position: relative;bottom: 35px;">
-                <button class="fuse-mat-button-rounded" mat-flat-button [color]="'primary'"
+                    autocomplete="off" (keyup)="applyFilter()" />
+                <mat-icon matPrefix>search</mat-icon>
+                <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
+                    (click)="onSearchClear()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                </mat-form-field>
+
+            <div class="flex flex-cols gap-2" >
+              <div class="pt-2 gap-2">
+                <button class="fuse-mat-button-rounded mr-6" mat-flat-button [color]="'primary'"
                 (click)="drawer.toggle();">
                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                 <span class="ml-2">Add Medicine</span>
             </button>
-            </div>
-            <!-- <div class="col-lg-9" style="text-align: end;">
-                <button class="fuse-mat-button-rounded mt-2" mat-flat-button [color]="'primary'"
-                (click)="patientDrawer.toggle()">
-                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                <span class="ml-2">New Patient</span>
-            </button>
-               
-            </div> -->
+            
+                <button class="mr-1 mt-1"  mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                  <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                </button>
+              
+                
+                  <button class="mr-20 mt-1"   mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="exportpdf()" matTooltip="Export To PDF">
+                    <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                  </button>
+                </div>
+              </div>
+      
 
         </div><br>
 

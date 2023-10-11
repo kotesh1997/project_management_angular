@@ -130,7 +130,15 @@ export class FuseHorizontalNavigationComponent
                     title: 'My Patients',
                     type: 'basic',
                     link: '/MyPatients',
-                }
+                },
+
+                {
+                    id: 'Reports',
+                    title: 'Reports',
+                    type: 'basic',
+                    link: '/Reports',
+                },
+
             );
         } else if (this.roleID == 3) {
             //FrontDesk
@@ -149,6 +157,14 @@ export class FuseHorizontalNavigationComponent
                     //link: '/DoctorsCalender'
                     link: '/calendar'
                 },
+
+                {
+                    id: 'Reports',
+                    title: 'Reports',
+                    type: 'basic',
+                    link: '/Reports',
+                },
+
                 // {
                 //     id: 'Patients',
                 //     title: 'Patients',
@@ -178,6 +194,14 @@ export class FuseHorizontalNavigationComponent
                     //link: '/DoctorsCalender'
                     link: '/calendar'
                 },
+
+                {
+                    id: 'Reports',
+                    title: 'Reports',
+                    type: 'basic',
+                    link: '/Reports',
+                },
+
                 // {
                 //     id: 'Patients',
                 //     title: 'Patients',
@@ -220,6 +244,12 @@ export class FuseHorizontalNavigationComponent
                     title: 'My Patients',
                     type: 'basic',
                     link: '/MyPatients',
+                },
+                {
+                    id: 'Reports',
+                    title: 'Reports',
+                    type: 'basic',
+                    link: '/Reports',
                 }
             );
         }
