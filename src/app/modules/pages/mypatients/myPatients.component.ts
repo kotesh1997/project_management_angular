@@ -39,7 +39,9 @@ export class MyPatientsComponent implements AfterViewInit {
 
 
     filterdayval:any;
-    displayedColumns: string[] = ['SL', 'Patient', 'Mobile', 'LastSeen','Vitals'];
+    
+    
+    displayedColumns: string[] = ['SL','Patient', 'Mobile','LastSeen','Vitals'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -78,6 +80,24 @@ export class MyPatientsComponent implements AfterViewInit {
         this.GetAllAppointments();
 
     }
+
+   
+
+    getRelativeDate(dateString: string) {
+        const currentDate = new Date();
+        const targetDate = new Date(dateString);
+    
+        const timeDifference = currentDate.getTime() - targetDate.getTime();
+        const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+    
+        if (daysDifference === 0) {
+          return "Today";
+        } else if (daysDifference === 1) {
+          return "Yesterday";
+        } else {
+          return daysDifference + " days before";
+        }
+      }
 
     sortData(sort: MatSort) {
         

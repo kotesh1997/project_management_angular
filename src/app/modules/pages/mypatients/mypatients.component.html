@@ -136,6 +136,15 @@
                         {{ element.appointmentID }}
                     </td>
                 </ng-container>
+                <!-- <ng-container matColumnDef="SL">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      SL
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.patientID }} 
+                    </td>
+                  </ng-container> -->
+                  
                 <ng-container matColumnDef="Patient">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="patient">
                         Patient Name & Gender
@@ -145,22 +154,72 @@
                         {{ element.age }}y)
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="Mobile">
+                <!-- <ng-container matColumnDef="Mobile">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="mobile">
-                        Phone Number
+                        Phone Numbergsgg
                     </th>
                     <td mat-cell *matCellDef="let element">
                         {{ element.mobile }}
                     </td>
+                </ng-container> -->
+
+            
+               
+                <ng-container matColumnDef="Mobile">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="mobile">
+                        <ng-container *ngIf="roleID != 2">Phone Number</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="roleID != 2">{{ element.mobile }}</ng-container>
+                    </td>
                 </ng-container>
-                <ng-container matColumnDef="LastSeen">
+                
+                
+                
+                
+                
+                
+                
+                
+
+        
+                
+                
+                <!-- <ng-container matColumnDef="LastSeen">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header="serviceDate">
                         Last Seen
                     </th>
                     <td mat-cell *matCellDef="let element">
                       <b>  {{ element.serviceDate }}</b>
                     </td>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="LastSeen">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="serviceDate">
+                      Last Seen
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ getRelativeDate(element.serviceDate) }}
+                    </td>
+                  </ng-container> -->
+
+                <ng-container matColumnDef="LastSeen">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="serviceDate">
+                        Last Seen
+                    </th>
+                    <ng-container *ngIf="roleID == 2">
+                        <td mat-cell *matCellDef="let element">
+                            {{ getRelativeDate(element.serviceDate) }}
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="roleID != 2">
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.serviceDate }}
+                        </td>
+                    </ng-container>
                 </ng-container>
+                
+                  
                 <!-- <ng-container matColumnDef="Reason">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
                     <td mat-cell *matCellDef="let element">{{element.service}}</td>

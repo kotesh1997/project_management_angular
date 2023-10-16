@@ -13,12 +13,17 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, I } from '@angular/cdk/keycodes';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+
 import {
     FormBuilder,
     FormControl,
     FormGroup,
     NgForm,
-    Validators, FormArray
+    Validators,
+     FormArray,
+     
 } from '@angular/forms';
 import { GeneralService } from '../../../Services/general.service';
 import { UtilitiesService } from 'app/Services/utilities.service';
@@ -35,8 +40,12 @@ import { map, startWith } from 'rxjs/operators';
     providers: [DatePipe],
 })
 export class MastersComponent implements OnInit {
- 
     
+
+    selectedGender
+  myForm: FormGroup;
+ 
+    selected = 'option1';
 
     // @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('Frontdeskpag') Frontdeskpag: MatPaginator;
@@ -124,6 +133,8 @@ export class MastersComponent implements OnInit {
         private generalService: GeneralService,
         private http: HttpClient,
         private fb: FormBuilder) {
+
+           
             
         this.form = _formBuilder.group({
             name           : ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -134,7 +145,9 @@ export class MastersComponent implements OnInit {
               ]],
             password       : ['', Validators.required],
             confirmPassword: ['', Validators.required],
-            gender         : ['', Validators.required],
+            // gender         : [''],
+            gender: [1, [Validators.required]],
+            // gender: ['1'],
             experience     : ['', Validators.required],
             qualification  : ['', ],
             aadharNumber  : ['', Validators.compose([ Validators.minLength(12),Validators.maxLength(12)])],
@@ -157,7 +170,7 @@ export class MastersComponent implements OnInit {
         // }
 
         // this.addItem();
-
+       
 
         
         this.submitbtn=true;
@@ -229,21 +242,47 @@ export class MastersComponent implements OnInit {
     
     }
 
+    
+
+    // getGenders() {
+    //     this.utilitiesService.getAllGenders().subscribe(
+    //         (data) => {
+    //             if (data) {
+    //                 this.genders = data;
+    //                 console.log("genders", this.genders)
+    //             } else {
+    //                 this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
+    //                     "duration": 2000
+    //                 });
+    //             }
+    //         },
+
+    //         () => { }
+    //     );
+    // }
     getGenders() {
         this.utilitiesService.getAllGenders().subscribe(
-            (data) => {
-                if (data) {
-                    this.genders = data;
-                } else {
-                    this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
-                        "duration": 2000
-                    });
-                }
-            },
-
-            () => { }
+          (data) => {
+            if (data) {
+              this.genders = data;
+              console.log("genders", this.genders);
+              this.selectedGender=this.genders[0].genderID
+    
+              // Set the default value based on your data
+              const defaultGender = 'Male'; // You can change this as needed
+              this.myForm.get('gender').setValue(defaultGender);
+            } else {
+              this._snackBar.open('Something went wrong, please try again later.', 'OK', {
+                duration: 2000,
+              });
+            }
+          },
+          () => {}
         );
-    }
+      }
+
+      
+    
 
     getSpecializations() {
         this.utilitiesService.getSpecializations().subscribe(
@@ -395,6 +434,8 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.actionName = 'New Doctor';
         this.submitbtn=true;
         this.Updatebtn=false;
+        this.form.controls['gender'].setValue(1);
+
     }
      
     addUpdateRegDetails(val) {

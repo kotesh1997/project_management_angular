@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReportService } from './report.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { T } from '@angular/cdk/keycodes';
 import { UtilitiesService } from 'app/Services/utilities.service';
 import { LoaderService } from '../../../Services/loader.service';
@@ -12,6 +12,8 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DateAdapter } from '@angular/material/core';
 import { jsPDF } from "jspdf";
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 import autoTable from 'jspdf-autotable'
 
@@ -30,14 +32,19 @@ import {
     providers: [DatePipe],
     //encapsulation: ViewEncapsulation.None
 })
+
 export class ReportComponent implements OnInit {
+    dateRangeForm: FormGroup;
     horizontalStepperForm: FormGroup;
     Repdata: boolean=true;
     constructor(public reportService: ReportService, private _matDialog: MatDialog, private dateAdapter: DateAdapter<Date>,
-        private utilitiesService: UtilitiesService, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder) {
-
+        private utilitiesService: UtilitiesService,private formBuilder: FormBuilder, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder,private snackBar: MatSnackBar) {
+           
         this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     }
+
+
+    
 
     patientsappointments: any = [];
     displayedColumns: string[] = ['Patient ARCID', 'SL', 'Patient', 'Mobile', 'Service Name', 'Last Visit', 'Visit Count', 'Payment', 'ModeofPayment'];
@@ -181,6 +188,7 @@ exportpdf(){
 
         this.appt.FromDate = this.datepipe.transform(from, 'd MMM yyyy');
         this.appt.ToDate = this.datepipe.transform(to, 'd MMM yyyy');
+        
 
         // let arr = [];
         // arr.push({ fromDate: from })

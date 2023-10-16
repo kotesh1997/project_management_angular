@@ -279,6 +279,7 @@ filename:any=[];
         this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
         // this.date = new FormControl(new Date());
         this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+            
             startWith(null),
             map((fruit: string | null) => (fruit ? this._filter(fruit) : this.complaints.slice())),
         );
@@ -299,11 +300,52 @@ filename:any=[];
 
    
         }
-    filterStates(name: string) {
+        // previous
+    // filterStates(name: string) {
+    //     debugger
 
-        return this.filterPatientappointments.filter(state =>
-            state.mobile.toLowerCase().indexOf(name.toLowerCase()) === 0);
-    }
+    //     return this.filterPatientappointments.filter(state =>
+    //         state.mobile.toLowerCase().indexOf(name.toLowerCase()) === 0);
+    // }
+
+    // filterStates(name: string) {
+    //     const filteredAppointments = this.filterPatientappointments.filter(state =>
+    //       state.mobile.toLowerCase().includes(name.toLowerCase())
+    //     );
+    //     return filteredAppointments;
+    //   }
+
+    // filterStates(name: string) {
+    //     const searchTokens = name.toLowerCase().split(' ').filter(token => token.trim() !== '');
+      
+    //     const filteredAppointments = this.filterPatientappointments.filter(state => {
+    //       const mobileAndPatient = state.mobile.toLowerCase() + ' (' + state.patient.toLowerCase() + ')';
+          
+    //       // Check if all search tokens are found within the combined model string
+    //       return searchTokens.every(token => mobileAndPatient.includes(token));
+    //     });
+      
+    //     return filteredAppointments;
+    //   }
+      
+    filterStates(searchValue: string) {
+        debugger
+    const searchTokens = searchValue.toLowerCase().split(' ').filter(token => token.trim() !== '');
+
+    return this.filterPatientappointments.filter(item => {
+        const fullName = item.patient.toLowerCase();
+        const mobileAndName = item.mobile.toLowerCase() + ' (' + fullName + ')';
+
+        // Check if any of the search tokens are found within the mobile number or the mobileAndName string
+        return searchTokens.some(token => mobileAndName.includes(token));
+    });
+}
+
+    
+      
+      
+
+
     
    
 
@@ -369,6 +411,7 @@ filename:any=[];
 
 
     add(event: MatChipInputEvent): void {
+        debugger
 
         const value = (event.value || '').trim();
 
@@ -386,6 +429,7 @@ filename:any=[];
         this.fruitCtrl.setValue(null);
     }
     addComplaints(val) {
+        debugger
         let arr = [];
         arr.push({ flag: Number(1), ComplaintName: val })
         var url = 'PatientsAppointments/ComplaintsCrud/';
@@ -423,6 +467,7 @@ filename:any=[];
         
 
         search(value: string) { 
+            debugger
            if(value==""){
             return  this.medicinePrescepList=this.searchmedicine;
            }
@@ -434,12 +479,15 @@ else{
 }
       
         }
+
+        
     // applyFilters() {
       
     //     this.medicinePrescepList.filter = this.searchKey.trim().toLowerCase();
     // }
 
     remove(fruit: string): void {
+        debugger
         const index = this.fruits.indexOf(fruit);
 
         if (index >= 0) {
@@ -449,7 +497,7 @@ else{
 
 
     selected(event: MatAutocompleteSelectedEvent): void {
-
+debugger
         this.fruits.push(event.option.viewValue);
         this.fruitInput.nativeElement.value = '';
         this.fruitCtrl.setValue(null);
@@ -463,8 +511,11 @@ else{
    // sorted : []
 
    ngAfterViewInit() {
+    debugger
     this.todayBookings.sort = this.sort;
 }
+
+
  
     ngOnInit(): void {
         this.filedisble=true;
@@ -630,7 +681,10 @@ debugger;
     }
 
     applysearch(){
+        debugger
         this.mobNum=this.searchKey3;
+        this.fName=this.searchKey3;
+        
     }
     today: Date = new Date();
     onDateChange(event: MatDatepickerInputEvent<Date>) {
@@ -641,12 +695,14 @@ debugger;
 
 
     ngOnDestroy(): void {
+        debugger
         localStorage.removeItem('accessToken');
 
         
        // localStorage.removeItem('loginDetails');
     }
     filterChange(filter, event) {
+        debugger
        
         var sd=event.value.trim().toLocaleLowerCase()
         
@@ -662,6 +718,7 @@ debugger;
 
 
     getFilterObject(fullObj, key) {
+        debugger
         const uniqChk = [];
         fullObj.filter((obj) => {
             if (!uniqChk.includes(obj[key])) {
@@ -673,6 +730,7 @@ debugger;
     }
 
     createFilter() {
+        debugger
         let filterFunction = function (data: any, filter: string): boolean {
             let searchTerms = JSON.parse(filter);
             let isFilterSet = false;
@@ -705,9 +763,11 @@ debugger;
         }
         return filterFunction
     }
+    
 
 
     addStaticData() {
+        debugger
 
         this.frequencyList = [];
         this.frequencyList.push({ ID: 1, frequency: 'Day' })
@@ -846,7 +906,7 @@ debugger;
     // });
     //}
     onRowPrintPresecptionClicked(row) {
-        
+        debugger
         if (row.vitalsID) {
             
             this.detailData = row;
@@ -855,14 +915,23 @@ debugger;
         }
     }
 
-    private _filter(value: string): string[] {
-
+    private _filter(value: any): string[] {
+        debugger
         //const filterValue = value.toLowerCase();
 
         //return this.patientsappointments.data.filter(option => option.mobile.toLowerCase().includes(filterValue));
-        return this.filterPatientappointments.filter(option => option.mobile.includes(value));
+        if (!isNaN(value)) {
+
+            return this.filterPatientappointments.filter(option => option.mobile.includes(value));
+
+        }
+        else{
+            return this.filterPatientappointments.filter(option => option.patient.includes(value));
+
+        }
     }
     filterAppointemnts(event) {
+        debugger
         //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
         let filtered: any[] = [];
         let query = event.query;
@@ -1033,10 +1102,13 @@ gethistory1(){
                         //All Bookings
                        // this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
                     }
-
                     this.filterPatientappointments = data.filter(
                         (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient) === i
-                    );
+                      );
+
+                    // this.filterPatientappointments = data.filter(
+                    //     (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient) === i
+                    // );
                 }
                 this.todayDataSourceBookings.sort((a, b) => (a.status < b.status ? -1 : 1));
                 if(this.upcomingBookings.length>0){
@@ -1128,7 +1200,7 @@ gethistory1(){
     }
 
     sortData(sort: MatSort) {
-        
+        debugger
 
         if (sort.active == "patientARCID") {
             if (sort.direction == "asc")
@@ -1157,6 +1229,7 @@ gethistory1(){
     }
 
     getAllDoctors() {
+        debugger
         this.utilitiesService.getAllDoctors().subscribe(
             (data) => {
                 if (data) {
@@ -1175,6 +1248,7 @@ gethistory1(){
         );
     }
     getAllPatients() {
+        debugger
         this.patientsService.GetAllPatients().subscribe(
             (data) => {
                 if (data) {
@@ -1189,6 +1263,7 @@ gethistory1(){
     }
 
     getServices() {
+        debugger
         this.utilitiesService.getServices().subscribe(
             (data) => {
                 if (data) {
@@ -1203,6 +1278,7 @@ gethistory1(){
     }
 
     getStatuses() {
+        debugger
         this.utilitiesService.getStatuses().subscribe(
             (data) => {
                 if (data) {
@@ -1215,6 +1291,7 @@ gethistory1(){
         );
     }
     getSlots() {
+        debugger
         this.utilitiesService.getSlots().subscribe(
             (data) => {
                 if (data) {
@@ -1268,12 +1345,14 @@ gethistory1(){
         );
     }
     onSearchClear() {
+        debugger
 
        this.searchKey3 = '';
     //this.applyFilter();
     }
 
     onAppointmentClear() {
+        debugger
 
         this.step1.reset();
         this.step2.reset();
@@ -1281,7 +1360,8 @@ gethistory1(){
         // this.applyFilter();
     }
 
-    onCheckboxChange(val) {  // 
+    onCheckboxChange(val) {
+        debugger  // 
         if (val.checked == true) {
             this.isPriceTag = false;
         }
@@ -1309,6 +1389,7 @@ debugger
          this.step2.controls['amountPaid'].setValue(700);
 
         this.appointmentButton = 'Create Appointment';
+        // this.form.controls['gender'].setValue(1);
         // this.horizontalStepperForm = this._formBuilder.group({
         //     step1: this._formBuilder.group({
         //         appDate: new FormControl(new Date()),
@@ -1347,6 +1428,7 @@ debugger
 
 
         EnableModeprice(){
+            debugger
             this.ModePrice=false
         }
     applyNetPrice(val) {
@@ -1546,6 +1628,7 @@ if(disc==5){
         // Number(this.horizontalStepperForm.value.step2.price);
     }
     displayFn(user): string {
+        debugger
         return user && user.mobile ? user.mobile : '';
     }
     fName:any;
@@ -1569,11 +1652,12 @@ if(disc==5){
             this.action = 'Patient Exists save new appointment';
             this.appointID = 0;
             this.patientID = details[0].patientID;
-            this.step1.controls['firstName'].setValue(details[0].patient);
+            this.step1.controls['fName'].setValue(details[0].patient);
            // this.step1.controls['lastName'].setValue(details[0].patient);
             this.step1.controls['mobNum'].setValue(details[0].mobile);
             if (this.actionName == 'Update Existing Appointment') {
                 this.step1.controls['mobNum'].disable();
+                this.step1.controls['fName'].disable();
             }
             this.step1.controls['age'].setValue(details[0].age);
             this.step1.controls['gender'].setValue(details[0].genderID);
@@ -1581,6 +1665,8 @@ if(disc==5){
         else {
             this.action = 'New Appointment';
             this.step1.controls['mobNum'].enable();
+              this.step1.controls['fName'].enable();
+
 
         }
         this.filteredOptions = this.myControl.valueChanges
@@ -1624,6 +1710,7 @@ if(disc==5){
       
     };
     addUpdateAppointments(val) {
+        debugger
         ;
         let arr = [];
         arr.push({
@@ -1717,6 +1804,7 @@ if(disc==5){
     }
 
     updateSelectDuePay(val) {
+        debugger
         // 
         this.isDuePay = true;
         this.isPriceTag = true;
@@ -2392,20 +2480,21 @@ debugger
     }
 
 
-    // searchPatient(val) {
-    //     if (this.actionName == 'New Appointment') {
-    //         this.applyFilter(val);
-    //     }
-    //     else if (this.actionName == 'Update Appointment') {
-    //         let details = this.patients.filter(
-    //             (a) => a.mobile == val && a.appointmentID != val.appointmentID
-    //         );
-    //         if (details.length > 0) {
-    //             this.mobNoAlreadyExists = true;
-    //             this.step1.controls['mobNum'].setValue();
-    //         }
-    //     }
-    // }
+    searchPatient(val) {
+        debugger
+        if (this.actionName == 'New Appointment') {
+            this.applyFilter(val);
+        }
+        else if (this.actionName == 'Update Appointment') {
+            let details = this.patients.filter(
+                (a) => a.mobile == val && a.appointmentID != val.appointmentID
+            );
+            if (details.length > 0) {
+                this.mobNoAlreadyExists = true;
+                this.step1.controls['mobNum'].setValue();
+            }
+        }
+    }
 
     deleteAppointment(val) {
 
@@ -3023,7 +3112,11 @@ debugger
 
                     this.filterPatientappointments = data.filter(
                         (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient) === i
-                    );
+                      );
+
+                    // this.filterPatientappointments = data.filter(
+                    //     (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient) === i
+                    // );
                 }
 
                 this.todayBookings = new MatTableDataSource(this.todayBookings);
@@ -3162,7 +3255,7 @@ debugger
         );
     }
     setValues(val) {
-
+debugger
         this.flag = '2';
         this.vitalsID = val.vitalsID;
         this.PatientID = val.patientID;
@@ -3511,7 +3604,7 @@ let b = a.split("\\");
     }
 
     GetMedicineData() {
-
+debugger
         
         this.medicineService.GetMedicineList().subscribe(
             (data) => {
