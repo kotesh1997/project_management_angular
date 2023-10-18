@@ -6,8 +6,15 @@
     transition: background 0.2s ease-in  !important;
 }
 
+// .table1 tr:nth-child(even) {
+//     background: rgb(221, 217, 217) !important;
+// }
+// .table1 tr:nth-child(even) {
+//     background: rgba(255, 118, 51, 0.9) !important; /* 30% opacity */
+// }
+
 .table1 tr:nth-child(even) {
-    background: rgb(221, 217, 217) !important;
+    background:  #f8fdff !important; /* 30% opacity */
 }
 
 .table1 tr:hover {
@@ -48,6 +55,15 @@
 .mat-simple-snackbar-action {
     color: #ff4081;
 }
+
+/* Make the header cells darker */
+// tr.mat-header-row {
+//     height: 56px;
+//     color: white !important; 
+//     font-weight: bold !important;
+//      background-color: #A9A9A9 !important;
+// }
+
 
 .mat-simple-snackbar-action {
     line-height: 1;

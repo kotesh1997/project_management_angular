@@ -101,6 +101,8 @@ export class MastersComponent implements OnInit {
     dayID: any = 1
     submitButton: boolean = true;
 
+
+
     doctorID: any;
     msg: any;
     sunItems: FormArray;
@@ -241,6 +243,13 @@ export class MastersComponent implements OnInit {
        // this.day(data);
     
     }
+
+    selectedRowName: string = '';
+
+// Function to set the selected doctor's name
+updateSelect1(doctor) {
+  this.selectedRowName = doctor.name;
+}
 
     
 

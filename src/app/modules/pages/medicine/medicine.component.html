@@ -6,7 +6,7 @@
         <div class="flex flex-cols justify-between h-8">
          
                 <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
-                    <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
+                    <input matInput [(ngModel)]="searchKey" placeholder="Search"
                     autocomplete="off" (keyup)="applyFilter()" />
                 <mat-icon matPrefix>search</mat-icon>
                 <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"

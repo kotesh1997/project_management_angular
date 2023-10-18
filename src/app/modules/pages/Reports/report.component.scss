@@ -401,10 +401,16 @@ tr.mat-header-row {
     text-align: left;
 }
 
-tr.mat-header-row {
-    height: 56px;
-    background-color: rgb(193 193 193 / 21%) !important;
-}
+// tr.mat-header-row {
+//     height: 56px;
+//     background-color: rgb(193 193 193 / 21%) !important;
+// }
+// tr.mat-header-row {
+//     height: 56px;
+//     color: white !important; 
+//     font-weight: bold !important;
+//      background-color: #A9A9A9 !important;
+// }
 
 body.light .mat-flat-button.mat-warn,
 body.light .mat-raised-button.mat-warn,
@@ -470,3 +476,18 @@ body .light .mat-mini-fab.mat-warn {
     background-color: white;
     height: 35px;
 }
+// .mat-row:nth-child(even){
+//     background-color: red;
+// }
+
+// .mat-row:nth-child(odd){
+//     background-color:#ff7633;
+// }
+
+// th.mat-header-cell {
+//     background: #A9A9A9; 
+//     color: white; 
+//     font-weight: bold; 
+// }
+
+

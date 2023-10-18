@@ -1297,9 +1297,24 @@ tr.mat-header-row {
     text-align: left;
 }
 
+// tr.mat-header-row {
+//     height: 56px;
+//      background-color: rgb(193 193 193 / 21%) !important;
+// }
 tr.mat-header-row {
     height: 56px;
-    background-color: rgb(193 193 193 / 21%) !important;
+    color: white ; 
+    font-weight: bold;
+     background-color: #A9A9A9 !important;
+}
+
+ .mat-sort-header-container {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    letter-spacing: normal;
+    outline: 0;
+    color: white;
 }
 
 body.light .mat-flat-button.mat-warn,

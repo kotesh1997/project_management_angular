@@ -88,7 +88,7 @@
             </mat-form-field> -->
 
             <mat-form-field floatLabel="never" class="col-span-2 search1 custom-background"  appearance="outline">
-                <input matInput [(ngModel)]="searchKey" placeholder="Search a Patient by Name or Phone Number"
+                <input matInput [(ngModel)]="searchKey" placeholder="Search Patient by Name or Phone No"
                     autocomplete="off" (keyup)="applyFilter()" />
                 <mat-icon matPrefix>search</mat-icon>
                 <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"

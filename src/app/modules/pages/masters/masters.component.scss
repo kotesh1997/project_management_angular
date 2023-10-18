@@ -5,7 +5,7 @@
 .weekDays-selector input[type=radio] + label {
     display: inline-block;
     border-radius: 6px;
-    background: #dddddd;
+   // background: #dddddd;
     height: 40px;
     width: 100px;
     margin-right: 3px;
@@ -203,10 +203,11 @@ tr.mat-header-row {
     text-align: left;
 }
 
-tr.mat-header-row {
-    height: 56px;
-    background-color: rgb(193 193 193 / 21%) !important;
-}
+// tr.mat-header-row {
+//     height: 56px;
+//     background-color: rgb(193 193 193 / 21%) !important;
+// }
+
 
 body.light .mat-flat-button.mat-warn,
 body.light .mat-raised-button.mat-warn,
@@ -276,5 +277,13 @@ body .light .mat-mini-fab.mat-warn {
     margin-right: 10px; /* Adjust the margin as needed for spacing between fields */
 }
 
+// th.mat-header-cell {
+//     background: darkgray; 
+//     color: white; 
+//     font-weight: bold; 
+// }
 
-
+.active5{
+    color: #f0f3f5;
+    background: #146aa6;
+}
