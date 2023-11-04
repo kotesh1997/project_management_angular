@@ -15,7 +15,8 @@ import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-
+import { forkJoin } from 'rxjs';
+import {MatSlideToggleChange, MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {
     FormBuilder,
     FormControl,
@@ -24,6 +25,7 @@ import {
     Validators,
      FormArray,
      
+     
 } from '@angular/forms';
 import { GeneralService } from '../../../Services/general.service';
 import { UtilitiesService } from 'app/Services/utilities.service';
@@ -31,6 +33,7 @@ import { ToastService } from 'app/Services/toastservice';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { FuseDrawerComponent } from '@fuse/components/drawer';
 
 @Component({
   selector: 'app-masters',
@@ -41,7 +44,6 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class MastersComponent implements OnInit {
     
-
     selectedGender
   myForm: FormGroup;
  
@@ -55,6 +57,8 @@ export class MastersComponent implements OnInit {
 
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('drawer', { static: false }) drawer: FuseDrawerComponent; // Replace 'yourDrawer' with your drawer name
+
 //   @ViewChild('paginatorPageSize') paginatorPageSize: MatPaginator;
 //   dataSourceWithPageSize = new MatTableDataSource<any>;
 
@@ -125,6 +129,17 @@ export class MastersComponent implements OnInit {
     frontdesks: boolean=true;
     assdoctortab: boolean=true;
     doctortab: boolean=true;
+    changedmon: boolean;
+    changedtue: boolean;
+    changedwed: boolean;
+    changedthu: boolean;
+    changedfri: boolean;
+    changedsat: boolean;
+    changedsun: boolean;
+    GetSlots: FormGroup;
+    orgslotsa: boolean;
+    orgslots: any=false;
+    dataset: any[];
     constructor(public patientsService: PatientsService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
@@ -249,6 +264,16 @@ export class MastersComponent implements OnInit {
 // Function to set the selected doctor's name
 updateSelect1(doctor) {
   this.selectedRowName = doctor.name;
+}
+isAllDays:boolean=false;
+onToggleChange(event:MatSlideToggleChange){
+if(event.checked){
+this.isAllDays=event.checked
+
+}
+else if(!event.checked){
+    this.isAllDays=event.checked
+}
 }
 
     
@@ -413,7 +438,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
 
     addActionForm(val)
     {
-        this.actionName = 'Jr Doctor'
+        this.actionName = 'Asst Doctor'
         this.form.reset();
         this.flag = '1';
         this.roleID = '5';
@@ -451,6 +476,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         debugger;
         if (this.flag == '1') {
             this.msg = this.actionName + ' data added successfully ..!!';
+           
         }
         else if (this.flag == '2') {
             //this.msg = 'Doctor with same mobile no alreay Exists ..!!';
@@ -482,13 +508,18 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                 if (data == '100') {
                     ;
                     this.getRegisterationDetails();
+                    this.drawer.close();
                     this.form.reset();
+
                     this._snackBar.open(this.msg, 'ok', {
                         "duration": 2000
                     });
                 }
                 else if (data == '101') {
-                    this._snackBar.open(this.msg, 'ok', {
+                    // this._snackBar.open(this.msg, 'ok', {
+                    //     "duration": 2000
+                    // });
+                    this._snackBar.open('Mobile Number already Exist ..!!', 'No', {
                         "duration": 2000
                     });
 
@@ -511,7 +542,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.roleID=(val.roleID).toString();
         if(this.roleID =='5')
         {
-            this.actionName = 'Jr Doctor';
+            this.actionName = 'Asst Doctor';
         }
         else if(  this.roleID == '3')
         {
@@ -551,7 +582,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.roleID=val.roleID;
         if(this.roleID =='5')
         {
-            this.actionName = 'Jr Doctor';
+            this.actionName = 'Asst Doctor';
         }
         else if(  this.roleID == '3')
         {
@@ -695,8 +726,24 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             to: ['', Validators.required],
         });
     }
-    chnaged(){
-       
+    chnaged(tme:any,id:any){
+        debugger
+        var data1=[];
+        this.dataset=[];
+        this.dataset.push({
+            Day: id
+            , Start: tme.value.from
+            , Ending: tme.value.to
+        })
+    }
+    chnaged1(time:any,id:any){
+        // var data1=[];
+        // this.dataset=[];
+        // this.dataset.push({
+        //     Day: 7
+        //     , Start: time.value.from
+        //     , Ending: time.value.to
+        // })
     }
     addItem(): void {
         debugger
@@ -728,6 +775,14 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             this.sat = this.slotsForm.get('sat') as FormArray;
             this.sat.push(this.createItem1());
         }
+debugger
+if(!this.orgslots){
+
+    this.GetSlots=this.slotsForm;
+    this.orgslots=true;
+    console.log("GetSlots11",this.GetSlots)
+
+}
         this.submitButton=false;
         this.submitButton1=true;
     }
@@ -777,6 +832,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     //         }
     // }
     DeleteItem(idx: number): void {
+        debugger
         // Display a confirmation dialog
         const isConfirmed = window.confirm('Are you sure you want to delete this item?');
       
@@ -802,6 +858,243 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
       
 
     daysArray(val) {
+debugger
+
+
+if(this.isAllDays){
+
+    this.dataset
+    
+    this.slotsArr = [];
+    if(val.sun.length!=0){
+        for (var i = 0; i < val.sun.length; i++) {
+            if(val.sun[0].from !=null ){
+            this.slotsArr.push({
+                  Day: 7
+                , Start: val.sun[i].from.Timings
+                , Ending: val.sun[i].to.Timings
+            });
+        }
+        
+        
+        else{
+            val.sun=[];
+        }
+        
+        
+        
+        } 
+        if(this.dataset[0].Day !=7){
+            this.slotsArr.push({
+                Day: 7
+              , Start: this.dataset[0].Start.Timings
+              , Ending: this.dataset[0].Ending.Timings
+            });
+        }
+       
+    }
+    else{
+        this.slotsArr.push({
+            Day: 7
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });
+    }
+    
+    if(val.mon.length!=0){
+    for (var i = 0; i < val.mon.length; i++) {
+        if(val.mon[0].from !=null ){
+        this.slotsArr.push({
+            Day: 1
+            , Start: val.mon[i].from.Timings
+            , Ending: val.mon[i].to.Timings
+        });
+    }
+    else{
+        val.mon=[];
+    }
+  
+} 
+if(this.dataset[0].Day !=1){
+    this.slotsArr.push({
+        Day: 1
+      , Start: this.dataset[0].Start.Timings
+      , Ending: this.dataset[0].Ending.Timings
+    }); 
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 1
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    }
+    
+    if(val.tue.length!=0){
+    for (var i = 0; i < val.tue.length; i++) {
+        if(val.tue[0].from !=null ){
+    
+        this.slotsArr.push({
+            Day: 2
+            , Start: val.tue[i].from.Timings
+            , Ending: val.tue[i].to.Timings
+        });
+    }
+    else{
+        val.tue=[];
+    }
+    
+   
+    }
+    if(this.dataset[0].Day !=2){
+        this.slotsArr.push({
+            Day: 2
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        }); 
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 2
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    }
+    
+    if(val.wed.length!=0){
+    
+    for (var i = 0; i < val.wed.length; i++) {
+        if(val.wed[0].from !=null ){
+            this.slotsArr.push({
+                Day: 3
+                , Start: val.wed[i].from.Timings
+                , Ending: val.wed[i].to.Timings
+            });
+        }
+        else{
+            val.wed=[];
+        }
+        
+   
+    }
+    if(this.dataset[0].Day !=3){
+        this.slotsArr.push({
+            Day: 3
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        }); 
+      
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 3
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    }
+    if(val.thu.length!=0){
+    
+    for (var i = 0; i < val.thu.length; i++) {
+        if(val.thu[0].from !=null ){
+    
+        this.slotsArr.push({
+            Day: 4
+            , Start: val.thu[i].from.Timings
+            , Ending: val.thu[i].to.Timings
+        });
+    }
+    else{
+        val.thu=[];
+    }
+   
+    }
+     
+    if(this.dataset[0].Day !=4){
+        this.slotsArr.push({
+            Day: 4
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        }); 
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 4
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    }
+    
+    if(val.fri.length!=0){
+    for (var i = 0; i < val.fri.length; i++) {
+        if(val.fri[0].from !=null ){
+        this.slotsArr.push({
+            Day: 5
+            , Start: val.fri[i].from.Timings
+            , Ending: val.fri[i].to.Timings
+        });
+    }
+        else{
+            val.fri=[];
+        }
+    
+    }
+        
+    if(this.dataset[0].Day !=5){
+        this.slotsArr.push({
+            Day: 5
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        }); 
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 5
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    }
+    
+    if(val.sat.length!=0){
+    for (var i = 0; i < val.sat.length; i++) {
+        if(val.sat[0].from !=null ){
+    
+        this.slotsArr.push({
+            Day: 6
+            , Start: val.sat[i].from.Timings
+            , Ending: val.sat[i].to.Timings
+        });
+    }
+    else{
+        val.sat=[];
+    }
+    
+    } 
+    
+    if(this.dataset[0].Day !=6){
+        this.slotsArr.push({
+            Day: 6
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        }); 
+    }
+    }
+    else{
+        this.slotsArr.push({
+            Day: 6
+          , Start: this.dataset[0].Start.Timings
+          , Ending: this.dataset[0].Ending.Timings
+        });  
+    } 
+    }
+
+else{
+
+
         debugger
        // let itemArr = [];
         this.slotsArr = [];
@@ -895,6 +1188,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             val.sat=[];
         }
         }
+    }
        // this.slotsArr = [];
        // this.slotsArr = itemArr;
         
@@ -930,6 +1224,10 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             () => { }
         );
     }
+
+    
+    
+    
 
     rowData(val) {
         debugger;
@@ -1008,6 +1306,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     day(val) {
         debugger;
         //this.slotsArrForChips = []
+        this.isAllDays=false;
         this.dayName = val.Name;
         this.dayID = val.Value;
         let arr = [];
@@ -1026,6 +1325,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     this.slotsArrForChipsList = []
                     this.slotsArrForChipsList =data
                     this.slotsArrForChips = this.slotsArrForChipsList.filter(a => a.day == this.dayID)
+                    console.log("1234",this.slotsArrForChips)
                     this.availSlots();
                 }
                 else {
@@ -1075,6 +1375,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             let to1 = this.timings.filter(a => a.Timings === this.allSlots[i].ending);
             let st = st1[0]
             let to = to1[0]
+            
 
             if (this.allSlots[i].day == 7) {
                 this.sun.push(this._formBuilder.group({

@@ -55,6 +55,11 @@ declare const PDFObject: any;
     providers: [DatePipe],
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
+
+    displayedColumns1 = ['slno', 'name', 'actions'];
+    showTable = false;
+    fileSelected = false;
+
     searchmedicine: any=[];
     patientHistorys: any = [];
     ModePrice=false;
@@ -92,6 +97,8 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 
 
     @ViewChild('horizontalStepper') horizontalStepper: MatStepper;
+
+    
 
 
     durationInSeconds = 5;
@@ -226,6 +233,8 @@ filename:any=[];
     Todays: boolean=true;
     hidePaginator: boolean;
     previousdata: boolean=true;
+    selectedPrice: any;
+    selectedfiles: File[];
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -246,6 +255,8 @@ filename:any=[];
         private dateAdapter: DateAdapter<Date>,
       
     ) {
+
+        
         this.yesterday.setDate(this.yesterday.getDate() - 0);
 
         // Object to create Filter for
@@ -346,7 +357,12 @@ filename:any=[];
       
 
 
-    
+handleFileUpload(event: Event) {
+    debugger
+    // Handle file upload logic here
+    // After file upload, set showTable to true
+    this.showTable = true;
+  }  
    
 
    
@@ -366,7 +382,9 @@ filename:any=[];
         'Actions',
         'Vitals',
         'View',
-        'History'
+        'History',
+        'filename',
+        'actions'
     ];
     displayedColumnsHistory: string[] = [
         'SL',
@@ -701,6 +719,9 @@ debugger;
         
        // localStorage.removeItem('loginDetails');
     }
+
+
+    
     filterChange(filter, event) {
         debugger
        
@@ -1387,6 +1408,7 @@ debugger
         this.step1.controls['mobNum'].enable();
         this.step1.controls['appDate'].setValue(new Date());
          this.step2.controls['amountPaid'].setValue(700);
+         this.selectedPrice = this.step2.controls['amountPaid'].value;
 
         this.appointmentButton = 'Create Appointment';
         // this.form.controls['gender'].setValue(1);
@@ -1442,7 +1464,8 @@ debugger
         .get('modeOfPayment');
         if (val.value==6) {
             // Remove the Validators.required validator
-            this.step2.controls['amountPaid'].setValue(0);
+            //  this.step2.controls['amountPaid'].setValue(0);
+            this.step2.controls['amountPaid'].setValue(this.selectedPrice);
 
             modeOfPaymentControl.clearValidators();
             modeOfPaymentControl.updateValueAndValidity(); 
@@ -1456,7 +1479,9 @@ debugger
 
 if(val.value==6){
 debugger
-this.step2.controls['discount'].setValue(6);
+this.step2.controls['discount'].setValue(0);
+// this.step2.controls['amountPaid'].setValue(0);
+ this.selectedPrice = this.step2.controls['amountPaid'].value;
 
 this.amounttopaid=true;
 Amounttopay.clearValidators();
@@ -1466,10 +1491,12 @@ this.ModePrice=true
 else{
     if(val.value==7){
         this.step2.controls['amountPaid'].setValue(500);
+        this.selectedPrice = this.step2.controls['amountPaid'].value;
 
     }
     if(val.value==2){
         this.step2.controls['amountPaid'].setValue(700);
+        this.selectedPrice = this.step2.controls['amountPaid'].value;
 
     }
     this.ModePrice=false  
@@ -1531,6 +1558,15 @@ Amounttopay.updateValueAndValidity();
     var disc  = this.horizontalStepperForm
     .get('step2')
     .get('discount').value;
+    if (disc == 0) { // Handle the discount of zero
+        var amtpaid = 0;
+        if (prices == 2) {
+          amtpaid = 700;
+        } else if (prices == 7) {
+          amtpaid = 500;
+        }
+        this.step2.controls['amountPaid'].setValue(amtpaid);
+      }
 if(disc==1){
     var amtpaid=0;
     if(prices==2){
@@ -2618,11 +2654,13 @@ change(){
     }
 
     DeleteItem(idx: number) {
+        debugger
         if (idx != 0) {
             this.items.removeAt(idx);
         }
     }
     DeleteMedicationItem(idx: number) {
+        debugger
         if (idx != 0) {
             this.medicationitems.removeAt(idx);
         }
@@ -2660,7 +2698,7 @@ change(){
         arr.controls = [];
         const arr1 = <FormArray>this.vitalsForm.controls.medicationitems;
         arr1.controls = [];
-        this.addItem();
+       // this.addItem();
         this.addMedicationItem();
     }
     vitalsCrud() {
@@ -2947,11 +2985,123 @@ debugger
             () => { }
         );
     }
+    // addUpdateVitals(val) {
+
+    //     let itemArr = [];
+    //     for (var i = 0; i < val.items.length; i++) {
+    //         if (val.items[i].docType != null) {
+    //             itemArr.push({
+    //                 AppointmentID: this.AppointmentID,
+    //                  //DocumentTypeID: val.items[i].docType.documentTypeID,
+
+    //                  DocumentTypeID: val.items[i].docType,
+
+
+    //                 //  , DocTypeNAme: val.items[i].Image
+    //                  DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
+    //             });
+    //         }
+    //         else {
+    //             itemArr.push({
+    //                 AppointmentID: this.AppointmentID,
+    //                 // DocumentTypeID: undefined,
+    //                 DocumentTypeID:  val.items[i].docType,
+    //                 //  , DocTypeNAme: val.items[i].Image
+    //                  DocTypeNAme: "VitalsDocs\\"
+    //             });
+    //         }
+    //     }
+    //     let medicationArr = [];
+        
+    //     for (var i = 0; i < val.medicationitems.length; i++) {
+
+    //         medicationArr.push({
+    //             vitalsID: this.AppointmentID
+    //             , medicine: val.medicationitems[i].medicine
+    //             , dose: val.medicationitems[i].dose
+    //             , when: val.medicationitems[i].when
+    //             , frequencyListMedication: val.medicationitems[i].frequencyListMedication
+    //             , duration: val.medicationitems[i].duration
+    //             , notes: val.medicationitems[i].notes,
+
+               
+
+                
+    //         });
+    //     }
+
+    //     let compArr = [];
+    //     for (var i = 0; i < this.fruits.length; i++) {
+    //         compArr.push({ ComplaintName: this.fruits[i] })
+    //     }
+    //     var DoctorCompleted = 0;
+    //     var Status = '';
+    //     if (this.roleID == 2) {
+    //         DoctorCompleted = 1;
+    //         Status = 'Completed';
+    //     }
+    //     else if (this.roleID == 5) {
+    //         Status = 'Arrived';
+    //     }
+    //     let arr = [];
+    //     arr.push({
+    //         flag: Number(this.flag)
+    //         , VitalsID: Number(this.vitalsID)
+    //         , BMI: val.BMI
+    //         , SpO2: val.SpO2
+    //         , BloodGroup: val.bloodGroup
+    //         , BP: val.bloodPressure
+    //         , Pulse: val.pulse
+    //         , Serum_Creatinine: val.serumCreatinine
+    //         , Temperature_F: val.temp
+    //         , VisitReasonID: Number(val.visitReason)
+    //         , DoctorCompleted: Number(DoctorCompleted)
+    //         , Weight: val.weight
+    //         , comp: compArr
+    //         , medicine: medicationArr
+    //         , PatientID: Number(this.PatientID)
+    //         , AppointmentID: Number(this.AppointmentID)
+    //         , vitalDocs: itemArr
+    //         , advice: val.advice
+    //         , nextVisit: val.nextVisit
+    //         , frequency: val.frequency
+    //         , pickADate: val.pickADate
+    //         , status: Status
+    //     })
+    //     var url = 'PatientsAppointments/VitalsCRUD/';
+    //     this.utilitiesService.addUpdateVitals(arr, url).subscribe(
+    //         //this.utilitiesService.CRUD(arr, url).subscribe(
+    //         (data) => {
+    //             if (data == '1') {
+
+    //                // 
+    //                // this.Screen = 1;
+    //                 // this.detailData.vitalId = this.afterSaveVitalId;
+    //                 // this.onRowClicked(this.detailData)
+    //                 this.fruits = [];
+    //                 this._snackBar.open('Submitted Successfully...!!', 'ok', {
+    //                     horizontalPosition: this.horizontalPosition,
+    //                     verticalPosition: this.verticalPosition,
+    //                     "duration": 2000,
+    //                 });
+    //                // this.getAllAppointmentsAfterSAve();
+    //                 this.Screen = 1;
+    //                 this.ngOnInit();
+                  
+    //             }
+    //             else {
+
+    //             }
+    //         },
+
+    //         () => { }
+    //     );
+    // }
     addUpdateVitals(val) {
 
         let itemArr = [];
         for (var i = 0; i < val.items.length; i++) {
-            if (val.items[i].docType != null) {
+           if (val.items[i].docType != null) {
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
                      //DocumentTypeID: val.items[i].docType.documentTypeID,
@@ -2969,7 +3119,7 @@ debugger
                     // DocumentTypeID: undefined,
                     DocumentTypeID:  val.items[i].docType,
                     //  , DocTypeNAme: val.items[i].Image
-                     DocTypeNAme: "VitalsDocs\\"
+                    DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
         }
@@ -3286,6 +3436,210 @@ debugger
 
         }
     }
+    // @ViewChild('fileInput') fileInput: ElementRef;
+    // openFileInput() {
+    //     this.fileInput.nativeElement.click();
+    //   }
+    // handleFileInput(event: Event) {
+    //     const files = (event.target as HTMLInputElement).files;
+    //     this.uploadFiles(files);
+    //   }
+    // onDragOver(event: Event) {
+    //     debugger
+    //     event.preventDefault();
+    //   }
+    
+    //   onDrop(event: Event) {
+    //     debugger
+    //     event.preventDefault();
+    //     const files = (event as DragEvent).dataTransfer.files;
+    //     this.uploadFiles(files);
+    //   }
+    //   uploadFiles(files: FileList) {
+    //     if (files.length === 0) {
+    //       return; // No files to handle
+    //     }
+      
+    //     // Assuming you want to process all files using FileReader and populate the dataSource
+    //     const fileArray = Array.from(files); // Convert FileList to an array
+      
+    //     const promises = fileArray.map((file) => {
+    //       return new Promise<void>((resolve, reject) => { // Explicitly specify 'void' type
+    //         const reader = new FileReader();
+      
+    //         reader.onload = (event) => {
+    //           // Handle the file content here, e.g., you can display the file name in the console
+    //           console.log(`Uploaded file: ${file.name}`);
+      
+    //           // Resolve the promise when the file is processed
+    //           resolve();
+    //         };
+      
+    //         reader.readAsDataURL(file);
+    //       });
+    //     });
+      
+    //     // Wait for all promises to complete before updating the dataSource
+    //     Promise.all(promises)
+    //       .then(() => {
+    //         // All files have been processed
+    //         this.selectedfiles=fileArray
+    //         this.dataSource = new MatTableDataSource(fileArray);
+    //         // item.patchValue({
+    //         //     fileName: files[0].name,
+    //         // })
+    //         // You can also add any additional logic, like enabling submit or updating the filenames.
+    //        // this.submitenable = true;
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error processing files:', error);
+    //       });
+    //   }
+
+    detectFiles1(event) {
+        debugger
+                //this.urls = [];
+                let files = event.target.files;
+                
+                var reader = new FileReader();
+        
+                reader.readAsDataURL(event.target.files[0]); // read file as data url
+          
+                reader.onload = (event) => { // called once readAsDataURL is completed
+              
+                }
+        
+                if (files) {
+                    for (let file of files) {
+                        let reader = new FileReader();
+                        reader.onload = (e: any) => {
+        
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                    this.fileChange(event);
+                }
+                
+                this.items = this.vitalsForm.get('items') as FormArray;
+                this.items.push(this.createItem2(files[0].name));
+                this.fileSelected = true;
+              
+            }
+            detectFiles2(files1) {
+        debugger
+                //this.urls = [];
+                let files = files1;
+                
+                var reader = new FileReader();
+        
+                reader.readAsDataURL(files1[0]); // read file as data url
+          
+                // reader.onload = (files1) => { // called once readAsDataURL is completed
+              
+                // }
+        
+                if (files) {
+                    for (let file of files) {
+                        let reader = new FileReader();
+                        reader.onload = (e: any) => {
+        
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                    this.fileChange1(files1);
+                }
+                
+                this.items = this.vitalsForm.get('items') as FormArray;
+                this.items.push(this.createItem2(files[0].name));
+              
+            }
+            createItem2(fileName): FormGroup {
+                return this._formBuilder.group({
+                    Image: [fileName],
+                    fileName: [fileName, Validators.required],
+                    docType: [''],
+                });
+            }
+            @ViewChild('fileInput') fileInput: ElementRef;
+        
+            openFileInput() {
+                this.fileInput.nativeElement.click();
+              }
+              onDragOver(event: DragEvent): void {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            
+              onDragLeave(event: DragEvent): void {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            
+              onDrop(event: DragEvent): void {
+                event.preventDefault();
+                event.stopPropagation();
+               
+                const files = (event as DragEvent).dataTransfer.files;
+                this.detectFiles2(files)
+              }
+              uploadFiles(files: FileList) {
+                if (files.length === 0) {
+                  return; // No files to handle
+                }
+              
+                // Assuming you want to process all files using FileReader and populate the dataSource
+                const fileArray = Array.from(files); // Convert FileList to an array
+              
+                const promises = fileArray.map((file) => {
+                  return new Promise<void>((resolve, reject) => { // Explicitly specify 'void' type
+                    const reader = new FileReader();
+              
+                    reader.onload = (event) => {
+                      // Handle the file content here, e.g., you can display the file name in the console
+                      console.log(`Uploaded file: ${file.name}`);
+              
+                      // Resolve the promise when the file is processed
+                      resolve();
+                    };
+              
+                    reader.readAsDataURL(file);
+                  });
+                });
+              
+                // Wait for all promises to complete before updating the dataSource
+                Promise.all(promises)
+                  .then(() => {
+                    // All files have been processed
+                    this.selectedfiles=fileArray
+                    this.dataSource = new MatTableDataSource(fileArray);
+                    // item.patchValue({
+                    //     fileName: files[0].name,
+                    // })
+                    // You can also add any additional logic, like enabling submit or updating the filenames.
+                   // this.submitenable = true;
+                  })
+                  .catch((error) => {
+                    console.error('Error processing files:', error);
+                  });
+              }
+              fileChange1(event) {
+        
+        
+                let fileList = event;
+        
+                let fileToUpload = <File>fileList[0];
+                const formData = new FormData();
+               
+                formData.append('file', fileToUpload, fileToUpload.name);
+                this.http.post(this.API_URL + 'PatientsAppointments/upload', formData, { reportProgress: true })
+                    .subscribe(data => {
+        
+                        this.fileName = fileList[0].name;
+        
+        
+                    });
+            }
+
     detectFiles(event, item) {
 
         //this.urls = [];
@@ -3315,6 +3669,8 @@ debugger
                 fileName: files[0].name,
             })
         }
+
+      
     }
 
     //This is for Uploading Multiple Image

@@ -396,10 +396,10 @@ tr.mat-footer-row {
     text-align: left;
 }
 
-// tr.mat-header-row {
-//     height: 56px;
-//     background-color: rgb(193 193 193 / 21%) !important;
-// }
+tr.mat-header-row {
+    height: 56px;
+    background-color: rgb(193 193 193 / 21%) !important;
+}
 
 body.light .mat-flat-button.mat-warn,
 body.light .mat-raised-button.mat-warn,
@@ -455,9 +455,9 @@ body .light .mat-mini-fab.mat-warn {
     background-color: white;
     height: 35px;
 }
-// th.mat-header-cell {
-//     background: #A9A9A9; 
-//     color: white; 
-//     font-weight: bold; 
-// }
+th.mat-header-cell {
+    background: #A9A9A9; 
+    color: white; 
+    font-weight: bold; 
+}
 

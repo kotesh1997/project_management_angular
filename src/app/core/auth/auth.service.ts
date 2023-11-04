@@ -12,6 +12,7 @@ export class AuthService {
     private messageSource = new BehaviorSubject<any>(1);
     currentMessage = this.messageSource.asObservable();
     private API_URL: any = environment.API_URL;
+    isAuthenticated: any;
     /**
      * Constructor
      */

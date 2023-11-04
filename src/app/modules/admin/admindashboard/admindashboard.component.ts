@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdmindashboardService } from './admindashboard.service';
+import { Router } from '@angular/router'; 
+
 
 @Component({
   selector: 'app-admindashboard',
@@ -10,7 +12,7 @@ import { AdmindashboardService } from './admindashboard.service';
 export class AdmindashboardComponent implements OnInit {
   doctorDetails: any; errorMessage: any;
 
-  constructor(private admindashboardService: AdmindashboardService) { }
+  constructor(private admindashboardService: AdmindashboardService,private router: Router) { }
 
   ngOnInit(): void {
     this.getDoctors();
@@ -32,4 +34,5 @@ export class AdmindashboardComponent implements OnInit {
 
     );
   }
+  
 }

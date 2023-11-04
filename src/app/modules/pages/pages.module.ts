@@ -57,15 +57,16 @@ import { PatientHistoryComponent } from './patient-history/patient-history.compo
 import { MyPatientsService } from './mypatients/mypatients.service';
  import { ReportService } from './Reports/report.service';
 import { MedicineService } from './medicine/medicine.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-const Routes: Route[] = [
+ const Routes: Route[] = [
     { path: 'Appointments', component: AppointmentsComponent },
-    { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
+    // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
     { path: 'Patients', component: PatientsComponent },
     { path: 'MyPatients', component: MyPatientsComponent },
     { path: 'Medicine', component:  MedicineComponent},
      { path: 'Reports', component: ReportComponent },
-    { path: 'Admindashboard', component: AdmindashboardComponent },
+    // { path: 'Admindashboard', component: AdmindashboardComponent },
     //{ path: 'Admindashboard', component: MastersComponent },
     { path: 'Employess', component: MastersComponent },
     { path: 'PatientHist', component: PatientHistoryComponent },
@@ -94,6 +95,7 @@ const Routes: Route[] = [
         MatSortModule,
         MatInputModule,
         MatFormFieldModule,
+        MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(Routes),

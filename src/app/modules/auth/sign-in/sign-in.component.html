@@ -31,7 +31,7 @@
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
             <!-- class="w-12" -->
-            <div style="width: 60%;" >
+            <div>
                 <img src="assets/images/logo/LOGO-Clinic.svg" />
             </div>
 
@@ -134,8 +134,8 @@
                 </div>
 
                 <!-- Submit button -->
-                <button
-                class="fuse-mat-button-large w-full mt-6"
+                <!-- <button
+                class="fuse-mat-button-large w-full mt-6 text-w text-white"
                 mat-flat-button
                 style="background-color: #ff7633" 
                 [disabled]="signInForm.disabled"
@@ -148,7 +148,41 @@
                     [mode]="'indeterminate'"
                 >
                 </mat-progress-spinner>
-            </button>
+            </button> -->
+            <button
+            class="fuse-mat-button-large w-full mt-6 h-10"
+            [disabled]="signInForm.invalid"
+            (click)="signIn()"
+            [ngStyle]="{
+              'background-color': signInForm.invalid ? '#ccc' : '#ff7633',
+              'border-radius.px': 30
+            }"
+            style="position: relative;"
+            onmouseover="this.style.backgroundColor='#ff7555'"
+            onmouseout="this.style.backgroundColor='#ff7633'"
+            onmouseover="if (!this.disabled) { this.style.backgroundColor = '#E36A33'; }"
+            onmouseout="if (!this.disabled) { this.style.backgroundColor = '#ff7633'; }"
+          >
+            <span class="text-white">Sign in</span>
+                <mat-progress-spinner 
+              *ngIf="signInForm.disabled"
+              [diameter]="24"
+              [mode]="'indeterminate'"
+              style="color: white;"
+              [ngStyle]="{
+                'position': 'absolute',
+                'top': '50%',
+                'left': '60%',
+                'transform': 'translate(-50%, -50%)'
+                
+              }"
+            ></mat-progress-spinner>
+          </button>
+          
+
+          
+              
+
                 <!-- <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button

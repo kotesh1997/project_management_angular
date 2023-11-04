@@ -57,6 +57,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     {
         return this._check('/');
     }
+    
 
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods

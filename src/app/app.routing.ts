@@ -3,6 +3,15 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { AdmindashboardComponent } from './modules/admin/admindashboard/admindashboard.component';
+import { ReportComponent } from './modules/pages/Reports/report.component';
+import { AppointmentsComponent } from './modules/pages/appointments/appointments.component';
+import { DoctorsCalenderComponent } from './modules/pages/doctors-calender/doctors-calender.component';
+import { MastersComponent } from './modules/pages/masters/masters.component';
+import { MedicineComponent } from './modules/pages/medicine/medicine.component';
+import { MyPatientsComponent } from './modules/pages/mypatients/myPatients.component';
+import { PatientHistoryComponent } from './modules/pages/patient-history/patient-history.component';
+import { PatientsComponent } from './modules/pages/patients/patients.component';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -44,10 +53,12 @@ export const appRoutes: Route[] = [
         component: LayoutComponent,
         data: {
             layout: 'empty'
+            
         },
         children: [
             { path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule) },
             { path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule) }
+            
         ]
     },
 
@@ -60,6 +71,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
+           
         ]
     },
 
@@ -75,6 +87,19 @@ export const appRoutes: Route[] = [
         children: [
             { path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule) },
             { path: 'calendar', loadChildren: () => import('app/modules/admin/apps/calendar/calendar.module').then(m => m.CalendarModule) },
+            { path: 'Admindashboard', loadChildren: () => import ('app/modules/admin/admindashboard/admindashboard.module').then(m=> m.AdmindashboardModule) },
+            { path: 'Pages', loadChildren: () => import ('app/modules/pages/pages.module').then(m=> m.PagesModule) },
+            
+            // { path: 'Appointments', component: AppointmentsComponent },
+            // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
+            // { path: 'Patients', component: PatientsComponent },
+            // { path: 'MyPatients', component: MyPatientsComponent },
+            // { path: 'Medicine', component:  MedicineComponent},
+            //  { path: 'Reports', component: ReportComponent },
+            // { path: 'Admindashboard', component: AdmindashboardComponent },
+            // //{ path: 'Admindashboard', component: MastersComponent },
+            // { path: 'Employess', component: MastersComponent },
+            // { path: 'PatientHist', component: PatientHistoryComponent },
         ]
     },
     // Pages routes

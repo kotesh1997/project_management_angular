@@ -1066,10 +1066,10 @@ img {
     line-height: 24px;
 }
 
-.mat-cell,
-.mat-footer-cell {
-    font-size: 12px;
-}
+// .mat-cell,
+// .mat-footer-cell {
+//     font-size: 12px;
+// }
 
 th.mat-header-cell,
 td.mat-cell,
@@ -1268,13 +1268,13 @@ tr.mat-footer-row {
     padding: 0;
 }
 
-tr.mat-header-row {
-    height: 30px !important;
-}
+// tr.mat-header-row {
+//     height: 30px !important;
+// }
 
-tr.mat-header-row {
-    height: 30px;
-}
+// tr.mat-header-row {
+//     height: 30px;
+// }
 
 .mat-form-field-infix {
     display: block;
@@ -1394,8 +1394,16 @@ body .light .mat-mini-fab.mat-warn {
     height: 35px;
 }
 
-
-
+.mouseover {
+    cursor: pointer;
+  }
+.ccolor{
+    background-color: #A9A9A9;
+}
+.mat-step-header {
+    pointer-events: none !important;
+}
+  
 
 
   

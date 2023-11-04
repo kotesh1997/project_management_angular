@@ -34,6 +34,7 @@ import {
 })
 
 export class ReportComponent implements OnInit {
+    hasData: boolean = false;
     dateRangeForm: FormGroup;
     horizontalStepperForm: FormGroup;
     Repdata: boolean=true;
@@ -185,6 +186,11 @@ exportpdf(){
     GetPatientData(from, to) {
         //this.appt.FromDate=from;
         // this.appt.ToDate=to;
+        if (this.patientList.length > 0) {
+            this.hasData = true;
+          } else {
+            this.hasData = false;
+          }
 
         this.appt.FromDate = this.datepipe.transform(from, 'd MMM yyyy');
         this.appt.ToDate = this.datepipe.transform(to, 'd MMM yyyy');

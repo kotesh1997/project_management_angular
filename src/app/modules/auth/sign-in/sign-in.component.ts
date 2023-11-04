@@ -16,6 +16,7 @@ import { PatientsService } from 'app/modules/pages/patients/patients.service';
 })
 export class AuthSignInComponent implements OnInit {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
+    
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -26,6 +27,7 @@ export class AuthSignInComponent implements OnInit {
 
     showAlert: boolean = false;
     loginDetails: any;
+    
 
     /**
      * Constructor
@@ -37,6 +39,12 @@ export class AuthSignInComponent implements OnInit {
         private _router: Router,
         private patientsService: PatientsService
     ) {}
+
+    isSignInButtonDisabled(): boolean {
+        return this.signInForm.invalid;
+      }
+      
+      
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

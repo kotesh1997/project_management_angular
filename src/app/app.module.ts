@@ -16,6 +16,7 @@ import { UtilitiesService } from './Services/utilities.service';
 import { ToastService } from './Services/toastservice';
 import { LoaderComponent } from './loader/loader.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 const routerConfig: ExtraOptions = {
@@ -40,6 +41,7 @@ const routerConfig: ExtraOptions = {
 
         // Layout module of your application
         LayoutModule,
+        MatSlideToggleModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),

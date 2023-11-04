@@ -5,7 +5,7 @@
         <!-- CONTENT GOES HERE -->
         <div class="flex flex-cols justify-between">
             <div class=" flex flex-cols gap-2 pt-8">
-                <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                <mat-form-field *ngIf="Repdata" class="col-span-2 search1 custom-background" appearance="outline">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput [(ngModel)]="searchKey" placeholder="Search"
                     autocomplete="off" (keyup)="applyFilter()" />
@@ -35,13 +35,13 @@
                   
 
 
-                <mat-form-field style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
+                <mat-form-field *ngIf="Repdata" style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [matDatepicker]="picker1" [max]="toDate" placeholder="Select From Date"  [matDatepickerFilter]="fromDateFilter" [(ngModel)]="fromDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
                   
-                  <mat-form-field style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
+                  <mat-form-field *ngIf="Repdata" style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [matDatepicker]="picker2" [min]="fromDate" placeholder="Select To Date" [matDatepickerFilter]="toDateFilter" [(ngModel)]="toDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
@@ -49,7 +49,7 @@
                   
                   
                 
-         <div class="pt-4">
+         <div class="pt-4" *ngIf="Repdata">
                 <button style="padding-top: 30px;" mat-raised-button color="primary" (click)="GetPatientData(appFromDate,appToDate)" >
                     Search
                   </button> 
@@ -57,7 +57,7 @@
             </div>
 
            
-            <div class="pt-4">
+            <div class="pt-4" *ngIf="Repdata">
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>
 
@@ -84,7 +84,7 @@
             <table *ngIf="Repdata"class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Patient ARCID
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -96,7 +96,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="SL">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         SL
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -107,7 +107,7 @@
                     </tfoot>     -->
                 </ng-container>
                 <ng-container matColumnDef="Patient">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Patient Name & Gender
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -119,7 +119,7 @@
                     </tfoot> -->
                 </ng-container>
                 <ng-container matColumnDef="Mobile">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Phone Number
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -141,7 +141,7 @@
                     </tfoot> -->
                 </ng-container>
                 <ng-container matColumnDef="Last Visit">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Last Visit
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -152,7 +152,7 @@
                     </tfoot>          -->
                 </ng-container>        
                 <ng-container matColumnDef="Visit Count">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Visit Count
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -160,7 +160,7 @@
                     </td>                  
                 </ng-container>  
                 <ng-container matColumnDef="Payment">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Payment
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -168,7 +168,7 @@
                     </td>                  
                 </ng-container>      
                 <ng-container matColumnDef="ModeofPayment">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Mode Of Payment
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -182,7 +182,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons></mat-paginator>
+            <mat-paginator *ngIf="Repdata" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons></mat-paginator>
             
         </div>
 
@@ -197,7 +197,7 @@
 <br>
 <div class="center-container1">
 <h2 style="color: #146aa6;    margin-top: -59px;">
-<b>No Report  data  Found </b> 
+<b>No Reports  data  Found </b> 
 </h2>
 </div>
             <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->

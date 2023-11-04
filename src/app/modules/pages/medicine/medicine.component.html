@@ -41,7 +41,7 @@
             <table class="table1" mat-table [dataSource]="medicineList" matSort >
                 <!-- Position Column -->
                 <ng-container matColumnDef="MedicineId">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Medicine ID
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -53,7 +53,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="MedicineName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Medicine Name
                     </th>
                     <td mat-cell *matCellDef="let element">
@@ -64,7 +64,7 @@
                     </tfoot>     -->
                 </ng-container>               
                 <ng-container matColumnDef="Composition">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
                         Composition
                     </th>
                     <td mat-cell *matCellDef="let element">
