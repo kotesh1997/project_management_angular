@@ -165,7 +165,7 @@ export class MastersComponent implements OnInit {
             // gender         : [''],
             gender: [1, [Validators.required]],
             // gender: ['1'],
-            experience     : ['', Validators.required],
+            experience     : ['', ],
             qualification  : ['', ],
             aadharNumber  : ['', Validators.compose([ Validators.minLength(12),Validators.maxLength(12)])],
             pancardNumber : ['', Validators.compose([ Validators.minLength(10),Validators.maxLength(10)])],
@@ -726,10 +726,17 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             to: ['', Validators.required],
         });
     }
+    submitEnable:boolean=false;
     chnaged(tme:any,id:any){
         debugger
         var data1=[];
         this.dataset=[];
+        if(tme.value.from&&tme.value.to){
+            this.submitEnable=true
+        }
+        else{
+            this.submitEnable=false
+        }
         this.dataset.push({
             Day: id
             , Start: tme.value.from
@@ -737,6 +744,13 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         })
     }
     chnaged1(time:any,id:any){
+
+        if(time.value.from&&time.value.to){
+            this.submitEnable=true
+        }
+        else{
+            this.submitEnable=false
+        }
         // var data1=[];
         // this.dataset=[];
         // this.dataset.push({
@@ -853,6 +867,8 @@ if(!this.orgslots){
           } else if (this.dayName == 'SATURDAY') {
             this.sat.removeAt(idx);
           }
+          this.slotsArrForChips.splice(idx, 1);
+         
         }
       }
       
@@ -884,22 +900,22 @@ if(this.isAllDays){
         
         
         } 
-        if(this.dataset[0].Day !=7){
-            this.slotsArr.push({
-                Day: 7
-              , Start: this.dataset[0].Start.Timings
-              , Ending: this.dataset[0].Ending.Timings
-            });
-        }
+        // if(this.dataset[0].Day !=7){
+        //     this.slotsArr.push({
+        //         Day: 7
+        //       , Start: this.dataset[0].Start.Timings
+        //       , Ending: this.dataset[0].Ending.Timings
+        //     });
+        // }
        
     }
-    else{
-        this.slotsArr.push({
-            Day: 7
-          , Start: this.dataset[0].Start.Timings
-          , Ending: this.dataset[0].Ending.Timings
-        });
-    }
+    // else{
+    //     this.slotsArr.push({
+    //         Day: 7
+    //       , Start: this.dataset[0].Start.Timings
+    //       , Ending: this.dataset[0].Ending.Timings
+    //     });
+    // }
     
     if(val.mon.length!=0){
     for (var i = 0; i < val.mon.length; i++) {
@@ -1009,15 +1025,14 @@ if(this.dataset[0].Day !=1){
     else{
         val.thu=[];
     }
-   
-    }
-     
+    
     if(this.dataset[0].Day !=4){
-        this.slotsArr.push({
-            Day: 4
-          , Start: this.dataset[0].Start.Timings
-          , Ending: this.dataset[0].Ending.Timings
-        }); 
+    this.slotsArr.push({
+        Day: 4
+      , Start: this.dataset[0].Start.Timings
+      , Ending: this.dataset[0].Ending.Timings
+    }); 
+}
     }
     }
     else{
@@ -1040,8 +1055,6 @@ if(this.dataset[0].Day !=1){
         else{
             val.fri=[];
         }
-    
-    }
         
     if(this.dataset[0].Day !=5){
         this.slotsArr.push({
@@ -1049,6 +1062,7 @@ if(this.dataset[0].Day !=1){
           , Start: this.dataset[0].Start.Timings
           , Ending: this.dataset[0].Ending.Timings
         }); 
+    }
     }
     }
     else{
@@ -1073,15 +1087,14 @@ if(this.dataset[0].Day !=1){
         val.sat=[];
     }
     
-    } 
-    
     if(this.dataset[0].Day !=6){
-        this.slotsArr.push({
-            Day: 6
-          , Start: this.dataset[0].Start.Timings
-          , Ending: this.dataset[0].Ending.Timings
-        }); 
-    }
+    this.slotsArr.push({
+        Day: 6
+      , Start: this.dataset[0].Start.Timings
+      , Ending: this.dataset[0].Ending.Timings
+    }); 
+}
+    } 
     }
     else{
         this.slotsArr.push({
@@ -1306,6 +1319,7 @@ else{
     day(val) {
         debugger;
         //this.slotsArrForChips = []
+        this.submitEnable=false;
         this.isAllDays=false;
         this.dayName = val.Name;
         this.dayID = val.Value;

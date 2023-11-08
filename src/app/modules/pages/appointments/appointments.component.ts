@@ -2655,10 +2655,12 @@ change(){
 
     DeleteItem(idx: number) {
         debugger
-        if (idx != 0) {
+        if (idx !>= 0) {
             this.items.removeAt(idx);
         }
     }
+  
+    
     DeleteMedicationItem(idx: number) {
         debugger
         if (idx != 0) {
@@ -2753,21 +2755,28 @@ change(){
 
     getTimeChange(val) {
 
-        if (val == "No Slot") {
+        if (val == "No Slots Available") {
             this.isNoSlot = true;
         }
         else {
             this.isNoSlot = false;
         }
     }
-    onDateChanged(event: any) {
-        // Handle the date change event here
+    // onDateChanged(event: any) {
+    //     // Handle the date change event here
+    //     const selectedDate = event.value; // The selected date
+    //     console.log('Selected Date:', selectedDate);
+    //     this.getSlotsWithDocID(this.doctrids)
+    //     // Add your logic here to respond to the date change
+    //     // For example, you can update other properties or perform actions.
+    //   }
+      onDateChanged(event: any) {
         const selectedDate = event.value; // The selected date
-        console.log('Selected Date:', selectedDate);
-        this.getSlotsWithDocID(this.doctrids)
-        // Add your logic here to respond to the date change
-        // For example, you can update other properties or perform actions.
-      }
+    console.log('Selected Date:', selectedDate);
+    this.selectedDate = selectedDate; // Store the selected date
+    this.getSlotsWithDocID(this.doctrids); 
+    }
+      
     getSlotsWithDocID(val) {
         debugger
         this.doctrids=val;
@@ -2793,7 +2802,7 @@ debugger
                     this.slotsArr = data;
                     if (this.slotsArr.length == 0) {
                         //this.slotsArr[0].slot="No Slot";
-                        this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slot' });
+                        this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
                         this.step1.controls['slot'].setValue(this.slotsArr[0]);
                         this.isNoSlot = true;
                         //  this.horizontalStepperForm.setErrors({
@@ -2882,6 +2891,13 @@ debugger
 
 
                     }
+                    if (this.slotsArr.length === 0) {
+                        this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
+                        this.step1.controls['slot'].setValue(this.slotsArr[0]);
+                        this.isNoSlot = true;
+                    } else {
+                        this.isNoSlot = false;
+                    }
                 }
                 else {
 
@@ -2891,7 +2907,85 @@ debugger
 
             () => { }
         );
+       
     }
+// getSlotsWithDocID(val) {
+//     debugger;
+//     this.doctrids = val;
+//     const selectedDate = this.selectedDate;
+//     this.doctrids = val;
+//     this.selectedDate = this.step1.get('appDate').value;
+//     var d = new Date(this.selectedDate);
+//     var n = d.getDay();
+
+//     const hours = d.getHours().toString().padStart(2, '0');
+//     const minutes = d.getMinutes().toString().padStart(2, '0');
+//     const seconds = d.getSeconds().toString().padStart(2, '0');
+
+//     // Create a formatted time string
+//     this.currentTimes = `${hours}:${minutes}:${seconds}`;
+
+//     let arr = [];
+//     arr.push({
+//         DoctorID: val
+//     });
+
+//     var url = 'PatientsAppointments/DoctorsAvailabilitySlots/';
+
+//     this.utilitiesService.addUpdateVitals(arr, url).subscribe(
+//         (data) => {
+//             if (data) {
+//                 debugger;
+//                 this.slotsArr = data;
+//                 if (this.slotsArr.length === 0) {
+//                     this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
+//                     this.step1.controls['slot'].setValue(this.slotsArr[0]);
+//                     this.isNoSlot = true;
+//                 } else {
+//                     let selDate = this.datepipe.transform(this.selectedDate, 'dd MMM yyyy');
+//                     let docAppointmentsOnSelectedDate = this.allAppointments.filter(a => a.doctorID == val && this.datepipe.transform(a.serviceDate, 'dd MMM yyyy') == selDate);
+//                     let dayOfWeekNumber = d.getDay();
+
+//                     // Filter out slots that are already booked
+//                     for (let i = this.slotsArr.length - 1; i >= 0; i--) {
+//                         if (dayOfWeekNumber === 0) {
+//                             dayOfWeekNumber = 7;
+//                         }
+//                         if (i === 0) {
+//                             if (dayOfWeekNumber !== this.slotsArr[0].day) {
+//                                 this.slotsArr.splice(0, 1);
+//                             }
+//                         } else {
+//                             if (dayOfWeekNumber !== this.slotsArr[i - 1].day) {
+//                                 this.slotsArr.splice(i, 1);
+//                             } else {
+//                                 if (docAppointmentsOnSelectedDate.some(e => e.slotTime === this.slotsArr[i].slot)) {
+//                                     this.slotsArr.splice(i, 1);
+//                                 }
+//                             }
+//                         }
+//                     }
+
+//                     // Check if there are available slots after filtering
+                
+//                     if (this.slotsArr.length === 0) {
+//                         this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
+//                         this.step1.controls['slot'].setValue(this.slotsArr[0]);
+//                         this.isNoSlot = true;
+//                     } else {
+//                         this.isNoSlot = false;
+//                     }
+//                 }
+//             } else {
+//                 // Handle the case where data is not available
+//             }
+//         },
+//         (error) => {
+//             // Handle the error case
+//         }
+//     );
+// }
+
 
     getSlotsWithDocIDEdit(val, slotTime) {
 
@@ -2910,7 +3004,7 @@ debugger
                     this.slotsArr = data;
                     if (this.slotsArr.length == 0) {
                         //this.slotsArr[0].slot="No Slot";
-                        this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slot' });
+                        this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
                         this.step1.controls['slot'].setValue(this.slotsArr[0]);
                         //  this.horizontalStepperForm.setErrors({
                         //                 invalid: true,
@@ -2939,6 +3033,9 @@ debugger
             () => { }
         );
     }
+
+   
+    
 
 //    bindMobileNo(){
         
@@ -3119,7 +3216,7 @@ debugger
                     // DocumentTypeID: undefined,
                     DocumentTypeID:  val.items[i].docType,
                     //  , DocTypeNAme: val.items[i].Image
-                    DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
+                   // DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
         }
