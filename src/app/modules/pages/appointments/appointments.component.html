@@ -1087,7 +1087,8 @@
                                 <mat-form-field class="col-lg-4" appearance="outline">
                                     <mat-label>Full Name</mat-label>
                                     <input matInput [formControlName]="'firstName'" 
-                                    pattern="[a-zA-Z][a-zA-Z ]+" required [readonly]="isDuePay" [(ngModel)]="fName"/>
+                                    pattern = "[a-zA-Z][a-zA-Z .]+"
+                                    required [readonly]="isDuePay" [(ngModel)]="fName"/>
                                 </mat-form-field>
 
                                 <!-- <mat-form-field class="col-lg-4" appearance="outline">

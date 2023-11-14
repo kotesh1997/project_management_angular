@@ -868,11 +868,16 @@
                                     [disabled]="slotsForm.invalid || submitButton " type="button">
                                                     Submit
                                                 </button> -->
-                                                <button  type="button"    style="cursor: pointer;"
+                                                <!-- <button  type="button"    style="cursor: pointer;"
                                                 [ngClass]="(slotsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
-                                                addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid"   >
+                                                addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid">
                                                Submit
-                                                  </button>
+                                                  </button> -->
+                                                  <button  type="button"    style="cursor: pointer;"
+                                                   (click)="
+                                                  addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="!submitEnable" [ngClass]="{'btnsub1': submitEnable, 'btnsub': !submitEnable}">
+                                                 Submit
+                                                    </button>
                                                 <!-- <button class="px-8"  style="cursor: pointer;"mat-flat-button  [color]="'primary'" [ngClass]="(slotsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
                                                 addSlots(slotsForm.value);scheduleDrawer.close();" 
                                 type="button">

@@ -519,7 +519,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     // this._snackBar.open(this.msg, 'ok', {
                     //     "duration": 2000
                     // });
-                    this._snackBar.open('Mobile Number already Exist ..!!', 'No', {
+                    this._snackBar.open('Email Or Mobile No already Exist ..!!', 'No', {
                         "duration": 2000
                     });
 
@@ -789,6 +789,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             this.sat = this.slotsForm.get('sat') as FormArray;
             this.sat.push(this.createItem1());
         }
+        this.submitEnable=false
 debugger
 if(!this.orgslots){
 
@@ -868,6 +869,7 @@ if(!this.orgslots){
             this.sat.removeAt(idx);
           }
           this.slotsArrForChips.splice(idx, 1);
+          this.submitEnable=true
          
         }
       }
@@ -884,7 +886,7 @@ if(this.isAllDays){
     this.slotsArr = [];
     if(val.sun.length!=0){
         for (var i = 0; i < val.sun.length; i++) {
-            if(val.sun[0].from !=null ){
+            if(val.sun[0].from !=null && val.sun[0].from !="" ){
             this.slotsArr.push({
                   Day: 7
                 , Start: val.sun[i].from.Timings
@@ -919,7 +921,7 @@ if(this.isAllDays){
     
     if(val.mon.length!=0){
     for (var i = 0; i < val.mon.length; i++) {
-        if(val.mon[0].from !=null ){
+        if(val.mon[0].from !=null && val.mon[0].from !=""){
         this.slotsArr.push({
             Day: 1
             , Start: val.mon[i].from.Timings
@@ -949,7 +951,7 @@ if(this.dataset[0].Day !=1){
     
     if(val.tue.length!=0){
     for (var i = 0; i < val.tue.length; i++) {
-        if(val.tue[0].from !=null ){
+        if(val.tue[0].from !=null && val.tue[0].from !="" ){
     
         this.slotsArr.push({
             Day: 2
@@ -982,7 +984,7 @@ if(this.dataset[0].Day !=1){
     if(val.wed.length!=0){
     
     for (var i = 0; i < val.wed.length; i++) {
-        if(val.wed[0].from !=null ){
+        if(val.wed[0].from !=null && val.wed[0].from !="" ){
             this.slotsArr.push({
                 Day: 3
                 , Start: val.wed[i].from.Timings
@@ -1014,7 +1016,7 @@ if(this.dataset[0].Day !=1){
     if(val.thu.length!=0){
     
     for (var i = 0; i < val.thu.length; i++) {
-        if(val.thu[0].from !=null ){
+        if(val.thu[0].from !=null && val.thu[0].from !=""){
     
         this.slotsArr.push({
             Day: 4
@@ -1045,7 +1047,7 @@ if(this.dataset[0].Day !=1){
     
     if(val.fri.length!=0){
     for (var i = 0; i < val.fri.length; i++) {
-        if(val.fri[0].from !=null ){
+        if(val.fri[0].from !=null && val.fri[0].from !="" ){
         this.slotsArr.push({
             Day: 5
             , Start: val.fri[i].from.Timings
@@ -1075,7 +1077,7 @@ if(this.dataset[0].Day !=1){
     
     if(val.sat.length!=0){
     for (var i = 0; i < val.sat.length; i++) {
-        if(val.sat[0].from !=null ){
+        if(val.sat[0].from !=null && val.sat[0].from !=""){
     
         this.slotsArr.push({
             Day: 6
@@ -1113,7 +1115,7 @@ else{
         this.slotsArr = [];
 
         for (var i = 0; i < val.sun.length; i++) {
-            if(val.sun[0].from !=null ){
+            if(val.sun[0].from !=null && val.sun[0].from !="" ){
             this.slotsArr.push({
                   Day: 7
                 , Start: val.sun[i].from.Timings
@@ -1126,7 +1128,7 @@ else{
         
         }
         for (var i = 0; i < val.mon.length; i++) {
-            if(val.mon[0].from !=null ){
+            if(val.mon[0].from !=null && val.mon[0].from !="" ){
             this.slotsArr.push({
                 Day: 1
                 , Start: val.mon[i].from.Timings
@@ -1138,7 +1140,7 @@ else{
         }
         }
         for (var i = 0; i < val.tue.length; i++) {
-            if(val.tue[0].from !=null ){
+            if(val.tue[0].from !=null && val.tue[0].from !="" ){
 
             this.slotsArr.push({
                 Day: 2
@@ -1151,7 +1153,7 @@ else{
         }
         }
         for (var i = 0; i < val.wed.length; i++) {
-            if(val.wed[0].from !=null ){
+            if(val.wed[0].from !=null && val.wed[0].from !="" ){
                 this.slotsArr.push({
                     Day: 3
                     , Start: val.wed[i].from.Timings
@@ -1164,7 +1166,7 @@ else{
           
         }
         for (var i = 0; i < val.thu.length; i++) {
-            if(val.thu[0].from !=null ){
+            if(val.thu[0].from !=null && val.thu[0].from !="" ){
 
             this.slotsArr.push({
                 Day: 4
@@ -1177,7 +1179,7 @@ else{
         }
         }
         for (var i = 0; i < val.fri.length; i++) {
-            if(val.fri[0].from !=null ){
+            if(val.fri[0].from !=null && val.fri[0].from !=""){
             this.slotsArr.push({
                 Day: 5
                 , Start: val.fri[i].from.Timings
@@ -1189,7 +1191,7 @@ else{
             }
         }
         for (var i = 0; i < val.sat.length; i++) {
-            if(val.sat[0].from !=null ){
+            if(val.sat[0].from !=null && val.sat[0].from !=""){
 
             this.slotsArr.push({
                 Day: 6
@@ -1206,6 +1208,46 @@ else{
        // this.slotsArr = itemArr;
         
     }
+
+// daysArray(val) {
+//     debugger;
+
+//     if (this.isAllDays) {
+//         this.slotsArr = [];
+
+//         const selectedDay = val.mon.length > 0 ? val.mon : val.tue.length > 0 ? val.tue :
+//             val.wed.length > 0 ? val.wed : val.thu.length > 0 ? val.thu : val.fri.length > 0 ? val.fri : val.sat;
+
+//         if (selectedDay.length !== 0) {
+//             for (let i = 0; i < selectedDay.length; i++) {
+//                 if (selectedDay[0].from != null) {
+//                     this.slotsArr.push({
+//                         Day: selectedDay[0].Day,
+//                         Start: selectedDay[i].from.Timings,
+//                         Ending: selectedDay[i].to.Timings
+//                     });
+//                 } else {
+//                     selectedDay.length = 0;
+//                 }
+//             }
+//         }
+
+//         // Add the slots to other days (Monday to Saturday)
+//         for (let dayIndex = 1; dayIndex <= 6; dayIndex++) {
+//             if (dayIndex !== selectedDay[0].Day) {
+//                 this.slotsArr.push({
+//                     Day: dayIndex,
+//                     Start: this.dataset[0].Start.Timings,
+//                     Ending: this.dataset[0].Ending.Timings
+//                 });
+//             }
+//         }
+//     } else {
+       
+//     }
+// }
+
+
 
     addSlots(val) {
         
