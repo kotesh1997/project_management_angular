@@ -5,7 +5,8 @@
         <!-- CONTENT GOES HERE -->
         <div class="flex flex-cols justify-between">
             <div class=" flex flex-cols gap-2 pt-8">
-                <mat-form-field *ngIf="Repdata" class="col-span-2 search1 custom-background" appearance="outline">
+                <!-- *ngIf="Repdata" -->
+                <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput [(ngModel)]="searchKey" placeholder="Search"
                     autocomplete="off" (keyup)="applyFilter()" />
@@ -35,21 +36,21 @@
                   
 
 
-                <mat-form-field *ngIf="Repdata" style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
-                    <input matInput [matDatepicker]="picker1" [max]="toDate" placeholder="Select From Date"  [matDatepickerFilter]="fromDateFilter" [(ngModel)]="fromDate" required />
+                <mat-form-field  style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
+                    <input matInput [matDatepicker]="picker1" [max]="toDate" placeholder="Select From Date"  [matDatepickerFilter]="fromDateFilter" [(ngModel)]="appFromDate" [(ngModel)]="fromDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
                   
-                  <mat-form-field *ngIf="Repdata" style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
-                    <input matInput [matDatepicker]="picker2" [min]="fromDate" placeholder="Select To Date" [matDatepickerFilter]="toDateFilter" [(ngModel)]="toDate" required />
+                  <mat-form-field  style="width: 140px;" class="col-span-2 search1 custom-background" appearance="outline">
+                    <input matInput [matDatepicker]="picker2" [min]="fromDate" placeholder="Select To Date" [matDatepickerFilter]="toDateFilter" [(ngModel)]="appToDate" [(ngModel)]="toDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                   </mat-form-field>
                   
-                  
+                 
                 
-         <div class="pt-4" *ngIf="Repdata">
+         <div class="pt-4">
                 <button style="padding-top: 30px;" mat-raised-button color="primary" (click)="GetPatientData(appFromDate,appToDate)" >
                     Search
                   </button> 

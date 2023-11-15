@@ -76,6 +76,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 this.loginDetails = JSON.parse(
                     localStorage.getItem('loginDetails')
                 );
+                console.log("login", this.loginDetails)
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -120,5 +121,10 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     signOut(): void {
         this._router.navigate(['/sign-out']);
+    }
+
+    changepassword(){
+
+        this._router.navigate(['./password']);
     }
 }

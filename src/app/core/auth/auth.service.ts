@@ -13,6 +13,7 @@ export class AuthService {
     currentMessage = this.messageSource.asObservable();
     private API_URL: any = environment.API_URL;
     isAuthenticated: any;
+    baseURL: string;
     /**
      * Constructor
      */
@@ -134,6 +135,28 @@ export class AuthService {
         // Return the observable
         return of(true);
     }
+
+    // Change the API endpoint in AuthService
+private CHANGE_PASSWORD_ENDPOINT = 'api/Registration/ChangePassword';
+
+// ...
+
+// Inside the AuthService class
+// changePassword(newPassword: string, confirmPassword: string): Observable<any> {
+//     debugger
+//     const payload = {
+//         registrationID: 0, // You may need to obtain the registration ID from somewhere
+//         newPassword: newPassword,
+//         confirmPassword: confirmPassword,
+//     };
+
+//     return this._httpClient.put(`${this.API_URL}/${this.CHANGE_PASSWORD_ENDPOINT}`, payload);
+// }
+resetPasswords(data:any): Observable<any> {
+    // return this._httpClient.post('api/Admin/UpdatePassword', data);
+    debugger
+    return this._httpClient.put(this.API_URL + 'Registration/ChangePassword', data)
+}
 
     /**
      * Sign up

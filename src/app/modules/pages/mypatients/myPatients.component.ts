@@ -34,7 +34,7 @@ export class MyPatientsComponent implements AfterViewInit {
       ];    
     horizontalStepperForm: FormGroup;
     peteintapp: boolean=true;
-    constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder
+    constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder,private cdr: ChangeDetectorRef 
     ) { }
 
 
@@ -136,6 +136,7 @@ export class MyPatientsComponent implements AfterViewInit {
 
 
     GetAllAppointments() {
+        debugger
 
         this.mypatientsService.GetAllAppointments_Distict().subscribe(
             (data) => {
@@ -168,8 +169,12 @@ export class MyPatientsComponent implements AfterViewInit {
         );
     }
     onSearchClear() {
+        debugger
         this.searchKey = "";
         this.applyFilter();
+        this.filterdayval = ""; // Add this line to reset the selected day
+        // this.filter.modelValue
+        
     }
 
 
@@ -177,6 +182,7 @@ export class MyPatientsComponent implements AfterViewInit {
 
     // }
     OnDaySelect(event:any) {
+        debugger
         
         var selectedValue= event;
         // var selectedValue= this.filterdayval;
@@ -211,9 +217,14 @@ export class MyPatientsComponent implements AfterViewInit {
     applyFilter() {
         debugger
         this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+        this.cdr.detectChanges();
+        this.filterdayval = "";
+      
+        
     }
 
     onRowClicked(row) {
+        debugger
         
         // this.rowClickedData=row;
         this.Screen = 2;
@@ -245,6 +256,7 @@ export class MyPatientsComponent implements AfterViewInit {
 
 
     viewHistory(val) {
+        debugger
         
         let arr = [];
         arr.push({ PatientID: Number(val.patientID) })

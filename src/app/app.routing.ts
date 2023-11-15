@@ -89,6 +89,7 @@ export const appRoutes: Route[] = [
             { path: 'calendar', loadChildren: () => import('app/modules/admin/apps/calendar/calendar.module').then(m => m.CalendarModule) },
             { path: 'Admindashboard', loadChildren: () => import ('app/modules/admin/admindashboard/admindashboard.module').then(m=> m.AdmindashboardModule) },
             { path: 'Pages', loadChildren: () => import ('app/modules/pages/pages.module').then(m=> m.PagesModule) },
+            {path: 'password', loadChildren: () => import('app/layout/common/password/password.module').then(m => m.PasswordModule)},
             
             // { path: 'Appointments', component: AppointmentsComponent },
             // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },

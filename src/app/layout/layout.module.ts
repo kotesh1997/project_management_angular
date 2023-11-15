@@ -16,6 +16,7 @@ import { FuturisticLayoutModule } from 'app/layout/layouts/vertical/futuristic/f
 import { ThinLayoutModule } from 'app/layout/layouts/vertical/thin/thin.module';
 import { SettingsModule } from 'app/layout/common/settings/settings.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { PasswordComponent } from './common/password/password.component';
 
 const layoutModules = [
     // Empty
@@ -38,7 +39,8 @@ const layoutModules = [
 
 @NgModule({
     declarations: [
-        LayoutComponent
+        LayoutComponent,
+    
     ],
     imports: [
         MatIconModule,
