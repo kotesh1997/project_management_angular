@@ -60,7 +60,7 @@ import { MedicineService } from './medicine/medicine.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
  const Routes: Route[] = [
-    { path: 'Appointments', component: AppointmentsComponent },
+     { path: 'Appointments', component: AppointmentsComponent },
     // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
     { path: 'Patients', component: PatientsComponent },
     { path: 'MyPatients', component: MyPatientsComponent },

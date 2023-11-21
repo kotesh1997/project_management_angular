@@ -3,7 +3,7 @@
     <!-- Main -->
     <div class="flex-auto p-9 " >
         <!-- CONTENT GOES HERE -->
-        <div class="flex flex-cols justify-between h-8">
+        <div class="flex flex-cols justify-between">
          
                 <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search"
@@ -15,8 +15,8 @@
                 </button>
                 </mat-form-field>
 
-            <div class="flex flex-cols gap-2" >
-              <div class="pt-2 gap-2">
+            <div class="flex flex-cols gap-2 pt-2" >
+              <div class=" gap-2">
                 <button class="fuse-mat-button-rounded mr-6" mat-flat-button [color]="'primary'"
                 (click)="drawer.toggle();" style="background-color: #ff7633;">
                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -35,7 +35,7 @@
               </div>
       
 
-        </div><br>
+        </div>
 
         <div *ngIf="medlist" class="example-container mat-elevation-z8" #TABLE style="padding-bottom:20px;">
             <table class="table1" mat-table [dataSource]="medicineList" matSort >

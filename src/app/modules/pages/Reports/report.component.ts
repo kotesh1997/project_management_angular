@@ -29,6 +29,7 @@ import {
     selector: 'app-reports',
     templateUrl: './report.component.html',
     styleUrls: ['./report.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [DatePipe],
     //encapsulation: ViewEncapsulation.None
 })

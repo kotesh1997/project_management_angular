@@ -418,6 +418,14 @@ body.light .mat-elevation-z8, body .light .mat-elevation-z8 {
       height: 48px !important;
       font-size: 13px !important;
   }
+  .custom-background .mat-form-field-wrapper {
+    background-color: white;
+    height: 35px;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0.25em 0;
+    margin-top: 1rem !important;
+}
   
   .mat-form-field-appearance-outline .mat-form-field-infix {
       padding: 1em 0 1em 0em !important;
@@ -428,6 +436,11 @@ body.light .mat-elevation-z8, body .light .mat-elevation-z8 {
       position: relative;
       text-align: left;
   }
+
+  .custom-background .mat-form-field-wrapper {
+    background-color: white;
+    height: 35px;
+}
   
   tr.mat-header-row {
     //   height: 56px;

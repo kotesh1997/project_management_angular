@@ -1008,76 +1008,123 @@ if(!this.orgslots){
 
 
 
-    deleteSlot(selectedIndex:number){
-        debugger
-       const confirmation = this._fuseconfirmationservice.open({
-        title: 'Delete Slot',
-        message: 'Are you sure you want to delete this slot?',
-        actions: {
-          confirm: {
-            label: 'Delete',
-                      }
-        }
-      });
+    // deleteSlot(selectedIndex:number){
+    //     debugger
+    //    const confirmation = this._fuseconfirmationservice.open({
+    //     title: 'Delete Slot',
+    //     message: 'Are you sure you want to delete this slot?',
+    //     actions: {
+    //       confirm: {
+    //         label: 'Delete',
+    //                   }
+    //     }
+    //   });
 
-      confirmation.afterClosed().subscribe((result) => {
-        if (result === 'confirmed') {
+    //   confirmation.afterClosed().subscribe((result) => {
+    //     if (result === 'confirmed') {
 
-            if (selectedIndex >= 0 && selectedIndex < this.selectedSlots.length) {
-                // Get the item to be removed from this.selectedSlots
-                const removedItem = this.selectedSlots[selectedIndex];
+    //         if (selectedIndex >= 0 && selectedIndex < this.selectedSlots.length) {
+    //             // Get the item to be removed from this.selectedSlots
+    //             const removedItem = this.selectedSlots[selectedIndex];
             
-                // Find the index of the corresponding item in this.availbleSlots
-                const availbleIndex = this.availbleSlots.findIndex(
-                  (item) =>
-                    item.day === removedItem.day &&
-                    item.start === removedItem.start &&
-                    item.ending === removedItem.ending
-                );
+    //             // Find the index of the corresponding item in this.availbleSlots
+    //             const availbleIndex = this.availbleSlots.findIndex(
+    //               (item) =>
+    //                 item.day === removedItem.day &&
+    //                 item.start === removedItem.start &&
+    //                 item.ending === removedItem.ending
+    //             );
             
-                // Remove the item from this.selectedSlots
-                this.selectedSlots.splice(selectedIndex, 1);
+    //             // Remove the item from this.selectedSlots
+    //             this.selectedSlots.splice(selectedIndex, 1);
             
-                // Remove the corresponding item from this.availbleSlots if the index is found
-                if (availbleIndex !== -1) {
-                  this.availbleSlots.splice(availbleIndex, 1);
-                }
-              }
-              const availbleSlots2 = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
+    //             // Remove the corresponding item from this.availbleSlots if the index is found
+    //             if (availbleIndex !== -1) {
+    //               this.availbleSlots.splice(availbleIndex, 1);
+    //             }
+    //           }
+    //           const availbleSlots2 = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
 
-              let arr = [];
-              arr.push({
-                  flag: '1'
-                  , DoctorID: this.doctorID
-                  , slots: availbleSlots2
-              })
-              var url = 'PatientsAppointments/DoctorsAvailability/';
-              this.utilitiesService.addUpdateVitals(arr, url).subscribe(
-                  (data) => {
-                      if (data == '100') {;
-                          this._snackBar.open('Slot deleted successfully ..!!', 'ok', {
-                              "duration": 2000
-                          });
-                          // val.Name = 'MONDAY';
-                          // val.Value = 1;
-                          // this.day(val)
-                      }
-                      else {
-                          this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
-                              "duration": 2000
-                          });
-                      }
-                  },
+    //           let arr = [];
+    //           arr.push({
+    //               flag: '1'
+    //               , DoctorID: this.doctorID
+    //               , slots: availbleSlots2
+    //           })
+    //           var url = 'PatientsAppointments/DoctorsAvailability/';
+    //           this.utilitiesService.addUpdateVitals(arr, url).subscribe(
+    //               (data) => {
+    //                   if (data == '100') {;
+    //                       this._snackBar.open('Slot deleted successfully ..!!', 'ok', {
+    //                           "duration": 2000
+    //                       });
+    //                       // val.Name = 'MONDAY';
+    //                       // val.Value = 1;
+    //                       // this.day(val)
+    //                   }
+    //                   else {
+    //                       this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
+    //                           "duration": 2000
+    //                       });
+    //                   }
+    //               },
       
-                  () => { }
-              );
-              console.log("After Delete",this.availbleSlots)
-           }
-        });
+    //               () => { }
+    //           );
+    //           console.log("After Delete",this.availbleSlots)
+    //        }
+    //     });
        
-    }
+    // }
 
+    deleteSlot(selectedIndex: number) {
+        const userConfirmation = window.confirm('Are you sure you want to delete this slot?');
     
+        if (userConfirmation) {
+            if (selectedIndex >= 0 && selectedIndex < this.selectedSlots.length) {
+                const removedItem = this.selectedSlots[selectedIndex];
+    
+                const availbleIndex = this.availbleSlots.findIndex(
+                    (item) =>
+                        item.day === removedItem.day &&
+                        item.start === removedItem.start &&
+                        item.ending === removedItem.ending
+                );
+    
+                this.selectedSlots.splice(selectedIndex, 1);
+    
+                if (availbleIndex !== -1) {
+                    this.availbleSlots.splice(availbleIndex, 1);
+                }
+            }
+    
+            const availbleSlots2 = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
+    
+            let arr = [];
+            arr.push({
+                flag: '1',
+                DoctorID: this.doctorID,
+                slots: availbleSlots2
+            });
+            var url = 'PatientsAppointments/DoctorsAvailability/';
+            this.utilitiesService.addUpdateVitals(arr, url).subscribe(
+                (data) => {
+                    if (data == '100') {
+                        this._snackBar.open('Slot deleted successfully ..!!', 'ok', {
+                            "duration": 2000
+                        });
+                    } else {
+                        this._snackBar.open('Something went wrong please try again later ..!!', 'ok', {
+                            "duration": 2000
+                        });
+                    }
+                },
+                () => { }
+            );
+            console.log("After Delete", this.availbleSlots);
+        }
+    }
+     
 
 
 

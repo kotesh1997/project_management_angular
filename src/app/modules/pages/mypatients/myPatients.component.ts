@@ -24,7 +24,8 @@ interface Days {
 @Component({
     selector: 'app-mypatients',
     templateUrl: './mypatients.component.html',
-    styleUrls: ['./mypatients.component.scss']
+    styleUrls: ['./mypatients.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class MyPatientsComponent implements AfterViewInit {
     days: Days[] = [

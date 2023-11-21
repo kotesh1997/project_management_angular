@@ -25,7 +25,9 @@ import autoTable from 'jspdf-autotable';
     selector: 'app-medicine',
     templateUrl: './medicine.component.html',
     styleUrls: ['./medicine.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [DatePipe],
+    
     //encapsulation: ViewEncapsulation.None
 })
 export class MedicineComponent implements OnInit {

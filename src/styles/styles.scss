@@ -97,3 +97,19 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
 }
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
+.mat-flat-button{
+    
+    background-color: #ff7633  !important; 
+}
+
+.center-container {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    height: 30vh; /* Set the container height to 100% of the viewport height */
+  }
+  .mat-sort-header{
+    font: 'text-lg text-white';
+  }
