@@ -90,7 +90,7 @@ export class MedicineComponent implements OnInit {
    exportpdf(){
             debugger
               var prepare=[];
-            this.patientsappointments.filteredData.forEach(e=>{
+            this.medicineList.filteredData.forEach(e=>{
               var tempObj =[];
               tempObj.push(e.appointmentID);
               tempObj.push(e.patient);
@@ -102,10 +102,10 @@ export class MedicineComponent implements OnInit {
             });
             const doc = new jsPDF();
             autoTable(doc,{
-                head: [['AppointmentID','Patient Name ',' Gender','Phone Number','Visit Count']],
+                head: [['MedicineId','MedicineName ',' Composition']],
                 body: prepare
             });
-            doc.save('Reports' + '.pdf');
+            doc.save('Madicine' + '.pdf');
           
             // const doc = new jsPDF("p", "pt", "a4");
             // const source = document.getElementById("table1");

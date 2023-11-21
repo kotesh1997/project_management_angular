@@ -79,9 +79,7 @@ showPasswordNotMatchMessage: boolean = false;
   signOut(): void {
     this._router.navigate(['/sign-out']);
 }
-onPasswordChange() {
-  this.isPasswordEmpty = this.resetPasswordForm.get('password').value === '';
-}
+
 
 
 // rest(){
@@ -101,8 +99,41 @@ onPasswordChange() {
 //   })
 // }
 
+// rest() {
+//   debugger;
+
+//   var data = {
+//     registrationID: this.loginDetails.registrationID,
+//     newPassword: this.resetPasswordForm.controls['password'].value,
+//     confirmPassword: this.resetPasswordForm.controls['passwordConfirm'].value
+//   };
+
+//   this._authService.resetPasswords(data).subscribe(
+//     (res: any) => {
+//       debugger;
+
+//       console.log('contcats', res);
+
+//       if (res && res.status === 'success') {
+//         this.passwordChanged = true;
+//         this.successMessage = 'An error occurred while changing the password.';  
+//       } else {
+//         this.passwordChanged = false;
+//         this.successMessage = 'Password changed successfully!';
+//       }
+//       this.resetPasswordForm.reset();
+//     },
+//     error => {
+//       console.error('Error:', error);
+//       this.passwordChanged = false;
+//       this.successMessage =  'Password change failed. Please try again.';
+//     }
+//   );
+// }
+
 rest() {
-  debugger;
+  // Disable the form during submission
+  this.resetPasswordForm.disable();
 
   var data = {
     registrationID: this.loginDetails.registrationID,
@@ -112,35 +143,53 @@ rest() {
 
   this._authService.resetPasswords(data).subscribe(
     (res: any) => {
-      debugger;
-
-      console.log('contcats', res);
-
       if (res && res.status === 'success') {
         this.passwordChanged = true;
-        this.successMessage = 'An error occurred while changing the password.';  
+        this.successMessage = 'An error occurred while changing the password.';
       } else {
         this.passwordChanged = false;
         this.successMessage = 'Password changed successfully!';
+
+        // Clear form and reset flags
+        this.resetPasswordForm.reset();
+        this.showPasswordNotMatchMessage = false;
+        this.isPasswordEmpty = true;
+
+        // Manually mark both password and confirm password controls as untouched and valid
+        this.resetPasswordForm.get('password').markAsUntouched();
+        this.resetPasswordForm.get('password').setErrors(null);
+        this.resetPasswordForm.get('passwordConfirm').markAsUntouched();
+        this.resetPasswordForm.get('passwordConfirm').setErrors(null);
       }
-      this.resetPasswordForm.reset();
     },
     error => {
       console.error('Error:', error);
       this.passwordChanged = false;
-      this.successMessage =  'Password change failed. Please try again.';
+      this.successMessage = 'Password change failed. Please try again.';
     }
-  );
+  ).add(() => {
+    // Enable the form after submission (whether successful or not)
+    this.resetPasswordForm.enable();
+  });
 }
 
 
- 
+
 
   onPasswordConfirmInput(): void {
     this.showPasswordNotMatchMessage =
       this.resetPasswordForm.get('passwordConfirm').dirty &&
       this.resetPasswordForm.hasError('mustMatch');
+      this.successMessage = '';
   }
+
+onPasswordChange() {
+  this.isPasswordEmpty = this.resetPasswordForm.get('password').value === '';
+  this.successMessage = '';
+}
+
+
+
 
   togglePasswordVisibility(field: any): void {
     field.type = field.type === 'password' ? 'text' : 'password';

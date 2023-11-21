@@ -98,7 +98,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-span-2 flex flex-col custom-background" appearance="outline" *ngFor="let filter of filterSelectObj"
-            style="padding-left:0;">
+            >
             <mat-label>Filter {{filter.name}}</mat-label>
 
             <mat-select matNativeControl [(ngModel)]="filter.modelValue" name="{{filter.columnProp}}"

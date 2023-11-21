@@ -18,9 +18,9 @@
             <div class="flex flex-cols gap-2" >
               <div class="pt-2 gap-2">
                 <button class="fuse-mat-button-rounded mr-6" mat-flat-button [color]="'primary'"
-                (click)="drawer.toggle();">
+                (click)="drawer.toggle();" style="background-color: #ff7633;">
                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                <span class="ml-2">Add Medicine</span>
+                <span  class="ml-2">Add Medicine</span>
             </button>
             
                 <button class="mr-1 mt-1"  mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
@@ -75,7 +75,7 @@
                     </tfoot> -->
                 </ng-container>               
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
             </table>

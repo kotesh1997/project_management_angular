@@ -223,6 +223,12 @@ export class MyPatientsComponent implements AfterViewInit {
         
     }
 
+   
+    
+    
+   
+    
+
     onRowClicked(row) {
         debugger
         

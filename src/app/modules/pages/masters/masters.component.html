@@ -7,14 +7,22 @@
 
                 <div class="flex flex-cols justify-between pr-4 w-full min-w-0 ng-star-inserted">
 
-                    <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                    <!-- <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey,1)"
                             placeholder="Search Profile">
+                    </mat-form-field> -->
+                    <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput type="text" [(ngModel)]="searchKey" (keyup)="doFilter1(searchKey, 1)" placeholder="Search Profile">
+                        <button mat-button *ngIf="searchKey" matSuffix (click)="clearSearch()">
+                            <mat-icon >close</mat-icon>
+                        </button>
                     </mat-form-field>
+                    
                    
                     <button class="fuse-mat-button-rounded  " mat-flat-button [color]="'primary'"
-                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 29%; width: 175px;">
+                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 10%; width: 175px; background-color:#ff7633;">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Doctor</span>
                 </button>
@@ -171,8 +179,11 @@
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter2(searchKey1,1)"
                             placeholder="Search Profile">
+                            <button mat-button *ngIf="searchKey1" matSuffix (click)="clearSearch()">
+                                <mat-icon >close</mat-icon>
+                            </button>
                     </mat-form-field>
-                    <button class=""style="position: relative;top: 29%; width: 175px;;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
+                    <button class=""style="position: relative;top: 29%; width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Asst Doctor</span>
                     </button>
@@ -303,8 +314,11 @@
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey2" (keyup)="doFilter3(searchKey2,1)"
                             placeholder="Search Profile">
+                            <button mat-button *ngIf="searchKey2" matSuffix (click)="clearSearch()">
+                                <mat-icon >close</mat-icon>
+                            </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 29%; width: 175px;;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 29%; width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Front Desk</span>
                     </button>
@@ -437,8 +451,11 @@
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput type="text" [(ngModel)]="searchKey3" (keyup)="doFilter4(searchKey3,1)"
                             placeholder="Search Profile">
+                            <button mat-button *ngIf="searchKey3" matSuffix (click)="clearSearch()">
+                                <mat-icon >close</mat-icon>
+                            </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 29%;width: 175px;;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 29%;width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">Lab Assistant</span>
                     </button>
@@ -781,14 +798,14 @@
 
                 <mat-slide-toggle [(ngModel)]="isAllDays" (change)="onToggleChange($event)" style="margin-left: 620px;" [disabled]="dayName == 'SUNDAY'">Select All</mat-slide-toggle>
               
-                <fieldset class="scheduler-border" [formGroup]="slotsForm">
+                <fieldset class="scheduler-border" >
                     <ul>
-                        <li *ngFor="let item of daysArr" (click)="day(item)">
+                        <li *ngFor="let item of daysArr" (click)="dayToggle(item.Value)">
                             <div class="weekDays-selector">
                                 <input type="radio" id="{{item.id}}" class="weekday" />
                                 <!-- <span [ngClass]="item.Name === dayName ? 'day1' :'active1'">  <label  [ngClass]="{'active': item.Name === dayName}" 
                                     for="{{item.id}}">{{item.Name}}</label></span> -->
-                                    <label  [ngClass]="{'active5': item.Name === dayName,'toggle':isAllDays&&item.Name != 'SUNDAY'}" 
+                                    <label  [ngClass]="{'active5': item.Value == selectedDay,'toggle':isAllDays&&item.Name != 'SUNDAY'}" 
                                     for="{{item.id}}">{{item.Name}}</label>
                                
                             </div>
@@ -821,12 +838,22 @@
                     </span>
                 </div> -->
                 <div class="flex flex-cols">
+                    <span class="flex flex-cols gap-2" *ngFor="let item of selectedSlots">
+                        <span *ngIf="item.start && item.ending">
+                            <span class="flex justify-center bgcol chip full-width" *ngIf="selectedDay == item.day">
+                                {{ item.start }} - {{ item.ending }}
+                            </span>
+                        </span>
+                    </span>
+                </div>
+                
+                <!-- <div class="flex flex-cols">
                     <span class="flex flex-cols gap-2" *ngFor="let item of slotsArrForChips">
                         <span class="flex justify-center bgcol chip full-width" *ngIf="dayID==item.day">
                             {{item.start}} - {{item.ending}}
                         </span>
                     </span>
-                </div>
+                </div> -->
                 
 
                     <!--<div class="row" *ngFor="let item of slotsArrForChips">
@@ -848,7 +875,7 @@
                            
 
                             <button class="fuse-mat-button-rounded  " mat-flat-button [color]="'primary'"
-                            (click)="addItem()"   style="position: relative; width: 140px;">
+                            (click)="addSlot()"   style="position: relative; width: 140px; background-color: #ff7633;">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                             <span class="ml-2">Add Slots</span>
                         </button> 
@@ -873,21 +900,17 @@
                                                 addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid">
                                                Submit
                                                   </button> -->
-                                                  <button  type="button"    style="cursor: pointer;"
+                                                  <!-- <button  type="button"    style="cursor: pointer;"
                                                    (click)="
                                                   addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="!submitEnable" [ngClass]="{'btnsub1': submitEnable, 'btnsub': !submitEnable}">
                                                  Submit
-                                                    </button>
-                                                <!-- <button class="px-8"  style="cursor: pointer;"mat-flat-button  [color]="'primary'" [ngClass]="(slotsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
-                                                addSlots(slotsForm.value);scheduleDrawer.close();" 
-                                type="button">
-                                Submit
-                            </button> -->
-                                                <!-- <button class="px-8" mat-flat-button [color]="'primary'" (click)="
-                                                addSlots(slotsForm.value);scheduleDrawer.close();" [disabled]="slotsForm.invalid || submitButton "
-                                type="button">
-                                Submit
-                            </button> -->
+                                                    </button> -->
+                                                    <button  type="button"  [disabled]="!isTimeSlotsValid()"  style="cursor: pointer;" [ngClass]="{'btnsub1': isTimeSlotsValid(), 'btnsub': !isTimeSlotsValid()}"
+                                                    (click)="
+                                                   addSlots(slotsForm.value);scheduleDrawer.close();" >
+                                                  Submit
+                                                     </button>
+            
                                
                             </div>
                         
@@ -903,248 +926,35 @@
                     </div>
                    
                     
-                    <div *ngIf="dayName=='SUNDAY'">
-                        <div formArrayName="sun" *ngFor="let item of slotsForm.get('sun')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-6 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'" (selectionChange)="chnaged1(item,7)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-6 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select (selectionChange)="chnaged(item,7)" [formControlName]="'to'">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 " style="padding-top: 20px;">
-                                        <button type="button" (click)="DeleteItem(i)">
-                                            <mat-icon svgIcon="heroicons_solid:trash"  style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
+                    <div >
+                        <div *ngFor="let item of selectedSlots; let i = index;">
+                            <div class="row">
+                                <mat-form-field class="col-lg-5 col-md-6 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
+                                    <mat-label>Select from timing</mat-label>
+                                    <mat-select [(ngModel)]="item.start" (selectionChange)="change1(item.start,item.ending)">
+                                        <mat-option *ngFor="let timing of timings" [value]="timing.Timings">
+                                            {{ timing.Timings }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="col-lg-5 col-md-6 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
+                                    <mat-label>Select to timing</mat-label>
+                                    <mat-select [(ngModel)]="item.ending" (selectionChange)="change1(item.start,item.ending)">
+                                        <mat-option *ngFor="let timing of timings" [value]="timing.Timings">
+                                            {{ timing.Timings }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
+                                    <button type="button" (click)="deleteSlot(i)">
+                                        <mat-icon svgIcon="heroicons_solid:trash" style="color:red;"></mat-icon>
+                                    </button>
                                 </div>
-                              
-                                
-                                
-                                
-                            
-                            </ng-container>
+                            </div>
                         </div>
+                        
                     </div>
-                    <div *ngIf="dayName=='MONDAY'">
-                        <div formArrayName="mon" *ngFor="let item of slotsForm.get('mon')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'" (selectionChange)="chnaged1(item,1)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,1)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button" (click)="DeleteItem(i)">
-                                            <mat-icon svgIcon="heroicons_solid:trash"  style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                            
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div *ngIf="dayName=='TUESDAY'">
-                        <div formArrayName="tue" *ngFor="let item of slotsForm.get('tue')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'"(selectionChange)="chnaged1(item,2)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,2)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button">
-                                            <mat-icon svgIcon="heroicons_solid:trash" (click)="DeleteItem(i)" style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                              
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div *ngIf="dayName=='WEDNESDAY'">
-                        <div formArrayName="wed" *ngFor="let item of slotsForm.get('wed')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'"(selectionChange)="chnaged1(item,3)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,3)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button">
-                                            <mat-icon svgIcon="heroicons_solid:trash" (click)="DeleteItem(i)" style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                                
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div *ngIf="dayName=='THURSDAY'">
-                        <div formArrayName="thu" *ngFor="let item of slotsForm.get('thu')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'"(selectionChange)="chnaged1(item,4)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,4)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button">
-                                            <mat-icon svgIcon="heroicons_solid:trash" (click)="DeleteItem(i)" style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                           
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div *ngIf="dayName=='FRIDAY'">
-                        <div formArrayName="fri" *ngFor="let item of slotsForm.get('fri')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'"(selectionChange)="chnaged1(item,5)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,5)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button">
-                                            <mat-icon svgIcon="heroicons_solid:trash" (click)="DeleteItem(i)" style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                              
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div *ngIf="dayName=='SATURDAY'">
-                        <div    style="margin-bottom: -40px;"  formArrayName="sat" *ngFor="let item of slotsForm.get('sat')['controls']; let i = index;">
-                            <ng-container [formGroupName]="i">
-                                <div class="row">
-                                  <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select from timing</mat-label>
-                                        <mat-select [formControlName]="'from'"(selectionChange)="chnaged1(item,6)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                      <mat-form-field class="col-lg-5 col-md-5 col-sm-12 col-xs-12 custom-form-field" appearance="outline">
-                                        <mat-label>Select to timing</mat-label>
-                                        <mat-select [formControlName]="'to'"(selectionChange)="chnaged(item,6)">
-                                            <mat-option *ngFor="let item of timings" [value]="item">
-                                                {{ item.Timings }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field> 
-
-                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top: 20px;">
-                                        <button type="button">
-                                            <mat-icon svgIcon="heroicons_solid:trash" (click)="DeleteItem(i)" style="color:red;">
-                                            </mat-icon>
-                                        </button>
-                                    </div>
-
-
-                                </div>
-                            
-                            </ng-container>
-                        </div>
-                    </div>
+              
                 </fieldset>
 
             </div>

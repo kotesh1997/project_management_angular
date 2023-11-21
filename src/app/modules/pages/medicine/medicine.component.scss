@@ -429,10 +429,10 @@ body.light .mat-elevation-z8, body .light .mat-elevation-z8 {
       text-align: left;
   }
   
-//   tr.mat-header-row {
-//       height: 56px;
-//       background-color: rgb(193 193 193 / 21%) !important;
-//   }
+  tr.mat-header-row {
+    //   height: 56px;
+      background-color: #A9A9A9 !important;
+  }
   
   body.light .mat-flat-button.mat-warn,
   body.light .mat-raised-button.mat-warn,

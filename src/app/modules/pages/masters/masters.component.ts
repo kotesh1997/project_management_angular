@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { forkJoin } from 'rxjs';
 import {MatSlideToggleChange, MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 import {
     FormBuilder,
     FormControl,
@@ -24,6 +25,7 @@ import {
     NgForm,
     Validators,
      FormArray,
+     
      
      
 } from '@angular/forms';
@@ -34,6 +36,7 @@ import { ToastService } from 'app/Services/toastservice';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FuseDrawerComponent } from '@fuse/components/drawer';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
   selector: 'app-masters',
@@ -119,6 +122,7 @@ export class MastersComponent implements OnInit {
     allSlots: any=[];
     actionName: string = 'Doctor'
     status1: any[];
+    newDayArry=[];
     Updatebtn: boolean;
     submitButton1: boolean=false;
     searchKey: string;
@@ -140,7 +144,12 @@ export class MastersComponent implements OnInit {
     orgslotsa: boolean;
     orgslots: any=false;
     dataset: any[];
+    selectedSlots:{start:any,ending:any,day:any}[]=[];
+    availbleSlots: any=[];
+    selectedDay: number=1;
+    addedTimeSlots1: { start: any; ending: any; day: any; }[];
     constructor(public patientsService: PatientsService,
+        private _fuseconfirmationservice:FuseConfirmationService,
         private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute,
         private utilitiesService: UtilitiesService,
@@ -187,23 +196,22 @@ export class MastersComponent implements OnInit {
         // }
 
         // this.addItem();
-       
 
-        
         this.submitbtn=true;
         this.getRegisterationDetails();
         this.getGenders();
         this.getSpecializations();
         this.getStatuses();
         this.daysArr = [];
+        
         this.daysArr.push(
-            { Name: 'MONDAY', Value: '1', id: 'weekday-mon'},
-            { Name: 'TUESDAY', Value: '2', id: 'weekday-tue'},
-            { Name: 'WEDNESDAY', Value: '3', id: 'weekday-wed'},
-            { Name: 'THURSDAY', Value: '4', id: 'weekday-thu'},
-            { Name: 'FRIDAY', Value: '5', id: 'weekday-fri'},
-            { Name: 'SATURDAY', Value: '6', id: 'weekday-sat' },
-            { Name: 'SUNDAY', Value: '7', id: 'weekday-sun' },
+            { Name: 'MONDAY', Value: '1', id: 'weekday-mon', isActive:false},
+            { Name: 'TUESDAY', Value: '2', id: 'weekday-tue', isActive:false},
+            { Name: 'WEDNESDAY', Value: '3', id: 'weekday-wed', isActive:false},
+            { Name: 'THURSDAY', Value: '4', id: 'weekday-thu', isActive:false},
+            { Name: 'FRIDAY', Value: '5', id: 'weekday-fri', isActive:false},
+            { Name: 'SATURDAY', Value: '6', id: 'weekday-sat' , isActive:false},
+           //  { Name: 'SUNDAY', Value: '7', id: 'weekday-sun' , isActive:false},
         )
         this.slotsForm = this._formBuilder.group({
             //items: this._formBuilder.array([this.createItem()], [Validators.required]),
@@ -259,6 +267,109 @@ export class MastersComponent implements OnInit {
     
     }
 
+    defaultSlot(){
+    const newSlot={
+       start:'',
+       ending:'',
+       day:this.selectedDay
+    }
+    this.availbleSlots.push(newSlot)
+    this.slotbinding()
+    }
+
+
+    slotbinding(){
+        debugger
+    this.selectedSlots = []
+
+    this.selectedSlots = this.availbleSlots.filter(a => a.day === this.selectedDay);
+   console.log("check Week",this.selectedSlots)
+
+    const slot = this.availbleSlots.filter(a => a.day == this.selectedDay);
+    if (slot == undefined || slot == null || slot.length == 0) {
+      this.defaultSlot();
+    }
+
+
+    const slot1 = this.availbleSlots.filter(a => a.day == this.selectedDay);
+    const slot2 = [];
+ 
+    this.selectedSlots = slot1;
+    }
+
+    isTimeSlotsValid():boolean{
+        return this.selectedSlots.every(group => group.start&&group.ending)
+    }
+
+    addSlot(){
+        debugger
+        console.log("SelectedSlots",this.selectedSlots)
+        const newSlot={
+            start:'',
+            ending:'',
+            day:this.selectedDay
+         }
+         this.availbleSlots.push(newSlot)
+         this.slotbinding()  
+    }
+
+    dayToggle(id){
+    this.isAllDays=false;
+     this.selectedDay=id
+     this.slotbinding()  
+    }
+
+    change1(start,end){
+    debugger
+    if(start && end)
+    {
+        if(this.isAllDays){
+            this.addedTimeSlots1 = [];
+  
+      let aa = this.selectedSlots;
+      console.log("aa", aa);
+  
+      aa.forEach((each) => {
+        for (let j = 1; j <= 6; j++) {
+          if (j !== this.selectedDay) {
+            const bb = {
+              start: each.start,
+              ending: each.ending,
+              day: j,
+              // interviewermasterId: each.interviewermasterId
+            };
+            this.addedTimeSlots1.push(bb);
+          }
+        }
+      });
+
+  
+      // Filter out objects with empty "start" and "ending" properties
+      const filteredAvailableSlots = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
+      this.addedTimeSlots1 = this.addedTimeSlots1.filter((slot) => slot.start !== "" && slot.ending !== "");
+      // Combine the arrays without duplicates
+      const combinedArray = [...filteredAvailableSlots, ...this.addedTimeSlots1];
+  
+      // Remove duplicates within the same day
+      const uniqueSlotsPerDay = {};
+      this.availbleSlots = combinedArray.filter((slot) => {
+        const key = `${slot.day}_${slot.start}_${slot.ending}`;
+        if (!uniqueSlotsPerDay[key]) {
+          uniqueSlotsPerDay[key] = true;
+          return true;
+        }
+        return false;
+      });
+  
+      console.log('1117', this.availbleSlots);
+      this.slotbinding();
+        }
+
+    }
+    }
+
+
+
     selectedRowName: string = '';
 
 // Function to set the selected doctor's name
@@ -266,14 +377,61 @@ updateSelect1(doctor) {
   this.selectedRowName = doctor.name;
 }
 isAllDays:boolean=false;
-onToggleChange(event:MatSlideToggleChange){
-if(event.checked){
-this.isAllDays=event.checked
 
-}
-else if(!event.checked){
-    this.isAllDays=event.checked
-}
+onToggleChange(event: MatSlideToggleChange) {
+    debugger;
+    if (event.checked) {
+      this.isAllDays = event.checked;
+      this.addedTimeSlots1 = [];
+  
+      let aa = this.selectedSlots;
+      console.log("aa", aa);
+  
+      aa.forEach((each) => {
+        for (let j = 1; j <= 6; j++) {
+          if (j !== this.selectedDay) {
+            const bb = {
+              start: each.start,
+              ending: each.ending,
+              day: j,
+              // interviewermasterId: each.interviewermasterId
+            };
+            this.addedTimeSlots1.push(bb);
+          }
+        }
+      });
+
+  
+      // Filter out objects with empty "start" and "ending" properties
+      const filteredAvailableSlots = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
+      this.addedTimeSlots1 = this.addedTimeSlots1.filter((slot) => slot.start !== "" && slot.ending !== "");
+      // Combine the arrays without duplicates
+      const combinedArray = [...filteredAvailableSlots, ...this.addedTimeSlots1];
+  
+      // Remove duplicates within the same day
+      const uniqueSlotsPerDay = {};
+      this.availbleSlots = combinedArray.filter((slot) => {
+        const key = `${slot.day}_${slot.start}_${slot.ending}`;
+        if (!uniqueSlotsPerDay[key]) {
+          uniqueSlotsPerDay[key] = true;
+          return true;
+        }
+        return false;
+      });
+  
+      console.log('1117', this.availbleSlots);
+      this.slotbinding();
+  
+    } else if (!event.checked) {
+      this.isAllDays = event.checked;
+    }
+  }
+  
+  
+  
+
+onToggleChanges(event:MatSlideToggleChange){
+
 }
 
     
@@ -337,7 +495,7 @@ else if(!event.checked){
     }
 
     getStatuses() {
-        debugger
+        
         this.utilitiesService.getStatuses().subscribe(
             (data) => {
                 if (data) {
@@ -370,6 +528,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         arr.push({ flag: Number(this.flag) })
         var url = 'PatientsAppointments/RegisterationCRUD/';
         this.utilitiesService.CRUD(arr, url).subscribe(
+            
             (data) => {
                 if (data) {                    
                     this.totalRegDetails = data;
@@ -473,7 +632,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
      
     addUpdateRegDetails(val) {
-        debugger;
+       
         if (this.flag == '1') {
             this.msg = this.actionName + ' data added successfully ..!!';
            
@@ -536,7 +695,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
 
     updateSelect(val) {
-        debugger;
+       
         this.registrationID = val.RegistrationID
         this.flag = '2';
         this.roleID=(val.roleID).toString();
@@ -578,7 +737,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
 
     deleteDoc(val) {
-        debugger;
+       
         this.roleID=val.roleID;
         if(this.roleID =='5')
         {
@@ -681,7 +840,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
       
     };
     public doFilter3 = (value, state) => {
-        debugger
+        
         var sd=value.trim().toLocaleLowerCase()
             this.regDetailsFrontList.filter = value.trim().toLocaleLowerCase()
             // this.upcomingBookings.filter =  '';
@@ -698,7 +857,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
       
     };
     public doFilter4 = (value, state) => {
-        debugger
+        
         var sd=value.trim().toLocaleLowerCase()
             this.regDetailsLabList.filter = value.trim().toLocaleLowerCase()
             // this.upcomingBookings.filter =  '';
@@ -728,7 +887,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
     submitEnable:boolean=false;
     chnaged(tme:any,id:any){
-        debugger
+       
         var data1=[];
         this.dataset=[];
         if(tme.value.from&&tme.value.to){
@@ -744,7 +903,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         })
     }
     chnaged1(time:any,id:any){
-
+        console.log("Selected Slots",this.selectedSlots)
         if(time.value.from&&time.value.to){
             this.submitEnable=true
         }
@@ -760,7 +919,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         // })
     }
     addItem(): void {
-        debugger
+       
         if (this.dayName == 'SUNDAY') {
             this.sun = this.slotsForm.get('sun') as FormArray;
             this.sun.push(this.createItem1());
@@ -790,7 +949,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
             this.sat.push(this.createItem1());
         }
         this.submitEnable=false
-debugger
+
 if(!this.orgslots){
 
     this.GetSlots=this.slotsForm;
@@ -846,8 +1005,84 @@ if(!this.orgslots){
     //                 this.sat.removeAt(idx);
     //         }
     // }
-    DeleteItem(idx: number): void {
+
+
+
+    deleteSlot(selectedIndex:number){
         debugger
+       const confirmation = this._fuseconfirmationservice.open({
+        title: 'Delete Slot',
+        message: 'Are you sure you want to delete this slot?',
+        actions: {
+          confirm: {
+            label: 'Delete',
+                      }
+        }
+      });
+
+      confirmation.afterClosed().subscribe((result) => {
+        if (result === 'confirmed') {
+
+            if (selectedIndex >= 0 && selectedIndex < this.selectedSlots.length) {
+                // Get the item to be removed from this.selectedSlots
+                const removedItem = this.selectedSlots[selectedIndex];
+            
+                // Find the index of the corresponding item in this.availbleSlots
+                const availbleIndex = this.availbleSlots.findIndex(
+                  (item) =>
+                    item.day === removedItem.day &&
+                    item.start === removedItem.start &&
+                    item.ending === removedItem.ending
+                );
+            
+                // Remove the item from this.selectedSlots
+                this.selectedSlots.splice(selectedIndex, 1);
+            
+                // Remove the corresponding item from this.availbleSlots if the index is found
+                if (availbleIndex !== -1) {
+                  this.availbleSlots.splice(availbleIndex, 1);
+                }
+              }
+              const availbleSlots2 = this.availbleSlots.filter((slot) => slot.start !== "" && slot.ending !== "");
+
+              let arr = [];
+              arr.push({
+                  flag: '1'
+                  , DoctorID: this.doctorID
+                  , slots: availbleSlots2
+              })
+              var url = 'PatientsAppointments/DoctorsAvailability/';
+              this.utilitiesService.addUpdateVitals(arr, url).subscribe(
+                  (data) => {
+                      if (data == '100') {;
+                          this._snackBar.open('Slot deleted successfully ..!!', 'ok', {
+                              "duration": 2000
+                          });
+                          // val.Name = 'MONDAY';
+                          // val.Value = 1;
+                          // this.day(val)
+                      }
+                      else {
+                          this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
+                              "duration": 2000
+                          });
+                      }
+                  },
+      
+                  () => { }
+              );
+              console.log("After Delete",this.availbleSlots)
+           }
+        });
+       
+    }
+
+    
+
+
+
+    DeleteItem(idx: number): void {
+       
         // Display a confirmation dialog
         const isConfirmed = window.confirm('Are you sure you want to delete this item?');
       
@@ -876,7 +1111,7 @@ if(!this.orgslots){
       
 
     daysArray(val) {
-debugger
+
 
 
 if(this.isAllDays){
@@ -1247,16 +1482,24 @@ else{
 //     }
 // }
 
+ 
+clearSearch() {
+    this.searchKey = '';
+    this.doFilter1(this.searchKey, 1)
+    this.doFilter2(this.searchKey1, 1)
+    this.doFilter3(this.searchKey2, 1)
+    this.doFilter4(this.searchKey3, 1)
+}
 
 
     addSlots(val) {
-        
-        this.daysArray(val);
+        debugger
+        // this.daysArray(val);
         let arr = [];
         arr.push({
             flag: '1'
             , DoctorID: this.doctorID
-            , slots: this.slotsArr
+            , slots: this.availbleSlots
         })
         var url = 'PatientsAppointments/DoctorsAvailability/';
         this.utilitiesService.addUpdateVitals(arr, url).subscribe(
@@ -1268,6 +1511,7 @@ else{
                     // val.Name = 'MONDAY';
                     // val.Value = 1;
                     // this.day(val)
+                    
                 }
                 else {
                     this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
@@ -1282,11 +1526,15 @@ else{
 
     
     
-    
+ 
+
 
     rowData(val) {
         debugger;
-
+        this.selectedSlots=[];
+    
+        // this.addSlot()
+        this.selectedDay=1
         this.slotsForm = this._formBuilder.group({
             //items: this._formBuilder.array([this.createItem()], [Validators.required]),
             sun: this._formBuilder.array([]),
@@ -1337,26 +1585,12 @@ else{
             this.sat = this.slotsForm.get('sat') as FormArray;
             this.sat=this._formBuilder.array([]),
 
-        // this.addItem();
-
-        
-        // var days=""
-        // var today = (new Date()).getDay();
-        // if(today==1){
-        //     days="MONDAY"
-        // }
-        // if(today==1){
-        //     days="MONDAY"
-        // }
+  
         this.doctorID = val.registrationID;
         this.slotsArrForChips = []
         this.slotsArrForChipsList = []
-        this.dayName == 'MONDAY'
-        val.Name = 'MONDAY';
-        val.Value = 1;
-        this.day(val)
-
-       
+         this.day(val)
+    
     }
     day(val) {
         debugger;
@@ -1376,7 +1610,11 @@ else{
                 if (data) {
                     ;
                     this.allSlots = [];
+                   
                     this.allSlots = data;
+                    console.log("1234",this.allSlots)
+                   this.availbleSlots=data;
+                   this.slotbinding();
                     this.slotsArrForChips = []
                     this.slotsArrForChipsList = []
                     this.slotsArrForChipsList =data
@@ -1439,6 +1677,7 @@ else{
                     to: [to, Validators.required],
                 }));
             }
+            
             else if (this.allSlots[i].day == 1) {
                 // this.monItems.push(this._formBuilder.group({
                 //     from: [st, Validators.required],
@@ -1450,6 +1689,7 @@ else{
                     to: [to, Validators.required],
                 }));
             }
+            
             else if (this.allSlots[i].day == 2) {
                 this.tue.push(this._formBuilder.group({
                     from: [st, Validators.required],
@@ -1461,6 +1701,7 @@ else{
                     from: [st, Validators.required],
                     to: [to, Validators.required],
                 }));
+                
             }
             else if (this.allSlots[i].day == 4) {
                 this.thu.push(this._formBuilder.group({
@@ -1482,9 +1723,15 @@ else{
             }
         }
 
-        this.addItem();
+        // this.addItem();
+        // this.addSlot();
+        this.rowData
+        this.day
 
     }
+  
+  
+    
 }
 
 

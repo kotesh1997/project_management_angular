@@ -720,6 +720,12 @@ debugger;
        // localStorage.removeItem('loginDetails');
     }
 
+    clearSearch() {
+        this.searchKey = '';
+        this.doFilter1(this.searchKey, 1)
+        this.doFilter(this.searchKey1, 2)
+       this.doFilter(this.searchKey2, 3)
+    }
 
     
     filterChange(filter, event) {
