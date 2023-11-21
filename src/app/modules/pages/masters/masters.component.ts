@@ -295,6 +295,22 @@ export class MastersComponent implements OnInit {
     const slot2 = [];
  
     this.selectedSlots = slot1;
+    // if (this.selectedSlots.length > 0) {
+    //     let lastObject = this.selectedSlots[this.selectedSlots.length - 1];
+      
+    //     console.log(lastObject);
+    //     if (lastObject.start !== ''&& lastObject.ending !== ''){
+    //         const newSlot={
+    //             start:'',
+    //             ending:'',
+    //             day:this.selectedDay
+    //          }
+    //          this.selectedSlots.push(newSlot)
+    //     }
+
+    //   } else {
+    //     console.log('lastobject',"The array is empty, so there is no last object to access.");
+    //   }
     }
 
     isTimeSlotsValid():boolean{
@@ -1772,8 +1788,7 @@ clearSearch() {
 
         // this.addItem();
         // this.addSlot();
-        this.rowData
-        this.day
+
 
     }
   
