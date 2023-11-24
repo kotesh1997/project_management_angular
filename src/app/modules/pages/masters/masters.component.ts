@@ -313,6 +313,9 @@ export class MastersComponent implements OnInit {
     //   }
     }
 
+
+
+
     isTimeSlotsValid():boolean{
         return this.selectedSlots.every(group => group.start&&group.ending)
     }

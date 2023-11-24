@@ -94,9 +94,9 @@ export class MedicineComponent implements OnInit {
               var prepare=[];
             this.medicineList.filteredData.forEach(e=>{
               var tempObj =[];
-              tempObj.push(e.appointmentID);
-              tempObj.push(e.patient);
-              tempObj.push( e.gender);
+              tempObj.push(e.medicineId);
+              tempObj.push(e.medicineName);
+              tempObj.push( e.composition);
               tempObj.push( e.mobile);
               tempObj.push(e.visitCount);
               prepare.push(tempObj);
@@ -107,7 +107,7 @@ export class MedicineComponent implements OnInit {
                 head: [['MedicineId','MedicineName ',' Composition']],
                 body: prepare
             });
-            doc.save('Madicine' + '.pdf');
+            doc.save('Medicine' + '.pdf');
           
             // const doc = new jsPDF("p", "pt", "a4");
             // const source = document.getElementById("table1");
