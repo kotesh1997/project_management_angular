@@ -12,13 +12,14 @@ import { MedicineComponent } from './modules/pages/medicine/medicine.component';
 import { MyPatientsComponent } from './modules/pages/mypatients/myPatients.component';
 import { PatientHistoryComponent } from './modules/pages/patient-history/patient-history.component';
 import { PatientsComponent } from './modules/pages/patients/patients.component';
-
 // @formatter:off
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    { path: '', pathMatch: 'full', redirectTo: 'Appointments' },
+
+    // { path: '', pathMatch: 'full', redirectTo: 'Appointments' },
+    { path: '', pathMatch: 'full', redirectTo: 'sign-in' },
 
     // Redirect signed in user to the '/example'
     //
@@ -90,6 +91,7 @@ export const appRoutes: Route[] = [
             { path: 'Admindashboard', loadChildren: () => import ('app/modules/admin/admindashboard/admindashboard.module').then(m=> m.AdmindashboardModule) },
             { path: 'Pages', loadChildren: () => import ('app/modules/pages/pages.module').then(m=> m.PagesModule) },
             {path: 'password', loadChildren: () => import('app/layout/common/password/password.module').then(m => m.PasswordModule)},
+            
             
             // { path: 'Appointments', component: AppointmentsComponent },
             // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
