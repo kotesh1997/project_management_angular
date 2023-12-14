@@ -651,9 +651,10 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
      
     addUpdateRegDetails(val) {
-       
+       debugger
         if (this.flag == '1') {
             this.msg = this.actionName + ' data added successfully ..!!';
+            this.drawer.close()
            
         }
         else if (this.flag == '2') {
@@ -697,7 +698,14 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
                     // this._snackBar.open(this.msg, 'ok', {
                     //     "duration": 2000
                     // });
-                    this._snackBar.open('Email Or Mobile No already Exist ..!!', 'No', {
+                    this._snackBar.open('Email already Exist ..!!', 'No', {
+                        "duration": 2000
+                    });
+
+                }
+                else if (data == '102') {
+                  
+                    this._snackBar.open('Mobile Number already Exist ..!!', 'No', {
                         "duration": 2000
                     });
 

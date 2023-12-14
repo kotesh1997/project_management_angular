@@ -132,6 +132,7 @@ showPasswordNotMatchMessage: boolean = false;
 // }
 
 rest() {
+  debugger
   // Disable the form during submission
   this.resetPasswordForm.disable();
 

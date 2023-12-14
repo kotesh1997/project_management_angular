@@ -34,4 +34,12 @@ export class AdmindashboardService {
         console.error(error);
         return throwError(error);
     }
+
+    getDashboardData(): Observable<any> {
+        return this.http.get<any>(this.API_URL + "Registration/GetDashboardCount/getDashboardCount/")
+            .pipe(
+                tap(status => console.log("status: " + status)),
+                catchError(this.handleError)
+            );
+    }
 }
