@@ -654,7 +654,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
        debugger
         if (this.flag == '1') {
             this.msg = this.actionName + ' data added successfully ..!!';
-            this.drawer.close()
+            // this.drawer.close()
            
         }
         else if (this.flag == '2') {
