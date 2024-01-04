@@ -3206,7 +3206,8 @@ debugger
         this.uploadFileNull=false
         let itemArr = [];
         for (var i = 0; i < val.items.length; i++) {
-           if (val.items[i].docType != null) {
+        //    if (val.items[i].docType != null ) {
+           if (val.items[i].fileName != null && val.items[i].fileName != "") {
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
                      //DocumentTypeID: val.items[i].docType.documentTypeID,
@@ -3218,16 +3219,15 @@ debugger
                      DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
-            else if(val.items[i].docType == null && val.items[i].fileName == null ) {
-                this.uploadFileNull=true
-                itemArr.push({
-                    AppointmentID: this.AppointmentID,
-                    // DocumentTypeID: undefined,
-                    DocumentTypeID:  val.items[i].docType,
-                    //  , DocTypeNAme: val.items[i].Image
-                   // DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
-                });
-            }
+            // else if(val.items[i].docType == null && val.items[i].fileName == null ) {
+            //     this.uploadFileNull=true
+               
+            // }
+            else if((val.items[i].docType == null || val.items[i].docType == "") && 
+        (val.items[i].fileName == null || val.items[i].fileName == "")) {
+    this.uploadFileNull = false;
+    let itemArr = [];
+}
             else if(val.items[i].docType == null && val.items[i].fileName != null ) {
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
