@@ -3533,9 +3533,9 @@ debugger
         this.AppointmentID = val.appointmentID;
         this.advice = val.advice;
         this.nextvisit = val.nextVisit;
-        
-        this.GetDocumentsXML();
+
         this.GetComplaintsXML();
+        this.GetDocumentsXML();
         this.GetMedicineXML();
         this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
         if (this.vitals.length > 0) {
