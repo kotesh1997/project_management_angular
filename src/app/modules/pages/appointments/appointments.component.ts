@@ -3200,8 +3200,10 @@ debugger
     //         () => { }
     //     );
     // }
+    uploadFileNull:boolean=false
     addUpdateVitals(val) {
-
+        debugger
+        this.uploadFileNull=false
         let itemArr = [];
         for (var i = 0; i < val.items.length; i++) {
            if (val.items[i].docType != null) {
@@ -3216,13 +3218,26 @@ debugger
                      DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
-            else {
+            else if(val.items[i].docType == null && val.items[i].fileName == null ) {
+                this.uploadFileNull=true
                 itemArr.push({
                     AppointmentID: this.AppointmentID,
                     // DocumentTypeID: undefined,
                     DocumentTypeID:  val.items[i].docType,
                     //  , DocTypeNAme: val.items[i].Image
                    // DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
+                });
+            }
+            else if(val.items[i].docType == null && val.items[i].fileName != null ) {
+                itemArr.push({
+                    AppointmentID: this.AppointmentID,
+                     //DocumentTypeID: val.items[i].docType.documentTypeID,
+
+                     DocumentTypeID: "",
+
+
+                    //  , DocTypeNAme: val.items[i].Image
+                     DocTypeNAme: "VitalsDocs\\" + val.items[i].fileName.split("\\").pop()
                 });
             }
         }
@@ -3284,6 +3299,7 @@ debugger
             , status: Status
         })
         var url = 'PatientsAppointments/VitalsCRUD/';
+        if(!this.uploadFileNull){
         this.utilitiesService.addUpdateVitals(arr, url).subscribe(
             //this.utilitiesService.CRUD(arr, url).subscribe(
             (data) => {
@@ -3311,6 +3327,7 @@ debugger
 
             () => { }
         );
+        }
     }
     getAllAppointmentsAfterSAve() {
         debugger
@@ -3456,6 +3473,7 @@ debugger
 
                     this.docsXml = data;
                     this.items = this.vitalsForm.get('items') as FormArray;
+                    console.log('document', this.items)
                     const arr = <FormArray>this.vitalsForm.controls.items;
                     arr.controls = [];
                     for (var i = 0; i < this.docsXml.length; i++) {
@@ -3515,9 +3533,9 @@ debugger
         this.AppointmentID = val.appointmentID;
         this.advice = val.advice;
         this.nextvisit = val.nextVisit;
-
-        this.GetComplaintsXML();
+        
         this.GetDocumentsXML();
+        this.GetComplaintsXML();
         this.GetMedicineXML();
         this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
         if (this.vitals.length > 0) {
