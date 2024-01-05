@@ -3527,6 +3527,8 @@ debugger
     }
     setValues(val) {
 debugger
+
+        this.patientName = val.patient + " " + "(" + val.gender + ", Age " + val.age + ")"
         this.flag = '2';
         this.vitalsID = val.vitalsID;
         this.PatientID = val.patientID;
