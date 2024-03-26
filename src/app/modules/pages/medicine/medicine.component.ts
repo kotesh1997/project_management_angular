@@ -11,6 +11,8 @@ import { LoaderService } from '../../../Services/loader.service';
 import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDrawer } from '@angular/material/sidenav';
+
 
 import {
     
@@ -31,6 +33,8 @@ import autoTable from 'jspdf-autotable';
     //encapsulation: ViewEncapsulation.None
 })
 export class MedicineComponent implements OnInit {
+    composition1:any;
+    medicine1:any;
     horizontalStepperForm: FormGroup;
     public form: FormGroup;
     medlist: boolean=true;
@@ -47,7 +51,7 @@ export class MedicineComponent implements OnInit {
           }
 
     medicineList:any = [];
-    displayedColumns: string[] = ['MedicineId','MedicineName', 'Composition'];
+    displayedColumns: string[] = ['MedicineId','MedicineName', 'Composition', 'Actions'];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('TABLE') table: ElementRef;
@@ -88,6 +92,20 @@ export class MedicineComponent implements OnInit {
         XLSX.writeFile(wb, 'SheetJS.xlsx');
         
         }
+
+        @ViewChild('myField') myField: ElementRef;
+        setFocus() {
+            debugger
+            
+            if (this.myField && this.myField.nativeElement) {
+                setTimeout(() => {
+                    this.myField.nativeElement.focus();
+
+                  }, 100);
+            //   this.myField.nativeElement.focus();
+            }
+        }
+       
         
    exportpdf(){
             debugger
@@ -133,56 +151,92 @@ export class MedicineComponent implements OnInit {
     }
    
 
-    GetMedicineData(){       
+    // GetMedicineData(){       
 
+    //     debugger;
+    //     this.medicineService.GetMedicineList().subscribe(
+    //         (data) => {
+    //             debugger;
+    //             if (data) {
+    //                 if(this.roleID == 2)
+    //                 {
+    //                     // console.log(data);
+    //                 data = data .sort((a,b) => {
+    //                     if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+    //                         return -1;
+    //                     }
+    //                 })
+    //                 this.medicineList = data;
+    //                 this.medicineList = this.medicineList.filter((a) => a.medic == this.registrationID);
+    //                 }
+    //                 else
+    //                 data = data .sort((a,b) => {
+    //                     if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
+    //                         return -1;
+    //                     }
+    //                 })
+    //                 this.medicineList = data;
+    //             }
+    //             if(this.medicineList.length>0){
+    //                 this.medlist=true
+    //             }
+    //             else{
+    //                 this.medlist=false
+    //             }
+               
+    //             // this.patientsappointments = this.patientsappointments.filter(
+    //             //     (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient )  === i
+    //             // );            
+    //             this.medicineList = new MatTableDataSource(this.medicineList);
+    //            //this.sort.sort()
+    //             this.medicineList.sort = this.sort;
+              
+
+    //             this.medicineList.paginator = this.paginator;
+    //         },
+
+    //         () => {
+
+    //         }
+
+    //     );
+
+    // }
+    GetMedicineData() {
         debugger;
         this.medicineService.GetMedicineList().subscribe(
             (data) => {
                 debugger;
                 if (data) {
-                    if(this.roleID == 2)
-                    {
-                        // console.log(data);
-                    data = data .sort((a,b) => {
-                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
-                            return -1;
-                        }
-                    })
-                    this.medicineList = data;
-                    this.medicineList = this.medicineList.filter((a) => a.medic == this.registrationID);
+                    if (this.roleID == 2) {
+                        this.medicineList = data.filter((a) => a.medic == this.registrationID);
+                    } else {
+                        this.medicineList = data;
                     }
-                    else
-                    data = data .sort((a,b) => {
-                        if((a.medicineName).toLowerCase() < (b.medicineName).toLowerCase()){
-                            return -1;
-                        }
-                    })
-                    this.medicineList = data;
                 }
-                if(this.medicineList.length>0){
-                    this.medlist=true
+                if (this.medicineList.length > 0) {
+                    this.medlist = true;
+                } else {
+                    this.medlist = false;
                 }
-                else{
-                    this.medlist=false
-                }
-               
-                // this.patientsappointments = this.patientsappointments.filter(
-                //     (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient )  === i
-                // );            
+    
                 this.medicineList = new MatTableDataSource(this.medicineList);
-               //this.sort.sort()
                 this.medicineList.sort = this.sort;
-              
-
                 this.medicineList.paginator = this.paginator;
             },
-
-            () => {
-
-            }
-
+            () => {}
         );
+    }
+    
 
+    updateSelect(val) {
+        debugger
+       this.flag='2'
+      
+       this.medicine1=val.medicineName
+       this.composition1=val.composition
+
+       
     }
 
     addUpdateMedicineDetails(val) {
@@ -198,7 +252,7 @@ export class MedicineComponent implements OnInit {
         }
         let arr = [];
         arr.push({ 
-                MedicineId:0,
+                MedicineId:            val.medicineId,
                 MedicineName           :val.medicineName           
                 ,Composition          :val.composition 
                 ,Action:'Insert',  

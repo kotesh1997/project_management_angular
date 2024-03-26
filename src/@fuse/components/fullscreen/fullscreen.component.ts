@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FSDocument, FSDocumentElement } from '@fuse/components/fullscreen/fullscreen.types';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
     selector       : 'fuse-fullscreen',
@@ -16,11 +17,12 @@ export class FuseFullscreenComponent implements OnInit
     private _fsDoc: FSDocument;
     private _fsDocEl: FSDocumentElement;
     private _isFullscreen: boolean = false;
+    
 
     /**
      * Constructor
      */
-    constructor(@Inject(DOCUMENT) private _document: Document)
+    constructor(@Inject(DOCUMENT) private _document: Document,private router: Router)
     {
         this._fsDoc = _document as FSDocument;
     }
@@ -35,6 +37,17 @@ export class FuseFullscreenComponent implements OnInit
     ngOnInit(): void
     {
         this._fsDocEl = document.documentElement as FSDocumentElement;
+        // Subscribe to router events
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationStart) {
+                const url = (event as NavigationStart).url;
+                // Check if navigating to the login page
+                if (url.includes('/sign-in')) {
+                    // Exit fullscreen only when navigating to the login page
+                    this._closeFullscreen();
+                }
+            }
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -46,16 +59,14 @@ export class FuseFullscreenComponent implements OnInit
      */
     toggleFullscreen(): void
     {
+        debugger
         // Check if the fullscreen is open
         this._isFullscreen = this._getBrowserFullscreenElement() !== null;
 
         // Toggle the fullscreen
-        if ( this._isFullscreen )
-        {
+        if (this._isFullscreen) {
             this._closeFullscreen();
-        }
-        else
-        {
+        } else {
             this._openFullscreen();
         }
     }

@@ -14,6 +14,7 @@ export class AuthService {
     private API_URL: any = environment.API_URL;
     isAuthenticated: any;
     baseURL: string;
+    authStatus: any;
     /**
      * Constructor
      */

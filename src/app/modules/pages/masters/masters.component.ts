@@ -722,6 +722,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
     }
 
     updateSelect(val) {
+        debugger
        
         this.registrationID = val.RegistrationID
         this.flag = '2';
