@@ -98,7 +98,7 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 
     @ViewChild('horizontalStepper') horizontalStepper: MatStepper;
 
-    
+
 
 
     durationInSeconds = 5;
@@ -235,9 +235,9 @@ filename:any=[];
     previousdata: boolean=true;
     selectedPrice: any;
     selectedfiles: File[];
-   
+
     constructor(private sanitizer: DomSanitizer,
-        
+
         public patientsService: PatientsService,
         public medicineService: MedicineService,
         private _formBuilder: FormBuilder,
@@ -253,10 +253,10 @@ filename:any=[];
         private _router: Router,
         private dialog: MatDialog,
         private dateAdapter: DateAdapter<Date>,
-      
+
     ) {
 
-        
+
         this.yesterday.setDate(this.yesterday.getDate() - 0);
 
         // Object to create Filter for
@@ -265,7 +265,7 @@ filename:any=[];
             //   name: 'ID',
             //   columnProp: 'patientARCID',
             //   options: []
-            // }, 
+            // },
             // {
             //     name: 'Patient NAME',
             //     columnProp: 'patient',
@@ -279,7 +279,7 @@ filename:any=[];
             //   name: 'EMAIL',
             //   columnProp: 'email',
             //   options: []
-            // }, 
+            // },
             {
                 name: 'STATUS',
                 columnProp: 'status',
@@ -290,7 +290,7 @@ filename:any=[];
         this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
         // this.date = new FormControl(new Date());
         this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-            
+
             startWith(null),
             map((fruit: string | null) => (fruit ? this._filter(fruit) : this.complaints.slice())),
         );
@@ -309,7 +309,7 @@ filename:any=[];
             );
 
 
-   
+
         }
         // previous
     // filterStates(name: string) {
@@ -328,17 +328,17 @@ filename:any=[];
 
     // filterStates(name: string) {
     //     const searchTokens = name.toLowerCase().split(' ').filter(token => token.trim() !== '');
-      
+
     //     const filteredAppointments = this.filterPatientappointments.filter(state => {
     //       const mobileAndPatient = state.mobile.toLowerCase() + ' (' + state.patient.toLowerCase() + ')';
-          
+
     //       // Check if all search tokens are found within the combined model string
     //       return searchTokens.every(token => mobileAndPatient.includes(token));
     //     });
-      
+
     //     return filteredAppointments;
     //   }
-      
+
     filterStates(searchValue: string) {
         debugger
     const searchTokens = searchValue.toLowerCase().split(' ').filter(token => token.trim() !== '');
@@ -352,9 +352,9 @@ filename:any=[];
     });
 }
 
-    
-      
-      
+
+
+
 
 
 handleFileUpload(event: Event) {
@@ -362,10 +362,10 @@ handleFileUpload(event: Event) {
     // Handle file upload logic here
     // After file upload, set showTable to true
     this.showTable = true;
-  }  
-   
+  }
 
-   
+
+
 
     displayedColumns: string[] = [
         'SL',
@@ -375,7 +375,7 @@ handleFileUpload(event: Event) {
         'Doctor',
         'Time',
         'WaitingTime',
-        'Status',       
+        'Status',
         'VisitCount',
         'ReceiptToken',
         'Billing',
@@ -474,17 +474,17 @@ handleFileUpload(event: Event) {
         // this.searchKey=""
         // this.applyFilters("")
     }
-    applyFilters(event:any) { 
+    applyFilters(event:any) {
         debugger
         event.target.value;
        var data = this.search(event.target.value);
         this.medicinePrescepList=data
         // this.medicinePrescepList = this.search(this.searchKey);
         }
-        
-        
 
-        search(value: string) { 
+
+
+        search(value: string) {
             debugger
            if(value==""){
             return  this.medicinePrescepList=this.searchmedicine;
@@ -492,15 +492,15 @@ handleFileUpload(event: Event) {
 else{
     let filter = value.toLowerCase();
 
-         
+
           return this.medicinePrescepList.filter(option => (option.medicineName).toLowerCase().startsWith(filter));
 }
-      
+
         }
 
-        
+
     // applyFilters() {
-      
+
     //     this.medicinePrescepList.filter = this.searchKey.trim().toLowerCase();
     // }
 
@@ -522,7 +522,7 @@ debugger
     }
 
     // private _filter(value: string): string[] {
-    //   
+    //
     //     const filterValue = value.toLowerCase();
     //     return this.complaints.filter(fruit => fruit.complaintName.toLowerCase().includes(filterValue));
     // }
@@ -534,10 +534,10 @@ debugger
 }
 
 
- 
+
     ngOnInit(): void {
         this.filedisble=true;
-       
+
         // const viewer = new GcPdfViewer("#viewer", {
         //     workerSrc: "//node_modules/@grapecity/gcpdfviewer/gcpdfviewer.worker.js",
         //     restoreViewStateOnLoad: false
@@ -565,7 +565,7 @@ debugger;
         this.getDiscounts();
         this.getAllPatients();
         this.GetMedicineData();
-        
+
         this.btnText = 'Register';
         this.detailData = [];
         // this.isChecked=false;
@@ -631,7 +631,7 @@ debugger;
                 }),
             });
         }
-        
+
         this.vitalsForm = this._formBuilder.group({
             weight: [''],
             bloodGroup: [''],
@@ -660,7 +660,7 @@ debugger;
         }
         else if (this.roleID == '2') {
             this.displayedColumns = [
-                'SL', 'Patient', 
+                'SL', 'Patient',
                 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
                  'Vitals', 'View','History'
             ];
@@ -702,7 +702,7 @@ debugger;
         debugger
         this.mobNum=this.searchKey3;
         this.fName=this.searchKey3;
-        
+
     }
     today: Date = new Date();
     onDateChange(event: MatDatepickerInputEvent<Date>) {
@@ -716,7 +716,7 @@ debugger;
         debugger
         localStorage.removeItem('accessToken');
 
-        
+
        // localStorage.removeItem('loginDetails');
     }
 
@@ -727,12 +727,12 @@ debugger;
        this.doFilter(this.searchKey2, 3)
     }
 
-    
+
     filterChange(filter, event) {
         debugger
-       
+
         var sd=event.value.trim().toLocaleLowerCase()
-        
+
         this.todayBookings.filter = event.value.trim().toLocaleLowerCase()
         this.todaysbooked.filter = event.value.trim().toLocaleLowerCase()
         this.upcomingBookings.filter =  '';
@@ -790,7 +790,7 @@ debugger;
         }
         return filterFunction
     }
-    
+
 
 
     addStaticData() {
@@ -870,7 +870,7 @@ debugger;
 
         }
         else {
-            
+
             this.patientName = row.patient + " " + "(" + row.gender + ", Age " + row.age + ")"
             // this.vitalsForm.reset();
             // this.fruits = [];
@@ -904,7 +904,7 @@ debugger;
             }
           });
         //this.todayDataSourcePrintBookings[0].patient=row.patientName
-        
+
         this.receiptToken= this.todayDataSourcePrintBookings[0].receiptToken;
         // this.todayDataSourcePrintBookings[0].modeofPaymentID=row.modeofPaymentID
         // this.todayDataSourcePrintBookings[0].serviceName=row.serviceName
@@ -923,7 +923,7 @@ debugger;
         //     this.openCompanyDetailsDialog();
         //  }
         // }
-    
+
     }
 
     // this.todayBookings.filterPredicate = this.createFilter();
@@ -935,7 +935,7 @@ debugger;
     onRowPrintPresecptionClicked(row) {
         debugger
         if (row.vitalsID) {
-            
+
             this.detailData = row;
             this.setValues(row);
             this.ViewPrescption();
@@ -990,21 +990,21 @@ gethistory(){
                     this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
                     this.patientsappointments.paginator = this.HistoryPaginator;
-        
-        
+
+
                     this.spinner.hide();
-                   
+
                 }
                 else {
                     // this.registrationID=this.loginDetails.registrationID;
                     this.gethistory1();
-                  
+
                     //this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
                 }
 
             }
-       
-          
+
+
         },
 
         () => {
@@ -1031,7 +1031,7 @@ exportpdf(){
         body: prepare
     });
     doc.save('Reports' + '.pdf');
-  
+
     // const doc = new jsPDF("p", "pt", "a4");
     // const source = document.getElementById("table1");
     // // doc.text("Test", 40, 20);
@@ -1057,7 +1057,7 @@ gethistory1(){
         (data) => {
             if (data) {
               debugger
-               
+
                     // this.registrationID=this.loginDetails.registrationID;
                     this.patientsappointments = data;
                     if(this.patientsappointments.length>0){
@@ -1067,10 +1067,10 @@ gethistory1(){
                         this.Histories=false
                     }
                     //this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
-                
+
 
             }
-       
+
             this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
             this.patientsappointments.paginator = this.HistoryPaginator;
@@ -1090,7 +1090,7 @@ gethistory1(){
         this.utilitiesService.getAllAppointments().subscribe(
             (data) => {
                 if (data) {
-                    
+
                     this.allAppointments = data;
                     this.date = new Date();
                     this.date.setHours(0, 0, 0, 0);
@@ -1105,11 +1105,11 @@ gethistory1(){
                                 const t12: any=  this.todayDataSourceBookings[i].waitingTime.split('.');
                                 this.todayDataSourceBookings[i].waitingTime= t12[0]+":"+t12[1]
                             }
-                         
+
                         }
 
 
-                       
+
 
                         this.selection = new Set < this.todayDataSourceBookings > (true);
                         //Future Bookings
@@ -1117,7 +1117,7 @@ gethistory1(){
                         //All Bookings
                         // this.patientsappointments = data.filter((a) => new Date(a.serviceDate) < new Date(dateforToday));
 
-                        // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i); 
+                        // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i);
                     }
                     else {
                         // this.registrationID=this.loginDetails.registrationID;
@@ -1157,15 +1157,15 @@ gethistory1(){
                 this.todaysbooked = new MatTableDataSource(this.todayDataSourceBookings);
 
                 this.todaysbooked.paginator = this.paginator;
-    
-                
+
+
                // this.patientsappointments = new MatTableDataSource(this.patientsappointments);
 
 
                 this.todayBookings.paginator = this.paginator;
                 this.upcomingBookings.paginator = this.upcomingPaginator;
 
-               
+
                // this.patientsappointments.paginator = this.HistoryPaginator;
 
                 if (this.receiptToken > 0) {
@@ -1348,7 +1348,7 @@ gethistory1(){
                 if (data) {
                     debugger
                     this.prices = data;
-                    
+
             this.step2.controls['price'].setValue(2);
                     // this.prices.splice(0, 1);
                 } else {
@@ -1388,7 +1388,7 @@ gethistory1(){
     }
 
     onCheckboxChange(val) {
-        debugger  // 
+        debugger  //
         if (val.checked == true) {
             this.isPriceTag = false;
         }
@@ -1427,7 +1427,7 @@ debugger
             map(value => this._filter(value)),
         );
 
-                    
+
         this.step2.controls['price'].setValue(2);
     }
     applyNetPrice1(val) {
@@ -1443,21 +1443,34 @@ debugger
         .get('modeOfPayment');
         if (val.value<=0) {
             // Remove the Validators.required validator
-          
+
             modeOfPaymentControl.clearValidators();
-            modeOfPaymentControl.updateValueAndValidity(); 
+            modeOfPaymentControl.updateValueAndValidity();
           } else {
             // Add the Validators.required validator back
             modeOfPaymentControl.setValidators([Validators.required]);
-            modeOfPaymentControl.updateValueAndValidity(); 
+            modeOfPaymentControl.updateValueAndValidity();
 
           }
         }
 
-
-        EnableModeprice(){
+price
+        EnableModeprice(value){
             debugger
             this.ModePrice=false
+            this.utilitiesService.getServicebyid(value.value).subscribe(
+                (data) => {
+                  if (data) {
+                    console.log("GetById",data)
+                    this.step2.controls['price'].setValue(data.price);
+                    this.price=data.price
+                //   this.regDetails1 = new MatTableDataSource(data);
+                //   this.regDetails1.sort = this.sort;
+                //   this.regDetails1.paginator = this.Assdocpag;
+
+                  }
+                }
+            )
         }
     applyNetPrice(val) {
 
@@ -1474,11 +1487,11 @@ debugger
             this.step2.controls['amountPaid'].setValue(this.selectedPrice);
 
             modeOfPaymentControl.clearValidators();
-            modeOfPaymentControl.updateValueAndValidity(); 
+            modeOfPaymentControl.updateValueAndValidity();
           } else {
             // Add the Validators.required validator back
             modeOfPaymentControl.setValidators([Validators.required]);
-            modeOfPaymentControl.updateValueAndValidity(); 
+            modeOfPaymentControl.updateValueAndValidity();
 
           }
 
@@ -1491,7 +1504,7 @@ this.step2.controls['discount'].setValue(0);
 
 this.amounttopaid=true;
 Amounttopay.clearValidators();
-Amounttopay.updateValueAndValidity(); 
+Amounttopay.updateValueAndValidity();
 this.ModePrice=true
 }
 else{
@@ -1505,14 +1518,14 @@ else{
         this.selectedPrice = this.step2.controls['amountPaid'].value;
 
     }
-    this.ModePrice=false  
+    this.ModePrice=false
     this.amounttopaid=false;
 
     // this.amounttopaid=true;
 Amounttopay.setValidators([Validators.required]);
-Amounttopay.updateValueAndValidity(); 
+Amounttopay.updateValueAndValidity();
 }
-        
+
         if (this.roleID == '1') {
             if (val.modeofPaymentID != 5) {
                 var pricList = [];
@@ -1524,9 +1537,9 @@ Amounttopay.updateValueAndValidity();
                 if (this.horizontalStepperForm.value.step2.discount != "") {
                     discList = this.discounts.filter(a => a.discountID === this.horizontalStepperForm.value.step2.discount);
                 }
-                
+
                 if (this.horizontalStepperForm.value.step2.price != "" && this.horizontalStepperForm.value.step2.discount != "") {
-                    //   
+                    //
                     if (discList.length > 0 && pricList.length > 0) {
                         var disco = ((pricList[0].price * discList[0].discount) / 100);
                         this.step2.controls['netPrice'].setValue(pricList[0].price - disco);
@@ -1603,7 +1616,7 @@ if(disc==2){
          amtpaid= (20 / 100) * 500
          amtpaid=  500- amtpaid ;
 
-        
+
             }
             this.step2.controls['amountPaid'].setValue(amtpaid);
 
@@ -1660,7 +1673,7 @@ if(disc==5){
 
 }
 
-   
+
 
 
 
@@ -1742,14 +1755,14 @@ if(disc==5){
     public doFilter1 = (value, state) => {
         debugger
         var sd=value.trim().toLocaleLowerCase()
-        
+
             this.todayBookings.filter = value.trim().toLocaleLowerCase()
             this.todaysbooked.filter = value.trim().toLocaleLowerCase()
             this.upcomingBookings.filter =  '';
             this.patientsappointments.filter = '';
             this.searchKey1 = '';
             this.searchKey2 = '';
-      
+
     };
     addUpdateAppointments(val) {
         debugger
@@ -1793,22 +1806,22 @@ if(disc==5){
     }
     onView(val) {
         debugger
-        
+
         this.receiptToken=val.receiptToken;
         // this.editCompanyDialogRef = this.dialog.open(this.editCompanyModal);
         this.ngOnInit();
-        
+
     }
 
     updateSelect(val) {
         debugger
         this.horizontalStepper.selectedIndex = 0;
-        
+
         if (val.duePayment != null && val.duePayment != '0.00') {
             this.updateSelectDuePay(val)
         }
         else {
-            // 
+            //
             this.isDuePay = false;
             this.spinner.show();
             this.action = 'Update Existing Appointment';
@@ -1847,7 +1860,7 @@ if(disc==5){
 
     updateSelectDuePay(val) {
         debugger
-        // 
+        //
         this.isDuePay = true;
         this.isPriceTag = true;
         this.spinner.show();
@@ -1862,7 +1875,7 @@ if(disc==5){
 
         this.getSlotsWithDocIDEdit(val.doctorID, val.slotTime);
 
-        
+
         this.step1.controls['docName'].setValue(val.doctorID);
         this.step1.controls['firstName'].setValue(val.patient);
        // this.step1.controls['lastName'].setValue(val.patient);
@@ -1888,7 +1901,7 @@ if(disc==5){
 
     // next(val)
     // {
-    //     
+    //
     //     var slot =val.step1.slot;
     //     if(slot == 0)
     //     {
@@ -1931,7 +1944,7 @@ if(disc==5){
 
                 }
                 if (this.appt.DiscountID == 6) {
-                    
+
 
                     if(this.appt.PriceID==2){
                         val.step2.amountPaid=700
@@ -2000,8 +2013,8 @@ if(disc==5){
         this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
 
             if (data) {
-                
-                if (data > 0) {
+
+                if (data) {
                     this.receiptToken = data;
                     this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
                         horizontalPosition: this.horizontalPosition,
@@ -2010,7 +2023,7 @@ if(disc==5){
                     });
 
                     this.ngOnInit(
-                       
+
                     );
                     this.appt = {};
                     // const dialogRef = this.dialog.open({
@@ -2033,7 +2046,7 @@ if(disc==5){
 
     //Receipt Print
     openCompanyDetailsDialog(): void {
-        
+
         const dialogConfig = new MatDialogConfig();
         dialogConfig.restoreFocus = false;
         dialogConfig.autoFocus = false;
@@ -2060,7 +2073,7 @@ debugger
 
     //Receipt Print preception
     ViewPrescption(): void {
-        
+
         const dialogConfig = new MatDialogConfig();
         dialogConfig.restoreFocus = false;
         dialogConfig.autoFocus = false;
@@ -2137,7 +2150,7 @@ debugger
                    font-weight: 400;
                    src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
                }
-   
+
                @font-face {
                    font-family: 'Source Sans Pro';
                    font-style: normal;
@@ -2145,7 +2158,7 @@ debugger
                    src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
                }
            }
-   
+
            /**
            * Avoid browser level font resizing.
            * 1. Windows Mobile
@@ -2158,7 +2171,7 @@ debugger
                -ms-text-size-adjust: 100%; /* 1 */
                -webkit-text-size-adjust: 100%; /* 2 */
            }
-   
+
            /**
            * Remove extra space added to tables and cells in Outlook.
            */
@@ -2167,14 +2180,14 @@ debugger
                mso-table-rspace: 0pt;
                mso-table-lspace: 0pt;
            }
-   
+
            /**
            * Better fluid images in Internet Explorer.
            */
            img {
                -ms-interpolation-mode: bicubic;
            }
-   
+
            /**
            * Remove blue links for iOS devices.
            */
@@ -2186,32 +2199,32 @@ debugger
                color: inherit !important;
                text-decoration: none !important;
            }
-   
+
            /**
            * Fix centering issues in Android 4.4.
            */
            div[style*="margin: 16px 0;"] {
                margin: 0 !important;
            }
-   
+
            body {
                width: 100% !important;
                height: 100% !important;
                padding: 0 !important;
                margin: 0 !important;
            }
-   
+
            /**
            * Collapse table borders to avoid space between cells.
            */
            table {
                border-collapse: collapse !important;
            }
-   
+
            a {
                color: #1a82e2;
            }
-   
+
            img {
                height: auto;
                line-height: 100%;
@@ -2219,7 +2232,7 @@ debugger
                border: 0;
                outline: none;
            }
-   
+
            .heading_1 {
                background-color: #fff;
                padding: 36px 24px 0;
@@ -2229,86 +2242,86 @@ debugger
                font-weight: bold;
                letter-spacing: 0.2px;
            }
-   
+
            .tocken_no{
                font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
        font-size: 16px;
        font-weight: bold;
            }
             .td_style{
-               padding: 24px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+               padding: 24px;
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                width: 50%;padding-bottom: 0px;
                padding-top: 10px;
            }
-           
+
            .td_table{
                text-align: left;
                background-color:#D2C7BA;
                 width:100%;
                padding: 12px;
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                font-size: 16px; line-height: 24px;
            }
            .td_table1{
              text-align: left;
               width:100%;
                padding: 12px;
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                font-size: 16px; line-height: 24px;
            }
            .td_table2{
-               text-align: left; 
+               text-align: left;
                width:50%;
-               padding: 12px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px; 
-               border-top: 2px dashed #D2C7BA; 
+               padding: 12px;
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+               font-size: 16px; line-height: 24px;
+               border-top: 2px dashed #D2C7BA;
                border-bottom: 2px dashed #D2C7BA;
            }
            .td_table3{
-               text-align: left; 
+               text-align: left;
                width:50%;
-               padding: 12px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px; 
-               border-top: 2px dashed #D2C7BA; 
+               padding: 12px;
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+               font-size: 16px; line-height: 24px;
+               border-top: 2px dashed #D2C7BA;
                border-bottom: 2px dashed #D2C7BA;
            }
            .Payment_row{
                text-align: left;
                background-color:#ffffff;
-               padding: 24px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+               padding: 24px;
+               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                font-size: 16px; line-height: 24px;
-               
+
            }
            .payment_Receipt{
                text-align: left;
                background-color: #ffffff;
-               padding: 36px 24px 0; 
+               padding: 36px 24px 0;
                border-top: 3px solid #d4dadf;width:30%;
            }
            .Token_No{
-           width: 100%; 
+           width: 100%;
            max-width: 600px;
            border-top:1px solid #c1c1c1;
            background-color: #fff;
-   
+
                }
                .Payment_method_bgmcolr{
                    width: 600px;
                    background-color: #fff;
                }
-               
+
                .Adress_row{
                    text-align: left;
-                  padding-bottom: 36px; 
-                   padding-left: 36px; 
-                   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                  padding-bottom: 36px;
+                   padding-left: 36px;
+                   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                    font-size: 16px; line-height: 24px;
                }
-   
+
           </style>
         </head>
     <body onload="window.print();window.close()">${printContents}</body>
@@ -2340,7 +2353,7 @@ debugger
                      font-weight: 400;
                      src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
                  }
-     
+
                  @font-face {
                      font-family: 'Source Sans Pro';
                      font-style: normal;
@@ -2348,7 +2361,7 @@ debugger
                      src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
                  }
              }
-     
+
              /**
              * Avoid browser level font resizing.
              * 1. Windows Mobile
@@ -2361,7 +2374,7 @@ debugger
                  -ms-text-size-adjust: 100%; /* 1 */
                  -webkit-text-size-adjust: 100%; /* 2 */
              }
-     
+
              /**
              * Remove extra space added to tables and cells in Outlook.
              */
@@ -2370,14 +2383,14 @@ debugger
                  mso-table-rspace: 0pt;
                  mso-table-lspace: 0pt;
              }
-     
+
              /**
              * Better fluid images in Internet Explorer.
              */
              img {
                  -ms-interpolation-mode: bicubic;
              }
-     
+
              /**
              * Remove blue links for iOS devices.
              */
@@ -2389,32 +2402,32 @@ debugger
                  color: inherit !important;
                  text-decoration: none !important;
              }
-     
+
              /**
              * Fix centering issues in Android 4.4.
              */
              div[style*="margin: 16px 0;"] {
                  margin: 0 !important;
              }
-     
+
              body {
                  width: 100% !important;
                  height: 100% !important;
                  padding: 0 !important;
                  margin: 0 !important;
              }
-     
+
              /**
              * Collapse table borders to avoid space between cells.
              */
              table {
                  border-collapse: collapse !important;
              }
-     
+
              a {
                  color: #1a82e2;
              }
-     
+
              img {
                  height: auto;
                  line-height: 100%;
@@ -2422,7 +2435,7 @@ debugger
                  border: 0;
                  outline: none;
              }
-     
+
              .heading_1 {
                  background-color: #fff;
                  padding: 36px 24px 0;
@@ -2432,86 +2445,86 @@ debugger
                  font-weight: bold;
                  letter-spacing: 0.2px;
              }
-     
+
              .tocken_no{
                  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
          font-size: 16px;
          font-weight: bold;
              }
               .td_style{
-                 padding: 24px; 
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                 padding: 24px;
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                  width: 50%;padding-bottom: 0px;
                  padding-top: 10px;
              }
-             
+
              .td_table{
                  text-align: left;
                  background-color:#D2C7BA;
                   width:100%;
                  padding: 12px;
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                  font-size: 16px; line-height: 24px;
              }
              .td_table1{
                text-align: left;
                 width:100%;
                  padding: 12px;
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                  font-size: 16px; line-height: 24px;
              }
              .td_table2{
-                 text-align: left; 
+                 text-align: left;
                  width:50%;
-                 padding: 12px; 
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-                 font-size: 16px; line-height: 24px; 
-                 border-top: 2px dashed #D2C7BA; 
+                 padding: 12px;
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                 font-size: 16px; line-height: 24px;
+                 border-top: 2px dashed #D2C7BA;
                  border-bottom: 2px dashed #D2C7BA;
              }
              .td_table3{
-                 text-align: left; 
+                 text-align: left;
                  width:50%;
-                 padding: 12px; 
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-                 font-size: 16px; line-height: 24px; 
-                 border-top: 2px dashed #D2C7BA; 
+                 padding: 12px;
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                 font-size: 16px; line-height: 24px;
+                 border-top: 2px dashed #D2C7BA;
                  border-bottom: 2px dashed #D2C7BA;
              }
              .Payment_row{
                  text-align: left;
                  background-color:#ffffff;
-                 padding: 24px; 
-                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                 padding: 24px;
+                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                  font-size: 16px; line-height: 24px;
-                 
+
              }
              .payment_Receipt{
                  text-align: left;
                  background-color: #ffffff;
-                 padding: 36px 24px 0; 
+                 padding: 36px 24px 0;
                  border-top: 3px solid #d4dadf;width:30%;
              }
              .Token_No{
-             width: 100%; 
+             width: 100%;
              max-width: 600px;
              border-top:1px solid #c1c1c1;
              background-color: #fff;
-     
+
                  }
                  .Payment_method_bgmcolr{
                      width: 600px;
                      background-color: #fff;
                  }
-                 
+
                  .Adress_row{
                      text-align: left;
-                    padding-bottom: 36px; 
-                     padding-left: 36px; 
-                     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                    padding-bottom: 36px;
+                     padding-left: 36px;
+                     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                      font-size: 16px; line-height: 24px;
                  }
-     
+
             </style>
           </head>
       <body onload="window.print();window.close()">${printContents}</body>
@@ -2576,7 +2589,7 @@ debugger
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
-   
+
 
     //==================Code related to Vitals======================//
 
@@ -2606,7 +2619,7 @@ debugger
             duration: ['', ],
             notes:['', ],
         });
-       
+
     }
     createMedicationItem1(): FormGroup {
 
@@ -2622,20 +2635,20 @@ debugger
     }
 
     addItem(): void {
-        
+
         this.items = this.vitalsForm.get('items') as FormArray;
         this.items.push(this.createItem1());
     }
 ngOnChanges(changes: SimpleChanges): void {
-    
+
 }
 change(){
 
-}   
+}
     addMedicationItem(): void {
         debugger
         this.formfields=true;
-       
+
          this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
          this.medicationitems.push(this.createMedicationItem());
          this.applyFilters("");
@@ -2655,7 +2668,7 @@ change(){
 
 
     get employees(): FormArray {
-        
+
         return this.vitalsForm.get('items') as FormArray;
     }
 
@@ -2665,8 +2678,8 @@ change(){
             this.items.removeAt(idx);
         }
     }
-  
-    
+
+
     DeleteMedicationItem(idx: number) {
         debugger
         if (idx != 0) {
@@ -2682,7 +2695,7 @@ change(){
     //    this.medicationitems.push(this.createMedicationItem());
 
        // this.medicationitems= this._formBuilder.array([this.createMedicationItem()]);
-       
+
     }
     validatepri1(e: any) {
         let input;
@@ -2699,7 +2712,7 @@ change(){
         this.PatientID = val.patientID;
         this.AppointmentID = val.appointmentID;
         this.vitalsID = 0;
-        
+
         this.items = this.vitalsForm.get('items') as FormArray;
         this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
         const arr = <FormArray>this.vitalsForm.controls.items;
@@ -2749,7 +2762,7 @@ change(){
 
     //     changeDetected(val)
     //     {
-    // 
+    //
     //         var s=0;
     //         // if(val ==0)
     //         // {
@@ -2780,20 +2793,20 @@ change(){
         const selectedDate = event.value; // The selected date
     console.log('Selected Date:', selectedDate);
     this.selectedDate = selectedDate; // Store the selected date
-    this.getSlotsWithDocID(this.doctrids); 
+    this.getSlotsWithDocID(this.doctrids);
     }
-      
+
     getSlotsWithDocID(val) {
         debugger
         this.doctrids=val;
         this.selectedDate = this.step1.get('appDate').value
         var d = new Date(this.selectedDate);
         var n = d.getDay();
-       
+
         const hours = d.getHours().toString().padStart(2, '0');
         const minutes = d.getMinutes().toString().padStart(2, '0');
         const seconds = d.getSeconds().toString().padStart(2, '0');
-    
+
         // Create a formatted time string
         this.currentTimes = `${hours}:${minutes}:${seconds}`;
         let arr = [];
@@ -2846,7 +2859,7 @@ debugger
                        debugger
 
 
-                       
+
                         var d2 = new Date(this.selectedDate);
                         var n1 = d2.getDate();
                        var n2 = d2.getFullYear();
@@ -2862,21 +2875,21 @@ debugger
                             slotsArr12=this.slotsArr;
                             this.slotsArr=[];
                             for (var j = 0; j < slotsArr12.length;  j++) {
-    
+
                                 const timeString = slotsArr12[j].slot;
                                 const timeParts = timeString.match(/(\d+):(\d+)([APap][Mm])/); // Use a regular expression to extract time components
-                                
+
                                 if (timeParts) {
                                   let hours = parseInt(timeParts[1], 10);
                                   const minutes = parseInt(timeParts[2], 10);
                                   const ampm = timeParts[3].toLowerCase();
-                                
+
                                   if (ampm === "pm" && hours !== 12) {
                                     hours += 12; // Convert to 24-hour format if it's PM
                                   } else if (ampm === "am" && hours === 12) {
                                     hours = 0; // Midnight (12:00 AM) is 0 in 24-hour format
                                   }
-                                
+
                                   // Create a Date object with the extracted hours and minutes
                                   const dates3 = new Date();
                                   dates3.setHours(hours);
@@ -2884,13 +2897,13 @@ debugger
                                     if(dates3>d1){
                                 this.slotsArr.push(slotsArr12[j])
                                     }
-    
+
                                 debugger
                                   console.log(dates3);
-                                } 
-                                
-                                
-                                
+                                }
+
+
+
                             }
                         }
 
@@ -2913,7 +2926,7 @@ debugger
 
             () => { }
         );
-       
+
     }
 // getSlotsWithDocID(val) {
 //     debugger;
@@ -2973,7 +2986,7 @@ debugger
 //                     }
 
 //                     // Check if there are available slots after filtering
-                
+
 //                     if (this.slotsArr.length === 0) {
 //                         this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });
 //                         this.step1.controls['slot'].setValue(this.slotsArr[0]);
@@ -3040,11 +3053,11 @@ debugger
         );
     }
 
-   
-    
+
+
 
 //    bindMobileNo(){
-        
+
 
 //         // this.horizontalStepperForm.step1.mobNum.setValue(this.searchKey3)
 //         this.step1.controls['mobNum'].setValue(this.searchKey3);
@@ -3115,7 +3128,7 @@ debugger
     //         }
     //     }
     //     let medicationArr = [];
-        
+
     //     for (var i = 0; i < val.medicationitems.length; i++) {
 
     //         medicationArr.push({
@@ -3127,9 +3140,9 @@ debugger
     //             , duration: val.medicationitems[i].duration
     //             , notes: val.medicationitems[i].notes,
 
-               
 
-                
+
+
     //         });
     //     }
 
@@ -3177,7 +3190,7 @@ debugger
     //         (data) => {
     //             if (data == '1') {
 
-    //                // 
+    //                //
     //                // this.Screen = 1;
     //                 // this.detailData.vitalId = this.afterSaveVitalId;
     //                 // this.onRowClicked(this.detailData)
@@ -3190,7 +3203,7 @@ debugger
     //                // this.getAllAppointmentsAfterSAve();
     //                 this.Screen = 1;
     //                 this.ngOnInit();
-                  
+
     //             }
     //             else {
 
@@ -3221,9 +3234,9 @@ debugger
             }
             // else if(val.items[i].docType == null && val.items[i].fileName == null ) {
             //     this.uploadFileNull=true
-               
+
             // }
-            else if((val.items[i].docType == null || val.items[i].docType == "") && 
+            else if((val.items[i].docType == null || val.items[i].docType == "") &&
         (val.items[i].fileName == null || val.items[i].fileName == "")) {
     this.uploadFileNull = false;
     let itemArr = [];
@@ -3242,7 +3255,7 @@ debugger
             }
         }
         let medicationArr = [];
-        
+
         for (var i = 0; i < val.medicationitems.length; i++) {
 
             medicationArr.push({
@@ -3254,9 +3267,9 @@ debugger
                 , duration: val.medicationitems[i].duration
                 , notes: val.medicationitems[i].notes,
 
-               
 
-                
+
+
             });
         }
 
@@ -3305,7 +3318,7 @@ debugger
             (data) => {
                 if (data == '1') {
 
-                   // 
+                   //
                    // this.Screen = 1;
                     // this.detailData.vitalId = this.afterSaveVitalId;
                     // this.onRowClicked(this.detailData)
@@ -3318,7 +3331,7 @@ debugger
                    // this.getAllAppointmentsAfterSAve();
                     this.Screen = 1;
                     this.ngOnInit();
-                  
+
                 }
                 else {
 
@@ -3354,9 +3367,9 @@ debugger
                         // this.patientsappointments = data.filter((a) => new Date(a.serviceDate) < new Date(dateforToday));
                         this.patientsappointments = data;
 
-                       
-                        
-                        // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i); 
+
+
+                        // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i);
                     }
                     else {
                         // this.registrationID=this.loginDetails.registrationID;
@@ -3367,7 +3380,7 @@ debugger
                         this.upcomingBookings = data.filter((a) => new Date(a.serviceDate) > new Date(dateforToday) && a.doctorID == this.registrationID);
                         //All Bookings
                         this.patientsappointments = data.filter((a) => a.doctorID == this.registrationID);
-                      
+
                     }
 
                     // //Today Bookings
@@ -3378,7 +3391,7 @@ debugger
                     // //All Bookings
                     // // this.patientsappointments = data.filter((a) => new Date(a.serviceDate) < new Date(dateforToday));
                     // this.patientsappointments = data;
-                    // // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i); 
+                    // // this.filterPatientappointments =data.filter((v, i, a) => a.indexOf(v) === i);
 
                     this.filterPatientappointments = data.filter(
                         (thing, i, arr) => arr.findIndex(t => t.mobile === thing.mobile && t.patient === thing.patient) === i
@@ -3392,7 +3405,7 @@ debugger
                 this.todayBookings = new MatTableDataSource(this.todayBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
                 this.patientsappointments = new MatTableDataSource(this.patientsappointments);
-               
+
                 this.detailData.vitalID = this.afterSaveVitalId;
                 if (this.roleID == 2) {
                     this.onRowClickedAfterSAve(this.detailData);
@@ -3427,7 +3440,7 @@ debugger
             this.patientName = row.patient + " " + "(" + row.gender + ", Age " + row.age + ")"
             // this.vitalsForm.reset();
             // this.fruits = [];
-            
+
             this.flag = '1'
             this.PatientID = row.patientID;
             this.AppointmentID = row.appointmentID;
@@ -3484,7 +3497,7 @@ debugger
                             docType: [this.docsXml[i].documentTypeID],
                            // docType: [uom[0]],
                         }));
-                       
+
                     }
                     this.spinner.hide();
                 } else {
@@ -3501,7 +3514,7 @@ debugger
             (data) => {
 
                 if (data) {
-                    
+
                     this.medicineXml = data;
                     this.medicationitems = this.vitalsForm.get('medicationitems') as FormArray;
                     const arr = <FormArray>this.vitalsForm.controls.medicationitems;
@@ -3515,7 +3528,7 @@ debugger
                             duration: [this.medicineXml[i].duration],
                             notes: [this.medicineXml[i].notes]
                         }));
-                    
+
                  }
                     this.spinner.hide();
                 } else {
@@ -3541,7 +3554,7 @@ debugger
         this.GetMedicineXML();
         this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
         if (this.vitals.length > 0) {
-            
+
             this.vitalsForm.controls['weight'].setValue(this.vitals[0].weight)
             this.vitalsForm.controls['bloodGroup'].setValue(this.vitals[0].bloodGroup)
             this.vitalsForm.controls['temp'].setValue(this.vitals[0].temperature_F)
@@ -3555,7 +3568,7 @@ debugger
             this.vitalsForm.controls['nextVisit'].setValue(this.vitals[0].nextVisit)
             this.vitalsForm.controls['pickADate'].setValue(this.vitals[0].pickADate)
             this.vitalsForm.controls['frequency'].setValue(this.vitals[0].frequency)
-          
+
 
         }
     }
@@ -3571,7 +3584,7 @@ debugger
     //     debugger
     //     event.preventDefault();
     //   }
-    
+
     //   onDrop(event: Event) {
     //     debugger
     //     event.preventDefault();
@@ -3582,26 +3595,26 @@ debugger
     //     if (files.length === 0) {
     //       return; // No files to handle
     //     }
-      
+
     //     // Assuming you want to process all files using FileReader and populate the dataSource
     //     const fileArray = Array.from(files); // Convert FileList to an array
-      
+
     //     const promises = fileArray.map((file) => {
     //       return new Promise<void>((resolve, reject) => { // Explicitly specify 'void' type
     //         const reader = new FileReader();
-      
+
     //         reader.onload = (event) => {
     //           // Handle the file content here, e.g., you can display the file name in the console
     //           console.log(`Uploaded file: ${file.name}`);
-      
+
     //           // Resolve the promise when the file is processed
     //           resolve();
     //         };
-      
+
     //         reader.readAsDataURL(file);
     //       });
     //     });
-      
+
     //     // Wait for all promises to complete before updating the dataSource
     //     Promise.all(promises)
     //       .then(() => {
@@ -3623,58 +3636,58 @@ debugger
         debugger
                 //this.urls = [];
                 let files = event.target.files;
-                
+
                 var reader = new FileReader();
-        
+
                 reader.readAsDataURL(event.target.files[0]); // read file as data url
-          
+
                 reader.onload = (event) => { // called once readAsDataURL is completed
-              
+
                 }
-        
+
                 if (files) {
                     for (let file of files) {
                         let reader = new FileReader();
                         reader.onload = (e: any) => {
-        
+
                         }
                         reader.readAsDataURL(file);
                     }
                     this.fileChange(event);
                 }
-                
+
                 this.items = this.vitalsForm.get('items') as FormArray;
                 this.items.push(this.createItem2(files[0].name));
                 this.fileSelected = true;
-              
+
             }
             detectFiles2(files1) {
         debugger
                 //this.urls = [];
                 let files = files1;
-                
+
                 var reader = new FileReader();
-        
+
                 reader.readAsDataURL(files1[0]); // read file as data url
-          
+
                 // reader.onload = (files1) => { // called once readAsDataURL is completed
-              
+
                 // }
-        
+
                 if (files) {
                     for (let file of files) {
                         let reader = new FileReader();
                         reader.onload = (e: any) => {
-        
+
                         }
                         reader.readAsDataURL(file);
                     }
                     this.fileChange1(files1);
                 }
-                
+
                 this.items = this.vitalsForm.get('items') as FormArray;
                 this.items.push(this.createItem2(files[0].name));
-              
+
             }
             createItem2(fileName): FormGroup {
                 return this._formBuilder.group({
@@ -3684,7 +3697,7 @@ debugger
                 });
             }
             @ViewChild('fileInput') fileInput: ElementRef;
-        
+
             openFileInput() {
                 this.fileInput.nativeElement.click();
               }
@@ -3692,16 +3705,16 @@ debugger
                 event.preventDefault();
                 event.stopPropagation();
               }
-            
+
               onDragLeave(event: DragEvent): void {
                 event.preventDefault();
                 event.stopPropagation();
               }
-            
+
               onDrop(event: DragEvent): void {
                 event.preventDefault();
                 event.stopPropagation();
-               
+
                 const files = (event as DragEvent).dataTransfer.files;
                 this.detectFiles2(files)
               }
@@ -3709,26 +3722,26 @@ debugger
                 if (files.length === 0) {
                   return; // No files to handle
                 }
-              
+
                 // Assuming you want to process all files using FileReader and populate the dataSource
                 const fileArray = Array.from(files); // Convert FileList to an array
-              
+
                 const promises = fileArray.map((file) => {
                   return new Promise<void>((resolve, reject) => { // Explicitly specify 'void' type
                     const reader = new FileReader();
-              
+
                     reader.onload = (event) => {
                       // Handle the file content here, e.g., you can display the file name in the console
                       console.log(`Uploaded file: ${file.name}`);
-              
+
                       // Resolve the promise when the file is processed
                       resolve();
                     };
-              
+
                     reader.readAsDataURL(file);
                   });
                 });
-              
+
                 // Wait for all promises to complete before updating the dataSource
                 Promise.all(promises)
                   .then(() => {
@@ -3746,20 +3759,20 @@ debugger
                   });
               }
               fileChange1(event) {
-        
-        
+
+
                 let fileList = event;
-        
+
                 let fileToUpload = <File>fileList[0];
                 const formData = new FormData();
-               
+
                 formData.append('file', fileToUpload, fileToUpload.name);
                 this.http.post(this.API_URL + 'PatientsAppointments/upload', formData, { reportProgress: true })
                     .subscribe(data => {
-        
+
                         this.fileName = fileList[0].name;
-        
-        
+
+
                     });
             }
 
@@ -3767,13 +3780,13 @@ debugger
 
         //this.urls = [];
         let files = event.target.files;
-        
+
         var reader = new FileReader();
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
-  
+
         reader.onload = (event) => { // called once readAsDataURL is completed
-      
+
         }
 
         if (files) {
@@ -3793,7 +3806,7 @@ debugger
             })
         }
 
-      
+
     }
 
     //This is for Uploading Multiple Image
@@ -3804,7 +3817,7 @@ debugger
 
         let fileToUpload = <File>fileList[0];
         const formData = new FormData();
-       
+
         formData.append('file', fileToUpload, fileToUpload.name);
         this.http.post(this.API_URL + 'PatientsAppointments/upload', formData, { reportProgress: true })
             .subscribe(data => {
@@ -3837,19 +3850,19 @@ debugger
         let arr = [];
         arr.push({ PatientID: Number(val.patientID) })
         var url = 'PatientsAppointments/PatientHistory/';
-        
+
         this.utilitiesService.CRUD(arr, url).subscribe(
-          
+
             (data) => {
                 debugger
                 if (data) {
 
                     const dateforToday = new Date();
                     this.patientHistory = data;
-                    
+
 
                     this.patientHistory = this.patientHistory.filter((a) => new Date(a.serviceDate) <= new Date(dateforToday));
-                    
+
                     if(this.patientHistory.length>0){
                         this.previousdata=true;
                     }
@@ -3857,7 +3870,7 @@ debugger
                         this.previousdata=false;
                     }
                     // this.patientHistoryList = data;
-                    // this.patientHistory.splice(0, 1); -- If you need to splice today data in Previous Visit tab 
+                    // this.patientHistory.splice(0, 1); -- If you need to splice today data in Previous Visit tab
                     // this.patientHistoryList.splice(0, 1);
                     for (var i = 0; i < this.patientHistory.length; i++) {
                         if (this.patientHistory[i].vitalsID > 0) {
@@ -3904,7 +3917,7 @@ debugger
                                 s = s  + data[i].complaintName + ',';
 
                             }
-                               
+
                         }
                         history.complaintName = s;
                     }
@@ -3953,8 +3966,8 @@ debugger
     }
     Viewfile(event,item){
         debugger
-       
-        this.fileUrl = item.controls.fileName.value; 
+
+        this.fileUrl = item.controls.fileName.value;
 
         let a =String.raw`\b1\c1\d1`; //Output a ="\b1\c1\d1"
 
@@ -3964,7 +3977,7 @@ let b = a.split("\\");
       if(c[0]=="VitalsDocs"){
         this.fileUrl=c[1];
       }
-        
+
         //"wwwroot/SiteDocument/SiteDemo1/FileDocument.doc" static file path
         this.utilitiesService.DocumentsDownload(this.fileUrl).subscribe(async (event) => {
             debugger
@@ -3979,13 +3992,13 @@ let b = a.split("\\");
         tab.location.href = url;
             }
         });
-       
+
         // this.utilitiesService.DocumentsDownload1(this.filename1).subscribe( (event) => {
         //     debugger
         //     let data = event as HttpResponse < Blob > ;
         // const blob = new Blob([data.body as BlobPart]);
 
-       
+
         // const url = window.URL.createObjectURL(blob);
         // let tab = window.open();
         // tab.location.href = url;
@@ -4013,11 +4026,11 @@ let b = a.split("\\");
         });
     }
     GetDocumentListXML1(val, history,k) {
-        
+
         this.apptList.VitalsID = val;
         this.utilitiesService.GetDocumentsXML(this.apptList).subscribe(
             (data) => {
-                
+
                 if (data) {
 
                     this.docsXml = data;
@@ -4046,13 +4059,13 @@ let b = a.split("\\");
         );
     }
     GetDocumentListXML(val, history) {
-        
+
                 this.apptList.VitalsID = val;
                 this.utilitiesService.GetDocumentsXML(this.apptList).subscribe(
                     (data) => {
-                        
+
                         if (data) {
-        
+
                             this.docsXml = data;
                             this.docsList = [];
                             this.labreportfiles = [];
@@ -4060,7 +4073,7 @@ let b = a.split("\\");
                             for (var i = 0; i < this.docsXml.length; i++) {
                                 this.docsList.push(this.docsXml[i]);
                                 this.labreportfiles.push(this.docsList[i].docTypeNAme.slice(11))
-                               
+
                             }
                             // var splitted = this.docsList[0].docTypeNAme.slice(11);
                             this.fileUrl=this.docsList[0].docTypeNAme.slice(11);
@@ -4084,10 +4097,10 @@ let b = a.split("\\");
 
     GetMedicineData() {
 debugger
-        
+
         this.medicineService.GetMedicineList().subscribe(
             (data) => {
-                
+
                 if (data) {
                     if (this.roleID == 2) {
                         data = data .sort((a,b) => {
@@ -4107,9 +4120,9 @@ debugger
                         this.medicinePrescepList = data;
                 }
 
-             
-              this.searchmedicine= this.medicinePrescepList; 
-              this.medicinePrescepList1= this.medicinePrescepList; 
+
+              this.searchmedicine= this.medicinePrescepList;
+              this.medicinePrescepList1= this.medicinePrescepList;
 
 
             },
@@ -4124,7 +4137,7 @@ debugger
 
     // //Receipt Print
     // openPresecptionDialog(): void {
-    //     
+    //
     //     const dialogConfig = new MatDialogConfig();
     //     dialogConfig.restoreFocus = false;
     //     dialogConfig.autoFocus = false;
