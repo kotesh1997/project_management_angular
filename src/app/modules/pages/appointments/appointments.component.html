@@ -3028,7 +3028,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="td_table1">Item</td>
+                                            <td class="td_table1">{{todayDataSourcePrintBookings[0].serviceName}}</td>
                                             <td class="td_table1">{{todayDataSourcePrintBookings[0].payment}}</td>
                                         </tr>
 
@@ -3130,7 +3130,7 @@
                             <tr style="background-color:#fff">
 
                                 <td class="td_style mt-1">
-                                    <span>ServiceName</span>
+                                    <span>Service Name</span>
                                     <div class="tocken_no">{{detailData.serviceName}}</div>
                                 </td>
                                 <td class="td_style mt-1">
@@ -3231,7 +3231,7 @@
                                     <table id="Nextvisit">
                                         <p><b>Next visit</b></p>
                                         <tr class="td_table2" class="table table-borderless">
-                                            <td>{{vitalsForm.get('nextVisit').value}}{{vitalsForm.get('frequency').value}}
+                                            <td>{{vitalsForm.get('nextVisit').value}} {{vitalsForm.get('frequency').value}}
                                             </td>
                                         </tr>
                                     </table>

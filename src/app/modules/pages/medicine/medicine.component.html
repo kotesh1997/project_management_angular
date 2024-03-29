@@ -169,7 +169,7 @@
                 </fieldset>
                 <div class="flex justify-end">
                     <button *ngIf="Updatebtn" class="px-8" type="button" style="cursor: pointer;" [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"
-                    (click)="UpdateMedicineDetails(form.value); setFocus();" [disabled]="form.invalid" type="button">
+                    (click)="UpdateMedicineDetails(form.value); setFocus();drawer.close();" [disabled]="form.invalid" type="button">
                     Update
                 </button>
                 <button *ngIf="!Updatebtn" class="px-8" type="button" style="cursor: pointer;" [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"
