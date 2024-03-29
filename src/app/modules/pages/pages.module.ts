@@ -58,7 +58,6 @@ import { MyPatientsService } from './mypatients/mypatients.service';
  import { ReportService } from './Reports/report.service';
 import { MedicineService } from './medicine/medicine.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ServiceComponent } from './service/service.component';
 
  const Routes: Route[] = [
      { path: 'Appointments', component: AppointmentsComponent },
@@ -71,7 +70,6 @@ import { ServiceComponent } from './service/service.component';
     //{ path: 'Admindashboard', component: MastersComponent },
     { path: 'Employess', component: MastersComponent },
     { path: 'PatientHist', component: PatientHistoryComponent },
-    {path:'service',component:ServiceComponent}
 
 
 
@@ -88,7 +86,6 @@ import { ServiceComponent } from './service/service.component';
         ToastComponent,
         MastersComponent,
         PatientHistoryComponent,
-        ServiceComponent,
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,
@@ -129,8 +126,8 @@ import { ServiceComponent } from './service/service.component';
         NgxMatTimepickerModule,
         NgxMatNativeDateModule,
         NgxMaterialTimepickerModule,
-        FuseAlertModule, MatSnackBarModule, FullCalendarModule,
-
+        FuseAlertModule, MatSnackBarModule, FullCalendarModule, 
+       
     ],
     providers: [PatientsService,DatePipe, AdmindashboardService,MyPatientsService,ReportService,MedicineService],
 })

@@ -168,11 +168,15 @@
                     
                 </fieldset>
                 <div class="flex justify-end">
-                    <button class="px-8" type="button"    style="cursor: pointer;"   [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"(click)="
-                                        addUpdateMedicineDetails(form.value);setFocus()" [disabled]="form.invalid"
-                        type="button">
-                        Submit
-                    </button>
+                    <button *ngIf="Updatebtn" class="px-8" type="button" style="cursor: pointer;" [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"
+                    (click)="UpdateMedicineDetails(form.value); setFocus();" [disabled]="form.invalid" type="button">
+                    Update
+                </button>
+                <button *ngIf="!Updatebtn" class="px-8" type="button" style="cursor: pointer;" [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"
+                    (click)="addUpdateMedicineDetails(form.value); setFocus();" [disabled]="form.invalid" type="button">
+                    Submit
+                </button>
+                
                     <!-- <button class="px-8" type="button"    style="cursor: pointer;"   [ngClass]="(form.invalid) ? 'btnsub' : 'btnsub1'"(click)="
                                         addUpdateMedicineDetails(form.value);drawer.close();" [disabled]="form.invalid"
                         type="button">

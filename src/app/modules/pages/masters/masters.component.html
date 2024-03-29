@@ -19,8 +19,8 @@
                             <mat-icon >close</mat-icon>
                         </button>
                     </mat-form-field>
-
-
+                    
+                   
                     <button class="fuse-mat-button-rounded  flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
                     (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633;">
@@ -29,7 +29,7 @@
                 </button>
             </div>
 
-
+             
             </div>
             <div   class="example-container mat-elevation-z8">
                 <table class="table1"   *ngIf="doctortab"class="table1" mat-table [dataSource]="regDetails1">
@@ -126,7 +126,7 @@
                                     style="color:#ff7b00;width: 80px;">
 
                                </mat-icon></div> -->
-
+                            
                         </td>
                     </ng-container>
 
@@ -140,7 +140,7 @@
             </div>
             </div>
             <div  *ngIf="!doctortab" style="text-align: center;">
-
+                
 
 
                 <div class="center-container">
@@ -150,7 +150,7 @@
 <br>
 <div class="center-container1">
     <h2 style="color: #146aa6;    margin-top: -59px;">
-    <b>No  doctor data  Found </b>
+    <b>No  doctor data  Found </b> 
     </h2>
 </div>
                 <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
@@ -188,9 +188,9 @@
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Asst Doctor</span>
                     </button>
-
+                   
             </div>
-
+               
             </div>
                 <div  class="example-container mat-elevation-z8">
                     <table class="table1"  *ngIf="assdoctortab" mat-table [dataSource]="regDetailsJrList">
@@ -242,24 +242,24 @@
                                 <span>{{ element.institution }}</span>
                             </td>
                         </ng-container>
-
+    
                         <ng-container matColumnDef="Actions">
                             <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
                                 Actions
                             </th>
-
+    
                             <td mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu"
                                     aria-label="Example icon-button with a menu">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #menu="matMenu">
-
+    
                                     <button mat-menu-item (click)="updateSelect(element);drawer.toggle()">
                                         <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
                                         <span>Edit</span>
                                     </button>
-
+    
                                     <button mat-menu-item (click)="deleteDoc(element)">
                                         <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
                                         <span >Delete</span>
@@ -277,35 +277,35 @@
                                 </button>
                             </td>
                         </ng-container> -->
-
+    
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                    </table>
+                    </table> 
                     <div [ngClass]="{'hidediv': assdoctortab, 'showdic': !assdoctortab}">
 
-
+            
                         <mat-paginator #Assdocpag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons>
                         </mat-paginator>
-                        </div>
+                        </div>   
                 </div>
                 <div  *ngIf="!assdoctortab" style="text-align: center;">
-
+                
 
 
                     <div class="center-container">
                         <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
-
+    
                     </div>
     <br>
     <div class="center-container1">
         <h2 style="color: #146aa6;    margin-top: -59px;">
-        <b>No Asst doctor data  Found </b>
+        <b>No Asst doctor data  Found </b> 
         </h2>
     </div>
                     <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
-
+    
                 </div>
-
+           
         </mat-tab>
         <mat-tab label="Front Desk">
             <div class="flex items-center mt-12 sm:mt-0 sm: space-x-3">
@@ -323,10 +323,10 @@
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Front Desk</span>
                     </button>
-
-
+               
+                   
             </div>
-
+              
             </div>
             <div class="example-container mat-elevation-z8">
                 <table class="table1"   *ngIf="frontdesks"  class="table1" mat-table [dataSource]="regDetailsFrontList" matSort>
@@ -396,7 +396,7 @@
                                     <span>Edit</span>
                                 </button>
 
-                                <button mat-menu-item (click)="deleteDoc(element)">
+                                <button mat-menu-item (click)="deleteDoc(element)"> 
                                     <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
                                     <span >Delete</span>
                                 </button>
@@ -416,18 +416,18 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                </table>
-
+                </table> 
+               
     <div [ngClass]="{'hidediv': frontdesks, 'showdic': !frontdesks}">
 
-
+            
         <mat-paginator #Frontdeskpag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons>
         </mat-paginator>
         </div>
             </div>
 
             <div  *ngIf="!frontdesks" style="text-align: center;">
-
+                
 
 
                 <div class="center-container">
@@ -437,7 +437,7 @@
 <br>
 <div class="center-container1">
     <h2 style="color: #146aa6;    margin-top: -59px;">
-    <b>No Front Desk data  Found </b>
+    <b>No Front Desk data  Found </b> 
     </h2>
 </div>
                 <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
@@ -460,10 +460,10 @@
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">Lab Assistant</span>
                     </button>
-
-
+                  
+               
             </div>
-
+              
             </div>
             <div  class="example-container mat-elevation-z8">
                 <table class="table1" *ngIf="labassts" mat-table [dataSource]=" regDetailsLabList">
@@ -533,7 +533,7 @@
                                     <span>Edit</span>
                                 </button>
 
-                                <button mat-menu-item (click)="deleteDoc(element)">
+                                <button mat-menu-item (click)="deleteDoc(element)"> 
                                     <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
                                     <span >Delete</span>
                                 </button>
@@ -553,16 +553,16 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
-                </table>
+                </table>  
                 <div [ngClass]="{'hidediv': labassts, 'showdic': !labassts}">
 
-
+            
                     <mat-paginator #LabAsspag [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons>
                     </mat-paginator>
-                    </div>
+                    </div>   
             </div>
             <div  *ngIf="!labassts" style="text-align: center;">
-
+                
 
 
                 <div class="center-container">
@@ -572,7 +572,7 @@
 <br>
 <div class="center-container1">
     <h2 style="color: #146aa6;    margin-top: -59px;">
-    <b>No Lab Asst  data  Found </b>
+    <b>No Lab Asst  data  Found </b> 
     </h2>
 </div>
                 <!-- <mat-icon svgIcon="heroicons_solid:x-circle"></mat-icon> -->
@@ -662,7 +662,7 @@
                               </mat-select>
                             </mat-form-field>
                           </div> -->
-
+                          
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -687,7 +687,7 @@
                     </div>
 
                     <!-- <div class="row">
-
+                       
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field appearance="outline">
                                 <mat-label>Qualification</mat-label>
@@ -701,11 +701,11 @@
                                     {{ item.name }}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> 
 
                     </div> -->
 
-
+                  
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field class="custom-width" appearance="outline">
@@ -769,7 +769,7 @@
                    Submit
                       </button>
 
-
+                    
                 </div>
                 <div *ngIf="Updatebtn" class="flex justify-end">
                     <button class="px-8" mat-flat-button [color]="'primary'" (click)="
@@ -798,17 +798,17 @@
             <div class="flex flex-col gt-xs:flex-row">
 
                 <mat-slide-toggle [(ngModel)]="isAllDays" (change)="onToggleChange($event)" style="margin-left: 620px;" [disabled]="dayName == 'SUNDAY'">Select All</mat-slide-toggle>
-
+              
                 <fieldset class="scheduler-border" >
                     <ul>
                         <li *ngFor="let item of daysArr" (click)="dayToggle(item.Value)">
                             <div class="weekDays-selector">
                                 <input type="radio" id="{{item.id}}" class="weekday" />
-                                <!-- <span [ngClass]="item.Name === dayName ? 'day1' :'active1'">  <label  [ngClass]="{'active': item.Name === dayName}"
+                                <!-- <span [ngClass]="item.Name === dayName ? 'day1' :'active1'">  <label  [ngClass]="{'active': item.Name === dayName}" 
                                     for="{{item.id}}">{{item.Name}}</label></span> -->
-                                    <label  [ngClass]="{'active5': item.Value == selectedDay,'toggle':isAllDays&&item.Name != 'SUNDAY'}"
+                                    <label  [ngClass]="{'active5': item.Value == selectedDay,'toggle':isAllDays&&item.Name != 'SUNDAY'}" 
                                     for="{{item.id}}">{{item.Name}}</label>
-
+                               
                             </div>
                         </li>
                     </ul>
@@ -816,8 +816,8 @@
                 <!-- <mat-slide-toggle [(ngModel)]="isAllDays" (change)="onToggleChange($event)" style="margin-left: 630px;">Select All</mat-slide-toggle> -->
 
 
-
-
+                   
+                      
                     <!-- <div class="row">
             <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12" style="padding-right: 0;"  *ngFor="let item of daysArr">
                 <div class="weekDays-selector" (click)="day(item)">
@@ -847,7 +847,7 @@
                         </span>
                     </span>
                 </div>
-
+                
                 <!-- <div class="flex flex-cols">
                     <span class="flex flex-cols gap-2" *ngFor="let item of slotsArrForChips">
                         <span class="flex justify-center bgcol chip full-width" *ngIf="dayID==item.day">
@@ -855,7 +855,7 @@
                         </span>
                     </span>
                 </div> -->
-
+                
 
                     <!--<div class="row" *ngFor="let item of slotsArrForChips">
 
@@ -872,23 +872,23 @@
 
 
                     <div class="flex flex-cols justify-end gap-2">
-
-
+                       
+                           
 
                             <button class="fuse-mat-button-rounded  " mat-flat-button [color]="'primary'"
                             (click)="addSlot()"   style="position: relative; width: 140px; background-color: #ff7633;">
                             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                             <span class="ml-2">Add Slots</span>
-                        </button>
+                        </button> 
 
-
-
-
+           
+                        
+                        
                             <div class="flex justify-end">
-
-
-
-                                    <!-- <button  class="px-8" mat-raised-button [color]="'primary'" (click)="addSlots(slotsForm.value);"
+           
+                               
+                                  
+                                    <!-- <button  class="px-8" mat-raised-button [color]="'primary'" (click)="addSlots(slotsForm.value);" 
                                     [ngClass]="(slotsForm.invalid || submitButton) ? 'mat-flat-button' : 'mat-raised-button'" type="button">
                                                     Submit
                                                 </button> -->
@@ -911,10 +911,10 @@
                                                    addSlots(slotsForm.value);scheduleDrawer.close();" >
                                                   Submit
                                                      </button>
-
-
+            
+                               
                             </div>
-
+                        
                     </div>
 <br>
                     <div class="row">
@@ -925,8 +925,8 @@
                             <label for="colFormLabelSm1" class="col-form-label ">To</label>
                         </div>
                     </div>
-
-
+                   
+                    
                     <div >
                         <div *ngFor="let item of selectedSlots; let i = index;">
                             <div class="row">
@@ -953,9 +953,9 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                     </div>
-
+              
                 </fieldset>
 
             </div>

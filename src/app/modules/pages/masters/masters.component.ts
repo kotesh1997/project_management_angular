@@ -764,73 +764,7 @@ if(this.status[i].statusName=="Active"||this.status[i].statusName=="InActive  " 
         this.Updatebtn=true;
     }
 
-    deleteDoc(val) {
-       
-        this.roleID=val.roleID;
-        if(this.roleID =='5')
-        {
-            this.actionName = 'Asst Doctor';
-        }
-        else if(  this.roleID == '3')
-        {
-            this.actionName = 'Front Desk';
-        }
-        else if(  this.roleID == '6')
-        {
-            this.actionName = 'Lab Assistant';
-        }
-        else if(  this.roleID == '2')
-        {
-            this.actionName = 'Doctor';
-        }
-        this.flag = '3';
-        if (this.flag == '3') {
-            this.msg = this.actionName + ' data Deleted successfully ..!!';
-        }
-        
-        let arr = [];
-        arr.push({
-            flag: Number(this.flag)
-            , RoleID         : this.roleID
-             ,Name           :val.name           
-             ,Email          :val.email          
-             ,Mobile         :val.mobile         
-             ,Password       :val.password       
-             ,GenderID       :val.gender         
-             ,Experience     :val.experience     
-             ,Qualification  :val.qualification 
-             ,AadharNumber  :val.aadharNumber
-             ,PancardNumber  :val.PancardNumber  
-            , SpecializationID:val.specializations
-             ,Institution    :val.institution    
-             ,StatusID         :val.status         
-             ,AboutMe        :val.aboutMe        
-            , Address: val.address
-            , RegistrationID: val.registrationID
-           
-        })
-        var url = 'PatientsAppointments/RegisterationCRUD/';
-        this.utilitiesService.addUpdateVitals(arr, url).subscribe(
-            (data) => {
-                if (data == '100') {
-                    ;
-                    this.getRegisterationDetails();
-                   
-                    this._snackBar.open(this.msg, 'ok', {
-                        "duration": 2000
-                    });
-                }                
-                else {
-                    this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
-                        "duration": 2000
-                    });
-                }
-            },
-
-            () => { }
-        );
-        
-    }
+ 
     public doFilter1 = (value, state) => {
         debugger
         var sd=value.trim().toLocaleLowerCase()

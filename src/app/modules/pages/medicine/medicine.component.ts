@@ -33,6 +33,8 @@ import autoTable from 'jspdf-autotable';
     //encapsulation: ViewEncapsulation.None
 })
 export class MedicineComponent implements OnInit {
+    Updatebtn: boolean;
+    submitbtn:any;
     composition1:any;
     medicine1:any;
     horizontalStepperForm: FormGroup;
@@ -228,14 +230,15 @@ export class MedicineComponent implements OnInit {
         );
     }
     
-
+    medicineId:any
     updateSelect(val) {
         debugger
        this.flag='2'
-      
+      this.medicineId=val.medicineId
        this.medicine1=val.medicineName
        this.composition1=val.composition
-
+       this.Updatebtn = true; // Show Update button
+    this.submitbtn = false;
        
     }
 
@@ -278,7 +281,86 @@ export class MedicineComponent implements OnInit {
             () => { }
         );
     }
+    UpdateMedicineDetails(val) {
+        debugger;
+        this.msg = this.actionName + ' data added successfully ..!!';
 
+        if (this.flag == '1') {
+            this.msg = this.actionName + ' data added successfully ..!!';
+        }
+        else if (this.flag == '2') {
+            //this.msg = 'Doctor with same mobile no alreay Exists ..!!';
+            this.msg = this.actionName + ' data updated Successfully ..!!';
+        }
+        let arr = [];
+        arr.push({ 
+                MedicineId:            this.medicineId,
+                MedicineName           :val.medicineName           
+                ,Composition          :val.composition 
+                ,Action:'Update',  
+        })
+        //var url = 'PatientsAppointments/RegisterationCRUD/';
+        this.medicineService.addUpdateMedicineDetails(arr).subscribe(
+            (data) => {
+                if (data == '1') {
+                    ;
+                    this.GetMedicineData();
+                    this.form.reset();
+                    this.Updatebtn = false;
+                    this._snackBar.open(this.msg, 'ok', {
+                        "duration": 2000
+                    });
+                }               
+                else {
+                    this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
+                        "duration": 2000
+                    });
+                }
+            },
+
+            () => { }
+        );
+    }
+
+    deleteDoc(element) {
+        debugger;
+        this.msg = this.actionName + ' data Deleted successfully ..!!';
+    
+        if (this.flag == '1') {
+            this.msg = this.actionName + ' data Deleted successfully ..!!';
+        } else if (this.flag == '2') {
+            this.msg = this.actionName + ' data Deleted Successfully ..!!';
+        } else if (this.flag == '3') {
+            this.msg = this.actionName + ' data Deleted Successfully ..!!';
+        }
+    
+        let arr = [];
+        arr.push({
+            MedicineId: element.medicineId,
+            MedicineName: element.medicineName,
+            Composition: element.composition,
+            Action: 'Delete',
+        });
+    
+        this.medicineService.addUpdateMedicineDetails(arr).subscribe(
+            (data) => {
+                if (data == '1') {
+                    this.GetMedicineData();
+                    this.form.reset();
+                    this.Updatebtn = false;
+                    this._snackBar.open(this.msg, 'ok', {
+                        duration: 2000
+                    });
+                } else {
+                    this._snackBar.open('Something went wrong please try again alter ..!!', 'ok', {
+                        duration: 2000
+                    });
+                }
+            },
+            () => {}
+        );
+    }
+    
 
     // GetAllAppointments() {
 

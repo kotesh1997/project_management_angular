@@ -85,19 +85,19 @@
                         <!-- <ng-container matColumnDef="Patient">
         <th mat-header-cell *matHeaderCellDef>
             Patient Details
-
+    
         </th>
-
+    
         <td mat-cell *matCellDef="let element">
             <span><b>{{ element.patient | titlecase}}</b></span>
             ({{ element.gender | slice:0:1}}, {{ element.age }}y)
             <br />
             <mat-icon style="font-size: 20px ;"> call</mat-icon>
             {{ element.mobile }}
-
+         
         </td>
 
-
+        
     </ng-container> -->
 
                         <ng-container matColumnDef="Patient">
@@ -382,7 +382,7 @@
                 <div *ngIf="row.doctorCompleted == 1" (click)="onRowClicked(row)">
                     <mat-icon style="color: green"> check_circle</mat-icon>
                 </div>
-
+             
             </button> -->
                                 <button mat-button
                                     *ngIf="roleID=='2' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00')">
@@ -462,11 +462,11 @@
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6" style="text-align: right;" *ngIf="roleID == 1 || roleID == 3">
-
+                  
                     <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                     style="position: relative;top: 8px;right: 9%; width: 170px;"
                         (click)="resetFilters1()">
-
+                        
                         <span class="ml-2">Clear</span>
                     </button>
                           <button class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
@@ -477,26 +477,26 @@
                           </button>
                 </div>
             </div> -->
-            <!--
+            <!-- 
             <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
-
+            
                 <mat-form-field class="col-span-2 search1" appearance="outline">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
                     placeholder="Search Profile">
                 </mat-form-field>
-
+              
               <button class=" " style="margin-top: -1px;">
-
+              
                <span (click)="resetFilters1()">
 
                  <img width="48" height="48"  style="max-width: 33%;display: inline;margin-right: 21px;cursor: pointer;margin-top: -7px;
-                  height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/></span>
+                  height: 40px;" src="https://img.icons8.com/sf-black/64/FD7E14/clear-filters.png" alt="clear-filters"/></span> 
 
-              </button>
-
-
+              </button> 
+            
+            
 
                     <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
                     style="position: relative;top: 24%;right: -10%;width: 175px;;"
@@ -536,24 +536,24 @@
 
             <!-- <div class="grid grid-cols-1 sm:grid-cols-8 md:grid-cols-8 gap-6 w-full min-w-0 ng-star-inserted">
 
-
+              
                 <mat-form-field class=" col-span-2 search">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput type="text" [(ngModel)]="searchKey1" (keyup)="doFilter(searchKey1,2)"
                         placeholder="Search Profile">
                 </mat-form-field>
-
-              <button class=" "  *ngIf="roleID == 1 || roleID == 3" style="margin-top: -1px;"
-
+              
+              <button class=" "  *ngIf="roleID == 1 || roleID == 3" style="margin-top: -1px;" 
+             
                   >
-
+              
                <span (click)="resetFilters1()">
 
                  <img width="48" height="48"  style="max-width: 29%;display: inline;margin-right: 21px;cursor: pointer;
-                  height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span>
+                  height: 35px;" src="https://img.icons8.com/sf-regular/48/000000/clear-filters.png" alt="clear-filters"/></span> 
 
-              </button>
-
+              </button> 
+            
 
               <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded col-span-2 flex flex-col justify-end"  mat-flat-button [color]="'primary'"
               style="position: relative;top:-28px;right: -230px;width: 180px;"
@@ -561,10 +561,10 @@
                   <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                   <span class="ml-2">New Appointment</span>
               </button>
+               
+            
 
-
-
-
+       
         </div> -->
 
             <div *ngIf="upcomings " class="table1 example-container mat-elevation-z8 ">
@@ -816,7 +816,7 @@
                             <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                           </button>
                         </div>
-
+                      
                         <div class="ml-2">
                           <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()">
                             <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
@@ -905,7 +905,7 @@
                                         {{
                                         element.slotTime
                                         }}
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
 
@@ -1182,7 +1182,7 @@
 
                             </div>
                             <div class="flex justify-end" *ngIf="action == 'Update Existing Appointment'">
-                                <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="nextDisabled
+                                <button class="px-8" mat-flat-button [color]="'primary'" [disabled]="nextDisabled                                         
                                     " type="button" matStepperNext>
                                     Next
                                 </button>
@@ -1202,7 +1202,7 @@
                             <div class="row">
                                 <mat-form-field class="col-lg-12" appearance="outline">
                                     <mat-label>Select Service</mat-label>
-                                    <mat-select (selectionChange)="EnableModeprice($event)" [formControlName]="'serviceName'"
+                                    <mat-select (selectionChange)="EnableModeprice()" [formControlName]="'serviceName'"
                                         required [disabled]="isDuePay">
                                         <mat-option *ngFor="let item of services" [value]="item.serviceID">
                                             {{ item.serviceName }}
@@ -1218,7 +1218,7 @@
 
                             </div>
                             <div class="row" *ngIf="isPriceTag">
-                                <!-- <mat-form-field class="col-lg-3" appearance="outline">
+                                <mat-form-field class="col-lg-3" appearance="outline">
                                     <mat-label>Price</mat-label>
                                     <mat-select [formControlName]="'price'" (selectionChange)="applyNetPrice($event)"
                                         required [disabled]="isDuePay">
@@ -1227,15 +1227,7 @@
                                             {{ item.price }}
                                         </mat-option>
                                     </mat-select>
-                                </mat-form-field> -->
-
-                                <mat-form-field class="col-lg-3" appearance="outline">
-                                    <mat-label>Price</mat-label>
-                                    <input matInput [(ngModel)]="price" [formControlName]="'price'" [disabled]="true" required
-                                        [readonly]="price" />
                                 </mat-form-field>
-
-
                                 <mat-form-field class="col-lg-3" appearance="outline">
                                     <mat-label>Mode Of Payment</mat-label>
                                     <mat-select [formControlName]="'modeOfPayment'" [disabled]="ModePrice">
@@ -1553,16 +1545,16 @@
                                             (drop)="onDrop($event)"(click)="fileInput.click()" style="width: 50%; height: 100%; padding-top: 24px; padding-bottom: 24px; background: white;  justify-content: center; align-items: center; display: inline-flex">
                                               <div style="flex-direction: column; justify-content: center; align-items: center; gap: 8px; display: inline-flex">
                                                 <div >
-
+                                                             
                                                     <span class="flex justify-center font-medium text-md text-primary-500 w-32 overflow-hidden"></span>
                                                     <mat-icon class="icon-size-14" >perm_media</mat-icon>
                                                     <button class=" px-2 bg-gray-300"(click)="openFileInput()" >Upload Logo</button>
                                                     <div>(or)</div>
                                                     <div>drag & drop file(s) here</div>
-
+                                                   
                                               </div>
-
-
+                                        
+                                             
                                               </div>
                                           </div> -->
 
@@ -1716,9 +1708,9 @@
                                                     <ng-container [formGroupName]="i">
                                                         <div class="row">
                                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-
+                                                               
                                                                 <mat-form-field appearance="outline">
-
+                                                                   
                                                                     <input style="color: black;" matInput [formControlName]="'docType'" />
                                                                 </mat-form-field>
                                                             </div>
@@ -1727,7 +1719,7 @@
                                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                                 <div class="header-icon" (click)="file.click()"
                                                                     style=" margin-left: -19px; width: 100%; ">
-                                                                    <button type="button" class="btn btn-primary"
+                                                                    <button type="button" class="btn btn-primary" 
                                                                         style="width: 100%; height: 57px !important; border-radius:5px;">
 
                                                                         <span style="font-size:20px;">📎</span> File
@@ -1740,7 +1732,7 @@
                                                                         class="form-control"
                                                                         formControlName="Image">
                                                                 </span>
-
+                                                               
                                                             </div>
 
 
@@ -1770,7 +1762,7 @@
                                                         </div>
                                                         <br />
                                                     </ng-container>
-
+                                                  
                                                 </div> -->
 
 
@@ -1825,7 +1817,7 @@
                                                                 (click)="appoinmentLink()">
                                                                 Back
                                                             </button> -->
-                    <!-- <button class="px-6" mat-flat-button [color]="'primary'"
+                    <!-- <button class="px-6" mat-flat-button [color]="'primary'"                                         
                                                              type="button" >
                                                             Back
                                                         </button> -->
@@ -1839,7 +1831,7 @@
                 <!-- <div class="col-lg-5 align-items-center">
                    <span> <mat-icon class="text-current" svgIcon="heroicons_solid:user-circle"></mat-icon> </span>
                     <label style="font-size: x-large;"><b>{{detailData.patient}}</b>  </label><span> ({{ detailData.gender | slice:0:1}}, {{ detailData.age }}y)</span><br>
-                    <mat-icon class="icon-size-3 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}}
+                    <mat-icon class="icon-size-3 text-current" svgIcon="feather:phone-call"></mat-icon> {{detailData.mobile}} 
                 </div> -->
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-4 px-6 md:px-8 ">
 
@@ -2162,9 +2154,9 @@
 
 
                                                             <!-- <iframe src="https://research.google.com/pubs/archive/44678.pdf" width="100%" height="300"></iframe> -->
-                                                            <!--
+                                                            <!-- 
                                                             <pdf-viewer
-
+                                                            
                                                             src="https://research.google.com/pubs/archive/44678.pdf"
                                                             [render-text]="true"
                                                             [original-size]="false"
@@ -2180,7 +2172,7 @@
 
 
                                                             <!-- <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-
+                                                               
                                                                 <mat-form-field appearance="outline">
                                                                     <input  disabled matInput [formControlName]="'docType'" />
                                                                 </mat-form-field>
@@ -2204,7 +2196,7 @@
 
                                                                 <!-- <button type="button" #file (click)="Viewfile($event,item)" style="color:#146aa6">
                                                                                 View File
-
+                                                                   
                                                                 </button> -->
                                                                 <button mat-button>
                                                                     <div class="hovers" style="color: #146aa6" #file
@@ -2226,9 +2218,9 @@
 
 
                                                             <!-- <iframe src="https://research.google.com/pubs/archive/44678.pdf" width="100%" height="300"></iframe> -->
-                                                            <!--
+                                                            <!-- 
                                                             <pdf-viewer
-
+                                                            
                                                             src="https://research.google.com/pubs/archive/44678.pdf"
                                                             [render-text]="true"
                                                             [original-size]="false"
@@ -2296,11 +2288,11 @@
                                                                     <input [formControlName]="'medicine1'"  matInput [(ngModel)]="searchKey" placeholder="Search a Medicine"
                                                                     autocomplete="off" (keyup)="applyFilters()"  />  </mat-form-field>
 
-                                                                <mat-option *ngFor="let item of medicinePrescepList" class="medication"
+                                                                <mat-option *ngFor="let item of medicinePrescepList" class="medication" 
                                                                     [value]="item.medicineName" (change)="selectmed()" >
                                                                     <h4 mat-line> {{ item.medicineName }}</h4>
-                                                                    <p mat-line>Composition - {{ item.composition }}</p>
-
+                                                                    <p mat-line>Composition - {{ item.composition }}</p>                                                                  
+                                                                   
                                                                 </mat-option>
                                                             </mat-select> -->
                                                         </mat-form-field>
@@ -2308,7 +2300,7 @@
                                                         <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                             <mat-form-field appearance="outline">
                                                                 <mat-label>Medicine</mat-label>
-
+                                                                
                                                                 <input matInput [formControlName]="'medication'" />
                                                             </mat-form-field>
                                                         </div> -->
@@ -2468,8 +2460,8 @@
                                                     </div>
                                                     <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
                                                         <mat-form-field appearance="outline">
-                                                            <!-- <mat-label>Pick a date</mat-label>
-                                                            <!-- <input matInput [formControlName]="'pickADate'" />
+                                                            <!-- <mat-label>Pick a date</mat-label> 
+                                                            <!-- <input matInput [formControlName]="'pickADate'" /> 
                                                             <mat-form-field class="col-lg-12" appearance="outline">
                                                                 <mat-label>Pick a date</mat-label>
                                                                 <input matInput [matDatepicker]="picker"
@@ -2506,7 +2498,7 @@
 
                     <mat-tab label="Previous Visit">
 
-                        <!-- <button class="px-6 justify-end" mat-flat-button [color]="'primary'"
+                        <!-- <button class="px-6 justify-end" mat-flat-button [color]="'primary'"                                         
                         type="button" >
                        Back
                    </button> -->
@@ -2609,8 +2601,8 @@
                                                     <span class="service_d" *ngFor="let val of labreportfiles"  >
                                                     <ul>
                                                         <li >{{val}}</li>
-
-                                                    </ul>
+                                                       
+                                                    </ul>  
                                                     <button type="button" mat-raised-button color="primary" (click)="DownloadDocument(val)">Download</button> -->
 
 
@@ -2719,12 +2711,12 @@
 
                             <!-- <div class="center-container">
                                 <img class="w-16" style="opacity: 0.5;" src="assets/images/logo/imgs1.svg" alt="Fuse logo">
-
+                    
                             </div>
                     <br>
                     <div class="center-container1">
                     <h2 style="color: #146aa6;    margin-top: -59px;">
-                    <b>No Previous Data  Found </b>
+                    <b>No Previous Data  Found </b> 
                     </h2>
                     </div> -->
 
@@ -2876,7 +2868,7 @@
 
                                                 <div class="table1  example-container mat-elevation-z8">
                                                     <!-- <table mat-table [dataSource]="patientsappointment1" matSort>
-
+                                                
                                                                     <ng-container matColumnDef="serviceDate">
                                                                         <th style="height: 24px;font-size: unset;text-align: center;" mat-header-cell *matHeaderCellDef>
                                                                             Receipt Date
@@ -2901,18 +2893,18 @@
                                                                             View Receipt
                                                                         </th>
                                                                         <td (click)="onRowClicked1(element)" style="height: 48px;font-size: unset;text-align: center;cursor: pointer;" mat-cell *matCellDef="let element">
-
-                                                                            <mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View Receipt'" svgIcon="heroicons_solid:eye"
+                                                                         
+                                                                            <mat-icon [matTooltipPosition]="'right'"   [matTooltip]="tooltip || 'View Receipt'" svgIcon="heroicons_solid:eye" 
                                                                             style="color:#146aa6">
                                                                        </mat-icon>
-
+                                                                           
                                                                         </td>
                                                                     </ng-container>
-
+                                                                  
                                                                     <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory1; sticky: true"></tr>
-
+                                       
                                         <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory1;"></tr>
-
+                                                                   
                                                                 </table>
                                                                 <mat-paginator #HistoryPaginator1 [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"
                                                                     showFirstLastButtons>
@@ -3011,7 +3003,7 @@
                             <tr style="background-color:#fff">
 
                                 <td class="td_style">
-                                    <!-- <span>Token No</span>
+                                    <!-- <span>Token No</span> 
                             <div class="tocken_no">0596147558</div> -->
                                 </td>
                                 <td class="td_style">
@@ -3211,13 +3203,13 @@
                                 <td class="Payment_row">
                                     <table id="">
                                             <p><b>Notes</b></p>
-
+                                     
                                         <tr *ngFor="let medList of vitalsForm.value.medicationitems let i = index;"  >
-
+                                          
                                             <td align="left">
                                                 {{i+1}}.&nbsp;&nbsp;{{medList.notes}} </td>
-
-
+                                       
+                                   
                                     </tr>
                                     </table>
 

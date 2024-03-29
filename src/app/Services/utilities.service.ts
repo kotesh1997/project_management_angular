@@ -16,15 +16,15 @@ export class UtilitiesService {
     currentMessage = this.messageSource.asObservable();
     private API_URL: any = environment.API_URL;
     constructor(private http: HttpClient) { }
-
+   
 
     CRUD(data,url) {
        // debugger
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.http.post(this.API_URL + url, data, { headers: headers });
     }
-
-
+    
+   
 
     GetComplaintsXML(data) {
       //  debugger
@@ -76,7 +76,7 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
-
+    
     addDocs(data) {
         debugger
         return this.http
@@ -151,22 +151,6 @@ export class UtilitiesService {
     getAllGenders(): Observable<any> {
         return this.http
             .get<any>(this.API_URL + 'Utilities/GetAllGenders')
-            .pipe(
-                tap((status) => console.log('status: ' + status)),
-                catchError(this.handleError)
-            );
-    }
-    getallservices(): Observable<any> {
-        return this.http
-            .get<any>(this.API_URL + 'Service/GetAllServices')
-            .pipe(
-                tap((status) => console.log('status: ' + status)),
-                catchError(this.handleError)
-            );
-    }
-    getServicebyid(serviceID): Observable<any> {
-        return this.http
-            .get<any>(`${this.API_URL}Service/GetServiceById/getserviceById?serviceId=${serviceID}`)
             .pipe(
                 tap((status) => console.log('status: ' + status)),
                 catchError(this.handleError)
@@ -319,41 +303,42 @@ export class UtilitiesService {
     addRegisterPatientAppointment(data) {
         debugger;
 
-        if(data.PatientID>0){
-        if(data.Action != 'Update Existing Appointment'){
-            data.Action='Patient Exists save new appointment'
-            var url = 'PatientsAppointments/AddUpdateAppointment/';
-        }
-        else{
-            var url = 'PatientsAppointments/AddUpdateAppointment/';
-        }
-
-
-        }
-
-        else {
-            var url = 'Patients/AddRegisterPatientAppointment/';
-
-
-        }
-        // if (data.Action == 'New Appointment' ) {   //Patient not exisiting condition
-        //     //var url = 'PatientsAppointments/AddUpdateAppointment/';
-        //      var url = 'Patients/AddRegisterPatientAppointment/';
-
-        // }
-        // else if (data.Action == 'Update Existing Appointment' || data.Action=='Patient Exists save new appointment') {
+        // if(data.PatientID>0){
+        // if(data.Action != 'Update Existing Appointment'){
+        //     data.Action='Patient Exists save new appointment'
         //     var url = 'PatientsAppointments/AddUpdateAppointment/';
-
         // }
+        // else{
+        //     var url = 'PatientsAppointments/AddUpdateAppointment/';
+        // }
+
+           
+        // }           
 
         // else {
-        //     var url = 'PatientsAppointments/AddUpdateAppointment/';
+        //     var url = 'Patients/AddRegisterPatientAppointment/';
+
 
         // }
+
+        if (data.Action == 'New Appointment' ) {   //Patient not exisiting condition
+            //var url = 'PatientsAppointments/AddUpdateAppointment/';
+             var url = 'Patients/AddRegisterPatientAppointment/';
+
+        }
+        else if (data.Action == 'Update Existing Appointment' || data.Action=='Patient Exists save new appointment') {
+            var url = 'PatientsAppointments/AddUpdateAppointment/';
+
+        }
+       
+        else {
+            var url = 'PatientsAppointments/AddUpdateAppointment/';
+
+        }
         return this.http
             .post(this.API_URL + url,data)
             .pipe(
-
+                
                 tap((status) => console.log('status: ' + status)),
                 catchError(this.handleError)
             );

@@ -163,6 +163,4 @@ export const horizontalNavigationDoctor: FuseNavigationItem[] = [
                     type: 'basic',
                     link: '/Employess',
                 },
-
-
 ];
