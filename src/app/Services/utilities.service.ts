@@ -134,6 +134,14 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
+    getServicebyid(serviceID): Observable<any> {
+        return this.http
+            .get<any>(`${this.API_URL}Service/GetServiceById/getserviceById?serviceId=${serviceID}`)
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
     getStatuses(): Observable<any> {
         return this.http.get<any>(this.API_URL + 'Utilities/GetStatuses').pipe(
             tap((status) => console.log('status: ' + status)),
@@ -365,5 +373,14 @@ export class UtilitiesService {
     private handleError(error: any) {
         console.error(error);
         return throwError(error);
+    }
+
+    addService(data) {
+        debugger
+        return this.http.post(this.API_URL + 'Service/AddService/AddService', data)
+    }
+
+    getallservices(){
+     return this.http.get(this.API_URL + 'Service/GetAllServices')
     }
 }

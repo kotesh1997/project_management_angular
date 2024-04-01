@@ -94,7 +94,13 @@ export class FuseHorizontalNavigationComponent
                     title: 'Reports',
                     type: 'basic',
                     link: '/Reports',
-                }
+                },
+                // {
+                //     id: 'Services',
+                //     title: 'Services',
+                //     type: 'basic',
+                //     link: '/service',
+                // }
             );
         } else if (this.roleID == 2) {
             //Doctor

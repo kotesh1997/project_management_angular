@@ -1,11 +1,57 @@
-<!-- Button -->
-<button
+
+<button mat-icon-button [matMenuTriggerFor]="userActions">
+    <span class="relative">
+        <!-- <img
+            class="w-7 h-7 rounded-full"
+            *ngIf="showAvatar && user.avatar"
+            [src]="user.avatar"
+        /> -->
+        <!-- <mat-icon
+           
+            [svgIcon]="'heroicons_outline:user-circle'"
+        ></mat-icon> -->
+        <mat-icon class="icon-size-5">build</mat-icon>
+        <!-- <span
+            class="absolute right-0 bottom-0 w-2 h-2 rounded-full"
+            [ngClass]="{
+                'mr-px mb-px': !showAvatar || !user.avatar,
+                'bg-green-500': user.status === 'online',
+                'bg-amber-500': user.status === 'away',
+                'bg-red-500': user.status === 'busy',
+                'bg-gray-400': user.status === 'not-visible'
+            }"
+        ></span> -->
+    </span>
+</button>
+
+<mat-menu [xPosition]="'before'" #userActions="matMenu">
+
+
+    <button (click)="gotoSettings()" mat-menu-item > 
+        <!-- <mat-icon [svgIcon]="'heroicons_outline:key'" class="mr-2"></mat-icon> -->
+        <mat-icon class="icon-size-5">settings</mat-icon>
+        <span>Admin</span>
+    </button>
+    <mat-divider class="my-2"></mat-divider>
+
+
+    <button mat-menu-item >
+        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+        <span>Front Desk</span>
+    </button>
+</mat-menu>
+
+
+
+
+
+<!-- <button
     mat-icon-button
     [matMenuTriggerFor]="languages">
     <ng-container *ngTemplateOutlet="flagImage; context: {$implicit: activeLang}"></ng-container>
 </button>
 
-<!-- Language menu -->
+
 <mat-menu
     [xPosition]="'before'"
     #languages="matMenu">
@@ -21,7 +67,6 @@
     </ng-container>
 </mat-menu>
 
-<!-- Flag image template -->
 <ng-template
     let-lang
     #flagImage>
@@ -32,4 +77,4 @@
             [src]="'assets/images/flags/' + flagCodes[lang].toUpperCase() + '.svg'"
             [alt]="'Flag image for ' + lang">
     </span>
-</ng-template>
+</ng-template> -->

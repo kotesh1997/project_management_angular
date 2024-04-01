@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { take } from 'rxjs/operators';
 import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
+import { Router } from '@angular/router';
 
 @Component({
     selector       : 'languages',
@@ -22,7 +23,8 @@ export class LanguagesComponent implements OnInit, OnDestroy
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
+        private _router:Router,
     )
     {
     }
@@ -62,6 +64,10 @@ export class LanguagesComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     {
     }
+
+    gotoSettings(){
+        this._router.navigate(['/admin-settings'])
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

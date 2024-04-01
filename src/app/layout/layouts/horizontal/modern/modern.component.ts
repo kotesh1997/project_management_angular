@@ -14,6 +14,7 @@ import { NavigationService } from 'app/core/navigation/navigation.service';
 })
 export class ModernLayoutComponent implements OnInit, OnDestroy
 {
+    roleID
     isScreenSmall: boolean;
     navigation: Navigation;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -67,6 +68,7 @@ export class ModernLayoutComponent implements OnInit, OnDestroy
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
+            this.roleID = localStorage.getItem('roleID');
     }
 
     /**

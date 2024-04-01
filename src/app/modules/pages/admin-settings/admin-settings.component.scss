@@ -1,0 +1,39 @@
+.single-features {
+    background-color: blue($color: #000000);
+       box-shadow: 0 0 1.25rem rgba(108, 118, 134, 0.1);
+       transition: var(--transition);
+       border-radius: 5px;
+   
+       &::before {
+           top: 50%;
+           left: 50%;
+           width: 0%;
+           z-index: -1;
+           height: 100%;
+           content: "";
+           position: absolute;
+           transition: all 0.3s ease-in-out;
+           background-color:  rgb(5, 60, 109);
+           transform: translate(-50%, -50%);
+           border-radius: 5px;
+       }
+       &:hover {
+           transform: translateY(-10px);
+           
+   
+           &::before {
+               width: 100%;
+           }
+            mat-icon {
+               color: white;
+           }
+           bg-primary:hover {
+               background-color: white;
+             }
+        
+       }
+   }
+   
+   .custom-hover:hover .bg-primary {
+       background-color: transparent !important;
+     }

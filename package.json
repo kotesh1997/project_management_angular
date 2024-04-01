@@ -44,7 +44,7 @@
         "heroicons": "^2.0.18",
         "highlight.js": "11.2.0",
         "jspdf": "^2.5.1",
-        "jspdf-autotable": "^3.5.28",
+        "jspdf-autotable": "^3.8.2",
         "lodash-es": "4.17.21",
         "moment": "^2.29.4",
         "ng-apexcharts": "1.5.12",

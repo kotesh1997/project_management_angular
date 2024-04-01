@@ -1348,8 +1348,8 @@ gethistory1(){
                 if (data) {
                     debugger
                     this.prices = data;
-                    
-            this.step2.controls['price'].setValue(2);
+
+           // this.step2.controls['price'].setValue(2);
                     // this.prices.splice(0, 1);
                 } else {
                 }
@@ -1413,7 +1413,7 @@ debugger
         this.horizontalStepper.selectedIndex = 0;
         this.step1.controls['mobNum'].enable();
         this.step1.controls['appDate'].setValue(new Date());
-         this.step2.controls['amountPaid'].setValue(700);
+        // this.step2.controls['amountPaid'].setValue(700);
          this.selectedPrice = this.step2.controls['amountPaid'].value;
 
         this.appointmentButton = 'Create Appointment';
@@ -1426,38 +1426,54 @@ debugger
             startWith(''),
             map(value => this._filter(value)),
         );
-
-                    
-        this.step2.controls['price'].setValue(2);
+       // this.step2.controls['price'].setValue(2);
     }
-    applyNetPrice1(val) {
 
 
-
-
-
-
+    applyNetPrice1() {
         debugger
-        const modeOfPaymentControl = this.horizontalStepperForm
-        .get('step2')
-        .get('modeOfPayment');
-        if (val.value<=0) {
-            // Remove the Validators.required validator
-          
-            modeOfPaymentControl.clearValidators();
-            modeOfPaymentControl.updateValueAndValidity(); 
-          } else {
-            // Add the Validators.required validator back
-            modeOfPaymentControl.setValidators([Validators.required]);
-            modeOfPaymentControl.updateValueAndValidity(); 
+        const totalamount=this.step2.controls['price'].value;
+        const discount=this.step2.controls['discount'].value;
+        const discountamount=(totalamount * discount) / 100;
+        const amountPaid=totalamount - discountamount
+        this.step2.controls['amountPaid'].setValue(amountPaid);
 
-          }
+
+        // const modeOfPaymentControl = this.horizontalStepperForm
+        // .get('step2')
+        // .get('modeOfPayment');
+        // if (val.value<=0) {
+        //     // Remove the Validators.required validator
+
+        //     modeOfPaymentControl.clearValidators();
+        //     modeOfPaymentControl.updateValueAndValidity();
+        //   } else {
+        //     // Add the Validators.required validator back
+        //     modeOfPaymentControl.setValidators([Validators.required]);
+        //     modeOfPaymentControl.updateValueAndValidity();
+
+        //   }
         }
 
+        price
 
-        EnableModeprice(){
+        EnableModeprice(value){
             debugger
             this.ModePrice=false
+            this.utilitiesService.getServicebyid(value.value).subscribe(
+                (data) => {
+                  if (data) {
+                    console.log("GetById",data)
+                    this.step2.controls['price'].setValue(data.price);
+                    this.price=data.price
+                    this.applyNetPrice1()
+                //   this.regDetails1 = new MatTableDataSource(data);
+                //   this.regDetails1.sort = this.sort;
+                //   this.regDetails1.paginator = this.Assdocpag;
+
+                  }
+                }
+            )
         }
     applyNetPrice(val) {
 
@@ -1501,7 +1517,7 @@ else{
 
     }
     if(val.value==2){
-        this.step2.controls['amountPaid'].setValue(700);
+       // this.step2.controls['amountPaid'].setValue(700);
         this.selectedPrice = this.step2.controls['amountPaid'].value;
 
     }
@@ -2001,7 +2017,7 @@ if(disc==5){
 
             if (data) {
                 
-                if (data > 0) {
+                if (data) {
                     this.receiptToken = data;
                     this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
                         horizontalPosition: this.horizontalPosition,
