@@ -383,4 +383,14 @@ export class UtilitiesService {
     getallservices(){
      return this.http.get(this.API_URL + 'Service/GetAllServices')
     }
+
+
+      deleteServiceById(serviceID): Observable<any> {
+        return this.http
+            .delete<any>(`${this.API_URL}Service/DeleteServiceById/deleteserviceById?serviceId=${serviceID}`)
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
 }
