@@ -229,6 +229,21 @@ service = new Service()
         );
     }
 
+    deleteService(id){
+        debugger
+        this.utilitiesService.deleteServiceById(id).subscribe((resp:any)=>{
+            if(resp.status=="OK"){
+                this._snackBar.open('Service deleted Successfully...!!', 'OK', {
+                    horizontalPosition: this.horizontalPosition,
+                    verticalPosition: this.verticalPosition,
+                    "duration": 2000
+                });
+                this.getservices();
+            }
+    })
+      }
+
+
     updateService(){
      this.utilitiesService.addService(this.service).subscribe((resp:any)=>{
             if(resp.status=="OK"){
@@ -285,6 +300,9 @@ service = new Service()
             this.searchKey1 = '';
       
     };
+
+
+    
 
     openSaveDrawer(){
         this.service=new Service()
