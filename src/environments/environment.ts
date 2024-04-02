@@ -10,7 +10,7 @@ export const environment = {
    // API_URL: 'http://3.84.161.177/api/',
     // API_URL: 'http://173.249.51.122:92/api/',
 //    API_URL: 'http://cmsapi.fadelsoft.com/api/',
-//    API_URL: 'http://173.249.51.122:808/api/',
+ //  API_URL: 'http://173.249.51.122:808/api/',
 
 };
 

@@ -1155,7 +1155,7 @@ gethistory1(){
                 this.todayBookings = new MatTableDataSource(this.todayDataSourceBookings);
                 this.upcomingBookings = new MatTableDataSource(this.upcomingBookings);
                 this.todaysbooked = new MatTableDataSource(this.todayDataSourceBookings);
-
+                console.log("appoint",this.todayDataSourceBookings)
                 this.todaysbooked.paginator = this.paginator;
     
                 

@@ -18,7 +18,7 @@ export class AdminSettingsComponent implements OnInit {
   }
 
   goToReports(){
-    
+    this._router.navigate(['/admin-reports'])
   }
 
 }

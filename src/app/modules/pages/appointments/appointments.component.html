@@ -1222,8 +1222,7 @@
                                     <mat-label>Price</mat-label>
                                     <mat-select [(ngModel)]="price" [formControlName]="'price'" (selectionChange)="applyNetPrice($event)"
                                         required [disabled]="isDuePay">
-                                        <mat-option *ngFor="let item of prices " [value]="item.priceID">
-
+                                        <mat-option *ngFor="let item of prices " [value]="item.price">
                                             {{ item.price }}
                                         </mat-option>
                                     </mat-select>

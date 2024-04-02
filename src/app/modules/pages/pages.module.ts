@@ -60,6 +60,7 @@ import { MedicineService } from './medicine/medicine.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ServiceComponent } from './service/service.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { AdminReportsComponent } from './admin-reports/admin-reports.component';
 
  const Routes: Route[] = [
      { path: 'Appointments', component: AppointmentsComponent },
@@ -73,7 +74,8 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
     { path: 'Employess', component: MastersComponent },
     { path: 'PatientHist', component: PatientHistoryComponent },
     {path:'service',component:ServiceComponent},
-    {path:'admin-settings',component:AdminSettingsComponent}
+    {path:'admin-settings',component:AdminSettingsComponent},
+    {path:'admin-reports',component:AdminReportsComponent}
 
 
 
@@ -92,6 +94,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
         PatientHistoryComponent,
         ServiceComponent,
         AdminSettingsComponent,
+        AdminReportsComponent,
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,
