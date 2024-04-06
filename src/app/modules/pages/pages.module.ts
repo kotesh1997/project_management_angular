@@ -61,9 +61,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ServiceComponent } from './service/service.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { AdminReportsComponent } from './admin-reports/admin-reports.component';
+import { AppointmentsV1Component } from './appointments-v1/appointments-v1.component';
 
  const Routes: Route[] = [
-     { path: 'Appointments', component: AppointmentsComponent },
+     { path: 'Appointmentsv1', component: AppointmentsComponent },
+     { path: 'Appointments', component: AppointmentsV1Component },
     // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
     { path: 'Patients', component: PatientsComponent },
     { path: 'MyPatients', component: MyPatientsComponent },
@@ -75,7 +77,8 @@ import { AdminReportsComponent } from './admin-reports/admin-reports.component';
     { path: 'PatientHist', component: PatientHistoryComponent },
     {path:'service',component:ServiceComponent},
     {path:'admin-settings',component:AdminSettingsComponent},
-    {path:'admin-reports',component:AdminReportsComponent}
+    {path:'admin-reports',component:AdminReportsComponent},
+
 
 
 
@@ -94,7 +97,7 @@ import { AdminReportsComponent } from './admin-reports/admin-reports.component';
         PatientHistoryComponent,
         ServiceComponent,
         AdminSettingsComponent,
-        AdminReportsComponent,
+        AppointmentsV1Component,
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,
