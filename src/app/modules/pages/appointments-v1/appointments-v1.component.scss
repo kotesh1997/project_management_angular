@@ -1383,10 +1383,22 @@ body .light .mat-mini-fab.mat-warn {
 }
 
 .backBtn {
-     position: absolute;
-    top: 73px;
-    left: 980px;
-    z-index: 100; 
+    //  position: absolute;
+    // top: 73px;
+    // left: 980px;
+    // z-index: 100; 
+margin-left: 47%;
+// margin-top: 12px;
+}
+.doctorsize{
+    margin-right: 40px;
+}
+.userstyle{
+    position: relative;
+    left: -28px;
+}
+.algn{
+    margin-top: 12%;
 }
 
 .custom-background .mat-form-field-wrapper {
