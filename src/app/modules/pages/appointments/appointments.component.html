@@ -25,17 +25,24 @@
                     </ng-container>
                     <ng-container>
                         <ng-container *ngIf="Todays">
-                            <mat-form-field class="flex flex-col ml-2 custom-background" appearance="outline"
+                            
+                            <!-- <mat-form-field class="flex flex-col ml-2 custom-background" appearance="outline"
                                 *ngFor="let filter of filterSelectObj" style="padding-left:0;width: 320px;">
                                 <mat-label>Filter {{filter.name}}</mat-label>
-
                                 <mat-select matNativeControl [(ngModel)]="filter.modelValue"
                                     name="{{filter.columnProp}}" (selectionChange)="filterChange(filter,$event)">
                                     <mat-option [value]="">-- Select {{filter.name}} --</mat-option>
-
                                     <mat-option [value]="item" *ngFor="let item of filter.options">{{item}}</mat-option>
-
-
+                                </mat-select>
+                            </mat-form-field> -->
+                            <mat-form-field class="flex flex-col ml-2 custom-background" appearance="outline"
+                            style="padding-left:0;width: 320px;">
+                                <mat-label>Select Service</mat-label>
+                                <mat-select (selectionChange)="filterDataByService($event)" [(ngModel)]="filterService"
+                                    >
+                                    <mat-option *ngFor="let item of services" [value]="item.serviceName">
+                                        {{ item.serviceName }}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
@@ -1240,7 +1247,7 @@
                                     <mat-label>Discount in %</mat-label>
                                     <mat-select [formControlName]="'discount'" (selectionChange)="applyNetPrice1()"
                                         [disabled]="isDuePay">
-                                        <mat-option *ngFor="let item of discounts" [value]="item.discount">
+                                        <mat-option *ngFor="let item of discounts" [value]="item.discountID">
                                             {{ item.discount }}
                                         </mat-option>
                                     </mat-select>

@@ -74,7 +74,8 @@ export class ReportComponent implements OnInit {
     // appToDate: string;
     appFromDate: Date;
     appToDate: Date;
-
+    toDate
+    fromDate
 exportpdf(){
     debugger
       var prepare=[];

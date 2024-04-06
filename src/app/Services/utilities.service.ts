@@ -393,4 +393,20 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
+
+    // getServiceDetailsByDept(fromDate, toDate, departmentId): Observable<any> {
+    //     return this.http.get<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails?fromDate=${fromDate}&toDate=${toDate}&departmentId=${departmentId}`);
+    //   }
+
+      getServiceDetailsByDept(data): Observable<any> {
+        return this.http.post<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails`,data);
+      }
+
+      getSummaryReports(data): Observable<any> {
+        return this.http.post<any>(`${this.API_URL}Service/GetSummaryByDeptWise/summaryreport`,data);
+      }
+
+      getCardReports(data): Observable<any> {
+        return this.http.post<any>(`${this.API_URL}Service/GetBillingDetailsByDept/reports`,data);
+      }
 }

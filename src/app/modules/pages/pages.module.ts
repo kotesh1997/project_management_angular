@@ -98,6 +98,7 @@ import { AppointmentsV1Component } from './appointments-v1/appointments-v1.compo
         ServiceComponent,
         AdminSettingsComponent,
         AppointmentsV1Component,
+        AdminReportsComponent
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,

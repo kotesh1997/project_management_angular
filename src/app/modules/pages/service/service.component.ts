@@ -86,7 +86,7 @@ service = new Service()
     regDetailsFrontList: any = [];
     regDetailsLabList: any = [];
 
-    regDetails1 = new MatTableDataSource(this.regDetailsLabList);
+    services = new MatTableDataSource(this.regDetailsLabList);
 
     regDetails: any = [];
     totalRegDetails:any=[];
@@ -192,9 +192,10 @@ service = new Service()
         this.utilitiesService.getallservices().subscribe(
             (data:any) => {
               if (data) {
-              this.regDetails1 = new MatTableDataSource(data);
-              this.regDetails1.sort = this.sort;
-              this.regDetails1.paginator = this.Assdocpag;
+              this.services = new MatTableDataSource(data);
+              this.services.sort = this.sort;
+              this.services.paginator = this.paginator;
+     
 
               }
             }
@@ -285,7 +286,7 @@ service = new Service()
     public doFilter1 = (value, state) => {
         debugger
         var sd=value.trim().toLocaleLowerCase()
-            this.regDetails1.filter = value.trim().toLocaleLowerCase()
+            this.services.filter = value.trim().toLocaleLowerCase()
             // this.upcomingBookings.filter =  '';
             // this.patientsappointments.filter = '';
             this.searchKey3 = '';

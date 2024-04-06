@@ -481,6 +481,18 @@ handleFileUpload(event: Event) {
         this.medicinePrescepList=data
         // this.medicinePrescepList = this.search(this.searchKey);
         }
+
+        filterByService
+        filterDataByService(val){
+        debugger
+        this.todayDataSourceBookings
+        console.log("Filter Service",this.todayDataSourceBookings)
+        const filteredData = this.todayDataSourceBookings.filter(appointment => appointment.serviceName === val.value);
+        // Update the MatTableDataSource with the filtered data
+        this.todaysbooked = new MatTableDataSource(filteredData);
+        this.todaysbooked.paginator = this.paginator;
+
+        }
         
         
 
@@ -546,7 +558,7 @@ debugger
         //   viewer.open("https://www.grapecity.com/documents-api-pdf/docs/offlinehelp.pdf");
         //  this.formfields=true;
        // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
-debugger;
+        debugger;
         this.doctors.sort();
         this.addStaticData();
         this.getDocs();
@@ -554,7 +566,6 @@ debugger;
         this.getVisitReason();
         this.vitalsCrud();
         this.gethistory();
-
         this.getAllAppointments();
         this.getAllDoctors();
         this.getServices();
@@ -1092,6 +1103,7 @@ gethistory1(){
                 if (data) {
                     
                     this.allAppointments = data;
+                    console.log("appoint",this.allAppointments)
                     this.date = new Date();
                     this.date.setHours(0, 0, 0, 0);
                     let todayDate = this.datepipe.transform(this.date, 'dd MMM yyyy');
@@ -1199,10 +1211,13 @@ gethistory1(){
             }
         );
     }
-
+    filterService
     // Reset table filters
     resetFilters() {
         debugger
+        this.filterService=""
+        this.todaysbooked = new MatTableDataSource(this.todayDataSourceBookings);
+        this.todaysbooked.paginator = this.paginator;
         this.filterValues = {}
         this.filterSelectObj.forEach((value, key) => {
             value.modelValue = undefined;
@@ -1211,6 +1226,7 @@ gethistory1(){
         this.searchKey='';
 
         this.todaysbooked.filter = this.searchKey.trim().toLocaleLowerCase()
+       
 
     }
     resetFilters1() {
@@ -1363,6 +1379,7 @@ gethistory1(){
             (data) => {
                 if (data) {
                     this.discounts = data;
+                console.log("Discounts",this.discounts)
                     // this.discounts.splice(0, 1);
                 } else {
                 }
@@ -1432,13 +1449,19 @@ debugger
 
     applyNetPrice1() {
         debugger
-        const totalamount=this.step2.controls['price'].value;
-        const discount=this.step2.controls['discount'].value;
-        const discountamount=(totalamount * discount) / 100;
-        const amountPaid=totalamount - discountamount
-        this.step2.controls['amountPaid'].setValue(amountPaid);
-
-
+        const totalamount = this.step2.controls['price'].value;
+        const discount = this.step2.controls['discount'].value;
+        
+        if (discount !== null) {
+          const selectedDis = this.discounts.filter(item => item.discountID === discount);
+          const discountamount = (totalamount * selectedDis[0].discount) / 100;
+          const amountPaid = totalamount - discountamount;
+          this.step2.controls['amountPaid'].setValue(amountPaid.toString());
+        } else {
+          // Set amountPaid to totalamount if discount is null
+          this.step2.controls['amountPaid'].setValue(totalamount.toString());
+        }
+        
         // const modeOfPaymentControl = this.horizontalStepperForm
         // .get('step2')
         // .get('modeOfPayment');
@@ -1938,7 +1961,7 @@ if(disc==5){
         if (this.isPriceTag == true) //SkipBilling
         {
             this.appt.modeofPaymentID = val.step2.modeOfPayment;
-            this.appt.PriceID = Number(val.step2.price);
+            //this.appt.PriceID = Number(val.step2.price);
 
             if (this.roleID == '1') {
                 this.appt.DiscountID = Number(val.step2.discount);
@@ -1999,6 +2022,9 @@ if(disc==5){
             this.appt.DuePayment = "0";
             this.appt.DiscountID = 6;
         }
+        this.appt.Price=this.price;
+        const filteredPrice = this.prices.filter(item => item.price === this.price);
+        this.appt.PriceID=filteredPrice[0].priceID
 
         this.appt.Action = this.action;
         this.appt.PatientName = (val.step1.firstName);  //
@@ -2013,6 +2039,7 @@ if(disc==5){
         if(this.appt.modeofPaymentID==null){
             this.appt.modeofPaymentID=6
         }
+
         this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
 
             if (data) {
