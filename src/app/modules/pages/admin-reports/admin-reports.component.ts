@@ -3,7 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { bottom } from '@popperjs/core';
 import { UtilitiesService } from 'app/Services/utilities.service';
+import { Chart } from 'chart.js/auto';
 import { result } from 'lodash';
 export class Dept{
   public fromDate:Date
@@ -29,6 +31,8 @@ export class CardReports{
   encapsulation: ViewEncapsulation.None,
 })
 export class AdminReportsComponent implements OnInit {
+  @ViewChild('barChart') barChart: ElementRef;
+  myBarChart: any;
   dept=new Dept()
   sumrep=new SummaryReports()
   cardrep=new CardReports()
@@ -39,8 +43,10 @@ export class AdminReportsComponent implements OnInit {
   wallet:number=0
   outstanding:number=0
   billedpatients:number=0
-
+  consultation:number=0
+  totalEarnings:number=0
   searchKey
+  date
   appFromDate: Date;
   appToDate: Date;
   summaryReports: MatTableDataSource<any>;
@@ -53,7 +59,102 @@ export class AdminReportsComponent implements OnInit {
 
   constructor( private utilitiesService: UtilitiesService,private datePipe: DatePipe) { }
 
+
+  
+
+  
+  ngAfterViewInit(): void {
+    if (this.myBarChart) {
+      this.myBarChart.destroy(); // Destroy existing chart
+    }
+  
+    if (!this.barChart || !this.barChart.nativeElement) {
+      console.error('Cannot access barChart element');
+      return;
+    }
+
+    this.myBarChart = new Chart(this.barChart.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: [this.date],
+        datasets: [
+          {
+            label: 'Billed Patients',
+            data: [0], // Assuming the data for 'Total Amount' is 4000
+            backgroundColor: 'black',
+            borderColor: 'black',
+            borderWidth: 1
+          },
+          {
+            label: 'Consultation',
+            data: [this.consultation], // Assuming the data for 'Consultation' is 2500
+            backgroundColor: 'rgb(0, 214, 57)',
+            borderColor: 'green',
+            borderWidth: 1
+          },
+          {
+            label: 'Total Earnings',
+            data: [this.totalEarnings], // Assuming the data for 'Total Amount' is 4000
+            backgroundColor: 'rgb(255, 60, 30)',
+            borderColor: 'red',
+            borderWidth: 1
+          },
+          {
+            label: 'Lab',
+            data: [0], // Assuming the data for 'Total Amount' is 4000
+            backgroundColor: 'orange',
+            borderColor: 'orange',
+            borderWidth: 1
+          },
+          {
+            label: 'Others',
+            data: [0], // Assuming the data for 'Total Amount' is 4000
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            borderWidth: 1
+          },
+         
+          
+         
+        ]
+      },
+      options: {
+        indexAxis: 'x', // Place the labels at the bottom of the x-axis
+        plugins: {
+          tooltip: {
+          },
+          legend: {
+              position: bottom,
+              display: true,
+              labels: {
+                  boxWidth: 10
+              }
+          }
+      },
+        scales: {
+          y: {
+            // Assuming the max value is 15000
+            title: {
+              display: true,
+              text: 'Amount'
+            },
+            beginAtZero: true,
+            ticks: {
+              callback: function(value, index, values) {
+                return value ;
+              }
+            }
+          }
+        },
+        
+      }
+      
+      
+    });    
+  }
+
   ngOnInit(): void {
+    this.showGraph()
   }
 
   onSearchClear() {
@@ -62,6 +163,10 @@ export class AdminReportsComponent implements OnInit {
 }
 applyFilter() {
     this.deptReports.filter = this.searchKey.trim().toLowerCase();
+}
+
+showGraph(){
+
 }
 
 getServiceDetailsByDept(){
@@ -79,13 +184,19 @@ this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
 }
 
 getSummaryReports(){
+  debugger
   this.sumrep.departmentId=1
-  this.utilitiesService.getSummaryReports(this.sumrep).subscribe(
+  this.utilitiesService.getSummaryReports(this.cardrep).subscribe(
     (data) => {
       if (data) {
+        this.consultation=data.result.consultation
+        this.totalEarnings=data.result.totEarnings
+        const resultdate=data.result.date
+        this.date=this.datePipe.transform(resultdate, 'dd/MM/yyyy');
         this.summaryReports = new MatTableDataSource<any>([data.result]);
         this.summaryReports.sort = this.sort;
         this.summaryReports.paginator = this.paginator;
+        this.ngAfterViewInit()
       }
     })
 }
@@ -106,6 +217,8 @@ getCardReports(){
         // this.summaryReports.paginator = this.paginator;
       }
     })
+
+    this.getSummaryReports()
 }
 
 

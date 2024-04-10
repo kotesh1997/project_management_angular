@@ -1357,7 +1357,7 @@ body .light .mat-mini-fab.mat-warn {
    // font-size: -2.125rem !important;
     font-weight: 350 !important;
 }
-.mat-button, .mat-fab, .mat-flat-button, .mat-icon-button, .mat-mini-fab, .mat-raised-button, .mat-stroked-button {
+.mat-button, .mat-fab, .mat-flat-button,  .mat-mini-fab, .mat-raised-button, .mat-stroked-button {
     // display: inline-flex !important;
     // align-items: center;
     // justify-content: center;
@@ -1383,10 +1383,22 @@ body .light .mat-mini-fab.mat-warn {
 }
 
 .backBtn {
-     position: absolute;
-    top: 73px;
-    left: 980px;
-    z-index: 100; 
+    //  position: absolute;
+    // top: 73px;
+    // left: 980px;
+    // z-index: 100; 
+margin-left: 47%;
+// margin-top: 12px;
+}
+.doctorsize{
+    margin-right: 40px;
+}
+.userstyle{
+    position: relative;
+    left: -28px;
+}
+.algn{
+    margin-top: 12%;
 }
 
 .custom-background .mat-form-field-wrapper {
@@ -1406,4 +1418,16 @@ body .light .mat-mini-fab.mat-warn {
   
 
 
+.highlight {
+    font-weight: bold;
+    font-size: medium;
+  }
+  
+.aligns{
+    height: 259px;
+}
+.medicine-options {
+    max-height: 200px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+  }
   

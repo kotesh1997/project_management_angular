@@ -43,6 +43,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { MatDrawer } from '@angular/material/sidenav';
 declare const PDFObject: any;
 // import { debug } from 'console';
 
@@ -55,7 +56,13 @@ declare const PDFObject: any;
     providers: [DatePipe],
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
+    selectedPanel: string = 'Vitals';
 
+    @ViewChild('drawer') drawer: MatDrawer;
+    drawerMode: 'over' | 'side' = 'side';
+    drawerOpened: boolean = true;
+
+    
     displayedColumns1 = ['slno', 'name', 'actions'];
     showTable = false;
     fileSelected = false;
@@ -544,10 +551,51 @@ debugger
     debugger
     this.todayBookings.sort = this.sort;
 }
-
+panels=[]
 
  
     ngOnInit(): void {
+        this.panels = [
+            {
+                id         : 'Vitals',
+                icon       : 'heroicons_outline:user-circle',
+                title      : 'Vitals',
+                // description: 'Manage your public profile and private information'
+            },
+            {
+                id         : 'Observations',
+                icon       : 'heroicons_outline:credit-card',
+                title      : 'Observations',
+                // description: 'Manage your subscription plan, payment method and billing information'
+            },
+               {
+              id         : 'LabReports',
+              icon       : 'heroicons_outline:credit-card',
+              title      : 'Lab Reports',
+              // description: 'Manage your subscription plan, payment method and billing information'
+          },
+    
+            {
+              id         : 'Medication',
+              icon       : 'heroicons_outline:credit-card',
+              title      : 'Medication',
+              // description: 'Manage your subscription plan, payment method and billing information'
+          },
+          {
+              id         : 'Advice',
+              icon       : 'heroicons_outline:credit-card',
+              title      : 'Advice',
+              // description: 'Manage your subscription plan, payment method and billing information'
+          },
+    
+            {
+              id         : 'Nextvisit',
+              icon       : 'heroicons_outline:credit-card',
+              title      : 'Next Visit',
+              // description: 'Manage your subscription plan, payment method and billing information'
+          },
+        ];
+
         this.filedisble=true;
        
         // const viewer = new GcPdfViewer("#viewer", {
@@ -4167,6 +4215,10 @@ debugger
 
     }
 
+    goToPanel(panelId: string): void {
+        this.selectedPanel = panelId;
+    }
+
     // //Receipt Print
     // openPresecptionDialog(): void {
     //     
@@ -4185,5 +4237,17 @@ debugger
 
 
     // }
+
+        /**
+   * Track by function for ngFor loops
+   *
+   * @param index
+   * @param item
+   */
+   trackByFn(index: number, item: any): any
+   {
+       return item.id || index;
+   }
+
 }
 

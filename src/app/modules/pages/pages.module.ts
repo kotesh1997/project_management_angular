@@ -62,10 +62,11 @@ import { ServiceComponent } from './service/service.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { AdminReportsComponent } from './admin-reports/admin-reports.component';
 import { AppointmentsV1Component } from './appointments-v1/appointments-v1.component';
+import { GraphComponent } from './graph/graph.component';
 
  const Routes: Route[] = [
-     { path: 'Appointmentsv1', component: AppointmentsComponent },
-     { path: 'Appointments', component: AppointmentsV1Component },
+     { path: 'Appointments', component: AppointmentsComponent },
+     { path: 'Appointmentsv1', component: AppointmentsV1Component },
     // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
     { path: 'Patients', component: PatientsComponent },
     { path: 'MyPatients', component: MyPatientsComponent },
@@ -78,6 +79,7 @@ import { AppointmentsV1Component } from './appointments-v1/appointments-v1.compo
     {path:'service',component:ServiceComponent},
     {path:'admin-settings',component:AdminSettingsComponent},
     {path:'admin-reports',component:AdminReportsComponent},
+    {path:'graph',component:GraphComponent}
 
 
 
@@ -98,7 +100,8 @@ import { AppointmentsV1Component } from './appointments-v1/appointments-v1.compo
         ServiceComponent,
         AdminSettingsComponent,
         AppointmentsV1Component,
-        AdminReportsComponent
+        AdminReportsComponent,
+        GraphComponent
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,
