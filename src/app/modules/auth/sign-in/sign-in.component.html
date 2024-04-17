@@ -56,6 +56,7 @@
             </div>-->
 
             <!-- Alert -->
+            
             <fuse-alert
                 class="mt-8 -mb-4"
                 *ngIf="showAlert"
@@ -150,11 +151,11 @@
                 </mat-progress-spinner>
             </button> -->
             <button
-            class="fuse-mat-button-large w-full mt-6 h-10"
+            class="fuse-mat-button-large flex items-center justify-center w-full mt-6 h-10"
             [disabled]="signInForm.invalid"
             (click)="signIn()"
             [ngStyle]="{
-              'background-color': signInForm.invalid ? '#ccc' : '#ff7633',
+              'background-color': !signInForm.valid ? '#ccc' : '#ff7633',
               'border-radius.px': 30
             }"
             style="position: relative;"
@@ -163,16 +164,16 @@
             onmouseover="if (!this.disabled) { this.style.backgroundColor = '#E36A33'; }"
             onmouseout="if (!this.disabled) { this.style.backgroundColor = '#ff7633'; }"
           >
-            <span class="text-white">Sign in</span>
+            <span *ngIf="!signInForm.disabled" class="text-white">Sign in</span>
                 <mat-progress-spinner 
-              *ngIf="signInForm.disabled"
+                *ngIf="signInForm.disabled"
               [diameter]="24"
               [mode]="'indeterminate'"
                style="color: white;"
               [ngStyle]="{
                 'position': 'absolute',
                 'top': '50%',
-                'left': '60%',
+                
                 'transform': 'translate(-50%, -50%)'
                 
               }"
