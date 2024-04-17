@@ -1430,4 +1430,13 @@ margin-left: 47%;
     max-height: 200px; /* Adjust the maximum height as needed */
     overflow-y: auto;
   }
-  
+  .scroolbar {
+   
+    max-width: 2000px; /* Set maximum width for the container */
+  }
+  .scroolbar {
+    min-width: 2000px; /* Set minimum width for the table */
+  }
+.visit{
+    text-align: center !important;
+}
