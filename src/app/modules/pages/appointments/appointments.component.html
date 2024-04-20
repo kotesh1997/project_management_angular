@@ -1232,7 +1232,7 @@
 
                             </div>
                             <div class="row" *ngIf="isPriceTag">
-                                <mat-form-field class="col-lg-3" appearance="outline">
+                                <!-- <mat-form-field class="col-lg-3" appearance="outline">
                                     <mat-label>Price</mat-label>
                                     <mat-select [(ngModel)]="price" [formControlName]="'price'" (selectionChange)="applyNetPrice($event)"
                                         required [disabled]="isDuePay">
@@ -1240,7 +1240,16 @@
                                             {{ item.price }}
                                         </mat-option>
                                     </mat-select>
+                                </mat-form-field> -->
+
+                                <mat-form-field class="col-lg-3" appearance="outline">
+                                    <mat-label>Price</mat-label>
+                                    <input matInput [(ngModel)]="price" [formControlName]="'price'" (input)="applyNetPrice($event)"
+                                           required readonly disabled>
                                 </mat-form-field>
+                                
+                                
+
                                 <mat-form-field class="col-lg-3" appearance="outline">
                                     <mat-label>Mode Of Payment</mat-label>
                                     <mat-select [formControlName]="'modeOfPayment'" [disabled]="ModePrice">

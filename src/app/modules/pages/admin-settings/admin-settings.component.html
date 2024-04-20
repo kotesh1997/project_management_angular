@@ -19,6 +19,26 @@
       </div>
   </div>
 
+  <div (click)="gotodiscount()" class="flex flex-col flex-auto  bg-card shadow rounded-2xl overflow-hidden ng-star-inserted hover:text-white single-features custom-hover">
+    <div class="flex p-2"  >
+          <span class="flex items-center justify-center w-12 h-12 rounded" style="background-color: rgb(5, 60, 109);">
+            <button>
+                <!-- <mat-icon  class="text-white"
+                (click)="gotoServices()" svgIcon="mail"></mat-icon> -->
+                <!-- <mat-icon class="text-white" (click)="gotoServices()" svgIcon="heroicons_outline:sparkles"></mat-icon> -->
+                <mat-icon class="text-white" (click)="goToReports()">%</mat-icon>
+
+                
+            </button>
+
+          </span>
+         <button> <div (click)="gotodiscount()" class="mt-3 ml-2 mb-4 text-xl font-medium">Discount</div></button>
+      </div>
+      <div class="mt-2 px-2 leading-6 ">
+          Pre-render discount to make reports and analytics more accessible by screen readers and other accessibility tools.
+      </div>
+  </div>
+
   <div (click)="goToReports()" class="flex flex-col flex-auto  bg-card shadow rounded-2xl overflow-hidden ng-star-inserted hover:text-white single-features custom-hover">
     <div class="flex p-2"  >
           <span class="flex items-center justify-center w-12 h-12 rounded" style="background-color: rgb(5, 60, 109);">

@@ -21,4 +21,8 @@ export class AdminSettingsComponent implements OnInit {
     this._router.navigate(['/admin-reports'])
   }
 
+  gotodiscount(){
+    this._router.navigate(['/Discount'])
+  }
+
 }
