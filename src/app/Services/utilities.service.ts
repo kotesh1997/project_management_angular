@@ -142,6 +142,14 @@ export class UtilitiesService {
                 catchError(this.handleError)
             );
     }
+    getdiscountbyid(discountID): Observable<any> {
+        return this.http
+            .get<any>(`${this.API_URL}Discount/getDiscountById?discountId=${discountID}`)
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
     getStatuses(): Observable<any> {
         return this.http.get<any>(this.API_URL + 'Utilities/GetStatuses').pipe(
             tap((status) => console.log('status: ' + status)),
@@ -375,10 +383,30 @@ export class UtilitiesService {
         return throwError(error);
     }
 
+
     addService(data) {
         debugger
         return this.http.post(this.API_URL + 'Service/AddService/AddService', data)
     }
+
+    adddisc(data) {
+        debugger
+        return this.http.post(this.API_URL + 'Discount/AddDiscount', data)
+    }
+
+    updatediscount(data) {
+        debugger
+        return this.http.post(this.API_URL + 'Discount/AddDiscount', data)
+    }
+
+    
+    adddiscount(data) {
+        debugger
+        return this.http.post(this.API_URL + 'Discount/AddDiscount', data)
+    }
+
+ 
+    
 
     getallservices(){
      return this.http.get(this.API_URL + 'Service/GetAllServices')
@@ -394,19 +422,30 @@ export class UtilitiesService {
             );
     }
 
+
+
+    deleteDiscountById(discountID): Observable<any> {
+        return this.http
+            .delete<any>(`${this.API_URL}Discount/deleteDiscountById?discountID=${discountID}`)
+            .pipe(
+                tap((status) => console.log('status: ' + status)),
+                catchError(this.handleError)
+            );
+    }
+
     // getServiceDetailsByDept(fromDate, toDate, departmentId): Observable<any> {
     //     return this.http.get<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails?fromDate=${fromDate}&toDate=${toDate}&departmentId=${departmentId}`);
     //   }
 
       getServiceDetailsByDept(data): Observable<any> {
-        return this.http.post<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails`,data);
+        return this.http.get<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails`,data);
       }
 
       getSummaryReports(data): Observable<any> {
-        return this.http.post<any>(`${this.API_URL}Service/GetSummaryByDeptWise/summaryreport`,data);
+        return this.http.get<any>(`${this.API_URL}Service/GetSummaryByDeptWise/summaryreport`,data);
       }
 
       getCardReports(data): Observable<any> {
-        return this.http.post<any>(`${this.API_URL}Service/GetBillingDetailsByDept/reports`,data);
+        return this.http.get<any>(`${this.API_URL}Service/GetBillingDetailsByDept/reports`,data);
       }
 }

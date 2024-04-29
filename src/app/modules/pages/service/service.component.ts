@@ -146,7 +146,7 @@ service = new Service()
         this.form = _formBuilder.group({
             serviceName    : ['', Validators.compose([Validators.required])],
             price          : ['', Validators.compose([Validators.required])],
-            gst             : ['', Validators.compose([Validators.required])],
+            gst             : [''],
             serviceOwner    : ['', Validators.compose([Validators.required])],
         },);
 
@@ -230,19 +230,36 @@ service = new Service()
         );
     }
 
-    deleteService(id){
-        debugger
-        this.utilitiesService.deleteServiceById(id).subscribe((resp:any)=>{
-            if(resp.status=="OK"){
-                this._snackBar.open('Service deleted Successfully...!!', 'OK', {
-                    horizontalPosition: this.horizontalPosition,
-                    verticalPosition: this.verticalPosition,
-                    "duration": 2000
-                });
-                this.getservices();
-            }
-    })
-      }
+    // deleteService(id){
+    //     debugger
+    //     this.utilitiesService.deleteServiceById(id).subscribe((resp:any)=>{
+    //         if(resp.status=="OK"){
+    //             this._snackBar.open('Service deleted Successfully...!!', 'OK', {
+    //                 horizontalPosition: this.horizontalPosition,
+    //                 verticalPosition: this.verticalPosition,
+    //                 "duration": 2000
+    //             });
+    //             this.getservices();
+    //         }
+    // })
+    //   }
+
+    deleteService(id) {
+        const confirmDelete = window.confirm('Are you sure you want to delete this service?');
+        if (confirmDelete) {
+            this.utilitiesService.deleteServiceById(id).subscribe((resp: any) => {
+                if (resp.status == "OK") {
+                    this._snackBar.open('Service deleted Successfully...!!', 'OK', {
+                        horizontalPosition: this.horizontalPosition,
+                        verticalPosition: this.verticalPosition,
+                        duration: 2000
+                    });
+                    this.getservices();
+                }
+            });
+        }
+    }
+    
 
 
     updateService(){

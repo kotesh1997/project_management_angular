@@ -169,7 +169,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <mat-form-field class="custom-width" appearance="outline">
                                 <mat-label>GST(%)</mat-label>
-                                <input  matInput [formControlName]="'gst'" [(ngModel)]="service.gst" required />
+                                <input  matInput [formControlName]="'gst'" [(ngModel)]="service.gst" />
                             </mat-form-field>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                         <span class="text-red-600">Failed to add service</span> 
                         </ng-container>
                     <button class="fuse-mat-button-rounded  flex flex-col justify-end"
-                    [ngClass]="!service.price || !service.gst || !service.serviceName || !service.serviceOwner ? 'btnsub' : 'btnsub1'"
+                    [ngClass]="!service.price || !service.serviceName || !service.serviceOwner ? 'btnsub' : 'btnsub1'"
                      (click)="addService()">
                     Submit
                 </button>

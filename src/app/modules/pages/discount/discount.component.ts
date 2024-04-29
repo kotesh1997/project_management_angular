@@ -40,12 +40,12 @@ import { FuseDrawerComponent } from '@fuse/components/drawer';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 
-export class Service{
-  public serviceId:any;
-  public serviceName:string;
-  public price:any;
-  public gst:any;
-  public serviceOwner:number;
+export class discount{
+  public discountId:any;
+  public discount:string;
+//   public price:any;
+//   public gst:any;
+//   public serviceOwner:number;
   }
 
 @Component({
@@ -56,11 +56,11 @@ export class Service{
   providers: [DatePipe],
 })
 export class DiscountComponent implements OnInit {
-
-  service = new Service()
+    discount: any = { discountID: 0, discount: '', createdBy: '', action: '' };
+    // discount = new discount()
       priceControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]);
       selectedGender
-    myForm: FormGroup;
+    // form: FormGroup;
   
       selected = 'option1';
       // @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -105,7 +105,7 @@ export class DiscountComponent implements OnInit {
       slotsArrForChips: any = [];
       slotsArrForChipsList: any = [];
       slotsForm: FormGroup;
-      public form: FormGroup;
+      form: FormGroup;
       registrationID: any;
       roleID: string;
       items: FormArray;
@@ -124,13 +124,7 @@ export class DiscountComponent implements OnInit {
       newDayArry=[];
       Updatebtn: boolean;
       submitButton1: boolean=false;
-      labassts: boolean=true;
-      frontdesks: boolean=true;
-      assdoctortab: boolean=true;
-      selectedSlots:{start:any,ending:any,day:any}[]=[];
-      availbleSlots: any=[];
-      selectedDay: number=1;
-      addedTimeSlots1: { start: any; ending: any; day: any; }[];
+   
   // discounts: any;
   
       constructor(public patientsService: PatientsService,
@@ -148,10 +142,10 @@ export class DiscountComponent implements OnInit {
   
   
           this.form = _formBuilder.group({
-              serviceName    : ['', Validators.compose([Validators.required])],
-              price          : ['', Validators.compose([Validators.required])],
-              gst             : ['', Validators.compose([Validators.required])],
-              serviceOwner    : ['', Validators.compose([Validators.required])],
+            discount    : ['', Validators.compose([Validators.required])],
+            //   price          : ['', Validators.compose([Validators.required])],
+            //   gst             : ['', Validators.compose([Validators.required])],
+            //   serviceOwner    : ['', Validators.compose([Validators.required])],
           },);
   
       }
@@ -177,50 +171,17 @@ export class DiscountComponent implements OnInit {
             // Calculate page count
             this.pageCount = Math.ceil(this.totalCount / this.pageSize);
           });
-          this.getservices();
+          
           this.getDiscounts();
           this.submitbtn=true;
-          this.getAllDoctors();
           this.daysArr = [];
   
-          this.daysArr.push(
-              { Name: 'MONDAY', Value: '1', id: 'weekday-mon', isActive:false},
-              { Name: 'TUESDAY', Value: '2', id: 'weekday-tue', isActive:false},
-              { Name: 'WEDNESDAY', Value: '3', id: 'weekday-wed', isActive:false},
-              { Name: 'THURSDAY', Value: '4', id: 'weekday-thu', isActive:false},
-              { Name: 'FRIDAY', Value: '5', id: 'weekday-fri', isActive:false},
-              { Name: 'SATURDAY', Value: '6', id: 'weekday-sat' , isActive:false},
-             //  { Name: 'SUNDAY', Value: '7', id: 'weekday-sun' , isActive:false},
-          )
-          this.slotsForm = this._formBuilder.group({
-              //items: this._formBuilder.array([this.createItem()], [Validators.required]),
-              sun: this._formBuilder.array([]),
-              mon: this._formBuilder.array([]),
-              tue: this._formBuilder.array([]),
-              wed: this._formBuilder.array([]),
-              thu: this._formBuilder.array([]),
-              fri: this._formBuilder.array([]),
-              sat: this._formBuilder.array([]),
-          });
-          this.timings = [];
+      
   
       }
   
       
-      getservices(){
-          this.utilitiesService.getallservices().subscribe(
-              (data:any) => {
-                if (data) {
-                this.services = new MatTableDataSource(data);
-                this.services.sort = this.sort;
-                this.services.paginator = this.paginator;
-       
-  
-                }
-              }
-          )
-  
-      }
+   
       getDiscounts() {
         this.utilitiesService.getDiscounts().subscribe(
 
@@ -244,76 +205,63 @@ export class DiscountComponent implements OnInit {
   
       doctors=[]
   
-      getAllDoctors() {
-          debugger
-          this.utilitiesService.getAllDoctors().subscribe(
-              (data) => {
-                  if (data) {
-                      // console.log(data)
-                      data = data .sort((a,b) => {
-                          if((a.doctor).toLowerCase() < (b.doctor).toLowerCase()){
-                              return -1;
-                          }
-                      })
-                      this.doctors = data;
-                      console.log("doctors",this.doctors)
-                  }
-                   else
-               {
-                  }
-              },
   
-              () => { }
-          );
-      }
+
+      updatediscount(){
+        this.utilitiesService.adddiscount(this.discount).subscribe((resp:any)=>{
+               if(resp.status=="OK"){
+                   this._snackBar.open('Discount Updated Successfully...!!', 'OK', {
+                       horizontalPosition: this.horizontalPosition,
+                       verticalPosition: this.verticalPosition,
+                       "duration": 2000
+                   });
+                   this.drawer.close();
+                   this.getDiscounts();
+               }
+       })
+       }
+   
+       showError:boolean=false
+       errMsg:string
+
+       adddiscount(){
+       this.utilitiesService.adddiscount(this.discount).subscribe((resp:any)=>{
+           if(resp.status=="OK"){
+               this._snackBar.open('Discount Added Successfully...!!', 'OK', {
+                   horizontalPosition: this.horizontalPosition,
+                   verticalPosition: this.verticalPosition,
+                   "duration": 2000
+               });
+               this.drawer.close();
+               this.getDiscounts();
+           }
+       },err=>{
+           this.errMsg=err.error.message
+           this.showError=true
+       })
+       }
+
   
-      deleteService(id){
+      deletediscount(id){
           debugger
-          this.utilitiesService.deleteServiceById(id).subscribe((resp:any)=>{
+          const confirmDelete = window.confirm('Are you sure you want to delete this discount?');
+          if (confirmDelete) {
+          this.utilitiesService.deleteDiscountById(id).subscribe((resp:any)=>{
               if(resp.status=="OK"){
-                  this._snackBar.open('Service deleted Successfully...!!', 'OK', {
+                  this._snackBar.open('Discount deleted Successfully...!!', 'OK', {
                       horizontalPosition: this.horizontalPosition,
                       verticalPosition: this.verticalPosition,
                       "duration": 2000
                   });
-                  this.getservices();
+                  this.getDiscounts();
               }
       })
         }
+
+    }
   
   
-      updateService(){
-       this.utilitiesService.addService(this.service).subscribe((resp:any)=>{
-              if(resp.status=="OK"){
-                  this._snackBar.open('Service Updated Successfully...!!', 'OK', {
-                      horizontalPosition: this.horizontalPosition,
-                      verticalPosition: this.verticalPosition,
-                      "duration": 2000
-                  });
-                  this.drawer.close();
-                  this.getservices();
-              }
-      })
-      }
-  
-      showError:boolean=false
-      errMsg:string
-      addService(){
-      this.utilitiesService.addService(this.service).subscribe((resp:any)=>{
-          if(resp.status=="OK"){
-              this._snackBar.open('Service Added Successfully...!!', 'OK', {
-                  horizontalPosition: this.horizontalPosition,
-                  verticalPosition: this.verticalPosition,
-                  "duration": 2000
-              });
-              this.drawer.close();
-              this.getservices();
-          }
-      },err=>{
-          this.errMsg=err.error.message
-          this.showError=true
-      })
-      }
+
   
       clearSearch() {
           this.searchKey = '';
@@ -323,7 +271,7 @@ export class DiscountComponent implements OnInit {
       public doFilter1 = (value, state) => {
           debugger
           var sd=value.trim().toLocaleLowerCase()
-              this.services.filter = value.trim().toLocaleLowerCase()
+              this.discounts.filter = value.trim().toLocaleLowerCase()
               // this.upcomingBookings.filter =  '';
               // this.patientsappointments.filter = '';
               this.searchKey3 = '';
@@ -343,19 +291,19 @@ export class DiscountComponent implements OnInit {
       
   
       openSaveDrawer(){
-          this.service=new Service()
+          this.discount=new discount()
           this.drawer.open();
           this.submitbtn=true;
           this.Updatebtn=false;
       }
   
       openUpdateDrawer(id){
-          this.service=new Service()
-          this.utilitiesService.getServicebyid(id).subscribe(
+          this.discount=new discount()
+          this.utilitiesService.getdiscountbyid(id).subscribe(
               (data) => {
                 if (data) {
                   console.log("servById",data)
-                  this.service=data
+                  this.discount=data
                 }
               })
   
