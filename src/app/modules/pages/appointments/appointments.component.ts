@@ -1897,7 +1897,7 @@ if(disc==5){
         else {
             // 
             this.isDuePay = false;
-            this.spinner.show();
+            // this.spinner.show();
             this.action = 'Update Existing Appointment';
             this.actionName = 'Update Appointment';
             this.appointmentButton = 'Update Appointment';
@@ -1918,7 +1918,7 @@ if(disc==5){
             // this.step1.controls['status'].setValue(val.statusID);
             this.step1.controls['gender'].setValue(val.genderID);
             this.step2.controls['serviceName'].setValue(val.serviceID);
-            this.step2.controls['price'].setValue(val.priceID);
+            this.step2.controls['price'].setValue(val.price);
             this.step2.controls['discount'].setValue(val.discountID);
             this.step2.controls['amountPaid'].setValue(val.payment);
             this.step2.controls['modeOfPayment'].setValue(val.modeofPaymentID);
