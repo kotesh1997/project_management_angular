@@ -131,8 +131,21 @@
             </button>
                 </div>      -->
             </div>
-
+            <div class="flex mx-2 align">
+                <div class="mr-1">
+                  <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel1()"  matTooltip="Export To Excel">
+                    <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                  </button>
+                </div>
+                <div class="">
+                  <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf()" matTooltip="Export To PDF">
+                    <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                  </button>
+                </div>
+              </div>
         </div>
+
+       
 
         <div  class="example-container mat-elevation-z8" >
             <table class="table1" id="table1" mat-table [dataSource]="summaryReports" matSort>
@@ -266,6 +279,19 @@
                 </button>
                     </div>     
                 </div>
+
+                <div class="flex mx-2 align">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()"  matTooltip="Export To Excel">
+                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                      </button>
+                    </div>
+                    <div class="">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf1()"  matTooltip="Export To PDF">
+                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                      </button>
+                    </div>
+                  </div>
 
             </div>
     

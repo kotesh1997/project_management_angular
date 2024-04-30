@@ -438,14 +438,14 @@ export class UtilitiesService {
     //   }
 
       getServiceDetailsByDept(data): Observable<any> {
-        return this.http.get<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails`,data);
+        return this.http.post<any>(`${this.API_URL}Service/GetServiceDetailsByDept/deptservicedetails`,data);
       }
 
       getSummaryReports(data): Observable<any> {
-        return this.http.get<any>(`${this.API_URL}Service/GetSummaryByDeptWise/summaryreport`,data);
+        return this.http.post<any>(`${this.API_URL}Service/GetSummaryByDeptWise/summaryreport`,data);
       }
 
       getCardReports(data): Observable<any> {
-        return this.http.get<any>(`${this.API_URL}Service/GetBillingDetailsByDept/reports`,data);
+        return this.http.post<any>(`${this.API_URL}Service/GetBillingDetailsByDept/reports`,data);
       }
 }

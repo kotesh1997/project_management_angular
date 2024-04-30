@@ -5,13 +5,18 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { bottom } from '@popperjs/core';
 import { UtilitiesService } from 'app/Services/utilities.service';
+import * as XLSX from 'xlsx';
 import { Chart } from 'chart.js/auto';
 import { result } from 'lodash';
+
+
 export class Dept{
   public fromDate:Date
   public toDate:Date
   public departmentId:number
 }
+
+
 
 export class SummaryReports{
   public fromDate:Date
@@ -24,6 +29,8 @@ export class CardReports{
   public toDate:Date
   public departmentId:number
 }
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-admin-reports',
   templateUrl: './admin-reports.component.html',
@@ -56,11 +63,115 @@ export class AdminReportsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('TABLE') table: ElementRef;
+  @ViewChild('TABLE') table1: ElementRef;
+
 
   constructor( private utilitiesService: UtilitiesService,private datePipe: DatePipe) { }
 
 
+
+
+  exportpdf(){
+    debugger
+      var prepare=[];
+    this.summaryReports.filteredData.forEach(e=>{
+      var tempObj =[];
+      tempObj.push(e.date);
+      tempObj.push(e.newRegistrations);
+      tempObj.push(e.billedPatients);
+      tempObj.push( e.consultation);
+      tempObj.push( e.lab);
+      tempObj.push(e.others);
+      tempObj.push(e.totEarnings);
+      prepare.push(tempObj);
   
+    });
+    const doc = new jsPDF();
+    autoTable(doc,{
+        head: [['Date', 'New Registration', 'Billed Patients', 'Consultations', 'Lab', 'Others', 'Total Earnings']],
+        body: prepare
+    });
+    doc.save('SummaryReports' + '.pdf');
+  
+    // const doc = new jsPDF("p", "pt", "a4");
+    // const source = document.getElementById("table1");
+    // // doc.text("Test", 40, 20);
+    // doc.setFontSize(20)
+    // doc.html(source, {
+    //   callback: function(pdf) {
+    //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+    //   }
+    // });
+  }
+
+
+
+
+exportpdf1(){
+  debugger
+    var prepare=[];
+  this.deptReports.filteredData.forEach(e=>{
+    var tempObj =[];
+    tempObj.push(e.department);
+    tempObj.push(e.service);
+    tempObj.push(e.count);
+    tempObj.push( e.totalBilled);
+    tempObj.push( e.totalCollected);
+    prepare.push(tempObj);
+
+  });
+  const doc = new jsPDF();
+  autoTable(doc,{
+      head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
+      body: prepare
+  });
+  doc.save('deptReports' + '.pdf');
+
+  // const doc = new jsPDF("p", "pt", "a4");
+  // const source = document.getElementById("table1");
+  // // doc.text("Test", 40, 20);
+  // doc.setFontSize(20)
+  // doc.html(source, {
+  //   callback: function(pdf) {
+  //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+  //   }
+  // });
+}
+
+ExportTOExcel() {
+  const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'DeptReports');
+
+  XLSX.writeFile(wb, 'DeptReports.xlsx');
+}
+
+ExportTOExcel1() {
+  const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table1.nativeElement);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  
+  // If the data is an array of objects, convert it to an array of arrays
+  const data = this.summaryReports.data.map(item => {
+      return [
+          this.datePipe.transform(item.date, 'dd/MM/yyyy'),
+          item.newRegistrations,
+          item.billedPatients,
+          item.consultation,
+          item.lab,
+          item.others,
+          item.totEarnings
+      ];
+  });
+
+  // Add the headers separately
+  const headers = ['Date', 'New Registration', 'Billed Patients', 'Consultations', 'Lab', 'Others', 'Total Earnings'];
+  const wsSummary: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([headers, ...data]);
+
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'SummaryReports');
+  XLSX.writeFile(wb, 'SummaryReports.xlsx');
+}
+
+
 
   
   ngAfterViewInit(): void {
@@ -202,6 +313,7 @@ getSummaryReports(){
 }
 
 getCardReports(){
+  debugger
   this.cardrep.departmentId=1
   this.utilitiesService.getCardReports(this.cardrep).subscribe(
     (data) => {
@@ -219,6 +331,7 @@ getCardReports(){
     })
 
     this.getSummaryReports()
+    this.getServiceDetailsByDept();
 }
 
 
