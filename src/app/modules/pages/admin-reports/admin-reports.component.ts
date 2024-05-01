@@ -8,6 +8,8 @@ import { UtilitiesService } from 'app/Services/utilities.service';
 import * as XLSX from 'xlsx';
 import { Chart } from 'chart.js/auto';
 import { result } from 'lodash';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker'; 
+
 
 
 export class Dept{
@@ -31,6 +33,7 @@ export class CardReports{
 }
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-admin-reports',
   templateUrl: './admin-reports.component.html',
@@ -40,6 +43,10 @@ import autoTable from 'jspdf-autotable';
 export class AdminReportsComponent implements OnInit {
   @ViewChild('barChart') barChart: ElementRef;
   myBarChart: any;
+  fromDate1: Date;
+  toDate1: Date;
+  fromDate2: Date;
+  toDate2: Date;
   dept=new Dept()
   sumrep=new SummaryReports()
   cardrep=new CardReports()
@@ -65,6 +72,10 @@ export class AdminReportsComponent implements OnInit {
   @ViewChild('TABLE') table: ElementRef;
   @ViewChild('TABLE') table1: ElementRef;
 
+  date1 = new FormControl(new Date());
+  serializedDate = new FormControl(new Date().toISOString());
+  date2 = new FormControl(new Date());
+  serializedDate1 = new FormControl(new Date().toISOString());
 
   constructor( private utilitiesService: UtilitiesService,private datePipe: DatePipe) { }
 
@@ -280,60 +291,130 @@ showGraph(){
 
 }
 
-getServiceDetailsByDept(){
-  const fromDate=this.datePipe.transform(this.appFromDate, 'dd/MM/yyyy');
-  const toDate=this.datePipe.transform(this.appToDate, 'dd/MM/yyyy');
-  this.dept.departmentId=1
-this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
-  (data) => {
-    if (data) {
-      this.deptReports = new MatTableDataSource(data.result.departmentServiceDetails);
-      this.deptReports.sort = this.sort;
-      this.deptReports.paginator = this.paginator;
-    }
-  })
+syncDateSetTwo(event: MatDatepickerInputEvent<Date>, datepicker: number) {
+  if (datepicker === 1) {
+    this.dept.fromDate = event.value;
+  } else if (datepicker === 2) {
+    this.dept.toDate = event.value;
+  }
 }
 
-getSummaryReports(){
-  debugger
-  this.sumrep.departmentId=1
+
+// getServiceDetailsByDept(){
+//   const fromDate=this.datePipe.transform(this.appFromDate, 'dd/MM/yyyy');
+//   const toDate=this.datePipe.transform(this.appToDate, 'dd/MM/yyyy');
+//   this.dept.departmentId=1
+// this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
+//   (data) => {
+//     if (data) {
+//       this.deptReports = new MatTableDataSource(data.result.departmentServiceDetails);
+//       this.deptReports.sort = this.sort;
+//       this.deptReports.paginator = this.paginator;
+//     }
+//   })
+// }
+
+// getSummaryReports(){
+//   debugger
+//   this.sumrep.departmentId=1
+//   this.utilitiesService.getSummaryReports(this.cardrep).subscribe(
+//     (data) => {
+//       if (data) {
+//         this.consultation=data.result.consultation
+//         this.totalEarnings=data.result.totEarnings
+//         const resultdate=data.result.date
+//         this.date=this.datePipe.transform(resultdate, 'dd/MM/yyyy');
+//         this.summaryReports = new MatTableDataSource<any>([data.result]);
+//         this.summaryReports.sort = this.sort;
+//         this.summaryReports.paginator = this.paginator;
+//         this.ngAfterViewInit()
+//       }
+//     })
+
+// }
+
+// getCardReports(){
+//   debugger
+//   this.cardrep.departmentId=1
+//   this.utilitiesService.getCardReports(this.cardrep).subscribe(
+//     (data) => {
+//       if (data) {
+//         this.totalBilled=data.result.totBilled
+//         this.totalCollected=data.result.totCollected
+//         this.cash=data.result.cash
+//         this.card=data.result.card
+//        // this.wallet=data.result.netbanking
+//        this.billedpatients=data.result.unqBilledPatients
+//         // this.summaryReports = new MatTableDataSource<any>([data.result]);
+//         // this.summaryReports.sort = this.sort;
+//         // this.summaryReports.paginator = this.paginator;
+//       }
+//     })
+
+//     this.getSummaryReports()
+// }
+
+
+generateReportsSetOne() {
+  this.getServiceDetailsByDept(this.cardrep.fromDate, this.cardrep.toDate);
+}
+
+generateReportsSetTwo() {
+  this.getServiceDetailsByDept(this.dept.fromDate, this.dept.toDate);
+}
+
+getServiceDetailsByDept(fromDate: Date, toDate: Date) {
+  const fromDateFormatted = this.datePipe.transform(fromDate, 'dd/MM/yyyy');
+  const toDateFormatted = this.datePipe.transform(toDate, 'dd/MM/yyyy');
+  this.dept.departmentId = 1;
+
+  this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
+    (data) => {
+      if (data) {
+        this.deptReports = new MatTableDataSource(data.result.departmentServiceDetails);
+        this.deptReports.sort = this.sort;
+        this.deptReports.paginator = this.paginator;
+      }
+    }
+  );
+}
+
+getSummaryReports() {
+  this.sumrep.departmentId = 1;
+
   this.utilitiesService.getSummaryReports(this.cardrep).subscribe(
     (data) => {
       if (data) {
-        this.consultation=data.result.consultation
-        this.totalEarnings=data.result.totEarnings
-        const resultdate=data.result.date
-        this.date=this.datePipe.transform(resultdate, 'dd/MM/yyyy');
+        this.consultation = data.result.consultation;
+        this.totalEarnings = data.result.totEarnings;
+        const resultdate = data.result.date;
+        this.date = this.datePipe.transform(resultdate, 'dd/MM/yyyy');
         this.summaryReports = new MatTableDataSource<any>([data.result]);
         this.summaryReports.sort = this.sort;
-        this.summaryReports.paginator = this.paginator;
-        this.ngAfterViewInit()
+       this.summaryReports.paginator = this.paginator;
+        this.ngAfterViewInit();
       }
-    })
+    }
+  );
 }
 
-getCardReports(){
-  debugger
-  this.cardrep.departmentId=1
+getCardReports() {
+  this.cardrep.departmentId = 1;
+
   this.utilitiesService.getCardReports(this.cardrep).subscribe(
     (data) => {
       if (data) {
-        this.totalBilled=data.result.totBilled
-        this.totalCollected=data.result.totCollected
-        this.cash=data.result.cash
-        this.card=data.result.card
-       // this.wallet=data.result.netbanking
-       this.billedpatients=data.result.unqBilledPatients
-        // this.summaryReports = new MatTableDataSource<any>([data.result]);
-        // this.summaryReports.sort = this.sort;
-        // this.summaryReports.paginator = this.paginator;
+        this.totalBilled = data.result.totBilled;
+        this.totalCollected = data.result.totCollected;
+        this.cash = data.result.cash;
+        this.card = data.result.card;
+        this.billedpatients = data.result.unqBilledPatients;
       }
-    })
+    }
+  );
 
-    this.getSummaryReports()
-    this.getServiceDetailsByDept();
+  this.getSummaryReports();
 }
-
 
 
 }
