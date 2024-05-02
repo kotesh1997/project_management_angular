@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -69,8 +69,14 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _viewContainerRef: ViewContainerRef,
         private utilitiesService: UtilitiesService,
-    )
-    {
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
+
     }
 
     // -----------------------------------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 
@@ -10,7 +11,16 @@ export class GraphComponent implements AfterViewInit {
   @ViewChild('barChart') barChart: ElementRef;
   myBarChart: any;
 
-  constructor() { }
+  constructor(
+    private platformlocation: PlatformLocation
+
+  ) {
+      history.pushState(null, '', location.href);
+      this.platformlocation.onPopState(() => {
+          history.pushState(null, '', location.href);
+      });
+
+   }
 
   ngAfterViewInit(): void {
     this.myBarChart = new Chart(this.barChart.nativeElement, {

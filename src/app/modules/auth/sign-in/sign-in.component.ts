@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,8 +38,15 @@ export class AuthSignInComponent implements OnInit {
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router,
-        private patientsService: PatientsService
-    ) {}
+        private patientsService: PatientsService,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
+    }
 
     isSignInButtonDisabled(): boolean {
         return this.signInForm.invalid;

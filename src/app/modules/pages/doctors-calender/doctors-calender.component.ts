@@ -22,6 +22,7 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { CalendarRecurrenceComponent } from 'app/modules/admin/apps/calendar/recurrence/recurrence.component';
 import { CalendarService } from 'app/modules/admin/apps/calendar/calendar.service';
 import { Calendar, CalendarDrawerMode, CalendarEvent, CalendarEventEditMode, CalendarEventPanelMode, CalendarSettings } from 'app/modules/admin/apps/calendar/calendar.types';
+import { PlatformLocation } from '@angular/common';
 
 
 @Component({
@@ -65,8 +66,15 @@ export class DoctorsCalenderComponent implements OnInit {
         private _matDialog: MatDialog,
         private _overlay: Overlay,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _viewContainerRef: ViewContainerRef
-    ) { }
+        private _viewContainerRef: ViewContainerRef,
+        private platformlocation: PlatformLocation
+
+      ) {
+          history.pushState(null, '', location.href);
+          this.platformlocation.onPopState(() => {
+              history.pushState(null, '', location.href);
+          });
+    }
 
   ngOnInit(): void {
   }

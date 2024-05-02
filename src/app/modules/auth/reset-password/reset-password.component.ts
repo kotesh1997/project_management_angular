@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseValidators } from '@fuse/validators';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
     selector     : 'auth-reset-password',
@@ -28,9 +29,14 @@ export class AuthResetPasswordComponent implements OnInit
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: FormBuilder
-    )
-    {
+        private _formBuilder: FormBuilder,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------

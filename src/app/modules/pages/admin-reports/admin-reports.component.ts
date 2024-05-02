@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -77,7 +77,16 @@ export class AdminReportsComponent implements OnInit {
   date2 = new FormControl(new Date());
   serializedDate1 = new FormControl(new Date().toISOString());
 
-  constructor( private utilitiesService: UtilitiesService,private datePipe: DatePipe) { }
+  constructor( private utilitiesService: UtilitiesService,
+    private datePipe: DatePipe,
+    private platformlocation: PlatformLocation
+
+  ) {
+      history.pushState(null, '', location.href);
+      this.platformlocation.onPopState(() => {
+          history.pushState(null, '', location.href);
+      });
+  }
 
 
 

@@ -8,7 +8,7 @@ import { T } from '@angular/cdk/keycodes';
 import { UtilitiesService } from 'app/Services/utilities.service';
 import { LoaderService } from '../../../Services/loader.service';
 import * as XLSX from 'xlsx';
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DateAdapter } from '@angular/material/core';
 import { jsPDF } from "jspdf";
@@ -40,7 +40,14 @@ export class ReportComponent implements OnInit {
     horizontalStepperForm: FormGroup;
     Repdata: boolean=true;
     constructor(public reportService: ReportService, private _matDialog: MatDialog, private dateAdapter: DateAdapter<Date>,
-        private utilitiesService: UtilitiesService,private formBuilder: FormBuilder, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder,private snackBar: MatSnackBar) {
+        private utilitiesService: UtilitiesService,private formBuilder: FormBuilder, public spinner: LoaderService, public datepipe: DatePipe, private _formBuilder: FormBuilder,private snackBar: MatSnackBar,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
            
         this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     }

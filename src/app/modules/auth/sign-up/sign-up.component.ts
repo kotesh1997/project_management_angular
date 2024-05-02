@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,9 +29,14 @@ export class AuthSignUpComponent implements OnInit
     constructor(
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
-    )
-    {
+        private _router: Router,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------

@@ -10,6 +10,7 @@ import { UserService } from 'app/core/user/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { User } from 'app/core/user/user.types';
+import { PlatformLocation } from '@angular/common';
 
 
 
@@ -42,8 +43,15 @@ showPasswordNotMatchMessage: boolean = false;
   constructor(
     private _authService: AuthService,private _changeDetectorRef: ChangeDetectorRef,
     private _router: Router,
-    private _formBuilder: FormBuilder,  private _userService: UserService,  // Inject FormBuilder here
-  ) {}
+    private _formBuilder: FormBuilder,  private _userService: UserService,  
+    private platformlocation: PlatformLocation
+
+  ) {
+      history.pushState(null, '', location.href);
+      this.platformlocation.onPopState(() => {
+          history.pushState(null, '', location.href);
+      });
+  }
 
   loginDetails: any = [];
   roleID: any;

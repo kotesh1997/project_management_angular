@@ -15,7 +15,7 @@ import {
     FormArray
 } from '@angular/forms';
 import moment from 'moment';
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 
 interface Days {
     value: string;
@@ -35,8 +35,21 @@ export class MyPatientsComponent implements AfterViewInit {
       ];    
     horizontalStepperForm: FormGroup;
     peteintapp: boolean=true;
-    constructor(public mypatientsService: MyPatientsService,private datePipe: DatePipe, private utilitiesService: UtilitiesService, public spinner: LoaderService, private _formBuilder: FormBuilder,private cdr: ChangeDetectorRef 
-    ) { }
+    constructor(public mypatientsService: MyPatientsService,
+        private datePipe: DatePipe,
+         private utilitiesService: UtilitiesService,
+          public spinner: LoaderService,
+           private _formBuilder: FormBuilder,
+           private cdr: ChangeDetectorRef,
+           private platformlocation: PlatformLocation
+
+        ) {
+            history.pushState(null, '', location.href);
+            this.platformlocation.onPopState(() => {
+                history.pushState(null, '', location.href);
+            });
+
+    }
 
 
     filterdayval:any;

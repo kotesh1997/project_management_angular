@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +9,16 @@ import { Router } from '@angular/router';
 })
 export class AdminSettingsComponent implements OnInit {
 
-  constructor(private _router:Router) { }
+  constructor(private _router:Router,
+    private platformlocation: PlatformLocation
+
+  ) {
+      history.pushState(null, '', location.href);
+      this.platformlocation.onPopState(() => {
+          history.pushState(null, '', location.href);
+      });
+
+   }
 
   ngOnInit(): void {
   }

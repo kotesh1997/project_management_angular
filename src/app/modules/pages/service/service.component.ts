@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PatientsService } from '../patients/patients.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 import { AfterViewInit, ElementRef } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -139,8 +139,14 @@ service = new Service()
         private _snackBar: MatSnackBar,
         private generalService: GeneralService,
         private http: HttpClient,
-        private fb: FormBuilder) {
+        private fb: FormBuilder,
+        private platformlocation: PlatformLocation
 
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
 
 
         this.form = _formBuilder.group({

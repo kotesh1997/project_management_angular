@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdmindashboardService } from './admindashboard.service';
 import { Router } from '@angular/router'; 
+import { PlatformLocation } from '@angular/common';
 
 
 
@@ -24,7 +25,15 @@ export class AdmindashboardComponent implements OnInit {
   dashboardData = new DashboardData();
   dashboardData1: any;
 
-  constructor(private admindashboardService: AdmindashboardService,private router: Router) { }
+  constructor(private admindashboardService: AdmindashboardService,private router: Router,
+    private platformlocation: PlatformLocation
+
+  ) {
+      history.pushState(null, '', location.href);
+      this.platformlocation.onPopState(() => {
+          history.pushState(null, '', location.href);
+      });
+  }
 
   ngOnInit(): void {
     debugger

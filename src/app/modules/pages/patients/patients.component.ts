@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PatientsService } from './patients.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
     selector: 'app-patients',
@@ -13,7 +14,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PatientsComponent implements OnInit {
     horizontalStepperForm: FormGroup;
-    constructor(public patientsService: PatientsService, private _formBuilder: FormBuilder) { }
+    constructor(public patientsService: PatientsService, private _formBuilder: FormBuilder,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
+
+    }
 
     patientsappointments: MatTableDataSource<any>;
     displayedColumns: string[] = ['SL', 'Patient', 'Mobile', 'LastSeen', 'AddAppointment', 'Action'];

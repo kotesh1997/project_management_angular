@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
@@ -23,9 +24,14 @@ export class ResetPasswordSplitScreenReversedComponent implements OnInit
      * Constructor
      */
     constructor(
-        private _formBuilder: FormBuilder
-    )
-    {
+        private _formBuilder: FormBuilder,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------

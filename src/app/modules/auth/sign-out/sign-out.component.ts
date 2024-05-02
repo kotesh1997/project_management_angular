@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject, timer } from 'rxjs';
 import { finalize, takeUntil, takeWhile, tap } from 'rxjs/operators';
 import { AuthService } from 'app/core/auth/auth.service';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
     selector     : 'auth-sign-out',
@@ -24,9 +25,14 @@ export class AuthSignOutComponent implements OnInit, OnDestroy
      */
     constructor(
         private _authService: AuthService,
-        private _router: Router
-    )
-    {
+        private _router: Router,
+        private platformlocation: PlatformLocation
+
+    ) {
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------

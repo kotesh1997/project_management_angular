@@ -9,7 +9,7 @@ import { T } from '@angular/cdk/keycodes';
 import { UtilitiesService } from 'app/Services/utilities.service';
 import { LoaderService } from '../../../Services/loader.service';
 import * as XLSX from 'xlsx';
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 
@@ -45,7 +45,14 @@ export class MedicineComponent implements OnInit {
         private _matDialog: MatDialog,
         private _snackBar: MatSnackBar,
          private utilitiesService: UtilitiesService,  public spinner: LoaderService ,  public datepipe: DatePipe,
-         private _formBuilder: FormBuilder) {
+         private _formBuilder: FormBuilder,
+         private platformlocation: PlatformLocation
+
+        ) {
+            history.pushState(null, '', location.href);
+            this.platformlocation.onPopState(() => {
+                history.pushState(null, '', location.href);
+            });
             this.form = _formBuilder.group({              
                 medicineName         : ['', Validators.required],
                 composition       : [''] 
