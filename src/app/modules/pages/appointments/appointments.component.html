@@ -8,7 +8,6 @@
 
 
 
-
             <div class="flex flex-cols justify-between">
                 <div class="flex flex-cols">
                     <ng-container *ngIf="Todays">
@@ -1252,16 +1251,16 @@
 
                                 <mat-form-field class="col-lg-3" appearance="outline">
                                     <mat-label>Mode Of Payment</mat-label>
-                                    <mat-select [formControlName]="'modeOfPayment'" [disabled]="ModePrice">
+                                    <mat-select [formControlName]="'modeOfPayment'" [(ngModel)]="selectpayment" [disabled]="ModePrice">
                                         <mat-option *ngFor="let item of Mode " [value]="item.ID">
                                             {{ item.label }}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
-                                <mat-form-field class="col-lg-3" appearance="outline" *ngIf="roleID==1">
+                                <mat-form-field class="col-lg-3" appearance="outline" >
                                     <mat-label>Discount in %</mat-label>
-                                    <mat-select [formControlName]="'discount'" (selectionChange)="applyNetPrice1()"
+                                    <mat-select [formControlName]="'discount'" [(ngModel)]="selecteddiscount" (selectionChange)="applyNetPrice1()"
                                         [disabled]="isDuePay">
                                         <mat-option *ngFor="let item of discounts" [value]="item.discountID">
                                             {{ item.discount }}
@@ -1269,7 +1268,11 @@
                                     </mat-select>
                                 </mat-form-field>
 
-                                <mat-form-field class="col-lg-3" appearance="outline" *ngIf="roleID==1">
+                              
+                                
+                                
+                                
+                                <mat-form-field class="col-lg-3" appearance="outline" >
                                     <mat-label>Amount Paid</mat-label>
                                     <input matInput [formControlName]="'amountPaid'" [disabled]="amounttopaid" required
                                         [readonly]="amounttopaid" (selectionChange)="applyNetPrice1($event)" />
@@ -2968,7 +2971,7 @@
 
     <mat-dialog-content>
         <fieldset>
-            <mat-icon class="mouseover" aria-label="Close dialog" (click)="closeCompanyDetailsDialog()"
+            <mat-icon style="float: right;" class="mouseover" aria-label="Close dialog" (click)="closeCompanyDetailsDialog()"
                 matTooltip="Close" matTooltipPosition="right" matTooltipShowDelay="500" matTooltipHideDelay="100">
                 <span (mouseover)="onCloseIconMouseOver()" (mouseout)="onCloseIconMouseOut()">close</span>
             </mat-icon>
@@ -2986,7 +2989,7 @@
                     <td align="center" bgcolor="#D2C7BA">
 
 
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td class="payment_Receipt">
                                     <img src="assets/images/logo/LOGO.png" style=" width: 100%;" />
@@ -3122,14 +3125,14 @@
     <mat-dialog-content>
         <fieldset>
 
-            <mat-icon class="mouseover" matTooltip="Close" aria-label="Close dialog" (click)="closePrecesptionDialog()">close</mat-icon>
+            <mat-icon style="float: right;" class="mouseover" matTooltip="Close" aria-label="Close dialog" (click)="closePrecesptionDialog()">close</mat-icon>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" id="component2">
                 <tr>
                     <td align="center" bgcolor="#D2C7BA">
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                        <table border="0" cellpadding="0" cellspacing="0" >
                             <tr>
                                 <td class="payment_Receipt">
-                                    <img src="assets/images/logo/LOGO.png" style=" width: 100%;" />
+                                    <img src="assets/images/logo/LOGO.png" />
                                 </td>
                                 <td class="heading_1">Prescription</td>
                             </tr>
@@ -3181,31 +3184,42 @@
                             <tr>
                                 <td class="Payment_row mt-2">
                                     <table id="customers">
-                                        <tr>
-                                            <th style="width: 20%;">Medicine</th>
-                                            <th style="width: 20%;">Dose</th>
-                                            <th style="width: 20%;">When</th>
-                                            <th style="width: 20%;">Frequency</th>
-                                            <th style="width: 20%;">Duration</th>
+                                        <tr style="white-space: nowrap;">
+                                            <th >Medicine</th>
+                                            <th >Dose</th>
+                                            <th >When</th>
+                                            <th >Frequency</th>
+                                            <th >Duration</th>
 
                                         </tr>
                                         <ng-container *ngFor="let medList of vitalsForm.value.medicationitems">
 
 
-                                            <tr class="td_table2">
-                                                <td style="width: 20%;"><span
-                                                        class="service">{{medList.medicine}}</span><br />
+                                            <tr class="td_table2" style="white-space: nowrap;">
+
+                                                <!-- <td style="width: 20%;"><span
+                                                    class="service">{{medList.medicine}}</span><br />
+                                                <span class="serviceFont" *ngFor="let item of medicinePrescepList">
+                                                    <div *ngIf="item.medicineName == medList.medicine">
+                                                        Composition - {{item.composition}}
+                                                    </div>
+                                                </span>
+                                                <span class="service"> Composition - {{medList.medicine}}    </span>                                         
+                                            </td> -->
+
+                                                <td>
+                                                    <span class="service"><b>{{medList.medicine}}</b></span><br />
                                                     <span class="serviceFont" *ngFor="let item of medicinePrescepList">
-                                                        <div *ngIf="item.medicineName == medList.medicine">
+                                                        <span style="white-space: nowrap;"  *ngIf="item.medicineName == medList.medicine">
                                                             Composition - {{item.composition}}
-                                                        </div>
+                                                        </span>
                                                     </span>
-                                                    <!-- <span class="service"> Composition - {{medList.medicine}}    </span>                                          -->
                                                 </td>
-                                                <td style="width: 20%;">{{medList.dose}}</td>
-                                                <td style="width: 20%; ">{{medList.when}}</td>
-                                                <td style="width: 20%;">{{medList.frequencyListMedication}}</td>
-                                                <td style="width: 20%;">{{medList.duration}}</td>
+                                                
+                                                <td >{{medList.dose}}</td>
+                                                <td style="white-space: nowrap;" >{{medList.when}}</td>
+                                                <td >{{medList.frequencyListMedication}}</td>
+                                                <td >{{medList.duration}}</td>
 
 
                                                 <!---   <td>{{medList.notes}}</td>-->

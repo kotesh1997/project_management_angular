@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PatientsService } from '../patients/patients.service';
 import { MedicineService } from '../medicine/medicine.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, PlatformLocation } from '@angular/common';
 import { AfterViewInit, ElementRef } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -44,6 +44,7 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { MatDrawer } from '@angular/material/sidenav';
+import { result } from 'lodash';
 declare const PDFObject: any;
 // import { debug } from 'console';
 
@@ -57,7 +58,7 @@ declare const PDFObject: any;
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     selectedPanel: string = 'Vitals';
-
+    selectpayment: number = 1;
     @ViewChild('drawer') drawer: MatDrawer;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -242,6 +243,8 @@ filename:any=[];
     previousdata: boolean=true;
     selectedPrice: any;
     selectedfiles: File[];
+    defaultDiscount: any;
+    selecteddiscount: any;
    
     constructor(private sanitizer: DomSanitizer,
         
@@ -260,8 +263,15 @@ filename:any=[];
         private _router: Router,
         private dialog: MatDialog,
         private dateAdapter: DateAdapter<Date>,
+        private platformlocation: PlatformLocation,
+        private formBuilder: FormBuilder
       
     ) {
+
+        history.pushState(null, '', location.href);
+        this.platformlocation.onPopState(() => {
+            history.pushState(null, '', location.href);
+        });
 
         
         this.yesterday.setDate(this.yesterday.getDate() - 0);
@@ -552,9 +562,9 @@ debugger
     this.todayBookings.sort = this.sort;
 }
 panels=[]
-
- 
+testIDD
     ngOnInit(): void {
+        //this.selecteddiscount=35
         this.panels = [
             {
                 id         : 'Vitals',
@@ -689,6 +699,8 @@ panels=[]
 
                 }),
             });
+
+            this.step2.controls['discount'].setValue(35);
         }
         
         this.vitalsForm = this._formBuilder.group({
@@ -1406,36 +1418,80 @@ gethistory1(){
             () => { }
         );
     }
+    // getAllAppointmentBills() {
+    //     this.utilitiesService.getAllAppointmentBills().subscribe(
+    //         (data) => {
+    //             if (data) {
+    //                 debugger
+    //                 this.prices = data;
+    //                 console.log('prices',this.prices)
+
+    //        // this.step2.controls['price'].setValue(2);
+    //                 // this.prices.splice(0, 1);
+    //             } else {
+    //             }
+    //         },
+
+    //         () => { }
+    //     );
+    // }
+    // getDiscounts() {
+    //     this.utilitiesService.getDiscounts().subscribe(
+    //         (data) => {
+    //             if (data) {
+    //                 this.discounts = data;
+    //             console.log("Discounts",this.discounts)
+    //                 // this.discounts.splice(0, 1);
+    //             } else {
+    //             }
+    //         },
+
+    //         () => { }
+    //     );
+    // }
+
+    allPrices=[]
     getAllAppointmentBills() {
+        debugger
         this.utilitiesService.getAllAppointmentBills().subscribe(
             (data) => {
                 if (data) {
-                    debugger
+                    debugger;
                     this.prices = data;
-
-           // this.step2.controls['price'].setValue(2);
+                    this.allPrices=data;
+                    console.log('prices', this.prices);
+    
+                    // Filter prices based on this.price
+                    if (this.price) {
+                        this.prices = this.prices.filter(price => price === this.price);
+                    }
+    
+                    // this.step2.controls['price'].setValue(2);
                     // this.prices.splice(0, 1);
                 } else {
+                    // Handle case when data is empty
                 }
             },
-
             () => { }
         );
     }
+    
+
     getDiscounts() {
-        this.utilitiesService.getDiscounts().subscribe(
-            (data) => {
-                if (data) {
-                    this.discounts = data;
-                console.log("Discounts",this.discounts)
-                    // this.discounts.splice(0, 1);
-                } else {
-                }
-            },
-
-            () => { }
+        debugger
+        this.utilitiesService.getDiscounts().subscribe(result=>{
+                if (result) {
+                    this.discounts = result;
+                    console.log("resulttest",this.discounts)
+                   this.selecteddiscount = this.discounts[0].discountID; 
+                   this.selectpayment = this.Mode.length > 0 ? this.Mode[0].ID : null;
+                } 
+            },err=> {
+                console.log(err)
+             }
         );
     }
+
     onSearchClear() {
         debugger
 
@@ -1466,11 +1522,13 @@ gethistory1(){
     }
 
     actionFormName(val) {
-debugger
+      debugger
         this.isDuePay = false;
         this.slotsArr = [];
         this.step1.reset();
-        this.step2.reset();
+       this.step2.reset();
+       this.getDiscounts()
+       this.addStaticData();
         this.onSearchClear();
         this.actionName = val;
         this.action = val;
@@ -1931,6 +1989,7 @@ if(disc==5){
             this.spinner.hide();
         }
     }
+    
 
     updateSelectDuePay(val) {
         debugger
@@ -2001,7 +2060,7 @@ if(disc==5){
         //this.appt.StatusID = Number(val.step1.status);
         this.appt.StatusID = Number(7);
         this.appt.ServiceDate = this.datepipe.transform(val.step1.appDate, 'd MMM yyyy');
-
+        this.appt.priceID = this.AppointmentID;
         this.appt.AppointmentBill = ('Test');  //
 
         //var disco= ((val.step2.price * discList[0].discount)/100);
@@ -2011,7 +2070,7 @@ if(disc==5){
             this.appt.modeofPaymentID = val.step2.modeOfPayment;
             //this.appt.PriceID = Number(val.step2.price);
 
-            if (this.roleID == '1') {
+            if (this.roleID == '1' || this.roleID == '3') {
                 this.appt.DiscountID = Number(val.step2.discount);
                 if (this.appt.DiscountID == 0) {
                     this.appt.DiscountID = 6;
@@ -2034,11 +2093,11 @@ if(disc==5){
                 this.appt.DiscountID = 6;
                 var pricList = this.prices.filter(a => a.priceID === this.horizontalStepperForm.value.step2.price);
 
-                this.actualPrice = pricList[0].price;
+                // this.actualPrice = pricList[0].price;
                 this.appt.Payment = this.actualPrice;  //
                 this.appt.DuePayment = "0";
             }
-            if (this.roleID == '1') {
+            if (this.roleID == '1' || this.roleID == '3') {
                 var due = Number(this.horizontalStepperForm.value.step2.netPrice) - Number(Number(val.step2.amountPaid) + Number(this.horizontalStepperForm.value.step2.duePayment));
                 if (this.isDuePay == true) {
                     //if (Number(due) == Number(this.horizontalStepperForm.value.step2.duePayment)) {
@@ -2070,9 +2129,20 @@ if(disc==5){
             this.appt.DuePayment = "0";
             this.appt.DiscountID = 6;
         }
+
+      
+
+
+
+// Continue with the rest of your code...
+
+
         this.appt.Price=this.price;
-        const filteredPrice = this.prices.filter(item => item.price === this.price);
-        this.appt.PriceID=filteredPrice[0].priceID
+        // const filteredPrice = this.prices.filter(item => item.price === this.price);
+        // const filteredPrice = this.prices
+        // this.appt.PriceID=filteredPrice[0].priceID
+        const selprice=this.allPrices.filter(price=>price.price==this.price)
+        this.appt.PriceID=selprice[0].priceID
 
         this.appt.Action = this.action;
         this.appt.PatientName = (val.step1.firstName);  //

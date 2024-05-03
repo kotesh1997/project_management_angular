@@ -539,17 +539,17 @@ body .light .mat-elevation-z8 {
     letter-spacing: 0.6px;
 }
 
-.service {
-    letter-spacing: 0.5px;
-    font-size: 15px;
-    color: #0b0a0a;
-}
+// .service {
+//     letter-spacing: 0.5px;
+//     font-size: 15px;
+//     color: #0b0a0a;
+// }
 
-.serviceFont {
-    letter-spacing: 0.5px;
-    font-size: 11px;
-    color: #696767;
-}
+// .serviceFont {
+//     letter-spacing: 0.5px;
+//     font-size: 11px;
+//     color: #696767;
+// }
 
 .service_d {
     color: #696767;
@@ -568,7 +568,7 @@ body .light .mat-elevation-z8 {
 #customers th {
     border: 0px solid #ddd;
     padding: 8px;
-    text-align: center;
+    text-align: left;
 }
 
 #customers tr:nth-child(even) {
@@ -606,7 +606,7 @@ body .light .mat-elevation-z8 {
 #customers th {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: center;
+    text-align: left;
 }
 
 #medication th {
@@ -1026,15 +1026,15 @@ img {
     color: white;
     font-weight: 500;
 }
-.Payment_row {
-    text-align: left;
-    background-color: #ffffff;
-    padding: 10px 0 10px 24px;
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 24px;
+// .Payment_row {
+//     text-align: left;
+//     background-color: #ffffff;
+//     padding: 10px 0 10px 24px;
+//     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+//     font-size: 16px;
+//     line-height: 24px;
 
-}
+// }
 
 .payment_Receipt {
     text-align: left;
@@ -1046,7 +1046,7 @@ img {
 
 .Token_No {
     width: 100%;
-    max-width: 600px;
+    // max-width: 600px;
     border-top: 1px solid #c1c1c1;
     background-color: #fff;
 
