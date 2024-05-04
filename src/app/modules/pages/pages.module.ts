@@ -37,6 +37,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import {
     NgxMatDatetimePickerModule,
@@ -146,7 +148,8 @@ import { DiscountComponent } from './discount/discount.component';
         NgxMatTimepickerModule,
         NgxMatNativeDateModule,
         NgxMaterialTimepickerModule,
-        FuseAlertModule, MatSnackBarModule, FullCalendarModule, 
+        FuseAlertModule, MatSnackBarModule, FullCalendarModule,
+        MatProgressSpinnerModule, 
        
     ],
     providers: [PatientsService,DatePipe, AdmindashboardService,MyPatientsService,ReportService,MedicineService],

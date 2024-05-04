@@ -333,7 +333,7 @@
                                         <span>Edit</span>
                                     </button>
 
-                                    <button *ngIf=" roleID=='1'" mat-menu-item (click)="deleteAppointment(element)">
+                                    <button *ngIf=" roleID=='1' && element.status !== 'Completed'" mat-menu-item (click)="deleteAppointment(element)">
                                         <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
                                         <span>Delete</span>
                                     </button>
@@ -839,7 +839,7 @@
                 <div class="flex flex-cols pt-4 pr-16">
                     <div class="mr-1">
                         <button *ngIf="Histories" mat-mini-fab color="primary"
-                            style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()"
+                            style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel1()"
                             matTooltip="Export To Excel">
                             <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                         </button>
@@ -1309,13 +1309,15 @@
                                     {{appointmentButton}}
                                 </button> -->
                                 <button type="button"
-                                    (click)="addRegisterPatientAppointment(horizontalStepperForm.value);appointmentDrawer.close();ConfirmDialog.toggle()"
-                                    [ngClass]="(horizontalStepperStep2.stepControl
-                                .invalid) ? 'btnnext' : 'btnnext1'" [disabled]="
-                                horizontalStepperStep2.stepControl
-                                    .invalid" matStepperNext>
-                                    {{appointmentButton}}
-                                </button>
+                                (click)="addRegisterPatientAppointment(horizontalStepperForm.value); ConfirmDialog.toggle();"
+                                [ngClass]="horizontalStepperStep2.stepControl.invalid ? 'btnnext' : 'btnnext1'"
+                                [disabled]="horizontalStepperStep2.stepControl.invalid" matStepperNext>
+                                <span *ngIf="!loading">{{ appointmentButton }}</span>
+                                <mat-progress-spinner *ngIf="loading" [diameter]="20" [mode]="'indeterminate'" style="color: white;"></mat-progress-spinner>
+                            </button>
+                            
+
+  
                             </div>
                             <div class="flex justify-end" *ngIf="!isPriceTag">
                                 <button class="px-8 mr-2" mat-flat-button [color]="'accent'" type="button"
@@ -1323,7 +1325,7 @@
                                     Back
                                 </button>
                                 <button class="px-8" mat-flat-button [color]="'primary'"
-                                    (click)="addRegisterPatientAppointment(horizontalStepperForm.value);appointmentDrawer.close();ConfirmDialog.toggle()"
+                                    (click)="addRegisterPatientAppointment(horizontalStepperForm.value);ConfirmDialog.toggle()"
                                     type="button" matStepperNext>
                                     {{appointmentButton}}
                                 </button>

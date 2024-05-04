@@ -93,6 +93,8 @@ export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
     when: any = [];
     duration: any = [];
     @ViewChild('TABLE') table: ElementRef;
+  @ViewChild('TABLE') table1: ElementRef;
+
 
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild("myNameElem") myNameElem: ElementRef;
@@ -725,15 +727,15 @@ testIDD
 
         if (this.roleID == '1') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
-                 'Actions', 'View','History'
+                'Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+                  'View','History'
             ];
         }
         else if (this.roleID == '2') {
             this.displayedColumns = [
-                'SL', 'Patient', 
+                'Vitals','View', 'SL', 'Patient', 
                 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
-                 'Vitals', 'View','History'
+                 'History'
             ];
             this.displayedColumnsUpcoming = [
                 'SL',
@@ -1113,7 +1115,7 @@ exportpdf(){
     //   }
     // });
 }
-ExportTOExcel() {
+ExportTOExcel1() {
     debugger
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
@@ -1123,6 +1125,8 @@ ExportTOExcel() {
     XLSX.writeFile(wb, 'SheetJS.xlsx');
 
 }
+
+
 gethistory1(){
     this.utilitiesService.getAllAppointments2(this.registrationID).subscribe(
         (data) => {
@@ -2046,153 +2050,196 @@ if(disc==5){
         debugger
 
     }
+    loading: boolean = false;
 
+    
     addRegisterPatientAppointment(val) {
         debugger
+        this.loading = true;
 
-
-        this.appt.AppointmentID = Number(this.appointID);
-        this.appt.registrationID = Number(val.step1.docName);  //
-        this.appt.PatientID = Number(this.patientID);  //
-        this.appt.ServiceID = Number(val.step2.serviceName);
-        //this.appt.SlotID = Number(val.step1.slot.slotID);
-        this.appt.Slot = (val.step1.slot.slot);
-        //this.appt.StatusID = Number(val.step1.status);
-        this.appt.StatusID = Number(7);
-        this.appt.ServiceDate = this.datepipe.transform(val.step1.appDate, 'd MMM yyyy');
-        this.appt.priceID = this.AppointmentID;
-        this.appt.AppointmentBill = ('Test');  //
-
-        //var disco= ((val.step2.price * discList[0].discount)/100);
-        // this.step2.controls['netPrice'].setValue(pricList[0].price - disco);
-        if (this.isPriceTag == true) //SkipBilling
-        {
-            this.appt.modeofPaymentID = val.step2.modeOfPayment;
-            //this.appt.PriceID = Number(val.step2.price);
-
-            if (this.roleID == '1' || this.roleID == '3') {
-                this.appt.DiscountID = Number(val.step2.discount);
-                if (this.appt.DiscountID == 0) {
-                    this.appt.DiscountID = 6;
-
-                }
-                if (this.appt.DiscountID == 6) {
-                    
-
-                    if(this.appt.PriceID==2){
-                        val.step2.amountPaid=700
+        setTimeout(() => {
+          
+            this.appt.AppointmentID = Number(this.appointID);
+            this.appt.registrationID = Number(val.step1.docName);  //
+            this.appt.PatientID = Number(this.patientID);  //
+            this.appt.ServiceID = Number(val.step2.serviceName);
+            //this.appt.SlotID = Number(val.step1.slot.slotID);
+            this.appt.Slot = (val.step1.slot.slot);
+            //this.appt.StatusID = Number(val.step1.status);
+            this.appt.StatusID = Number(7);
+            this.appt.ServiceDate = this.datepipe.transform(val.step1.appDate, 'd MMM yyyy');
+            this.appt.priceID = this.AppointmentID;
+            this.appt.AppointmentBill = ('Test');  //
+    
+            //var disco= ((val.step2.price * discList[0].discount)/100);
+            // this.step2.controls['netPrice'].setValue(pricList[0].price - disco);
+            if (this.isPriceTag == true) //SkipBilling
+            {
+                this.appt.modeofPaymentID = val.step2.modeOfPayment;
+                //this.appt.PriceID = Number(val.step2.price);
+    
+                if (this.roleID == '1' || this.roleID == '3') {
+                    this.appt.DiscountID = Number(val.step2.discount);
+                    if (this.appt.DiscountID == 0) {
+                        this.appt.DiscountID = 6;
+    
                     }
-                    if(this.appt.PriceID==7){
-                        val.step2.amountPaid=500
+                    if (this.appt.DiscountID == 6) {
+                        
+    
+                        if(this.appt.PriceID==2){
+                            val.step2.amountPaid=700
+                        }
+                        if(this.appt.PriceID==7){
+                            val.step2.amountPaid=500
+                        }
                     }
-                }
-
-                this.appt.Payment = (val.step2.amountPaid);  //
-            }
-            else {
-                this.appt.DiscountID = 6;
-                var pricList = this.prices.filter(a => a.priceID === this.horizontalStepperForm.value.step2.price);
-
-                // this.actualPrice = pricList[0].price;
-                this.appt.Payment = this.actualPrice;  //
-                this.appt.DuePayment = "0";
-            }
-            if (this.roleID == '1' || this.roleID == '3') {
-                var due = Number(this.horizontalStepperForm.value.step2.netPrice) - Number(Number(val.step2.amountPaid) + Number(this.horizontalStepperForm.value.step2.duePayment));
-                if (this.isDuePay == true) {
-                    //if (Number(due) == Number(this.horizontalStepperForm.value.step2.duePayment)) {
-                    if (due == 0) {
-                        this.appt.DuePayment = "0";
-                    }
-                    // }
-                    else {
-                        this.appt.DuePayment = this.horizontalStepperForm.value.step2.duePayment;
-                    }
-                    this.appt.Payment = Number(val.step2.amountPaid) + Number(this.horizontalStepperForm.value.step2.duePayment);
+    
+                    this.appt.Payment = (val.step2.amountPaid);  //
                 }
                 else {
-
-                    if (due > 0) {
-                        this.appt.DuePayment = due.toString();
+                    this.appt.DiscountID = 6;
+                    var pricList = this.prices.filter(a => a.priceID === this.horizontalStepperForm.value.step2.price);
+    
+                    // this.actualPrice = pricList[0].price;
+                    this.appt.Payment = this.actualPrice;  //
+                    this.appt.DuePayment = "0";
+                }
+                if (this.roleID == '1' || this.roleID == '3') {
+                    var due = Number(this.horizontalStepperForm.value.step2.netPrice) - Number(Number(val.step2.amountPaid) + Number(this.horizontalStepperForm.value.step2.duePayment));
+                    if (this.isDuePay == true) {
+                        //if (Number(due) == Number(this.horizontalStepperForm.value.step2.duePayment)) {
+                        if (due == 0) {
+                            this.appt.DuePayment = "0";
+                        }
+                        // }
+                        else {
+                            this.appt.DuePayment = this.horizontalStepperForm.value.step2.duePayment;
+                        }
+                        this.appt.Payment = Number(val.step2.amountPaid) + Number(this.horizontalStepperForm.value.step2.duePayment);
                     }
                     else {
-                        this.appt.DuePayment = "0";
+    
+                        if (due > 0) {
+                            this.appt.DuePayment = due.toString();
+                        }
+                        else {
+                            this.appt.DuePayment = "0";
+                        }
                     }
                 }
+    
             }
+            else {
+                this.appt.modeofPaymentID = 5;
+                this.appt.PriceID = 6;
+                this.appt.Payment = "0";  //
+                this.appt.DuePayment = "0";
+                this.appt.DiscountID = 6;
+            }
+    
+          
+    
+    
+    
+    // Continue with the rest of your code...
+    
+    
+            this.appt.Price=this.price;
+            // const filteredPrice = this.prices.filter(item => item.price === this.price);
+            // const filteredPrice = this.prices
+            // this.appt.PriceID=filteredPrice[0].priceID
+            const selprice=this.allPrices.filter(price=>price.price==this.price)
+            this.appt.PriceID=selprice[0].priceID
+    
+            this.appt.Action = this.action;
+            this.appt.PatientName = (val.step1.firstName);  //
+           // this.appt.PatientLastName = (val.step1.lastName);  //
+            this.appt.Mobile = (val.step1.mobNum); //
+            this.appt.GenderID = Number(val.step1.gender);
+            this.appt.Age = Number(val.step1.age);
+            this.appt.PatientStatus = 'Booked'
+            let arr = [];
+            arr.push(this.appt);
+            this.receiptToken = 0;
+            if(this.appt.modeofPaymentID==null){
+                this.appt.modeofPaymentID=6
+            }
+    
+            this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
 
-        }
-        else {
-            this.appt.modeofPaymentID = 5;
-            this.appt.PriceID = 6;
-            this.appt.Payment = "0";  //
-            this.appt.DuePayment = "0";
-            this.appt.DiscountID = 6;
-        }
-
-      
-
-
-
-// Continue with the rest of your code...
-
-
-        this.appt.Price=this.price;
-        // const filteredPrice = this.prices.filter(item => item.price === this.price);
-        // const filteredPrice = this.prices
-        // this.appt.PriceID=filteredPrice[0].priceID
-        const selprice=this.allPrices.filter(price=>price.price==this.price)
-        this.appt.PriceID=selprice[0].priceID
-
-        this.appt.Action = this.action;
-        this.appt.PatientName = (val.step1.firstName);  //
-       // this.appt.PatientLastName = (val.step1.lastName);  //
-        this.appt.Mobile = (val.step1.mobNum); //
-        this.appt.GenderID = Number(val.step1.gender);
-        this.appt.Age = Number(val.step1.age);
-        this.appt.PatientStatus = 'Booked'
-        let arr = [];
-        arr.push(this.appt);
-        this.receiptToken = 0;
-        if(this.appt.modeofPaymentID==null){
-            this.appt.modeofPaymentID=6
-        }
-
-        this.utilitiesService.addRegisterPatientAppointment(this.appt).subscribe((data) => {
-
-            if (data) {
-                
                 if (data) {
+
+                   if (this.action === 'Update Existing Appointment') {
+                        this._snackBar.open('Appointment Updated Successfully...!!', 'OK', {
+                            horizontalPosition: this.horizontalPosition,
+                            verticalPosition: this.verticalPosition,
+                            "duration": 2000
+                        });
+                        
+                        this.actionFormName('New Appointment');
+
+
+                    } else if (data) {
+                        this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
+                            horizontalPosition: this.horizontalPosition,
+                            verticalPosition: this.verticalPosition,
+                            "duration": 2000
+                        });
+
+                        this.actionFormName('New Appointment');
+                    }
+                    
                     this.receiptToken = data;
-                    this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
-                        horizontalPosition: this.horizontalPosition,
-                        verticalPosition: this.verticalPosition,
-                        "duration": 2000
-                    });
-    // window.location.reload();
-
-
-                    this.ngOnInit(
-                       
-                    );
+                    
+                    this.ngOnInit(); 
                     this.appt = {};
-                    // const dialogRef = this.dialog.open({
-                    //     width: '600px',
-                    //   });
                 } else {
-                    this.showError(
-                        'Your query is not sent, Please try after some time'
-                    );
+                    this.showError('Your query is not sent, Please try after some time');
                     console.log('DB Exception');
                 }
-            }
-        },
-            (error) => {
-                this.errorMessage = error;
+    
+        //         if (data) {
+                    
+        //             if (data) {
+                        
+        //                 this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
+        //                     horizontalPosition: this.horizontalPosition,
+        //                     verticalPosition: this.verticalPosition,
+        //                     "duration": 2000
+        //                 });
+        //                 this.receiptToken = data;
+        //                 this.actionFormName('New Appointment')
+        // // window.location.reload();
+    
+    
+        //                 this.ngOnInit(
+                           
+        //                 );
+        //                 this.appt = {};
+        //                 // const dialogRef = this.dialog.open({
+        //                 //     width: '600px',
+        //                 //   });
+        //             } else {
+        //                 this.showError(
+        //                     'Your query is not sent, Please try after some time'
+        //                 );
+        //                 console.log('DB Exception');
+        //             }
+        //         }
             },
-            () => { }
-        );
+                (error) => {
+                    this.errorMessage = error;
+                },
+                () => { }
+            );
+            this.loading = false; // Hide loading spinner after 5 seconds
+        }, 1000);
+
+     
     }
+    
+   
 
     //Receipt Print
     openCompanyDetailsDialog(): void {
