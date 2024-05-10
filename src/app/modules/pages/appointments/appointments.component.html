@@ -58,8 +58,28 @@
                         [matTooltip]="tooltip || 'Refresh'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
                             height: 35px;margin-top: 14px;margin-left: 10px;">
                         <mat-icon svgIcon="mat_outline:refresh"></mat-icon>
-                    </button>
+                    </button>&nbsp;&nbsp;&nbsp;
+                   
+                  <!-- <div class="mt-5" *ngIf="Todays" >
+                   <span class=" text-lg alignstatus"><b>Pending:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.pending }}</b></span> &nbsp;&nbsp;&nbsp;&nbsp;
+                   <span class=" text-lg "><b>Completed:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.completed }}</b></span> &nbsp;&nbsp;&nbsp; 
+                  </div> -->
+
+                  <div class="mt-5" *ngIf="Todays && roleID != 3 && roleID != 4 && roleID != 5">
+                    <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.pending }}</b></span> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="text-lg "><b>Completed:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.completed }}</b></span> &nbsp;&nbsp;&nbsp; 
                 </div>
+                
+
+                    <!-- <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-4 flex flex-col justify-end alignbtn"
+                    mat-flat-button [color]="'primary'"
+                    (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                    <span class="ml-2">New Appointment</span>
+                </button> -->
+
+                </div>
+                
 
                 <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-4 flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
@@ -155,13 +175,13 @@
                         <ng-container style="margin: auto;" matColumnDef="Doctor">
                             <th mat-header-cell *matHeaderCellDef >
                                 <div class="row">
-                                    <div class="col-lg-12 text-lg text-white">Doctor</div>
+                                    <div class="col-lg-12 text-lg text-white" *ngIf="roleID !='2' ">Doctor</div>
 
                                 </div>
                             </th>
 
                             <td mat-cell *matCellDef="let element" >
-                                <span>{{ element.doctor }}</span>
+                                <span *ngIf="roleID !='2' ">{{ element.doctor }}</span>
                             </td>
                         </ng-container>
                         <ng-container style="margin: auto;" matColumnDef="Time">
@@ -839,7 +859,7 @@
                 <div class="flex flex-cols pt-4 pr-16">
                     <div class="mr-1">
                         <button *ngIf="Histories" mat-mini-fab color="primary"
-                            style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel1()"
+                            style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()"
                             matTooltip="Export To Excel">
                             <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                         </button>
@@ -858,8 +878,8 @@
 
 
 
-            <div class="table1 example-container mat-elevation-z8">
-                <table *ngIf="Histories" mat-table [dataSource]="patientsappointments" matSort>
+            <div class="example-container mat-elevation-z8" >
+                <table class="table1" id="table1" *ngIf="Histories"  mat-table [dataSource]="patientsappointments" matSort>
                     <!-- Position Column -->
 
                     <ng-container matColumnDef="SL">

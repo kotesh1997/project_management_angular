@@ -224,7 +224,14 @@ export class DiscountComponent implements OnInit {
                    this.drawer.close();
                    this.getDiscounts();
                }
-       })
+            },err=>{
+                this.errMsg = err.error.message;
+                this.showError = true;
+                // Hide error message after 2 seconds
+                setTimeout(() => {
+                  this.showError = false;
+                }, 5000);
+              });
        }
    
        showError:boolean=false
@@ -242,10 +249,14 @@ export class DiscountComponent implements OnInit {
                this.getDiscounts();
            }
        },err=>{
-           this.errMsg=err.error.message
-           this.showError=true
-       })
-       }
+        this.errMsg = err.error.message;
+        this.showError = true;
+        // Hide error message after 2 seconds
+        setTimeout(() => {
+          this.showError = false;
+        }, 5000);
+      });
+    }
 
   
       deletediscount(id){

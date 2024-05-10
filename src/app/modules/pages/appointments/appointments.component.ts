@@ -18,6 +18,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import * as XLSX from 'xlsx';
 import { jsPDF } from "jspdf";
 
+
 import autoTable from 'jspdf-autotable'
 
 import { GcPdfViewer } from '@grapecity/gcpdfviewer';
@@ -1115,16 +1116,32 @@ exportpdf(){
     //   }
     // });
 }
-ExportTOExcel1() {
-    debugger
+// ExportTOExcel() {
+//     debugger
 
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+//     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+//     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+//     XLSX.writeFile(wb, 'SheetJS.xlsx');
+
+// }
+
+ExportTOExcel() {
+    debugger
+    // Get the table element by its class name
+    const table = document.querySelector('.example-container table');
+  
+    // Convert the table to a worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table);
+  
+    // Create a new workbook and append the worksheet
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
+  
+    // Save the workbook as an Excel file
     XLSX.writeFile(wb, 'SheetJS.xlsx');
-
-}
+  }
 
 
 gethistory1(){

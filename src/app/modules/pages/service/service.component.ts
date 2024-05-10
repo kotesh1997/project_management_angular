@@ -279,7 +279,14 @@ service = new Service()
                 this.drawer.close();
                 this.getservices();
             }
-    })
+    },err=>{
+        this.errMsg = err.error.message;
+        this.showError = true;
+        // Hide error message after 2 seconds
+        setTimeout(() => {
+          this.showError = false;
+        }, 5000);
+      });
     }
 
     showError:boolean=false
@@ -296,9 +303,13 @@ service = new Service()
             this.getservices();
         }
     },err=>{
-        this.errMsg=err.error.message
-        this.showError=true
-    })
+        this.errMsg = err.error.message;
+        this.showError = true;
+        // Hide error message after 2 seconds
+        setTimeout(() => {
+          this.showError = false;
+        }, 5000);
+      });
     }
 
     clearSearch() {

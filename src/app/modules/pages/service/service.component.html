@@ -194,7 +194,7 @@
                 <div *ngIf="submitbtn" class="flex justify-end">
                     <ng-container *ngIf="showError">
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
-                        <span class="text-red-600">Failed to add service</span> 
+                        <span class="text-red-600">Failed to add service Already Servicename Exist</span> 
                         </ng-container>
                     <button class="fuse-mat-button-rounded  flex flex-col justify-end"
                     [ngClass]="!service.price || !service.serviceName || !service.serviceOwner ? 'btnsub' : 'btnsub1'"
@@ -206,7 +206,7 @@
                 <div *ngIf="Updatebtn" class="flex justify-end">
                     <ng-container *ngIf="showError">
                         <mat-icon class="text-red-600" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
-                        <span class="text-red-600">Failed to add service</span> 
+                        <span class="text-red-600">Failed to Update service Already servicename exist</span> 
                         </ng-container>
                     <button class="px-8" 
                      [ngClass]="!service.price || !service.gst || !service.serviceName ? 'btnsub' : 'btnsub1'" 
