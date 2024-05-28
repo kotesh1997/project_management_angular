@@ -71,7 +71,7 @@
 
         </div>
 
-        <div  class="example-container mat-elevation-z8" #TABLE>
+        <div  class="example-container mat-elevation-z8 h-grid" #TABLE>
             <table *ngIf="Repdata"class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
@@ -169,7 +169,7 @@
                 
               
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
+                <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
             </table>

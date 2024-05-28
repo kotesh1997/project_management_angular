@@ -172,7 +172,7 @@
 
        
 
-        <div  class="example-container mat-elevation-z8" >
+        <div  class="example-container mat-elevation-z8 h-grid" >
             <table class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
@@ -270,12 +270,11 @@
                 
               
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true" style="background-color: #A9A9A9 ;"></tr>
+                <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns3; sticky: true" style="background-color: #A9A9A9 ;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns3"></tr>
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
             </table>
-            <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons></mat-paginator>
-            
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" #paginator1></mat-paginator>
         </div>
 
       
@@ -329,12 +328,12 @@
 
                 <div class="flex mx-2 align">
                     <div class="mr-1">
-                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;"  matTooltip="Export To Excel">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
                         <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                       </button>
                     </div>
                     <div class="">
-                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;"  matTooltip="Export To PDF">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf1()" matTooltip="Export To PDF">
                         <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                       </button>
                     </div>
@@ -342,7 +341,7 @@
 
             </div>
     
-            <div  class="example-container mat-elevation-z8" #TABLE>
+            <div  class="example-container mat-elevation-z8 h-grid" #TABLE>
                 <table class="table1" id="table1" mat-table [dataSource]="deptReports" matSort>
                     <!-- Position Column -->
                     <ng-container matColumnDef="department">
@@ -405,11 +404,11 @@
                     
                   
     
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
+                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                     <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
                 </table>
-                <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" #paginator2></mat-paginator>
                 
             </div>
     

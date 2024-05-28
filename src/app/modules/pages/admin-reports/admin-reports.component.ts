@@ -85,7 +85,9 @@ export class AdminReportsComponent implements OnInit {
   displayedColumns2: string[] = ['date','newreg','billedpatients', 'consultations', 'lab', 'others', 'totalearnings'];
   displayedColumns: string[] = ['department', 'service', 'count', 'totalbill', 'totalcollected'];
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginator1') paginator1: MatPaginator;
+@ViewChild('paginator2') paginator2: MatPaginator;
   @ViewChild('TABLE') table: ElementRef;
   @ViewChild('TABLE') table1: ElementRef;
   
@@ -172,39 +174,91 @@ export class AdminReportsComponent implements OnInit {
     // });
   }
 
+ 
+  
 
+  
+  exportpdf1() {
+    const prepare = [];
+    this.deptReports.filteredData.forEach(e => {
+        const tempObj = [];
+        tempObj.push(e.department);
+        tempObj.push(e.service);
+        tempObj.push(e.count);
+        tempObj.push(e.totalBilled);
+        tempObj.push(e.totalCollected);
+        prepare.push(tempObj);
+    });
 
+    const doc = new jsPDF();
+    
+    // Add logo
+    const logo = new Image();
+    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+    logo.onload = () => {
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        
+        // Add title
+        doc.setFontSize(12);
 
-exportpdf1(){
-  debugger
-    var prepare=[];
-  this.deptReports.filteredData.forEach(e=>{
-    var tempObj =[];
-    tempObj.push(e.department);
-    tempObj.push(e.service);
-    tempObj.push(e.count);
-    tempObj.push( e.totalBilled);
-    tempObj.push( e.totalCollected);
-    prepare.push(tempObj);
+        // Format and add selected dates with left padding
+        const fromDate = this.formatDate(this.dept.fromDate);
+        const toDate = this.formatDate(this.dept.toDate);
+        doc.text(`From Date: ${fromDate.padStart(10)}  To Date: ${toDate.padStart(10)}`, 105, 40); // Adjust the x-coordinate to move the dates slightly to the right and add padding
 
-  });
-  const doc = new jsPDF();
-  autoTable(doc,{
-      head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
-      body: prepare
-  });
-  doc.save('deptReports' + '.pdf');
-
-  // const doc = new jsPDF("p", "pt", "a4");
-  // const source = document.getElementById("table1");
-  // // doc.text("Test", 40, 20);
-  // doc.setFontSize(20)
-  // doc.html(source, {
-  //   callback: function(pdf) {
-  //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-  //   }
-  // });
+        // Add table
+        autoTable(doc, {
+            head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
+            body: prepare,
+            startY: 50 // adjust the start position as needed
+        });
+        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+        doc.setFontSize(10);
+        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+        // Save PDF
+        doc.save('deptReports.pdf');
+    };
 }
+
+  
+  formatDate(date: Date): string {
+      const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+  }
+  
+  
+
+
+// exportpdf1(){
+//   debugger
+//     var prepare=[];
+//   this.deptReports.filteredData.forEach(e=>{
+//     var tempObj =[];
+//     tempObj.push(e.department);
+//     tempObj.push(e.service);
+//     tempObj.push(e.count);
+//     tempObj.push( e.totalBilled);
+//     tempObj.push( e.totalCollected);
+//     prepare.push(tempObj);
+
+//   });
+//   const doc = new jsPDF();
+//   autoTable(doc,{
+//       head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
+//       body: prepare
+//   });
+//   doc.save('deptReports' + '.pdf');
+
+//   // const doc = new jsPDF("p", "pt", "a4");
+//   // const source = document.getElementById("table1");
+//   // // doc.text("Test", 40, 20);
+//   // doc.setFontSize(20)
+//   // doc.html(source, {
+//   //   callback: function(pdf) {
+//   //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+//   //   }
+//   // });
+// }
 
 ExportTOExcel() {
   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
@@ -257,13 +311,13 @@ ExportTOExcel1() {
       data: {
         labels: [this.date],
         datasets: [
-          {
-            label: 'Billed Patients',
-            data: [0], // Assuming the data for 'Total Amount' is 4000
-            backgroundColor: 'black',
-            borderColor: 'black',
-            borderWidth: 1
-          },
+          // {
+          //   label: 'Billed Patients',
+          //   data: [0], // Assuming the data for 'Total Amount' is 4000
+          //   backgroundColor: 'black',
+          //   borderColor: 'black',
+          //   borderWidth: 1
+          // },
           {
             label: 'Consultation',
             data: [this.consultation], // Assuming the data for 'Consultation' is 2500
@@ -379,7 +433,8 @@ this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
     if (data) {
       this.deptReports = new MatTableDataSource(data.result.departmentServiceDetails);
       this.deptReports.sort = this.sort;
-      this.deptReports.paginator = this.paginator;
+      // this.deptReports.paginator = this.paginator;
+      this.deptReports.paginator = this.paginator2;
     }
   })
 }
@@ -461,7 +516,7 @@ getSummaryReports() {
         this.date = this.datePipe.transform(resultdate, 'dd/MM/yyyy');
         this.summaryReports = new MatTableDataSource<any>([data.result]);
         this.summaryReports.sort = this.sort;
-       this.summaryReports.paginator = this.paginator;
+      //  this.summaryReports.paginator = this.paginator;
         this.ngAfterViewInit();
       }
     }
@@ -534,7 +589,8 @@ GetPatientData(from, to) {
 
               this.patientsappointments = new MatTableDataSource(this.patientsappointments);                   
               this.patientsappointments.sort = this.sort;
-              this.patientsappointments.paginator = this.paginator;
+              // this.patientsappointments.paginator = this.paginator;
+              this.patientsappointments.paginator = this.paginator1;
               this.totalPrice();
           }
       },
@@ -563,42 +619,104 @@ applyFilter3() {
   this.patientsappointments.filter = this.searchKey3.trim().toLowerCase();
 }
 
-exportpdf3(){
-  debugger
-    var prepare=[];
-  this.patientsappointments.filteredData.forEach(e=>{
-    var tempObj =[];
-    tempObj.push(e.appointmentID);
-    tempObj.push(e.patientARCID);
-    tempObj.push(e.patient);
-    tempObj.push(e.gender);
-    tempObj.push( e.age);
-    tempObj.push( e.mobile);
-    tempObj.push( e.serviceName);
-    tempObj.push(e.serviceDate);
-    tempObj.push(e.discount);
-    tempObj.push(e.payment);
-    tempObj.push(e.modeofPayment);
-    prepare.push(tempObj);
-  });
+// exportpdf3(){
+//   debugger
+//     var prepare=[];
+//   this.patientsappointments.filteredData.forEach(e=>{
+//     var tempObj =[];
+//     tempObj.push(e.appointmentID);
+//     tempObj.push(e.patientARCID);
+//     tempObj.push(e.patient);
+//     tempObj.push(e.gender);
+//     tempObj.push( e.age);
+//     tempObj.push( e.mobile);
+//     tempObj.push( e.serviceName);
+//     tempObj.push(e.serviceDate);
+//     tempObj.push(e.discount);
+//     tempObj.push(e.payment);
+//     tempObj.push(e.modeofPayment);
+//     prepare.push(tempObj);
+//   });
 
-  const doc = new jsPDF();
-  autoTable(doc,{
-      head: [[' SL','Patient ARCID','Name','Gender','Age','Mobile',' Service Name','Last Visit','Discount','Payment','Modeof Payment']],
-      body: prepare,
-  });
-  doc.save('Reports' + '.pdf');
+//   const doc = new jsPDF();
+//   autoTable(doc,{
+//       head: [[' SL','Patient ARCID','Name','Gender','Age','Mobile',' Service Name','Last Visit','Discount','Payment','Modeof Payment']],
+//       body: prepare,
+//   });
+//   doc.save('Reports' + '.pdf');
 
-  // const doc = new jsPDF("p", "pt", "a4");
-  // const source = document.getElementById("table1");
-  // // doc.text("Test", 40, 20);
-  // doc.setFontSize(20)
-  // doc.html(source, {
-  //   callback: function(pdf) {
-  //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-  //   }
-  // });
+//   // const doc = new jsPDF("p", "pt", "a4");
+//   // const source = document.getElementById("table1");
+//   // // doc.text("Test", 40, 20);
+//   // doc.setFontSize(20)
+//   // doc.html(source, {
+//   //   callback: function(pdf) {
+//   //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+//   //   }
+//   // });
+// }
+
+
+exportpdf3() {
+    const prepare = [];
+    this.patientsappointments.filteredData.forEach(e => {
+        const tempObj = [];
+        tempObj.push(e.appointmentID);
+        tempObj.push(e.patientARCID);
+        tempObj.push(e.patient);
+        tempObj.push(e.gender);
+        tempObj.push(e.age);
+        tempObj.push(e.mobile);
+        tempObj.push(e.serviceName);
+        tempObj.push(e.serviceDate);
+        tempObj.push(e.discount);
+        tempObj.push(e.payment);
+        tempObj.push(e.modeofPayment);
+        prepare.push(tempObj);
+    });
+
+    const doc = new jsPDF();
+    
+    // Add logo
+    const logo = new Image();
+    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+    logo.onload = () => {
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        
+        // Format dates to "25 May 2024"
+        const formatDate = (date) => {
+            const d = new Date(date);
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+        };
+
+        const formattedFromDate = formatDate(this.appFromDate);
+        const formattedToDate = formatDate(this.appToDate);
+        
+        // Add date range in a single line with padding left 10px and space between dates
+        doc.setFontSize(12);
+        const textWidth = doc.getTextWidth(`From Date: ${formattedFromDate}  to  ${formattedToDate}`);
+        const startX = (doc.internal.pageSize.width - textWidth) / 2; // Align text in the middle
+        doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
+
+        // Add table with reduced distance between dates and table data
+        autoTable(doc, {
+            head: [[' SL', 'Patient ARCID', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Discount', 'Payment', 'Mode of Payment']],
+            body: prepare,
+            startY: 50, // adjust the start position to reduce distance
+            margin: { left: 10, right: 10 } // setting left and right margins to 10
+        });
+        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+        doc.setFontSize(10);
+        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+        // Save PDF
+        doc.save('Reports.pdf');
+    };
 }
+
+
+
 ExportTOExcel3() {
   // Get the table element by its class name
   const table = document.querySelector('.example-container table');

@@ -116,36 +116,78 @@ export class MedicineComponent implements OnInit {
         }
        
         
-   exportpdf(){
-            debugger
-              var prepare=[];
-            this.medicineList.filteredData.forEach(e=>{
-              var tempObj =[];
-              tempObj.push(e.medicineId);
-              tempObj.push(e.medicineName);
-              tempObj.push( e.composition);
-              tempObj.push( e.mobile);
-              tempObj.push(e.visitCount);
-              prepare.push(tempObj);
+//    exportpdf(){
+//             debugger
+//               var prepare=[];
+//             this.medicineList.filteredData.forEach(e=>{
+//               var tempObj =[];
+//               tempObj.push(e.medicineId);
+//               tempObj.push(e.medicineName);
+//               tempObj.push( e.composition);
+//               tempObj.push( e.mobile);
+//               tempObj.push(e.visitCount);
+//               prepare.push(tempObj);
         
-            });
-            const doc = new jsPDF();
-            autoTable(doc,{
-                head: [['MedicineId','MedicineName ',' Composition']],
-                body: prepare
-            });
-            doc.save('Medicine' + '.pdf');
+//             });
+//             const doc = new jsPDF();
+//             autoTable(doc,{
+//                 head: [['MedicineId','MedicineName ',' Composition']],
+//                 body: prepare
+//             });
+//             doc.save('Medicine' + '.pdf');
           
-            // const doc = new jsPDF("p", "pt", "a4");
-            // const source = document.getElementById("table1");
-            // // doc.text("Test", 40, 20);
-            // doc.setFontSize(20)
-            // doc.html(source, {
-            //   callback: function(pdf) {
-            //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-            //   }
-            // });
-        }
+//             // const doc = new jsPDF("p", "pt", "a4");
+//             // const source = document.getElementById("table1");
+//             // // doc.text("Test", 40, 20);
+//             // doc.setFontSize(20)
+//             // doc.html(source, {
+//             //   callback: function(pdf) {
+//             //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+//             //   }
+//             // });
+//         }
+
+exportpdf() {
+    const prepare = [];
+    this.medicineList.filteredData.forEach(e => {
+        const tempObj = [];
+        tempObj.push(e.medicineId);
+        tempObj.push(e.medicineName);
+        tempObj.push(e.composition);
+        prepare.push(tempObj);
+    });
+
+    const doc = new jsPDF();
+
+    // Add logo
+    const logo = new Image();
+    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+    logo.onload = () => {
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        
+        // Add title
+        doc.setFontSize(12);
+
+        // Add current date
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+        doc.text(`Date: ${formattedDate}`, 160, 40);
+
+        // Add table
+        autoTable(doc, {
+            head: [['MedicineId', 'MedicineName', 'Composition']],
+            body: prepare,
+            startY: 50 // adjust the start position as needed
+        });
+        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+        doc.setFontSize(10);
+        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+        // Save PDF
+        doc.save('Medicine.pdf');
+    };
+}
+
   
 
     ngOnInit(): void {

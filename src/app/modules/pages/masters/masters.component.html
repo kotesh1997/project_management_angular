@@ -31,7 +31,7 @@
 
              
             </div>
-            <div   class="example-container mat-elevation-z8">
+            <div   class="example-container mat-elevation-z8 h-grid">
                 <table class="table1"   *ngIf="doctortab"class="table1" mat-table [dataSource]="regDetails1">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
@@ -130,7 +130,7 @@
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 </table>
                 <div [ngClass]="{'hidediv': doctortab, 'showdic': !doctortab}">
@@ -192,7 +192,7 @@
             </div>
                
             </div>
-                <div  class="example-container mat-elevation-z8">
+                <div  class="example-container mat-elevation-z8 h-grid">
                     <table class="table1"  *ngIf="assdoctortab" mat-table [dataSource]="regDetailsJrList">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
@@ -278,7 +278,7 @@
                             </td>
                         </ng-container> -->
     
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
+                        <tr mat-header-row class="height" *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                     </table> 
                     <div [ngClass]="{'hidediv': assdoctortab, 'showdic': !assdoctortab}">
@@ -328,7 +328,7 @@
             </div>
               
             </div>
-            <div class="example-container mat-elevation-z8">
+            <div class="example-container mat-elevation-z8 h-grid">
                 <table class="table1"   *ngIf="frontdesks"  class="table1" mat-table [dataSource]="regDetailsFrontList" matSort>
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
@@ -414,7 +414,7 @@
                         </td>
                     </ng-container> -->
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
+                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                 </table> 
                
@@ -465,7 +465,7 @@
             </div>
               
             </div>
-            <div  class="example-container mat-elevation-z8">
+            <div  class="example-container mat-elevation-z8 h-grid">
                 <table class="table1" *ngIf="labassts" mat-table [dataSource]=" regDetailsLabList">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
@@ -551,7 +551,7 @@
                         </td>
                     </ng-container> -->
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
+                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumnsJr; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsJr"></tr>
                 </table>  
                 <div [ngClass]="{'hidediv': labassts, 'showdic': !labassts}">

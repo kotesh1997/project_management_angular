@@ -15,6 +15,7 @@ import { jsPDF } from "jspdf";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
+
 import autoTable from 'jspdf-autotable'
 
 
@@ -83,44 +84,111 @@ export class ReportComponent implements OnInit {
     appToDate: Date;
     toDate
     fromDate
-exportpdf(){
-    debugger
-      var prepare=[];
-    this.patientsappointments.filteredData.forEach(e=>{
-      var tempObj =[];
-      tempObj.push(e.patientARCID);
-      tempObj.push(e.appointmentID);
-      tempObj.push(e.patient);
-      tempObj.push(e.gender);
 
 
-      tempObj.push( e.age);
-      tempObj.push( e.mobile);
-      tempObj.push( e.serviceName);
-      tempObj.push(e.serviceDate);
-      tempObj.push(e.payment);
+// exportpdf(){
+//     debugger
+//       var prepare=[];
+//     this.patientsappointments.filteredData.forEach(e=>{
+//       var tempObj =[];
+//       tempObj.push(e.patientARCID);
+//       tempObj.push(e.appointmentID);
+//       tempObj.push(e.patient);
+//       tempObj.push(e.gender);
+
+
+//       tempObj.push( e.age);
+//       tempObj.push( e.mobile);
+//       tempObj.push( e.serviceName);
+//       tempObj.push(e.serviceDate);
+//       tempObj.push(e.payment);
       
-      tempObj.push(e.modeofPayment);
-      prepare.push(tempObj);
-    });
+//       tempObj.push(e.modeofPayment);
+//       prepare.push(tempObj);
+//     });
   
+//     const doc = new jsPDF();
+//     autoTable(doc,{
+//         head: [['Patient ARCID',' SL','Name','Gender','Age','Mobile',' Service Name','Last Visit','Payment','Modeof Payment']],
+//         body: prepare,
+//     });
+//     doc.save('Reports' + '.pdf');
+  
+//     // const doc = new jsPDF("p", "pt", "a4");
+//     // const source = document.getElementById("table1");
+//     // // doc.text("Test", 40, 20);
+//     // doc.setFontSize(20)
+//     // doc.html(source, {
+//     //   callback: function(pdf) {
+//     //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+//     //   }
+//     // });
+// }
+
+
+// Function to export PDF
+
+
+
+
+exportpdf() {
+    const prepare = [];
+    this.patientsappointments.filteredData.forEach(e => {
+        const tempObj = [];
+        tempObj.push(e.patientARCID);
+        tempObj.push(e.appointmentID);
+        tempObj.push(e.patient);
+        tempObj.push(e.gender);
+        tempObj.push(e.age);
+        tempObj.push(e.mobile);
+        tempObj.push(e.serviceName);
+        tempObj.push(e.serviceDate);
+        tempObj.push(e.payment);
+        tempObj.push(e.modeofPayment);
+        prepare.push(tempObj);
+    });
+
     const doc = new jsPDF();
-    autoTable(doc,{
-        head: [['Patient ARCID',' SL','Name','Gender','Age','Mobile',' Service Name','Last Visit','Payment','Modeof Payment']],
-        body: prepare,
-    });
-    doc.save('Reports' + '.pdf');
-  
-    // const doc = new jsPDF("p", "pt", "a4");
-    // const source = document.getElementById("table1");
-    // // doc.text("Test", 40, 20);
-    // doc.setFontSize(20)
-    // doc.html(source, {
-    //   callback: function(pdf) {
-    //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-    //   }
-    // });
+
+    // Add logo
+    const logo = new Image();
+    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+    logo.onload = () => {
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+
+        // Format dates to "25 May 2024"
+        const formatDate = (date) => {
+            const d = new Date(date);
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+        };
+
+        const formattedFromDate = formatDate(this.appFromDate);
+        const formattedToDate = formatDate(this.appToDate);
+
+        // Add date range in a single line with padding left 10px and space between dates
+        doc.setFontSize(12);
+        doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
+
+        // Add table with reduced distance between dates and table data
+        autoTable(doc, {
+            head: [['Patient ARCID', 'SL', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Payment', 'Mode of Payment']],
+            body: prepare,
+            startY: 50, // adjust the start position to reduce distance
+            margin: { left: 10, right: 10 } // setting left and right margins to 10
+        });
+        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+        doc.setFontSize(10);
+        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+        // Save PDF
+        doc.save('Reports.pdf');
+    };
 }
+
+
+
+
     ExportTOExcel() {
 
         const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
@@ -130,6 +198,7 @@ exportpdf(){
         XLSX.writeFile(wb, 'SheetJS.xlsx');
 
     }
+
     createFilter() {
         let filterFunction = function (data: any, filter: string): boolean {
             let searchTerms = JSON.parse(filter);

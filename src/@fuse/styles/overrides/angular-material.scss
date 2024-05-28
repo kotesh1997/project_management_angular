@@ -1050,7 +1050,8 @@
         .mat-form-field-flex {
 
             .mat-form-field-outline {
-                @apply text-gray-300 dark:text-gray-500 #{'!important'};
+                // @apply text-gray-300 dark:text-gray-500 #{'!important'};
+                @apply text-gray-900 dark:text-gray-900 #{'!important'};
             }
         }
     }

@@ -124,7 +124,7 @@
    
     </div>
 
-        <div *ngIf="peteintapp" class="table1 example-container mat-elevation-z8">
+        <div *ngIf="peteintapp" class="table1 example-container mat-elevation-z8 h-grid">
             <table mat-table [dataSource]="patientsappointments" matSort  matSortActive="appointmentID" matSortDirection="asc" (matSortChange)="sortData($event)">
                 <!-- Position Column -->
 
@@ -252,7 +252,7 @@
                     </td>                       
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns;" style="background-color: #A9A9A9 ;"></tr>
+                <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" showFirstLastButtons></mat-paginator>
