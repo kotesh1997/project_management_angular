@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { ViewEncapsulation, Component, ViewChild, OnInit, TemplateRef, OnDestroy, OnChanges, SimpleChanges, Input, Renderer2 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +17,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import * as XLSX from 'xlsx';
 import { jsPDF } from "jspdf";
+import { MatTabGroup } from '@angular/material/tabs';
 
 
 import autoTable from 'jspdf-autotable'
@@ -58,6 +59,8 @@ declare const PDFObject: any;
     providers: [DatePipe],
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
+
+
     selectedPanel: string = 'Vitals';
     selectpayment: number = 1;
     @ViewChild('drawer') drawer: MatDrawer;
@@ -267,7 +270,8 @@ filename:any=[];
         private dialog: MatDialog,
         private dateAdapter: DateAdapter<Date>,
         private platformlocation: PlatformLocation,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private renderer: Renderer2
       
     ) {
 
@@ -413,6 +417,7 @@ handleFileUpload(event: Event) {
         // 'Doctor',
         // 'Time',
         'VisitCount',
+        'appointmentDate',
         'View'
     ];
     displayedColumnsHistory1: string[] = [
@@ -488,6 +493,7 @@ handleFileUpload(event: Event) {
             () => { }
         );
     }
+    
     selectmed(){
         debugger
         this.medicinePrescepList=this.searchmedicine;
@@ -752,7 +758,7 @@ testIDD
         }
         else if (this.roleID == '3') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
+                'View',  'SL', 'Patient', 'Service', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount',
                  'History'
             ];
         }
@@ -772,6 +778,8 @@ testIDD
         this.amoutpaids=700;
     }
 
+ 
+    
     applysearch(){
         debugger
         this.mobNum=this.searchKey3;
@@ -902,7 +910,7 @@ testIDD
         this.when = [];
         this.when.push({ ID: 2, label: 'After Food' })
         this.when.push({ ID: 2, label: 'Before Food' })
-        this.when.push({ ID: 2, label: 'Night' })
+        // this.when.push({ ID: 2, label: 'Night' })
 
         this.duration = [];
         this.duration.push({ ID: 2, label: '4 Days' })
@@ -1086,46 +1094,82 @@ gethistory(){
         }
     );
 }
-exportpdf(){
-    debugger
-      var prepare=[];
-    this.patientsappointments.filteredData.forEach(e=>{
-      var tempObj =[];
-      tempObj.push(e.appointmentID);
-      tempObj.push(e.patient);
-      tempObj.push( e.gender);
-      tempObj.push( e.mobile);
-      tempObj.push(e.visitCount);
-      prepare.push(tempObj);
-
-    });
-    const doc = new jsPDF();
-    autoTable(doc,{
-        head: [['AppointmentID','Patient Name ',' Gender','Phone Number','Visit Count']],
-        body: prepare
-    });
-    doc.save('Reports' + '.pdf');
-  
-    // const doc = new jsPDF("p", "pt", "a4");
-    // const source = document.getElementById("table1");
-    // // doc.text("Test", 40, 20);
-    // doc.setFontSize(20)
-    // doc.html(source, {
-    //   callback: function(pdf) {
-    //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-    //   }
-    // });
-}
-// ExportTOExcel() {
+// exportpdf(){
 //     debugger
+//       var prepare=[];
+//     this.patientsappointments.filteredData.forEach(e=>{
+//       var tempObj =[];
+//       tempObj.push(e.appointmentID);
+//       tempObj.push(e.patient);
+//       tempObj.push( e.gender);
+//       tempObj.push( e.mobile);
+//       tempObj.push(e.visitCount);
+//       prepare.push(tempObj);
 
-//     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
-//     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-//     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-//     XLSX.writeFile(wb, 'SheetJS.xlsx');
-
+//     });
+//     const doc = new jsPDF();
+//     autoTable(doc,{
+//         head: [['AppointmentID','Patient Name ',' Gender','Phone Number','Visit Count']],
+//         body: prepare
+//     });
+//     doc.save('Reports' + '.pdf');
+  
+//     // const doc = new jsPDF("p", "pt", "a4");
+//     // const source = document.getElementById("table1");
+//     // // doc.text("Test", 40, 20);
+//     // doc.setFontSize(20)
+//     // doc.html(source, {
+//     //   callback: function(pdf) {
+//     //     doc.output("dataurlnewwindow"); // preview pdf file when exported
+//     //   }
+//     // });
 // }
+
+exportpdf() {
+    const prepare = [];
+    this.patientsappointments.filteredData.forEach(e => {
+        const tempObj = [];
+        tempObj.push(e.appointmentID);
+        tempObj.push(e.patient);
+        tempObj.push(e.gender);
+        tempObj.push(e.mobile);
+        tempObj.push(e.visitCount);
+        tempObj.push(e.serviceDate); // Add the date column here
+        prepare.push(tempObj);
+    });
+
+    const doc = new jsPDF();
+
+    // Add logo
+    const logo = new Image();
+    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+    logo.onload = () => {
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        
+        // Add title
+        doc.setFontSize(12);
+
+        // Add current date
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+        doc.text(`Date: ${formattedDate}`, 160, 40);
+
+        // Add table
+        autoTable(doc, {
+            head: [['AppointmentID', 'Patient Name', 'Gender', 'Phone Number', 'Visit Count', 'Date']], // Include 'Date' in the head
+            body: prepare,
+            startY: 50 // adjust the start position as needed
+        });
+        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+        doc.setFontSize(10);
+        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+        // Save PDF
+        doc.save('History.pdf');
+    };
+}
+
+
 
 ExportTOExcel() {
     debugger
@@ -2893,13 +2937,25 @@ change(){
         }
     }
   
+    confirmDelete(idx: number) {
+        const confirmDeletion = confirm("Are you sure you want to delete this medication item?");
+        if (confirmDeletion) {
+            this.DeleteMedicationItem(idx);
+        }
+    }
     
     DeleteMedicationItem(idx: number) {
-        debugger
         if (idx != 0) {
             this.medicationitems.removeAt(idx);
         }
     }
+    
+    // DeleteMedicationItem(idx: number) {
+    //     debugger
+    //     if (idx != 0) {
+    //         this.medicationitems.removeAt(idx);
+    //     }
+    // }
     closePresceptionDetailsDialog(){
        for(var i=0;i<=this.medicationitems.length;i++){
         this.medicationitems.removeAt(i);
@@ -3429,6 +3485,7 @@ debugger
     // }
     uploadFileNull:boolean=false
     addUpdateVitals(val) {
+        this.loading=true
         debugger
         this.uploadFileNull=false
         let itemArr = [];
@@ -3543,6 +3600,7 @@ debugger
                         "duration": 2000,
                     });
                    // this.getAllAppointmentsAfterSAve();
+                   this.loading=false
                     this.Screen = 1;
                     this.ngOnInit();
                   
@@ -3556,6 +3614,42 @@ debugger
         );
         }
     }
+
+    setValues(val) {
+        debugger
+        
+                this.patientName = val.patient + " " + "(" + val.gender + ", Age " + val.age + ")"
+                this.flag = '2';
+                this.vitalsID = val.vitalsID;
+                this.PatientID = val.patientID;
+                this.AppointmentID = val.appointmentID;
+                this.advice = val.advice;
+                this.nextvisit = val.nextVisit;
+        
+                this.GetComplaintsXML();
+                this.GetDocumentsXML();
+                this.GetMedicineXML();
+                this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
+                if (this.vitals.length > 0) {
+                    
+                    this.vitalsForm.controls['weight'].setValue(this.vitals[0].weight)
+                    this.vitalsForm.controls['bloodGroup'].setValue(this.vitals[0].bloodGroup)
+                    this.vitalsForm.controls['temp'].setValue(this.vitals[0].temperature_F)
+                    this.vitalsForm.controls['serumCreatinine'].setValue(this.vitals[0].serum_Creatinine)
+                    this.vitalsForm.controls['bloodPressure'].setValue(this.vitals[0].bp)
+                    this.vitalsForm.controls['pulse'].setValue(this.vitals[0].pulse)
+                    this.vitalsForm.controls['SpO2'].setValue(this.vitals[0].spO2)
+                    this.vitalsForm.controls['BMI'].setValue(this.vitals[0].bmi)
+                    this.vitalsForm.controls['visitReason'].setValue(this.vitals[0].visitReasonID)
+                    this.vitalsForm.controls['advice'].setValue(this.vitals[0].advice)
+                    this.vitalsForm.controls['nextVisit'].setValue(this.vitals[0].nextVisit)
+                    this.vitalsForm.controls['pickADate'].setValue(this.vitals[0].pickADate)
+                    this.vitalsForm.controls['frequency'].setValue(this.vitals[0].frequency)
+                  
+        
+                }
+            }
+
     getAllAppointmentsAfterSAve() {
         debugger
         this.spinner.show();
@@ -3708,7 +3802,9 @@ debugger
                         this.items.push(this._formBuilder.group({
                             Image: [this.docsXml[i].docTypeNAme],
                             fileName: [this.docsXml[i].docTypeNAme],
-                            docType: [this.docsXml[i].documentTypeID],
+                            // docType: [this.docsXml[i].documentTypeID],
+                            docType: [this.docsXml[i].docTypeNAme],  // Ensure docTypeNAme is used here
+
                            // docType: [uom[0]],
                         }));
                        
@@ -3721,6 +3817,8 @@ debugger
             () => { this.spinner.hide(); }
         );
     }
+
+    
     GetMedicineXML() {
 
         this.appt.VitalsID = Number(this.vitalsID);
@@ -3752,40 +3850,7 @@ debugger
             () => { this.spinner.hide(); }
         );
     }
-    setValues(val) {
-debugger
 
-        this.patientName = val.patient + " " + "(" + val.gender + ", Age " + val.age + ")"
-        this.flag = '2';
-        this.vitalsID = val.vitalsID;
-        this.PatientID = val.patientID;
-        this.AppointmentID = val.appointmentID;
-        this.advice = val.advice;
-        this.nextvisit = val.nextVisit;
-
-        this.GetComplaintsXML();
-        this.GetDocumentsXML();
-        this.GetMedicineXML();
-        this.vitals = this.vitalsList.filter(a => a.vitalsID === this.vitalsID);
-        if (this.vitals.length > 0) {
-            
-            this.vitalsForm.controls['weight'].setValue(this.vitals[0].weight)
-            this.vitalsForm.controls['bloodGroup'].setValue(this.vitals[0].bloodGroup)
-            this.vitalsForm.controls['temp'].setValue(this.vitals[0].temperature_F)
-            this.vitalsForm.controls['serumCreatinine'].setValue(this.vitals[0].serum_Creatinine)
-            this.vitalsForm.controls['bloodPressure'].setValue(this.vitals[0].bp)
-            this.vitalsForm.controls['pulse'].setValue(this.vitals[0].pulse)
-            this.vitalsForm.controls['SpO2'].setValue(this.vitals[0].spO2)
-            this.vitalsForm.controls['BMI'].setValue(this.vitals[0].bmi)
-            this.vitalsForm.controls['visitReason'].setValue(this.vitals[0].visitReasonID)
-            this.vitalsForm.controls['advice'].setValue(this.vitals[0].advice)
-            this.vitalsForm.controls['nextVisit'].setValue(this.vitals[0].nextVisit)
-            this.vitalsForm.controls['pickADate'].setValue(this.vitals[0].pickADate)
-            this.vitalsForm.controls['frequency'].setValue(this.vitals[0].frequency)
-          
-
-        }
-    }
     // @ViewChild('fileInput') fileInput: ElementRef;
     // openFileInput() {
     //     this.fileInput.nativeElement.click();
@@ -4349,9 +4414,23 @@ debugger
 
     }
 
+    // goToPanel(panelId: string): void {
+    //     this.selectedPanel = panelId;
+    // }
     goToPanel(panelId: string): void {
         this.selectedPanel = panelId;
+        if (panelId === 'Medication') {
+            setTimeout(() => {
+                const dropdown = document.querySelector('#medicineSelect');
+                if (dropdown) {
+                    this.renderer.selectRootElement(dropdown).click();
+                }
+            });
+        }
     }
+    
+    
+    
 
     // //Receipt Print
     // openPresecptionDialog(): void {

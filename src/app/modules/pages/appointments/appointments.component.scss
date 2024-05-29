@@ -587,6 +587,8 @@ body .light .mat-elevation-z8 {
     color: #191818;
     font-size: 13px;
     letter-spacing: 0.5px;
+    border: 1px solid #ddd;
+
 }
 
 .date_1 {
@@ -602,17 +604,16 @@ body .light .mat-elevation-z8 {
     width: 100%;
 }
 
-#medication td,
-#customers th {
+#medication td{
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
 }
+
 
 #medication th {
     padding-left: 15px;
-    padding-top: 5px;
-    padding-bottom: 12px;
+    // padding-top: 5px;
+    // padding-bottom: 12px;
     text-align: left;
     background-color: #a2a5a436;
     color: #191818;
@@ -932,12 +933,13 @@ img {
 
 .heading_1 {
     background-color: #fff;
-    padding: 0px 35px 0;
+    // padding: 0px 35px 0;
     // border-top: 3px solid #d4dadf;
     font-family: sans-serif;
     font-size: 21px;
     font-weight: bold;
     letter-spacing: 0.2px;
+    padding-left: 125px;
 }
 
 .tocken_no {
@@ -1026,22 +1028,22 @@ img {
     color: white;
     font-weight: 500;
 }
-// .Payment_row {
-//     text-align: left;
-//     background-color: #ffffff;
-//     padding: 10px 0 10px 24px;
-//     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-//     font-size: 16px;
-//     line-height: 24px;
+.Payment_row {
+    text-align: left;
+    background-color: #ffffff;
+    padding: 10px 0 10px 24px;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
 
-// }
+}
 
 .payment_Receipt {
     text-align: left;
     background-color: #ffffff;
     padding: 10px 24px 10px 0;
     // border-top: 3px solid #d4dadf;
-    width: 30%;
+    width: 25%;
 }
 
 .Token_No {
@@ -1374,7 +1376,7 @@ body .light .mat-mini-fab.mat-warn {
 
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0.25em 0;
-    margin-top: 1rem !important;
+    margin-top: 7px !important;
 }
 
 .text_box{
@@ -1424,7 +1426,8 @@ margin-left: 47%;
   }
   
 .aligns{
-    height: 259px;
+    // height: 259px;
+    height: 315px;
 }
 .medicine-options {
     max-height: 200px; /* Adjust the maximum height as needed */
@@ -1446,3 +1449,44 @@ margin-left: 47%;
 .alignstatus{
     margin-left: 10px;
 }
+.h-grid{
+    height: 22rem !important;
+}
+
+
+.mat-header-cell.sticky{
+    background-color: white;
+    z-index: 100;
+}
+.backroundcolor {
+    background-color: #dddde5;
+    padding: 5px 5px; /* Optional: Add some padding for better appearance */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+.height{
+    height: 45px !important;
+}
+.paddingtheforms{
+    margin-bottom: -30px;
+}
+.paddingthepanels{
+    padding-top: 13px;
+    padding-bottom: 12px;
+}
+
+.viewbtn{
+    float: right;
+    position: relative;
+    top: -8px;
+}
+
+
+
+
+
+
+
+
+
+
+
