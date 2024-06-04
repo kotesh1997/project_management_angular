@@ -1855,12 +1855,21 @@
                                 </div>
 
                                 <div class="flex justify-end">
-                                    <button type="button" style="cursor: pointer;background-color: #ff7633;color: white;"
+                                    <!-- <button type="button" style="cursor: pointer;background-color: #ff7633;color: white;"
                                         [ngClass]="(vitalsForm.invalid) ? 'btnsub' : 'btnsub1'" (click)="
                                     addUpdateVitals(vitalsForm.value);vitalsDrawer.close();"
                                         >
                                         Submit
-                                    </button>
+                                    </button> -->
+                                    <button type="button" 
+                                    style="cursor: pointer; background-color: #ff7633; color: white;"
+                                    [ngClass]="(vitalsForm.invalid) ? 'btnsub' : 'btnsub1'" 
+                                    [disabled]="loading"
+                                    (click)="addUpdateVitals(vitalsForm.value)">
+                                <span *ngIf="!loading">Submit</span>
+                                <mat-progress-spinner *ngIf="loading" [diameter]="20" [mode]="'indeterminate'" style="color: blue;"></mat-progress-spinner>
+                            </button>
+                                    
                                 </div>
 
                             </div>
@@ -1948,6 +1957,18 @@
             </div>
 
             <div>
+            <div  style="text-align: right;padding-top:15px; margin-bottom: 10px;" *ngIf="roleID=='3'">
+                <span class="doctorsize">
+                <label  style="font-size: large;color: darkgray;"><b>Status : </b></label><label class="login_name"><b>
+                        Front Desk</b></label></span>
+                        <span (click)="appoinmentLink()" class="backBtn"
+                        style="color: #146aa6;display: flex;cursor: pointer;">
+                        <mat-icon (click)="appoinmentLink()"  class="icon-size-5"
+                            class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
+                        <button type="button" (click)="appoinmentLink()"
+                            style="font-size: 18px;cursor: pointer;">Back</button>
+                    </span>
+            </div>
             <div  style="text-align: right;padding-top:15px; margin-bottom: 10px;" *ngIf="roleID=='2'">
                 <span class="doctorsize">
                 <label  style="font-size: large;color: darkgray;"><b>Status : </b></label><label class="login_name"><b>
@@ -1960,15 +1981,27 @@
                             style="font-size: 18px;cursor: pointer;">Back</button>
                     </span>
             </div>
-            <div  style="text-align: right;padding-top:15px" *ngIf="roleID=='5'">
+            <!-- <div  style="text-align: right;padding-top:15px" *ngIf="roleID=='5'">
                 <label style="font-size: large;color: darkgray;"><b>Status : </b></label><label class="login_name"><b>
                         With Jr.Doctor</b></label>
+            </div> -->
+            <div  style="text-align: right;padding-top:15px; margin-bottom: 10px;" *ngIf="roleID=='5'">
+                <span class="doctorsize">
+                <label  style="font-size: large;color: darkgray;"><b>Status : </b></label><label class="login_name"><b>
+                    With Jr.Doctor</b></label></span>
+                        <span (click)="appoinmentLink()" class="backBtn"
+                        style="color: #146aa6;display: flex;cursor: pointer;">
+                        <mat-icon (click)="appoinmentLink()"  class="icon-size-5"
+                            class="text-current mr-1" svgIcon="feather:arrow-left"></mat-icon>&nbsp;
+                        <button type="button" (click)="appoinmentLink()"
+                            style="font-size: 18px;cursor: pointer;">Back</button>
+                    </span>
             </div>
              </div> 
             </div>
 
 
-            <div class=" bg-card border-2 h-100 rounded-2xl mt-2 col-lg-12">
+            <div class=" bg-card border-2  rounded-2xl mt-2 col-lg-12">
 
                 <mat-tab-group>
 
@@ -2115,21 +2148,21 @@
                                                         <div class="row">
                                                             <mat-form-field
                                                                 class="example-chip-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                                                 appearance="fill">
+                                                                 appearance="outline">
                                                                 <mat-label>
                                                                     Complaints (Type and select or press enter to
                                                                     add...)
                                                                 </mat-label>
                                                                 <mat-chip-list #chipList aria-label="Fruit selection">
-                                                                    <mat-chip *ngFor="let fruit of fruits"
+                                                                    <mat-chip class="matchipheight" *ngFor="let fruit of fruits"
                                                                         [selectable]="selectable" [removable]="removable"
                                                                         (removed)="remove(fruit)">
                                                                         {{fruit}}
-                                                                        <button matChipRemove *ngIf="removable">
+                                                                        <button class="cancelbtnheaight" matChipRemove *ngIf="removable">
                                                                             <mat-icon>cancel</mat-icon>
                                                                         </button>
                                                                     </mat-chip>
-                                                                    <input #fruitInput [formControl]="fruitCtrl"
+                                                                    <input class="alignthetext" #fruitInput [formControl]="fruitCtrl"
                                                                         [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                                                         (matChipInputTokenEnd)="add($event)">
@@ -2789,12 +2822,12 @@
                                                             </td>
                                                         </ng-container>
 
-                                                        <tr mat-header-row
+                                                        <tr mat-header-row class="height"
                                                             *matHeaderRowDef="displayedColumnsHistory1; sticky: true">
                                                         </tr>
                                                         <!--<tr mat-row
                                         *matRowDef="let row; columns: displayedColumns"></tr>-->
-                                                        <tr mat-row
+                                                        <tr mat-row class="height"
                                                             *matRowDef="let row; columns: displayedColumnsHistory1;">
                                                         </tr>
 

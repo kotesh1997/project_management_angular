@@ -60,7 +60,7 @@ declare const PDFObject: any;
 })
 export class AppointmentsComponent implements OnInit,OnDestroy,OnChanges{
 
-
+    @ViewChild('vitalsDrawer') vitalsDrawer: MatDrawer;
     selectedPanel: string = 'Vitals';
     selectpayment: number = 1;
     @ViewChild('drawer') drawer: MatDrawer;
@@ -3483,10 +3483,12 @@ debugger
     //         () => { }
     //     );
     // }
+    
     uploadFileNull:boolean=false
     addUpdateVitals(val) {
-        this.loading=true
         debugger
+        this.loading=true
+        setTimeout(() => {
         this.uploadFileNull=false
         let itemArr = [];
         for (var i = 0; i < val.items.length; i++) {
@@ -3599,6 +3601,7 @@ debugger
                         verticalPosition: this.verticalPosition,
                         "duration": 2000,
                     });
+                    this.vitalsDrawer.close();
                    // this.getAllAppointmentsAfterSAve();
                    this.loading=false
                     this.Screen = 1;
@@ -3613,6 +3616,9 @@ debugger
             () => { }
         );
         }
+        this.loading = false;
+    }, 1000);
+
     }
 
     setValues(val) {

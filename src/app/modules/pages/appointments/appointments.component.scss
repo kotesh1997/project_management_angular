@@ -1371,7 +1371,9 @@ body .light .mat-mini-fab.mat-warn {
 }
 .mat-chip-list-wrapper {
    
-    margin-top: 10px !important;
+    // margin-top: 10px !important;
+    margin-top: -11px !important;
+
 }
 
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
@@ -1479,9 +1481,15 @@ margin-left: 47%;
     position: relative;
     top: -8px;
 }
-
-
-
+.alignthetext{
+    margin-top: 9px !important;
+}
+.cancelbtnheaight{
+    height: 25px !important;
+}
+.matchipheight{
+    min-height: 25px !important;
+}
 
 
 
