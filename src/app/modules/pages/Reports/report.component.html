@@ -48,7 +48,7 @@
             </div>
 
            
-            <div class="pt-4" *ngIf="Repdata">
+            <div class="pt-4 ml-60" *ngIf="Repdata">
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>
 
@@ -67,9 +67,21 @@
                   
                   
              </div>
- 
+
+             <mat-form-field class="custom-background mt-8" appearance="outline">
+                <!-- <mat-label>Select Columns</mat-label> -->
+                <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                  <mat-select-trigger>
+                    <span>Select Columns</span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let column of columnDefinitions" [value]="column.def">
+                    {{ column.displayName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
         </div>
+        
 
         <div  class="example-container mat-elevation-z8 h-grid" #TABLE>
             <table *ngIf="Repdata"class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>

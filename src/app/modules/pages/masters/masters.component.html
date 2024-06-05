@@ -23,10 +23,23 @@
                    
                     <button class="fuse-mat-button-rounded  flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
-                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633;">
+                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633; margin-left: 50%;">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Doctor</span>
                 </button>
+
+                <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions'">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
             </div>
 
              
@@ -184,11 +197,23 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class=""style="position: relative;top: 29%; width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
+                    <button class=""style="position: relative;top: 29%; width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Asst Doctor</span>
                     </button>
                    
+                    <mat-form-field class="custom-background" appearance="outline">
+                        <!-- <mat-label>Select Columns</mat-label> -->
+                        <mat-select  multiple [(ngModel)]="selectedColumnsjr" (selectionChange)="updateDisplayedColumnsjr()">
+                          <mat-select-trigger>
+                            <span>Select Columns</span>
+                          </mat-select-trigger>
+                          <mat-option *ngFor="let column of columnDefinitionsjr" [value]="column.def" [disabled]="column.def === 'Actions'">
+                            {{ column.displayName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
             </div>
                
             </div>
@@ -319,12 +344,22 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 29%; width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 29%; width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Front Desk</span>
                     </button>
                
-                   
+                    <mat-form-field class="custom-background" appearance="outline">
+                        <!-- <mat-label>Select Columns</mat-label> -->
+                        <mat-select  multiple [(ngModel)]="selectedColumnsjr" (selectionChange)="updateDisplayedColumnsjr()">
+                          <mat-select-trigger>
+                            <span>Select Columns</span>
+                          </mat-select-trigger>
+                          <mat-option *ngFor="let column of columnDefinitionsjr" [value]="column.def" [disabled]="column.def === 'Actions'">
+                            {{ column.displayName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
             </div>
               
             </div>
@@ -456,11 +491,22 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 29%;width: 175px; background-color: #ff7633;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 29%;width: 175px; background-color: #ff7633; margin-left:50%;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">Lab Assistant</span>
                     </button>
                   
+                    <mat-form-field class="custom-background" appearance="outline">
+                        <!-- <mat-label>Select Columns</mat-label> -->
+                        <mat-select  multiple [(ngModel)]="selectedColumnsjr" (selectionChange)="updateDisplayedColumnsjr()">
+                          <mat-select-trigger>
+                            <span>Select Columns</span>
+                          </mat-select-trigger>
+                          <mat-option *ngFor="let column of columnDefinitionsjr" [value]="column.def" [disabled]="column.def === 'Actions'">
+                            {{ column.displayName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                
             </div>
               

@@ -410,6 +410,7 @@ handleFileUpload(event: Event) {
         'filename',
         'actions'
     ];
+   
     displayedColumnsHistory: string[] = [
         'SL',
         'Patient',
@@ -420,12 +421,20 @@ handleFileUpload(event: Event) {
         'appointmentDate',
         'View'
     ];
+    columnDefinitionshistory = [
+        { def: 'SL', visible: true, displayName: 'ID' },
+        { def: 'Patient', visible: true, displayName: '	Patient Details' },
+        { def: 'VisitCount', visible: true, displayName: ' Visit Count' },
+        { def: 'appointmentDate', visible: true, displayName: '	Date' },
+        { def: 'View', visible: true, displayName: 'View' },
+    ];
     displayedColumnsHistory1: string[] = [
         'sno',
         'serviceDate',
         'Amount',
         'View',
     ];
+  
     displayedColumnsUpcoming: string[] = [
         'SL',
         'Patient',
@@ -436,6 +445,18 @@ handleFileUpload(event: Event) {
         'VisitCount',
         'Billing',
         'Actions'
+    ];
+    columnDefinitionsupcoming = [
+        { def: 'SL', visible: true, displayName: 'ID' },
+        { def: 'Patient', visible: true, displayName: '	Patient Details' },
+        { def: 'Service', visible: true, displayName: ' Service Name' },
+        { def: 'Doctor', visible: true, displayName: '	Doctor' },
+        { def: 'Time', visible: true, displayName: 'Time' },
+        { def: 'WaitingTime', visible: true, displayName: 'Waiting Time' },
+        { def: 'VisitCount', visible: true, displayName: 'Visit Count#' },
+        { def: 'Billing', visible: true, displayName: '	Billing' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+    
     ];
 
     @ViewChild(MatSort) sort: MatSort;
@@ -493,6 +514,46 @@ handleFileUpload(event: Event) {
             () => { }
         );
     }
+
+
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = [ 
+        'Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+        'View','History'
+    ];
+    updateDisplayedColumnsupcoming() {
+        this.displayedColumnsUpcoming = this.columnDefinitionsupcoming
+          .filter(cd => this.selectedColumnsupcoming.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumnsupcoming: string[] = [ 
+        'SL',
+        'Patient',
+        'Service',
+        'Doctor',
+        'Time',
+        'WaitingTime',
+        'VisitCount',
+        'Billing',
+        'Actions'
+    ];
+    updateDisplayedColumnshistory() {
+        this.displayedColumnsHistory = this.columnDefinitionshistory
+          .filter(cd => this.selectedColumnshistory.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumnshistory: string[] = [ 
+        'SL',
+        'Patient',
+        'VisitCount',
+        'appointmentDate',
+        'View'
+    ];
+
     
     selectmed(){
         debugger
@@ -572,6 +633,25 @@ debugger
 }
 panels=[]
 testIDD
+columnDefinitions = [
+    { def: 'Actions', visible: true, displayName: 'Actions' },
+    { def: 'SL', visible: true, displayName: 'Patient ID' },
+    { def: 'Patient', visible: true, displayName: '	Patient Details' },
+    { def: 'Service', visible: true, displayName: ' Service Name' },
+    { def: 'LastVisit', visible: true, displayName: 'Last Visit' },
+    { def: 'Doctor', visible: true, displayName: '	Doctor' },
+    { def: 'Time', visible: true, displayName: 'Time' },
+    { def: 'WaitingTime', visible: true, displayName: 'Waiting Time' },
+    { def: 'Status', visible: true, displayName: '	 Status' },
+    { def: 'VisitCount', visible: true, displayName: 'Visit Count#' },
+    { def: 'ReceiptToken', visible: true, displayName: 'Token' },
+    { def: 'Billing', visible: true, displayName: '	Billing' },
+    { def: 'View', visible: true, displayName: 'view' },
+    { def: 'DuePayment', visible: true, displayName: 'Due Payment' },
+    { def: 'History', visible: true, displayName: 'History' },
+
+
+];
     ngOnInit(): void {
         //this.selecteddiscount=35
         this.panels = [
@@ -737,6 +817,7 @@ testIDD
                 'Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
                   'View','History'
             ];
+           
         }
         else if (this.roleID == '2') {
             this.displayedColumns = [

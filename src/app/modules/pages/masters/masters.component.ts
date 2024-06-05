@@ -68,7 +68,25 @@ export class MastersComponent implements OnInit {
     horizontalPosition: MatSnackBarHorizontalPosition = 'start';
     verticalPosition: MatSnackBarVerticalPosition = 'bottom';
     displayedColumns: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
+    columnDefinitions = [
+        { def: 'name', visible: true, displayName: 'Name' },
+        { def: 'mobile', visible: true, displayName: 'Mobile' },
+        { def: 'email', visible: true, displayName: 'Email' },
+        { def: 'experience', visible: true, displayName: 'Experience' },
+        { def: 'qualification', visible: true, displayName: 'Qualification' },
+        { def: 'institution', visible: true, displayName: 'Institution' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+    ];
     displayedColumnsJr: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions'];
+    columnDefinitionsjr = [
+        { def: 'name', visible: true, displayName: 'Name' },
+        { def: 'mobile', visible: true, displayName: 'Mobile' },
+        { def: 'email', visible: true, displayName: 'Email' },
+        { def: 'experience', visible: true, displayName: 'Experience' },
+        { def: 'qualification', visible: true, displayName: 'Qualification' },
+        { def: 'institution', visible: true, displayName: 'Institution' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+    ];
     columnsToDisplay: string[] = this.displayedColumns.slice();
     @ViewChild(MatSort) sort: MatSort;
     private API_URL: any = environment.API_URL;
@@ -271,6 +289,19 @@ export class MastersComponent implements OnInit {
        // this.day(data);
     
     }
+
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
+      updateDisplayedColumnsjr() {
+        this.displayedColumnsJr = this.columnDefinitionsjr
+          .filter(cd => this.selectedColumnsjr.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumnsjr: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
 
     defaultSlot(){
     const newSlot={

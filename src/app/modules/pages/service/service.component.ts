@@ -77,6 +77,14 @@ service = new Service()
     horizontalPosition: MatSnackBarHorizontalPosition = 'end';
     verticalPosition: MatSnackBarVerticalPosition = 'top';
     displayedColumns: string[] = [ 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
+    columnDefinitions = [
+        { def: 'mobile', visible: true, displayName: 'S.NO' },
+        { def: 'email', visible: true, displayName: '	Service Name' },
+        { def: 'experience', visible: true, displayName: 'Price' },
+        { def: 'qualification', visible: true, displayName: 'GST(%)' },
+        { def: 'institution', visible: true, displayName: 'Service Owner' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+    ];
     displayedColumnsJr: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions'];
     columnsToDisplay: string[] = this.displayedColumns.slice();
     @ViewChild(MatSort) sort: MatSort;
@@ -193,7 +201,13 @@ service = new Service()
 
     }
 
-    
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['mobile', 'email', 'experience', 'qualification', 'institution', 'Actions','Slots'];
+
     getservices(){
         this.utilitiesService.getallservices().subscribe(
             (data:any) => {

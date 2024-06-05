@@ -15,10 +15,23 @@
 
             <button class="fuse-mat-button-rounded  flex flex-col justify-end"
             mat-flat-button [color]="'primary'"
-            (click)="openSaveDrawer()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633;">
+            (click)="openSaveDrawer()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633; margin-left: 50%;">
             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
             <span class="ml-2">Add Discount</span>
         </button>
+
+        <mat-form-field class="custom-background" appearance="outline">
+            <!-- <mat-label>Select Columns</mat-label> -->
+            <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+              <mat-select-trigger>
+                <span>Select Columns</span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions'">
+                {{ column.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
     </div>
 
 

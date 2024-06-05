@@ -77,6 +77,12 @@ export class DiscountComponent implements OnInit {
       horizontalPosition: MatSnackBarHorizontalPosition = 'end';
       verticalPosition: MatSnackBarVerticalPosition = 'top';
       displayedColumns: string[] = [ 'mobile', 'email',  'Actions','Slots'];
+      columnDefinitions = [
+        { def: 'mobile', visible: true, displayName: 'S.NO' },
+        { def: 'email', visible: true, displayName: '	Discount' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+        // { def: 'Slots', visible: true, displayName: 'Slots' },
+    ];
       displayedColumnsJr: string[] = ['name', 'mobile', 'email', 'experience', 'qualification', 'institution', 'Actions'];
       columnsToDisplay: string[] = this.displayedColumns.slice();
       @ViewChild(MatSort) sort: MatSort;
@@ -187,7 +193,13 @@ export class DiscountComponent implements OnInit {
       }
   
       
-   
+      updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['mobile', 'email',  'Actions',];
+
       getDiscounts() {
         this.utilitiesService.getDiscounts().subscribe(
 

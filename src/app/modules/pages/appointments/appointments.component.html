@@ -11,7 +11,7 @@
             <div class="flex flex-cols justify-between">
                 <div class="flex flex-cols">
                     <ng-container *ngIf="Todays">
-                        <mat-form-field class=" search1 mr-2 custom-background" style="width: 320px;"
+                        <mat-form-field class=" search1 mr-2 custom-background" style="width: 250px;"
                             appearance="outline">
 
                             <mat-icon matPrefix>perm_identity</mat-icon>
@@ -35,7 +35,7 @@
                                 </mat-select>
                             </mat-form-field> -->
                             <mat-form-field class="flex flex-col ml-2 custom-background" appearance="outline"
-                            style="padding-left:0;width: 320px;">
+                            style="padding-left:0;width: 250px;">
                                 <mat-label>Select Service</mat-label>
                                 <mat-select (selectionChange)="filterDataByService($event)" [(ngModel)]="filterService"
                                     >
@@ -47,16 +47,16 @@
                         </ng-container>
                     </ng-container>
 
-                    <button *ngIf="Todays" [matTooltipPosition]="'right'" (click)="resetFilters()"
+                    <button class="mt-2" *ngIf="Todays" [matTooltipPosition]="'right'" (click)="resetFilters()"
                         [matTooltip]="tooltip || 'Clear'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
-                        height: 35px;margin-top: 14px;margin-left: 10px;">
+                        height: 35px;margin-left: 10px;">
                         <mat-icon svgIcon="mat_outline:clear"></mat-icon>
                     </button>
 
 
-                    <button *ngIf="Todays" (click)="resetFilters()" [matTooltipPosition]="'right'"
+                    <button class="mt-2" *ngIf="Todays" (click)="resetFilters()" [matTooltipPosition]="'right'"
                         [matTooltip]="tooltip || 'Refresh'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
-                            height: 35px;margin-top: 14px;margin-left: 10px;">
+                            height: 35px;margin-left: 10px;">
                         <mat-icon svgIcon="mat_outline:refresh"></mat-icon>
                     </button>&nbsp;&nbsp;&nbsp;
                    
@@ -66,7 +66,7 @@
                     <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.pending }}</b></span> &nbsp;&nbsp;&nbsp;&nbsp;
                     <span class="text-lg "><b>Completed:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.completed }}</b></span> &nbsp;&nbsp;&nbsp; 
                 </div> -->
-                <div class="mt-5" *ngIf="Todays && roleID != 3 && roleID != 4 && roleID != 5">
+                <div class="mt-3" *ngIf="Todays && roleID != 3 && roleID != 4 && roleID != 5">
     <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;
         <span class="backroundcolor">
             {{ todayDataSourceBookings[0]?.pending }}
@@ -91,13 +91,26 @@
                 </div>
                 
 
-                <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-4 flex flex-col justify-end"
+                <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-2 flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
                     (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Appointment</span>
                 </button>
 
+                <ng-container *ngIf="Todays">
+                <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions'">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+               </ng-container>
 
             </div>
 
@@ -571,11 +584,25 @@
                     </mat-form-field>
                 </div>
 
-                <button *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded mt-4" mat-flat-button
+                <button style="margin-left: 50%;" *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded mt-4" mat-flat-button
                     [color]="'primary'" (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Appointment</span>
                 </button>
+
+                <ng-container *ngIf="upcomings">
+                    <mat-form-field class="custom-background" appearance="outline">
+                        <!-- <mat-label>Select Columns</mat-label> -->
+                        <mat-select  multiple [(ngModel)]="selectedColumnsupcoming" (selectionChange)="updateDisplayedColumnsupcoming()">
+                          <mat-select-trigger>
+                            <span>Select Columns</span>
+                          </mat-select-trigger>
+                          <mat-option *ngFor="let column of columnDefinitionsupcoming" [value]="column.def" [disabled]="column.def === 'Actions'">
+                            {{ column.displayName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                   </ng-container>
 
             </div>
 
@@ -875,7 +902,7 @@
                           </button>
                         </div>
                       </div> -->
-                <div class="flex flex-cols pt-4 pr-16">
+                <div style="margin-left: 55%;" class="flex flex-cols pt-4 pr-16">
                     <div class="mr-1">
                         <button *ngIf="Histories" mat-mini-fab color="primary"
                             style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()"
@@ -889,8 +916,24 @@
                             matTooltip="Export To PDF">
                             <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                         </button>
+
+                       
+
                     </div>
                 </div>
+                <ng-container>
+                    <mat-form-field class="custom-background" appearance="outline">
+                        <!-- <mat-label>Select Columns</mat-label> -->
+                        <mat-select  multiple [(ngModel)]="selectedColumnshistory" (selectionChange)="updateDisplayedColumnshistory()">
+                          <mat-select-trigger>
+                            <span>Select Columns</span>
+                          </mat-select-trigger>
+                          <mat-option *ngFor="let column of columnDefinitionshistory" [value]="column.def" [disabled]="column.def === 'Actions'">
+                            {{ column.displayName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                   </ng-container>
 
             </div>
 

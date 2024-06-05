@@ -121,6 +121,18 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+
+          <mat-form-field  class="custom-background" appearance="outline" style="grid-column: 10;">
+            <!-- <mat-label>Select Columns</mat-label> -->
+            <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+              <mat-select-trigger>
+                <span>Select Columns</span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Vitals'">
+                {{ column.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
    
     </div>
 

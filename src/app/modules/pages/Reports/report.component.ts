@@ -58,6 +58,17 @@ export class ReportComponent implements OnInit {
 
     patientsappointments: any = [];
     displayedColumns: string[] = ['Patient ARCID', 'SL', 'Patient', 'Mobile', 'Service Name', 'Last Visit', 'Visit Count', 'Payment', 'ModeofPayment'];
+    columnDefinitions = [
+        { def: 'Patient ARCID', visible: true, displayName: 'Patient ARCID' },
+        { def: 'SL', visible: true, displayName: 'SL' },
+        { def: 'Patient', visible: true, displayName: 'Patient Name & Gender' },
+        { def: 'Mobile', visible: true, displayName: 'Phone Number' },       
+        { def: 'Service Name', visible: true, displayName: 'Service Name' },
+        { def: 'Last Visit', visible: true, displayName: 'Last Visit' },
+        { def: 'Visit Count', visible: true, displayName: 'Visit Count' },
+        { def: 'Payment', visible: true, displayName: 'Payment' },
+        { def: 'ModeofPayment', visible: true, displayName: 'Mode Of Payment' },
+    ];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('TABLE') table: ElementRef;
@@ -85,7 +96,12 @@ export class ReportComponent implements OnInit {
     toDate
     fromDate
 
-
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['Patient ARCID', 'SL', 'Patient', 'Mobile', 'Service Name', 'Last Visit', 'Visit Count', 'Payment', 'ModeofPayment'];
 // exportpdf(){
 //     debugger
 //       var prepare=[];

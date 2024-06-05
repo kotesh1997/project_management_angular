@@ -56,6 +56,13 @@ export class MyPatientsComponent implements AfterViewInit {
     
     
     displayedColumns: string[] = ['SL','Patient', 'Mobile','LastSeen','Vitals'];
+    columnDefinitions = [
+        { def: 'SL', visible: true, displayName: 'SL' },
+        { def: 'Patient', visible: true, displayName: 'Patient Name & Gender' },
+        { def: 'Mobile', visible: true, displayName: 'Phone Number' },
+        { def: 'LastSeen', visible: true, displayName: 'LastSeen' },
+        { def: 'Vitals', visible: true, displayName: 'Previous Visit' },
+    ];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -83,6 +90,13 @@ export class MyPatientsComponent implements AfterViewInit {
     yesterdaydate: any;
     todaydate: any;
     tomorrowdate: any;
+
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['SL','Patient', 'Mobile','LastSeen','Vitals'];
 
     ngAfterViewInit(): void {
     

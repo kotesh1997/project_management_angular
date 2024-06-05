@@ -82,8 +82,27 @@ export class AdminReportsComponent implements OnInit {
   summaryReports: MatTableDataSource<any>;
   deptReports: any = [];
   displayedColumns3 : string[] = ['SL','Patient ARCID', 'Patient', 'Mobile', 'Service Name', 'Last Visit', 'Visit Count', 'Payment', 'ModeofPayment'];
+  columnDefinitions3 = [
+    { def: 'SL', visible: true, displayName: 'SL' },
+    { def: 'Patient ARCID', visible: true, displayName: 'Patient ARCID' },
+    { def: 'Patient', visible: true, displayName: 'Patient Name & Gender' },
+    { def: 'Mobile', visible: true, displayName: 'Phone Number' },       
+    { def: 'Service Name', visible: true, displayName: 'Service Name' },
+    { def: 'Last Visit', visible: true, displayName: 'Last Visit' },
+    { def: 'Visit Count', visible: true, displayName: 'Discount' },
+    { def: 'Payment', visible: true, displayName: 'Payment' },
+    { def: 'ModeofPayment', visible: true, displayName: 'Mode Of Payment' },
+];
   displayedColumns2: string[] = ['date','newreg','billedpatients', 'consultations', 'lab', 'others', 'totalearnings'];
   displayedColumns: string[] = ['department', 'service', 'count', 'totalbill', 'totalcollected'];
+  columnDefinitions = [
+    { def: 'department', visible: true, displayName: 'Department' },
+    { def: 'service', visible: true, displayName: 'Service' },
+    { def: 'count', visible: true, displayName: 'Count' },
+    { def: 'totalbill', visible: true, displayName: 'Total Bill' },       
+    { def: 'totalcollected', visible: true, displayName: 'Total Collected' },
+   
+];
   @ViewChild(MatSort) sort: MatSort;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('paginator1') paginator1: MatPaginator;
@@ -139,6 +158,20 @@ export class AdminReportsComponent implements OnInit {
   appToDate3: Date;
   toDate
   fromDate
+
+  updateDisplayedColumns3() {
+    this.displayedColumns3 = this.columnDefinitions3
+      .filter(cd => this.selectedColumns3.includes(cd.def))
+      .map(cd => cd.def);
+  }
+  selectedColumns3: string[] = [ 'SL','Patient ARCID', 'Patient', 'Mobile', 'Service Name', 'Last Visit', 'Visit Count', 'Payment', 'ModeofPayment'];
+
+  updateDisplayedColumns() {
+    this.displayedColumns = this.columnDefinitions
+      .filter(cd => this.selectedColumns.includes(cd.def))
+      .map(cd => cd.def);
+  }
+  selectedColumns: string[] = [ 'department', 'service', 'count', 'totalbill', 'totalcollected'];
 
 
   exportpdf(){

@@ -60,7 +60,13 @@ export class MedicineComponent implements OnInit {
           }
 
     medicineList:any = [];
-    displayedColumns: string[] = ['MedicineId','MedicineName', 'Composition', 'Actions'];
+    displayedColumns: string[] = ['MedicineId', 'MedicineName', 'Composition', 'Actions'];
+    columnDefinitions = [
+        { def: 'MedicineId', visible: true, displayName: 'Medicine ID' },
+        { def: 'MedicineName', visible: true, displayName: 'Medicine Name' },
+        { def: 'Composition', visible: true, displayName: 'Composition' },
+        { def: 'Actions', visible: true, displayName: 'Actions' },
+    ];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('TABLE') table: ElementRef;
@@ -86,6 +92,18 @@ export class MedicineComponent implements OnInit {
     actionName: string = 'Medicine'
     flag: string;
     msg: any;
+
+    updateDisplayedColumns() {
+        this.displayedColumns = this.columnDefinitions
+          .filter(cd => this.selectedColumns.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns: string[] = ['MedicineId', 'MedicineName', 'Composition', 'Actions'];
+      
+
+    // isColumnVisible(column: string): boolean {
+    //     return this.columnDefinitions.find(cd => cd.def === column)?.visible ?? false;
+    // }
 
     ExportTOExcel()
         {

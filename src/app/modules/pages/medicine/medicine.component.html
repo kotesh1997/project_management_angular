@@ -3,9 +3,9 @@
     <!-- Main -->
     <div class="flex-auto p-9 " >
         <!-- CONTENT GOES HERE -->
-        <div class="flex flex-cols justify-between">
+        <div class="flex flex-cols justify-between ">
          
-                <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                <mat-form-field class="col-span-2 mt-1 search1 custom-background" appearance="outline">
                     <input matInput [(ngModel)]="searchKey" placeholder="Search"
                     autocomplete="off" (keyup)="applyFilter()" />
                 <mat-icon matPrefix>search</mat-icon>
@@ -17,24 +17,38 @@
 
             <div class="flex flex-cols gap-2 pt-2" >
               <div class=" gap-2">
-                <button class="fuse-mat-button-rounded mt-2 mr-6" mat-flat-button [color]="'primary'"
+                <button class="fuse-mat-button-rounded  mr-6" mat-flat-button [color]="'primary'"
                 (click)="drawer.toggle(); setFocus();" style="background-color: #ff7633;">
                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                 <span  class="ml-2">Add Medicine</span>
             </button>
             
-                <button class="mr-1 mt-1"  mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                <button class="mr-1 "  mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
                   <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                 </button>
               
                 
-                  <button class="mr-20 mt-1"   mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="exportpdf()" matTooltip="Export To PDF">
+                  <button class="mr-10 "   mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none; position: relative;bottom: -3px;" (click)="exportpdf()" matTooltip="Export To PDF">
                     <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                   </button>
+
+                  <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions'">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                 
+    
                 </div>
               </div>
-      
-
+             
         </div>
 
         <div *ngIf="medlist" class="example-container mat-elevation-z8 h-grid" #TABLE>
