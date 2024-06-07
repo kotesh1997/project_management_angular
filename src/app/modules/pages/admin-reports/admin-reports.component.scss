@@ -1375,7 +1375,7 @@ body .light .mat-mini-fab.mat-warn {
 
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0.25em 0;
-    margin-top: 1rem !important;
+    // margin-top: 1rem !important;
 }
 
 .text_box{
@@ -1405,11 +1405,6 @@ body .light .mat-mini-fab.mat-warn {
     pointer-events: none !important;
 }
   
-.align{
-    position: relative;
-    top: 11px;
-    right: 50px;
-}
 
 .h-grid{
     height: 23rem !important;

@@ -21,9 +21,9 @@
                     </mat-form-field>
                     
                    
-                    <button class="fuse-mat-button-rounded  flex flex-col justify-end"
+                    <button class="fuse-mat-button-rounded mt-1 flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
-                    (click)="drawer.toggle();openAddForm()"   style="position: relative;top: 30%; width: 175px; background-color:#ff7633; margin-left: 50%;">
+                    (click)="drawer.toggle();openAddForm()"   style=" width: 175px; background-color:#ff7633; margin-left: 50%;">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Doctor</span>
                 </button>
@@ -197,7 +197,7 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class=""style="position: relative;top: 29%; width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
+                    <button class=" mt-1"style=" width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionForm('JrDoctor')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Asst Doctor</span>
                     </button>
@@ -217,8 +217,8 @@
             </div>
                
             </div>
-                <div  class="example-container mat-elevation-z8 h-grid">
-                    <table class="table1"  *ngIf="assdoctortab" mat-table [dataSource]="regDetailsJrList">
+                <div  class="example-container mat-elevation-z8 h-grid margintoptable">
+                    <table class="table1 "  *ngIf="assdoctortab" mat-table [dataSource]="regDetailsJrList">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
                                 Name
@@ -344,7 +344,7 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2" style="position: relative;top: 29%; width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mt-1" style=" width: 175px; background-color: #ff7633; margin-left: 50%;" (click)="drawer.toggle();addActionFormFrontDesk('Front Desk')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">New Front Desk</span>
                     </button>
@@ -363,7 +363,7 @@
             </div>
               
             </div>
-            <div class="example-container mat-elevation-z8 h-grid">
+            <div class="example-container mat-elevation-z8 h-grid margintoptable">
                 <table class="table1"   *ngIf="frontdesks"  class="table1" mat-table [dataSource]="regDetailsFrontList" matSort>
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
@@ -491,7 +491,7 @@
                                 <mat-icon >close</mat-icon>
                             </button>
                     </mat-form-field>
-                    <button class="fuse-mat-button-rounded mb-2"style="position: relative;top: 29%;width: 175px; background-color: #ff7633; margin-left:50%;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
+                    <button class="fuse-mat-button-rounded mt-1"style="width: 175px; background-color: #ff7633; margin-left:50%;" (click)="drawer.toggle();addActionFormLabAssitant('Lab Assistant')" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                         <span class="ml-2">Lab Assistant</span>
                     </button>
@@ -511,8 +511,8 @@
             </div>
               
             </div>
-            <div  class="example-container mat-elevation-z8 h-grid">
-                <table class="table1" *ngIf="labassts" mat-table [dataSource]=" regDetailsLabList">
+            <div  class="example-container mat-elevation-z8 h-grid margintoptable">
+                <table class="table1 " *ngIf="labassts" mat-table [dataSource]=" regDetailsLabList">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="text-lg text-white">
                             Name

@@ -47,14 +47,14 @@
                         </ng-container>
                     </ng-container>
 
-                    <button class="mt-2" *ngIf="Todays" [matTooltipPosition]="'right'" (click)="resetFilters()"
+                    <button class="mt-1" *ngIf="Todays" [matTooltipPosition]="'right'" (click)="resetFilters()"
                         [matTooltip]="tooltip || 'Clear'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
                         height: 35px;margin-left: 10px;">
                         <mat-icon svgIcon="mat_outline:clear"></mat-icon>
                     </button>
 
 
-                    <button class="mt-2" *ngIf="Todays" (click)="resetFilters()" [matTooltipPosition]="'right'"
+                    <button class="mt-1" *ngIf="Todays" (click)="resetFilters()" [matTooltipPosition]="'right'"
                         [matTooltip]="tooltip || 'Refresh'" mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;cursor: pointer;
                             height: 35px;margin-left: 10px;">
                         <mat-icon svgIcon="mat_outline:refresh"></mat-icon>
@@ -91,7 +91,7 @@
                 </div>
                 
 
-                <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-2 flex flex-col justify-end"
+                <button *ngIf="roleID !='2' " class="fuse-mat-button-rounded mt-1 flex flex-col justify-end"
                     mat-flat-button [color]="'primary'"
                     (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
@@ -584,7 +584,7 @@
                     </mat-form-field>
                 </div>
 
-                <button style="margin-left: 50%;" *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded mt-4" mat-flat-button
+                <button style="margin-left: 50%;" *ngIf="roleID == 1 || roleID == 3" class="fuse-mat-button-rounded mt-1" mat-flat-button
                     [color]="'primary'" (click)="appointmentDrawer.toggle();actionFormName('New Appointment')">
                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                     <span class="ml-2">New Appointment</span>
@@ -902,7 +902,7 @@
                           </button>
                         </div>
                       </div> -->
-                <div style="margin-left: 55%;" class="flex flex-cols pt-4 pr-16">
+                <div style="margin-left: 55%;" class="flex flex-cols mt-1 pr-16">
                     <div class="mr-1">
                         <button *ngIf="Histories" mat-mini-fab color="primary"
                             style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()"
@@ -1607,7 +1607,7 @@
 
                                                     </div>-->
                                                     <div class="row">
-                                                        <mat-form-field
+                                                        <!-- <mat-form-field
                                                             class="example-chip-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                                             appearance="fill">
                                                             <mat-label>
@@ -1636,7 +1636,37 @@
                                                                     {{fruit.complaintName}}
                                                                 </mat-option>
                                                             </mat-autocomplete>
-                                                        </mat-form-field>
+                                                        </mat-form-field> -->
+
+                                                        <mat-form-field
+                                                                class="example-chip-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                                                 appearance="outline">
+                                                                <mat-label>
+                                                                    Complaints (Type and select or press enter to
+                                                                    add...)
+                                                                </mat-label>
+                                                                <mat-chip-list #chipList aria-label="Fruit selection">
+                                                                    <mat-chip class="matchipheight" *ngFor="let fruit of fruits"
+                                                                        [selectable]="selectable" [removable]="removable"
+                                                                        (removed)="remove(fruit)">
+                                                                        {{fruit}}
+                                                                        <button class="cancelbtnheaight" matChipRemove *ngIf="removable">
+                                                                            <mat-icon>cancel</mat-icon>
+                                                                        </button>
+                                                                    </mat-chip>
+                                                                    <input class="alignthetext" #fruitInput [formControl]="fruitCtrl"
+                                                                        [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                                        (matChipInputTokenEnd)="add($event)">
+                                                                </mat-chip-list>
+                                                                <mat-autocomplete #auto="matAutocomplete"
+                                                                    (optionSelected)="selected($event)">
+                                                                    <mat-option *ngFor="let fruit of filteredFruits | async"
+                                                                        [value]="fruit.complaintName">
+                                                                        {{fruit.complaintName}}
+                                                                    </mat-option>
+                                                                </mat-autocomplete>
+                                                            </mat-form-field>
 
                                                     </div>
 
@@ -1744,7 +1774,7 @@
                                                       </td> -->
                                                         </ng-container>
 
-                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                        <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns1"></tr>
                                                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;">
                                                         </tr>
                                                     </table>

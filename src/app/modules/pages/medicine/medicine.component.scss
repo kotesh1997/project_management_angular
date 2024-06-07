@@ -424,7 +424,7 @@ body.light .mat-elevation-z8, body .light .mat-elevation-z8 {
 }
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0.25em 0;
-    margin-top: 1rem !important;
+    // margin-top: 1rem !important;
 }
   
   .mat-form-field-appearance-outline .mat-form-field-infix {
@@ -515,4 +515,12 @@ textarea.mat-input-element {
 }
 .height{
     height: 45px !important;
+}
+.alignthetopbtns{
+    position: relative;
+    top: 6px;
+}
+.alignthetopbtns1{
+    position: relative;
+    top: 4px;
 }

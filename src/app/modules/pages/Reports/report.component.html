@@ -18,13 +18,13 @@
                 </mat-form-field>
 
  
-                <mat-form-field  style="width: 160px;" class="col-span-2 search1 custom-background" appearance="outline">
+                <mat-form-field  style="width: 160px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [matDatepicker]="picker1" [max]="toDate" placeholder="Select From Date"  [matDatepickerFilter]="fromDateFilter" [(ngModel)]="appFromDate" [(ngModel)]="fromDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
                   
-                  <mat-form-field  style="width: 150px;" class="col-span-2 search1 custom-background" appearance="outline">
+                  <mat-form-field  style="width: 150px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
                     <input matInput [matDatepicker]="picker2" [min]="fromDate" placeholder="Select To Date" [matDatepickerFilter]="toDateFilter" [(ngModel)]="appToDate" [(ngModel)]="toDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
@@ -32,7 +32,7 @@
                   
                  
                 
-         <div class="pt-4">
+         <div class="mt-1">
                 <!-- <button style="padding-top: 30px;" mat-raised-button color="primary" >
                     Search
                   </button>  -->
@@ -48,7 +48,7 @@
             </div>
 
            
-            <div class="pt-4 ml-60" *ngIf="Repdata">
+            <div class="mt-1 ml-60" *ngIf="Repdata">
                 <label>Total Amount  : </label>
                 <label class="login_name"> {{patientTotalAmount}} /- </label>
 
