@@ -66,16 +66,20 @@
                     <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.pending }}</b></span> &nbsp;&nbsp;&nbsp;&nbsp;
                     <span class="text-lg "><b>Completed:&nbsp;&nbsp;{{ todayDataSourceBookings[0]?.completed }}</b></span> &nbsp;&nbsp;&nbsp; 
                 </div> -->
-                <div class="mt-3" *ngIf="Todays && roleID != 3 && roleID != 4 && roleID != 5">
+                <div class="mt-3" *ngIf="Todays && roleID != 2 && roleID != 3 && roleID != 4 && roleID != 5">
     <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;
-        <span class="backroundcolor">
-            {{ todayDataSourceBookings[0]?.pending }}
-        </span>
+        {{adminpending}}
     </b></span> &nbsp;&nbsp;&nbsp;&nbsp;
     <span class="text-lg"><b>Completed:&nbsp;&nbsp;
-        <span class="backroundcolor">
-            {{ todayDataSourceBookings[0]?.completed }}
-        </span>
+        {{admincomplete}}
+    </b></span> &nbsp;&nbsp;&nbsp; 
+</div>
+<div class="mt-3" *ngIf="Todays && roleID != 1 && roleID != 3 && roleID != 4 && roleID != 5">
+    <span class="text-lg alignstatus"><b>Pending:&nbsp;&nbsp;
+        {{doctorpending}}
+    </b></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="text-lg"><b>Completed:&nbsp;&nbsp;
+        {{doctorcomplete}}
     </b></span> &nbsp;&nbsp;&nbsp; 
 </div>
 

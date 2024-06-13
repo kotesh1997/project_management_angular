@@ -68,7 +68,7 @@
                   
              </div>
 
-             <mat-form-field class="custom-background mt-8" appearance="outline">
+             <mat-form-field *ngIf="Repdata" class="custom-background mt-8" appearance="outline">
                 <!-- <mat-label>Select Columns</mat-label> -->
                 <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
                   <mat-select-trigger>

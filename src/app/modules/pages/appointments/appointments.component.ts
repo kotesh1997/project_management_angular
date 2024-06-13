@@ -19,7 +19,6 @@ import * as XLSX from 'xlsx';
 import { jsPDF } from "jspdf";
 import { MatTabGroup } from '@angular/material/tabs';
 
-
 import autoTable from 'jspdf-autotable'
 
 import { GcPdfViewer } from '@grapecity/gcpdfviewer';
@@ -253,7 +252,7 @@ filename:any=[];
     selecteddiscount: any;
    
     constructor(private sanitizer: DomSanitizer,
-        
+
         public patientsService: PatientsService,
         public medicineService: MedicineService,
         private _formBuilder: FormBuilder,
@@ -469,7 +468,7 @@ handleFileUpload(event: Event) {
     @ViewChild('HistoryPaginator12') HistoryPaginator12: MatPaginator;
 
     // @ViewChild('paginator', {static: true}) paginator: MatPaginator;
-    @ViewChild('upcomingPaginator', { static: true }) upcomingPaginator: MatPaginator;
+    @ViewChild('upcomingPaginator') upcomingPaginator: MatPaginator;
     @ViewChild('appointmentForm') myForm: NgForm;
     searchKey: string;
 
@@ -652,6 +651,8 @@ columnDefinitions = [
 
 
 ];
+
+doctordetails
     ngOnInit(): void {
         //this.selecteddiscount=35
         this.panels = [
@@ -706,6 +707,9 @@ columnDefinitions = [
         //  this.formfields=true;
        // this.sorted = doctors.sort((a, b) => a.labCode> b.labCode? 1 : -1);
         debugger;
+        this.doctordetails = JSON.parse(localStorage.getItem('loginDetails'));
+        this.doctorid = this.doctordetails.registrationID
+        console.log("D Details",this.doctorid)
         this.doctors.sort();
         this.addStaticData();
         this.getDocs();
@@ -714,6 +718,7 @@ columnDefinitions = [
         this.vitalsCrud();
         this.gethistory();
         this.getAllAppointments();
+        this.getdoctordetails()
         this.getAllDoctors();
         this.getServices();
         //  this.getStatuses();
@@ -1301,6 +1306,22 @@ gethistory1(){
         }
     );
 }
+admincomplete
+adminpending
+doctorcomplete
+doctorpending
+doctorid
+getdoctordetails(){
+    debugger
+    this.utilitiesService.getAllAppointments2(this.doctorid).subscribe(
+        (data) => {
+            if (data) {
+                this.doctorcomplete = data[0].completed
+                    this.doctorpending = data[0].pending
+                console.log("doctorids",data)
+            }
+            })
+}
     getAllAppointments() {
         debugger
         this.spinner.show();
@@ -1309,6 +1330,10 @@ gethistory1(){
                 if (data) {
                     
                     this.allAppointments = data;
+                    this.doctorid = this.allAppointments[0].doctorID
+                    console.log("doctorid",this.allAppointments)
+                    this.admincomplete = this.allAppointments[0].completed
+                    this.adminpending = this.allAppointments[0].pending
                     console.log("appoint",this.allAppointments)
                     this.date = new Date();
                     this.date.setHours(0, 0, 0, 0);
