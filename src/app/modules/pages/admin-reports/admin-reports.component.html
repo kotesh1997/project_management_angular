@@ -98,6 +98,151 @@
 
 
 
+        <!-- Main -->
+        <div class="flex-auto px-8 pt-4">
+            <!-- CONTENT GOES HERE -->
+            <div class="text-xl">Service Billing</div>
+            <div class="flex flex-cols justify-between">
+                <div class=" flex flex-cols gap-2 ">
+                    <!-- *ngIf="Repdata" -->
+                    <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
+                        <mat-icon matPrefix>perm_identity</mat-icon>
+                        <input matInput [(ngModel)]="searchKey" placeholder="Search"
+                        autocomplete="off" (keyup)="applyFilter()" />
+                        <mat-icon matPrefix>search</mat-icon>
+                        <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
+                            (click)="onSearchClear()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+    
+     
+                    <mat-form-field  style="width: 160px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
+                        <input matInput [matDatepicker]="picker3" [max]="dept.toDate" placeholder="Select From Date"   [(ngModel)]="dept.fromDate"  required />
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                      </mat-form-field>
+                      
+                      <mat-form-field  style="width: 150px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
+                        <input matInput [matDatepicker]="picker4" [min]="dept.fromDate" placeholder="Select To Date"  [(ngModel)]="dept.toDate" required />
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                        <mat-datepicker #picker4></mat-datepicker>
+                      </mat-form-field>
+                      
+                     
+                    
+             <div class="mt-1">
+
+                    <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
+                     [disabled]="!dept.fromDate || !dept.toDate"
+                    [ngClass]="!dept.fromDate || !dept.toDate ? 'btnsub' : 'btnsub1'" 
+                    (click)="getServiceDetailsByDept()">
+                    
+                    <span class="ml-2">Generate</span>
+                </button>
+                    </div>     
+                </div>
+
+                <div class="flex mx-2">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                      </button>
+                    </div>
+                    <div class="">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf1()" matTooltip="Export To PDF">
+                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+    
+            <div  class="example-container mat-elevation-z8" #TABLE>
+                <table class="table1" id="table1" mat-table [dataSource]="deptReports" matSort>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="department">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
+                            Department
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.department }}
+                        </td>
+                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
+                            aaa
+                        </tfoot>     -->
+                    </ng-container>
+    
+                    <ng-container matColumnDef="service">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
+                            Service
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.service }}
+                        </td>
+                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
+                            aaa
+                        </tfoot>     -->
+                    </ng-container>
+                    <ng-container matColumnDef="count">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
+                            Count
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                       {{ element.count }}
+                        </td>
+                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
+                            aaa
+                        </tfoot> -->
+                    </ng-container>
+                    <ng-container matColumnDef="totalbill">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
+                            Total Bill
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.totalBilled }}
+                        </td>
+                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
+                            aaa
+                        </tfoot> -->
+                    </ng-container>
+                    <ng-container matColumnDef="totalcollected">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
+                            Total Collected
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.totalCollected }}
+                        </td>
+                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
+                            aaa
+                        </tfoot> -->
+                    </ng-container>
+               
+                    
+                  
+    
+                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
+                </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" #paginator2></mat-paginator>
+                
+            </div>
+    
+          
+        </div>
+
+
 
 
 
@@ -183,7 +328,7 @@
 
        
 
-        <div  class="example-container mat-elevation-z8 h-grid" >
+        <div  class="example-container mat-elevation-z8" >
             <table class="table1" id="table1" mat-table [dataSource]="patientsappointments" matSort>
                 <!-- Position Column -->
                 <ng-container matColumnDef="Patient ARCID">
@@ -290,151 +435,6 @@
 
       
     </div>
-
-
-        <!-- Main -->
-        <div class="flex-auto px-8 pt-4">
-            <!-- CONTENT GOES HERE -->
-            <div class="text-xl">Service Billing</div>
-            <div class="flex flex-cols justify-between">
-                <div class=" flex flex-cols gap-2 ">
-                    <!-- *ngIf="Repdata" -->
-                    <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
-                        <mat-icon matPrefix>perm_identity</mat-icon>
-                        <input matInput [(ngModel)]="searchKey" placeholder="Search"
-                        autocomplete="off" (keyup)="applyFilter()" />
-                        <mat-icon matPrefix>search</mat-icon>
-                        <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey"
-                            (click)="onSearchClear()">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-    
-     
-                    <mat-form-field  style="width: 160px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
-                        <input matInput [matDatepicker]="picker3" [max]="dept.toDate" placeholder="Select From Date"   [(ngModel)]="dept.fromDate"  required />
-                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                        <mat-datepicker #picker3></mat-datepicker>
-                      </mat-form-field>
-                      
-                      <mat-form-field  style="width: 150px; position: relative;bottom: 2px;" class="col-span-2 search1 custom-background" appearance="outline">
-                        <input matInput [matDatepicker]="picker4" [min]="dept.fromDate" placeholder="Select To Date"  [(ngModel)]="dept.toDate" required />
-                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                        <mat-datepicker #picker4></mat-datepicker>
-                      </mat-form-field>
-                      
-                     
-                    
-             <div class="mt-1">
-
-                    <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
-                     [disabled]="!dept.fromDate || !dept.toDate"
-                    [ngClass]="!dept.fromDate || !dept.toDate ? 'btnsub' : 'btnsub1'" 
-                    (click)="getServiceDetailsByDept()">
-                    
-                    <span class="ml-2">Generate</span>
-                </button>
-                    </div>     
-                </div>
-
-                <div class="flex mx-2">
-                    <div class="mr-1">
-                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
-                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
-                      </button>
-                    </div>
-                    <div class="">
-                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf1()" matTooltip="Export To PDF">
-                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                  <mat-form-field class="custom-background" appearance="outline">
-                    <!-- <mat-label>Select Columns</mat-label> -->
-                    <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
-                      <mat-select-trigger>
-                        <span>Select Columns</span>
-                      </mat-select-trigger>
-                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def">
-                        {{ column.displayName }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
-    
-            <div  class="example-container mat-elevation-z8 h-grid" #TABLE>
-                <table class="table1" id="table1" mat-table [dataSource]="deptReports" matSort>
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="department">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
-                            Department
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.department }}
-                        </td>
-                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
-                            aaa
-                        </tfoot>     -->
-                    </ng-container>
-    
-                    <ng-container matColumnDef="service">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
-                            Service
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.service }}
-                        </td>
-                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
-                            aaa
-                        </tfoot>     -->
-                    </ng-container>
-                    <ng-container matColumnDef="count">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
-                            Count
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                       {{ element.count }}
-                        </td>
-                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
-                            aaa
-                        </tfoot> -->
-                    </ng-container>
-                    <ng-container matColumnDef="totalbill">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
-                            Total Bill
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.totalBilled }}
-                        </td>
-                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
-                            aaa
-                        </tfoot> -->
-                    </ng-container>
-                    <ng-container matColumnDef="totalcollected">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-lg text-white">
-                            Total Collected
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.totalCollected }}
-                        </td>
-                        <!-- <tfoot mat-footer-cell *matFooterCellDef>
-                            aaa
-                        </tfoot> -->
-                    </ng-container>
-               
-                    
-                  
-    
-                    <tr mat-header-row class="height" *matHeaderRowDef="displayedColumns; sticky: true" style="background-color: #A9A9A9 ;"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                    <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr> -->
-                </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="100" #paginator2></mat-paginator>
-                
-            </div>
-    
-          
-        </div>
 
 
        

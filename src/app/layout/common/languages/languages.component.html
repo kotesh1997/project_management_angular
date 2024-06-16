@@ -27,15 +27,15 @@
 <mat-menu [xPosition]="'before'" #userActions="matMenu">
 
 
-    <button (click)="gotoSettings()" mat-menu-item > 
+    <button *ngIf="roleID ==1" (click)="gotoSettings()"  mat-menu-item > 
         <!-- <mat-icon [svgIcon]="'heroicons_outline:key'" class="mr-2"></mat-icon> -->
-        <mat-icon class="icon-size-5">settings</mat-icon>
+        <mat-icon  class="icon-size-5">settings</mat-icon>
         <span>Admin</span>
     </button>
-    <mat-divider class="my-2"></mat-divider>
+    <mat-divider *ngIf="roleID ==1" class="my-2"></mat-divider>
 
 
-    <button mat-menu-item >
+    <button (click)="goToReports()" mat-menu-item >
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span>Front Desk</span>
     </button>

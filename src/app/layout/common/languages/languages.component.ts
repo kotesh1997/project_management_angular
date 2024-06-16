@@ -3,6 +3,8 @@ import { take } from 'rxjs/operators';
 import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { Router } from '@angular/router';
+import { NavigationService } from 'app/core/navigation/navigation.service';
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
 @Component({
     selector       : 'languages',
@@ -16,7 +18,7 @@ export class LanguagesComponent implements OnInit, OnDestroy
     availableLangs: AvailableLangs;
     activeLang: string;
     flagCodes: any;
-
+    roleID
     /**
      * Constructor
      */
@@ -25,6 +27,8 @@ export class LanguagesComponent implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _translocoService: TranslocoService,
         private _router:Router,
+        private _navigationService: NavigationService,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
     )
     {
     }
@@ -56,6 +60,13 @@ export class LanguagesComponent implements OnInit, OnDestroy
             'en': 'us',
             'tr': 'tr'
         };
+
+      
+
+        // Subscribe to media changes
+       
+            this.roleID = localStorage.getItem('roleID');
+
     }
 
     /**
@@ -156,4 +167,7 @@ export class LanguagesComponent implements OnInit, OnDestroy
                 });
         }
     }
+    goToReports(){
+        this._router.navigate(['/admin-reports'])
+      }
 }

@@ -514,7 +514,25 @@ handleFileUpload(event: Event) {
         );
     }
 
-
+    truncateComposition(composition: string): string {
+        const maxLength = 63;
+        const maxWords = 10;
+      
+        // Check by character length first
+        if (composition.length > maxLength) {
+          return composition.slice(0, maxLength) + ' .......';
+        }
+      
+        // Check by word count
+        const words = composition.split(' ');
+        if (words.length > maxWords) {
+          return words.slice(0, maxWords).join(' ') + ' .......';
+        }
+      
+        return composition;
+      }
+      
+      
     updateDisplayedColumns() {
         this.displayedColumns = this.columnDefinitions
           .filter(cd => this.selectedColumns.includes(cd.def))
@@ -522,13 +540,42 @@ handleFileUpload(event: Event) {
       }
       selectedColumns: string[] = [ 
         'Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
-        'View','History'
+       'Vitals','View','History'
+    ];
+    updateDisplayedColumns6() {
+        this.displayedColumns = this.columnDefinitions6
+          .filter(cd => this.selectedColumns6.includes(cd.def))
+          .map(cd => cd.def);
+      }
+      selectedColumns6: string[] = [ 
+         'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+       'Vitals','View','History'
+    ];
+    columnDefinitions6 = [
+        { def: 'Vitals', visible: true, displayName: 'Vitals' },
+        { def: 'View', visible: true, displayName: 'View' },
+        { def: 'SL', visible: true, displayName: 'Patient ID' },
+        { def: 'Patient', visible: true, displayName: '	Patient Details' },
+        { def: 'Service', visible: true, displayName: ' Service Name' },
+        { def: 'LastVisit', visible: true, displayName: 'Last Visit' },
+        { def: 'Doctor', visible: true, displayName: '	Doctor' },
+        { def: 'Time', visible: true, displayName: 'Time' },
+        { def: 'WaitingTime', visible: true, displayName: 'Waiting Time' },
+        { def: 'Status', visible: true, displayName: '	 Status' },
+        { def: 'VisitCount', visible: true, displayName: 'Visit Count#' },
+        { def: 'ReceiptToken', visible: true, displayName: 'Token' },
+        { def: 'Billing', visible: true, displayName: '	Billing' },
+        { def: 'DuePayment', visible: true, displayName: 'Due Payment' },
+        { def: 'History', visible: true, displayName: 'History' },
+    
+    
     ];
     updateDisplayedColumnsupcoming() {
         this.displayedColumnsUpcoming = this.columnDefinitionsupcoming
           .filter(cd => this.selectedColumnsupcoming.includes(cd.def))
           .map(cd => cd.def);
       }
+   
       selectedColumnsupcoming: string[] = [ 
         'SL',
         'Patient',
@@ -633,6 +680,8 @@ debugger
 panels=[]
 testIDD
 columnDefinitions = [
+    { def: 'Vitals', visible: true, displayName: 'Vitals' },
+    { def: 'View', visible: true, displayName: 'View' },
     { def: 'Actions', visible: true, displayName: 'Actions' },
     { def: 'SL', visible: true, displayName: 'Patient ID' },
     { def: 'Patient', visible: true, displayName: '	Patient Details' },
@@ -645,7 +694,6 @@ columnDefinitions = [
     { def: 'VisitCount', visible: true, displayName: 'Visit Count#' },
     { def: 'ReceiptToken', visible: true, displayName: 'Token' },
     { def: 'Billing', visible: true, displayName: '	Billing' },
-    { def: 'View', visible: true, displayName: 'view' },
     { def: 'DuePayment', visible: true, displayName: 'Due Payment' },
     { def: 'History', visible: true, displayName: 'History' },
 
@@ -819,8 +867,8 @@ doctordetails
 
         if (this.roleID == '1') {
             this.displayedColumns = [
-                'Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
-                  'View','History'
+                'View','Actions', 'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+                  'History'
             ];
            
         }
@@ -850,8 +898,8 @@ doctordetails
         }
         else if (this.roleID == '5') {
             this.displayedColumns = [
-                'SL', 'Patient', 'Service','LastVisit', 'Time', 'WaitingTime', 'Status', 'VisitCount',
-                 'Vitals', 'View','History'
+                'Vitals', 'View','SL', 'Patient', 'Service','LastVisit', 'Time', 'WaitingTime', 'Status', 'VisitCount',
+                  'History'
             ];
         }
 
@@ -2915,29 +2963,55 @@ debugger
         }
     }
 
+    // deleteAppointment(val) {
+
+    //     this.spinner.show();
+    //     this.appt.AppointmentID = Number(val.appointmentID);
+    //     this.utilitiesService.deleteAppointment(this.appt).subscribe((data) => {
+    //         if (data) {
+    //             var c = data;
+    //             this._snackBar.open('Appointment Deleted Successfully...!!', '', {
+    //                 "duration": 2000
+    //             });
+    //             this.spinner.hide();
+    //             this.getAllAppointments();
+
+    //         }
+    //     },
+    //         (error) => {
+    //             this.spinner.hide();
+    //             this.errorMessage = error;
+    //         },
+
+    //         () => { this.spinner.hide(); }
+    //     );
+    // }
+
     deleteAppointment(val) {
-
-        this.spinner.show();
-        this.appt.AppointmentID = Number(val.appointmentID);
-        this.utilitiesService.deleteAppointment(this.appt).subscribe((data) => {
-            if (data) {
-                var c = data;
-                this._snackBar.open('Appointment Deleted Successfully...!!', '', {
-                    "duration": 2000
-                });
-                this.spinner.hide();
-                this.getAllAppointments();
-
-            }
-        },
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to delete this appointment?')) {
+            this.spinner.show();
+            this.appt.AppointmentID = Number(val.appointmentID);
+            this.utilitiesService.deleteAppointment(this.appt).subscribe((data) => {
+                if (data) {
+                    var c = data;
+                    this._snackBar.open('Appointment Deleted Successfully...!!', '', {
+                        duration: 2000
+                    });
+                    this.spinner.hide();
+                    this.getAllAppointments();
+                }
+            },
             (error) => {
                 this.spinner.hide();
                 this.errorMessage = error;
             },
-
-            () => { this.spinner.hide(); }
-        );
+            () => { 
+                this.spinner.hide(); 
+            });
+        }
     }
+    
 
     showError(msg) {
         this.toastService.show(msg, {
@@ -3663,7 +3737,7 @@ debugger
             Status = 'Completed';
         }
         else if (this.roleID == 5) {
-            Status = 'Arrived';
+            Status = 'In Progress';
         }
         let arr = [];
         arr.push({

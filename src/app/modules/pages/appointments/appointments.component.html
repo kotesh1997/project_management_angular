@@ -103,13 +103,26 @@
                 </button>
 
                 <ng-container *ngIf="Todays">
-                <mat-form-field class="custom-background" appearance="outline">
+                <mat-form-field class="custom-background" *ngIf="roleID=='1'"  appearance="outline">
                     <!-- <mat-label>Select Columns</mat-label> -->
                     <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
                       <mat-select-trigger>
                         <span>Select Columns</span>
                       </mat-select-trigger>
-                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions'">
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def" [disabled]="column.def === 'Actions' || column.def === 'Vitals' || column.def === 'View'">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+               </ng-container>
+               <ng-container *ngIf="Todays">
+                <mat-form-field class="custom-background" *ngIf="roleID!='1'" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select  multiple [(ngModel)]="selectedColumns6" (selectionChange)="updateDisplayedColumns6()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions6" [value]="column.def" [disabled]="column.def === 'Actions' || column.def === 'Vitals' || column.def === 'View'">
                         {{ column.displayName }}
                       </mat-option>
                     </mat-select>
@@ -298,7 +311,7 @@
                                 <span *ngIf="element.status =='Completed'" style="color: green">
                                     <b> {{ element.status }}</b>
                                 </span>
-                                <span *ngIf="element.status =='Arrived'" style="color: #ff4081">
+                                <span *ngIf="element.status =='In Progress'" style="color: #ff4081">
                                     <b> {{ element.status }}</b>
                                 </span>
 
@@ -423,7 +436,7 @@
                             </th>
                             <td mat-cell class="w-10" *matCellDef="let row">
 
-                                <button mat-button *ngIf="roleID=='5' && row.vitalsID"
+                                <button mat-button *ngIf="roleID=='5' && row.vitalsID && row.status !== 'Completed'"
                                     (click)="vitalsDrawer.toggle();$event.stopPropagation()">
                                     <div *ngIf="row.vitalsID" style="color: green" (click)="setValues(row)">Update
                                         Vitals
@@ -431,7 +444,7 @@
                                 </button>
 
                                 <button mat-button
-                                    *ngIf="roleID=='5' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID"
+                                    *ngIf="roleID=='5' && (row.modeofPaymentID != 5) && (row.duePayment == null || row.duePayment == '0.00') && !row.vitalsID && row.status !== 'Completed' "
                                     (click)="vitalsDrawer.toggle();$event.stopPropagation()">
 
                                     <div style="color: #ff4081"
@@ -442,6 +455,10 @@
                                     <!-- <div *ngIf="!row.vitalsID" style="color: #ff4081" (click)="rowData(row)"> Add Vitals
             </div> -->
                                 </button>
+                            
+                                <div *ngIf="roleID == '5' && row.status === 'Completed'" style="color: green">
+                                    Cannot Update
+                                </div>
                                 <!-- <button mat-button>
                 <div style="color: cornflowerblue"
                     (click)="onRowClicked(row)">Start</div>
@@ -472,9 +489,9 @@
                                     <div style="color: cornflowerblue" (click)="onRowClicked(row)">Visits</div>
 
                                 </button>
-                                <button mat-button *ngIf="roleID=='2' || roleID=='3'">
+                                <button mat-button *ngIf="roleID=='2' || roleID=='3'" matTooltip="Print">
                                     <div style="color: cornflowerblue" *ngIf="row.doctorCompleted == 1"
-                                        (click)="onRowPrintPresecptionClicked(row)">Print </div>
+                                        (click)="onRowPrintPresecptionClicked(row)"> <mat-icon>print</mat-icon></div>
                                 </button>
                             </td>
                         </ng-container>
@@ -3303,10 +3320,10 @@
                                                     <span class="service"><b>{{medList.medicine}}</b></span><br />
                                                     <span class="serviceFont" *ngFor="let item of medicinePrescepList">
                                                         <div class="composition" style="width: 40ch;" *ngIf="item.medicineName == medList.medicine">
-                                                            Composition - {{item.composition}}
+                                                            <!-- Composition - {{item.composition}} -->
+                                                            Composition - {{truncateComposition(item.composition)}}
                                                         </div>
-                                                    </span><br />
-                                                    <span class="advice"><b>Note - {{vitalsForm.get('advice').value}}</b></span>
+                                                    </span>
                                                 </td>
                                                 
                                                 
@@ -3326,13 +3343,20 @@
                                         {{medList.notes}}
                                     </td>
                                        </tr> -->
-
+                                        </ng-container>
+                                       
+                                        <ng-container>
+                                            <tr class="td_table2">
+                                     <td><span class="advice"><b>Note - {{vitalsForm.get('advice').value}}</b></span></td>  
+                                    </tr>
                                         </ng-container>
                                     </table>
+                              
 
                                 </td>
                             </tr>
                         </table>
+                       
                     
                         <table class="Payment_method_bgmcolr">
                             <!-- <tr>
