@@ -515,8 +515,8 @@ handleFileUpload(event: Event) {
     }
 
     truncateComposition(composition: string): string {
-        const maxLength = 63;
-        const maxWords = 10;
+        const maxLength = 62;
+        const maxWords = 9;
       
         // Check by character length first
         if (composition.length > maxLength) {
@@ -548,7 +548,7 @@ handleFileUpload(event: Event) {
           .map(cd => cd.def);
       }
       selectedColumns6: string[] = [ 
-         'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 'ReceiptToken','Billing','DuePayment',
+         'SL', 'Patient', 'Service','Doctor', 'Time','LastVisit', 'WaitingTime', 'Status', 'VisitCount', 
        'Vitals','View','History'
     ];
     columnDefinitions6 = [
@@ -563,9 +563,6 @@ handleFileUpload(event: Event) {
         { def: 'WaitingTime', visible: true, displayName: 'Waiting Time' },
         { def: 'Status', visible: true, displayName: '	 Status' },
         { def: 'VisitCount', visible: true, displayName: 'Visit Count#' },
-        { def: 'ReceiptToken', visible: true, displayName: 'Token' },
-        { def: 'Billing', visible: true, displayName: '	Billing' },
-        { def: 'DuePayment', visible: true, displayName: 'Due Payment' },
         { def: 'History', visible: true, displayName: 'History' },
     
     

@@ -262,36 +262,7 @@ export class AdminReportsComponent implements OnInit {
   
 
 
-// exportpdf1(){
-//   debugger
-//     var prepare=[];
-//   this.deptReports.filteredData.forEach(e=>{
-//     var tempObj =[];
-//     tempObj.push(e.department);
-//     tempObj.push(e.service);
-//     tempObj.push(e.count);
-//     tempObj.push( e.totalBilled);
-//     tempObj.push( e.totalCollected);
-//     prepare.push(tempObj);
 
-//   });
-//   const doc = new jsPDF();
-//   autoTable(doc,{
-//       head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
-//       body: prepare
-//   });
-//   doc.save('deptReports' + '.pdf');
-
-//   // const doc = new jsPDF("p", "pt", "a4");
-//   // const source = document.getElementById("table1");
-//   // // doc.text("Test", 40, 20);
-//   // doc.setFontSize(20)
-//   // doc.html(source, {
-//   //   callback: function(pdf) {
-//   //     doc.output("dataurlnewwindow"); // preview pdf file when exported
-//   //   }
-//   // });
-// }
 
 ExportTOExcel() {
   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
@@ -472,70 +443,7 @@ this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
   })
 }
 
-// getSummaryReports(){
-//   debugger
-//   this.sumrep.departmentId=1
-//   this.utilitiesService.getSummaryReports(this.cardrep).subscribe(
-//     (data) => {
-//       if (data) {
-//         this.consultation=data.result.consultation
-//         this.totalEarnings=data.result.totEarnings
-//         const resultdate=data.result.date
-//         this.date=this.datePipe.transform(resultdate, 'dd/MM/yyyy');
-//         this.summaryReports = new MatTableDataSource<any>([data.result]);
-//         this.summaryReports.sort = this.sort;
-//         this.summaryReports.paginator = this.paginator;
-//         this.ngAfterViewInit()
-//       }
-//     })
 
-// }
-
-// getCardReports(){
-//   debugger
-//   this.cardrep.departmentId=1
-//   this.utilitiesService.getCardReports(this.cardrep).subscribe(
-//     (data) => {
-//       if (data) {
-//         this.totalBilled=data.result.totBilled
-//         this.totalCollected=data.result.totCollected
-//         this.cash=data.result.cash
-//         this.card=data.result.card
-//        // this.wallet=data.result.netbanking
-//        this.billedpatients=data.result.unqBilledPatients
-//         // this.summaryReports = new MatTableDataSource<any>([data.result]);
-//         // this.summaryReports.sort = this.sort;
-//         // this.summaryReports.paginator = this.paginator;
-//       }
-//     })
-
-//     this.getSummaryReports()
-// }
-
-
-// generateReportsSetOne() {
-//   this.getServiceDetailsByDept(this.cardrep.fromDate, this.cardrep.toDate);
-// }
-
-// generateReportsSetTwo() {
-//   this.getServiceDetailsByDept(this.dept.fromDate, this.dept.toDate);
-// }
-
-// getServiceDetailsByDept(fromDate: Date, toDate: Date) {
-//   const fromDateFormatted = this.datePipe.transform(fromDate, 'dd/MM/yyyy');
-//   const toDateFormatted = this.datePipe.transform(toDate, 'dd/MM/yyyy');
-//   this.dept.departmentId = 1;
-
-//   this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
-//     (data) => {
-//       if (data) {
-//         this.deptReports = new MatTableDataSource(data.result.departmentServiceDetails);
-//         this.deptReports.sort = this.sort;
-//         this.deptReports.paginator = this.paginator;
-//       }
-//     }
-//   );
-// }
 
 getSummaryReports() {
   this.sumrep.departmentId = 1;
