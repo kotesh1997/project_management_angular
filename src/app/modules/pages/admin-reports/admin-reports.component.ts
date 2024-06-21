@@ -21,8 +21,8 @@ import {
 } from '@angular/forms';
 
 export class Dept{
-  public fromDate:Date
-  public toDate:Date
+  public fromDate:any
+  public toDate:any
   public departmentId:number
 }
 
@@ -404,7 +404,6 @@ ExportTOExcel1() {
     const dateforToday = new Date();
     this.appFromDate = new Date();
     this.appToDate = new Date();
-    this.GetPatientData(this.appFromDate, this.appToDate);
   }
 
   onSearchClear() {
@@ -413,6 +412,8 @@ ExportTOExcel1() {
 }
 applyFilter() {
     this.deptReports.filter = this.searchKey.trim().toLowerCase();
+    this.patientsappointments.filter = this.searchKey.trim().toLowerCase();
+
 }
 
 showGraph(){
@@ -429,8 +430,9 @@ syncDateSetTwo(event: MatDatepickerInputEvent<Date>, datepicker: number) {
 
 
 getServiceDetailsByDept(){
-  const fromDate=this.datePipe.transform(this.appFromDate, 'dd/MM/yyyy');
-  const toDate=this.datePipe.transform(this.appToDate, 'dd/MM/yyyy');
+  debugger
+  this.dept.fromDate=this.cardrep.fromDate, 'dd/MM/yyyy';
+  this.dept.toDate=this.cardrep.toDate, 'dd/MM/yyyy';
   this.dept.departmentId=1
 this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
   (data) => {
@@ -441,6 +443,9 @@ this.utilitiesService.getServiceDetailsByDept(this.dept).subscribe(
       this.deptReports.paginator = this.paginator2;
     }
   })
+
+  this.GetPatientData();
+
 }
 
 
@@ -466,6 +471,7 @@ getSummaryReports() {
 
 getCardReports() {
   debugger
+
   this.cardrep.departmentId = 1;
 
   this.utilitiesService.getCardReports(this.cardrep).subscribe(
@@ -481,6 +487,9 @@ getCardReports() {
   );
 
   this.getSummaryReports();
+  this.getServiceDetailsByDept();
+
+
 }
 
 
@@ -491,7 +500,8 @@ onDateChange(data) {
   //this.datepipe.transform(from, 'd MMM yyyy');
 }
 
-GetPatientData(from, to) {
+GetPatientData() {
+  debugger
   //this.appt.FromDate=from;
   // this.appt.ToDate=to;
   if (this.patientList.length > 0) {
@@ -500,8 +510,8 @@ GetPatientData(from, to) {
       this.hasData = false;
     }
 
-  this.appt.FromDate = this.datepipe.transform(from, 'd MMM yyyy');
-  this.appt.ToDate = this.datepipe.transform(to, 'd MMM yyyy');
+  this.appt.FromDate = this.cardrep.fromDate, 'd MMM yyyy';
+  this.appt.ToDate = this.cardrep.toDate, 'd MMM yyyy';
   
 
   // let arr = [];
@@ -552,13 +562,14 @@ totalPrice() {
   this.patientTotalAmount=Number(total);  
 }
 
-onSearchClear3() {
-  this.searchKey3 = "";
-  this.applyFilter3();
-}
-applyFilter3() {
-  this.patientsappointments.filter = this.searchKey3.trim().toLowerCase();
-}
+// onSearchClear3() {
+//   this.searchKey3 = "";
+//   this.applyFilter3();
+// }
+// applyFilter3() {
+//   this.patientsappointments.filter = this.searchKey3.trim().toLowerCase();
+  
+// }
 
 // exportpdf3(){
 //   debugger

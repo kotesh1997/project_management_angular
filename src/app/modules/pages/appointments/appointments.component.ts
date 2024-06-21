@@ -2538,207 +2538,448 @@ debugger
         // this.print1();
     }
 
-    print1(cmpName) {
+    // print1(cmpName) {
 
+    //     let printContents, popupWin;
+    //     printContents = document.getElementById(cmpName).innerHTML;
+    //     popupWin = window.open('', '_blank', 'top=10,left=100,height=900,width=1000');
+    //     //popupWin.document.open();
+    //     popupWin.document.write(`
+    //   <html>
+    //     <head>
+    //       <style>
+    //       body{  width: 99%;}
+    //       /**
+    //        * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
+    //        */
+    //        @media screen {
+    //            @font-face {
+    //                font-family: 'Source Sans Pro';
+    //                font-style: normal;
+    //                font-weight: 400;
+    //                src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
+    //            }
+   
+    //            @font-face {
+    //                font-family: 'Source Sans Pro';
+    //                font-style: normal;
+    //                font-weight: 700;
+    //                src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
+    //            }
+    //        }
+   
+    //        /**
+    //        * Avoid browser level font resizing.
+    //        * 1. Windows Mobile
+    //        * 2. iOS / OSX
+    //        */
+    //        body,
+    //        table,
+    //        td,
+    //        a {
+    //            -ms-text-size-adjust: 100%; /* 1 */
+    //            -webkit-text-size-adjust: 100%; /* 2 */
+    //        }
+   
+    //        /**
+    //        * Remove extra space added to tables and cells in Outlook.
+    //        */
+    //        table,
+    //        td {
+    //            mso-table-rspace: 0pt;
+    //            mso-table-lspace: 0pt;
+    //        }
+   
+    //        /**
+    //        * Better fluid images in Internet Explorer.
+    //        */
+    //        img {
+    //            -ms-interpolation-mode: bicubic;
+    //        }
+   
+    //        /**
+    //        * Remove blue links for iOS devices.
+    //        */
+    //        a[x-apple-data-detectors] {
+    //            font-family: inherit !important;
+    //            font-size: inherit !important;
+    //            font-weight: inherit !important;
+    //            line-height: inherit !important;
+    //            color: inherit !important;
+    //            text-decoration: none !important;
+    //        }
+   
+    //        /**
+    //        * Fix centering issues in Android 4.4.
+    //        */
+    //        div[style*="margin: 16px 0;"] {
+    //            margin: 0 !important;
+    //        }
+   
+    //        body {
+    //            width: 100% !important;
+    //            height: 100% !important;
+    //            padding: 0 !important;
+    //            margin: 0 !important;
+    //        }
+   
+    //        /**
+    //        * Collapse table borders to avoid space between cells.
+    //        */
+    //        table {
+    //            border-collapse: collapse !important;
+    //        }
+   
+    //        a {
+    //            color: #1a82e2;
+    //        }
+   
+    //        img {
+    //            height: auto;
+    //            line-height: 100%;
+    //            text-decoration: none;
+    //            border: 0;
+    //            outline: none;
+    //        }
+   
+    //        .heading_1 {
+    //            background-color: #fff;
+    //            padding: 36px 24px 0;
+    //            border-top: 3px solid #d4dadf;
+    //            font-family: sans-serif;
+    //            font-size: 21px;
+    //            font-weight: bold;
+    //            letter-spacing: 0.2px;
+    //        }
+   
+    //        .tocken_no{
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    //    font-size: 16px;
+    //    font-weight: bold;
+    //        }
+    //         .td_style{
+    //            padding: 24px; 
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            width: 50%;padding-bottom: 0px;
+    //            padding-top: 10px;
+    //        }
+           
+    //        .td_table{
+    //            text-align: left;
+    //            background-color:#D2C7BA;
+    //             width:100%;
+    //            padding: 12px;
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            font-size: 16px; line-height: 24px;
+    //        }
+    //        .td_table1{
+    //          text-align: left;
+    //           width:100%;
+    //            padding: 12px;
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            font-size: 16px; line-height: 24px;
+    //        }
+    //        .td_table2{
+    //            text-align: left; 
+    //            width:50%;
+    //            padding: 12px; 
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            font-size: 16px; line-height: 24px; 
+    //            border-top: 2px dashed #D2C7BA; 
+    //            border-bottom: 2px dashed #D2C7BA;
+    //        }
+    //        .td_table3{
+    //            text-align: left; 
+    //            width:50%;
+    //            padding: 12px; 
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            font-size: 16px; line-height: 24px; 
+    //            border-top: 2px dashed #D2C7BA; 
+    //            border-bottom: 2px dashed #D2C7BA;
+    //        }
+    //        .Payment_row{
+    //            text-align: left;
+    //            background-color:#ffffff;
+    //            padding: 24px; 
+    //            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //            font-size: 16px; line-height: 24px;
+               
+    //        }
+    //        .payment_Receipt{
+    //            text-align: left;
+    //            background-color: #ffffff;
+    //            padding: 36px 24px 0; 
+    //            border-top: 3px solid #d4dadf;width:30%;
+    //        }
+    //        .Token_No{
+    //        width: 100%; 
+    //        max-width: 600px;
+    //        border-top:1px solid #c1c1c1;
+    //        background-color: #fff;
+   
+    //            }
+    //            .Payment_method_bgmcolr{
+    //                width: 600px;
+    //                background-color: #fff;
+    //            }
+               
+    //         //    .Adress_row{
+    //         //        text-align: left;
+    //         //       padding-bottom: 36px; 
+    //         //        padding-left: 36px; 
+    //         //        font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+    //         //        font-size: 16px; line-height: 24px;
+    //         //    }
+
+    //            .Adress_row {
+    //                 position: absolute;
+    //                 bottom: 0;
+    //                 left: 0;
+    //                 text-align: left;
+    //                 padding-bottom: 36px;
+    //                 padding-left: 36px;
+    //                 font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    //                 font-size: 16px;
+    //                 line-height: 24px;
+    //             }
+
+   
+    //       </style>
+    //     </head>
+    // <body onload="window.print();window.close()">${printContents}</body>
+    //   </html>`
+    //     );
+    //     popupWin.document.close();
+
+    // }
+
+     print1(cmpName) {
         let printContents, popupWin;
         printContents = document.getElementById(cmpName).innerHTML;
         popupWin = window.open('', '_blank', 'top=10,left=100,height=900,width=1000');
-        //popupWin.document.open();
         popupWin.document.write(`
-      <html>
-        <head>
-          <style>
-          body{  width: 99%;}
-          /**
-           * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
-           */
-           @media screen {
-               @font-face {
-                   font-family: 'Source Sans Pro';
-                   font-style: normal;
-                   font-weight: 400;
-                   src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
-               }
-   
-               @font-face {
-                   font-family: 'Source Sans Pro';
-                   font-style: normal;
-                   font-weight: 700;
-                   src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
-               }
-           }
-   
-           /**
-           * Avoid browser level font resizing.
-           * 1. Windows Mobile
-           * 2. iOS / OSX
-           */
-           body,
-           table,
-           td,
-           a {
-               -ms-text-size-adjust: 100%; /* 1 */
-               -webkit-text-size-adjust: 100%; /* 2 */
-           }
-   
-           /**
-           * Remove extra space added to tables and cells in Outlook.
-           */
-           table,
-           td {
-               mso-table-rspace: 0pt;
-               mso-table-lspace: 0pt;
-           }
-   
-           /**
-           * Better fluid images in Internet Explorer.
-           */
-           img {
-               -ms-interpolation-mode: bicubic;
-           }
-   
-           /**
-           * Remove blue links for iOS devices.
-           */
-           a[x-apple-data-detectors] {
-               font-family: inherit !important;
-               font-size: inherit !important;
-               font-weight: inherit !important;
-               line-height: inherit !important;
-               color: inherit !important;
-               text-decoration: none !important;
-           }
-   
-           /**
-           * Fix centering issues in Android 4.4.
-           */
-           div[style*="margin: 16px 0;"] {
-               margin: 0 !important;
-           }
-   
-           body {
-               width: 100% !important;
-               height: 100% !important;
-               padding: 0 !important;
-               margin: 0 !important;
-           }
-   
-           /**
-           * Collapse table borders to avoid space between cells.
-           */
-           table {
-               border-collapse: collapse !important;
-           }
-   
-           a {
-               color: #1a82e2;
-           }
-   
-           img {
-               height: auto;
-               line-height: 100%;
-               text-decoration: none;
-               border: 0;
-               outline: none;
-           }
-   
-           .heading_1 {
-               background-color: #fff;
-               padding: 36px 24px 0;
-               border-top: 3px solid #d4dadf;
-               font-family: sans-serif;
-               font-size: 21px;
-               font-weight: bold;
-               letter-spacing: 0.2px;
-           }
-   
-           .tocken_no{
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-       font-size: 16px;
-       font-weight: bold;
-           }
-            .td_style{
-               padding: 24px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               width: 50%;padding-bottom: 0px;
-               padding-top: 10px;
-           }
-           
-           .td_table{
-               text-align: left;
-               background-color:#D2C7BA;
-                width:100%;
-               padding: 12px;
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px;
-           }
-           .td_table1{
-             text-align: left;
-              width:100%;
-               padding: 12px;
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px;
-           }
-           .td_table2{
-               text-align: left; 
-               width:50%;
-               padding: 12px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px; 
-               border-top: 2px dashed #D2C7BA; 
-               border-bottom: 2px dashed #D2C7BA;
-           }
-           .td_table3{
-               text-align: left; 
-               width:50%;
-               padding: 12px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px; 
-               border-top: 2px dashed #D2C7BA; 
-               border-bottom: 2px dashed #D2C7BA;
-           }
-           .Payment_row{
-               text-align: left;
-               background-color:#ffffff;
-               padding: 24px; 
-               font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-               font-size: 16px; line-height: 24px;
-               
-           }
-           .payment_Receipt{
-               text-align: left;
-               background-color: #ffffff;
-               padding: 36px 24px 0; 
-               border-top: 3px solid #d4dadf;width:30%;
-           }
-           .Token_No{
-           width: 100%; 
-           max-width: 600px;
-           border-top:1px solid #c1c1c1;
-           background-color: #fff;
-   
-               }
-               .Payment_method_bgmcolr{
-                   width: 600px;
-                   background-color: #fff;
-               }
-               
-               .Adress_row{
-                   text-align: left;
-                  padding-bottom: 36px; 
-                   padding-left: 36px; 
-                   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-                   font-size: 16px; line-height: 24px;
-               }
-   
-          </style>
-        </head>
-    <body onload="window.print();window.close()">${printContents}</body>
-      </html>`
-        );
+            <html>
+                <head>
+                    <style>
+                        body {
+                            width: 99%;
+                        }
+    
+                        /**
+                         * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
+                         */
+                        @media screen {
+                            @font-face {
+                                font-family: 'Source Sans Pro';
+                                font-style: normal;
+                                font-weight: 400;
+                                src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
+                            }
+    
+                            @font-face {
+                                font-family: 'Source Sans Pro';
+                                font-style: normal;
+                                font-weight: 700;
+                                src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
+                            }
+                        }
+    
+                        /**
+                         * Avoid browser level font resizing.
+                         * 1. Windows Mobile
+                         * 2. iOS / OSX
+                         */
+                        body,
+                        table,
+                        td,
+                        a {
+                            -ms-text-size-adjust: 100%; /* 1 */
+                            -webkit-text-size-adjust: 100%; /* 2 */
+                        }
+    
+                        /**
+                         * Remove extra space added to tables and cells in Outlook.
+                         */
+                        table,
+                        td {
+                            mso-table-rspace: 0pt;
+                            mso-table-lspace: 0pt;
+                        }
+    
+                        /**
+                         * Better fluid images in Internet Explorer.
+                         */
+                        img {
+                            -ms-interpolation-mode: bicubic;
+                        }
+    
+                        /**
+                         * Remove blue links for iOS devices.
+                         */
+                        a[x-apple-data-detectors] {
+                            font-family: inherit !important;
+                            font-size: inherit !important;
+                            font-weight: inherit !important;
+                            line-height: inherit !important;
+                            color: inherit !important;
+                            text-decoration: none !important;
+                        }
+    
+                        /**
+                         * Fix centering issues in Android 4.4.
+                         */
+                        div[style*="margin: 16px 0;"] {
+                            margin: 0 !important;
+                        }
+    
+                        body {
+                            width: 100% !important;
+                            height: 100% !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                        }
+    
+                        /**
+                         * Collapse table borders to avoid space between cells.
+                         */
+                        table {
+                            border-collapse: collapse !important;
+                        }
+    
+                        a {
+                            color: #1a82e2;
+                        }
+    
+                        img {
+                            height: auto;
+                            line-height: 100%;
+                            text-decoration: none;
+                            border: 0;
+                            outline: none;
+                        }
+    
+                        .heading_1 {
+                            background-color: #fff;
+                            padding: 36px 24px 0;
+                            border-top: 3px solid #d4dadf;
+                            font-family: sans-serif;
+                            font-size: 21px;
+                            font-weight: bold;
+                            letter-spacing: 0.2px;
+                        }
+    
+                        .tocken_no {
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+    
+                        .td_style {
+                            padding: 24px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            width: 50%;
+                            padding-bottom: 0px;
+                            padding-top: 10px;
+                        }
+    
+                        .td_table {
+                            text-align: left;
+                            background-color: #d2c7ba;
+                            width: 100%;
+                            padding: 12px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+    
+                        .td_table1 {
+                            text-align: left;
+                            width: 100%;
+                            padding: 12px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+    
+                        .td_table2 {
+                            text-align: left;
+                            width: 50%;
+                            padding: 12px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                            border-top: 2px dashed #d2c7ba;
+                            border-bottom: 2px dashed #d2c7ba;
+                        }
+    
+                        .td_table3 {
+                            text-align: left;
+                            width: 50%;
+                            padding: 12px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                            border-top: 2px dashed #d2c7ba;
+                            border-bottom: 2px dashed #d2c7ba;
+                        }
+    
+                        .Payment_row {
+                            text-align: left;
+                            background-color: #ffffff;
+                            padding: 24px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+    
+                        .payment_Receipt {
+                            text-align: left;
+                            background-color: #ffffff;
+                            padding: 36px 24px 0;
+                            border-top: 3px solid #d4dadf;
+                            width: 30%;
+                        }
+    
+                        .Token_No {
+                            width: 100%;
+                            max-width: 600px;
+                            border-top: 1px solid #c1c1c1;
+                            background-color: #fff;
+                        }
+    
+                        .Payment_method_bgmcolr {
+                            width: 600px;
+                            background-color: #fff;
+                        }
+    
+                        .Adress_row {
+                            position: fixed;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            text-align: left;
+                            padding-bottom: 36px;
+                            padding-left: 36px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
+                    </style>
+                </head>
+                <body onload="window.print();window.close()">
+                    ${printContents}
+                    <div class="Adress_row">
+                        <!-- Content of Adress_row that should appear on every page -->
+                        Address content here...
+                    </div>
+                </body>
+            </html>
+        `);
         popupWin.document.close();
-
     }
+    
+    
+    
     toggle() {
         this.showHideDiv = !this.showHideDiv;
     }

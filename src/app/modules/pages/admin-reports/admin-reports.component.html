@@ -14,6 +14,16 @@
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
               
+              <mat-form-field class="col-span-2 search1 custom-background" appearance="outline">
+                <mat-icon matPrefix>perm_identity</mat-icon>
+                <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()" />
+                <mat-icon matPrefix>search</mat-icon>
+                <button mat-button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey" (click)="onSearchClear()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              
+              
              
             
      <div class="mt-1">
@@ -101,11 +111,9 @@
         <!-- Main -->
         <div class="flex-auto px-8 pt-4">
             <!-- CONTENT GOES HERE -->
-            <div class="text-xl">Service Billing</div>
-            <div class="flex flex-cols justify-between">
-                <div class=" flex flex-cols gap-2 ">
+                <!-- <div class=" flex flex-cols gap-2 "> -->
                     <!-- *ngIf="Repdata" -->
-                    <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
+                    <!-- <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
                         <mat-icon matPrefix>perm_identity</mat-icon>
                         <input matInput [(ngModel)]="searchKey" placeholder="Search"
                         autocomplete="off" (keyup)="applyFilter()" />
@@ -127,21 +135,26 @@
                         <input matInput [matDatepicker]="picker4" [min]="dept.fromDate" placeholder="Select To Date"  [(ngModel)]="dept.toDate" required />
                         <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                         <mat-datepicker #picker4></mat-datepicker>
-                      </mat-form-field>
+                      </mat-form-field> -->
                       
                      
                     
              <div class="mt-1">
 
-                    <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
+                    <!-- <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
                      [disabled]="!dept.fromDate || !dept.toDate"
                     [ngClass]="!dept.fromDate || !dept.toDate ? 'btnsub' : 'btnsub1'" 
                     (click)="getServiceDetailsByDept()">
                     
                     <span class="ml-2">Generate</span>
-                </button>
+                </button> -->
                     </div>     
-                </div>
+                <!-- </div> -->
+
+                <!-- <div class="text-xl">Service Billing</div>
+
+                <div class="flex flex-cols justify-end">
+
 
                 <div class="flex mx-2">
                     <div class="mr-1">
@@ -156,7 +169,6 @@
                     </div>
                   </div>
                   <mat-form-field class="custom-background" appearance="outline">
-                    <!-- <mat-label>Select Columns</mat-label> -->
                     <mat-select  multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
                       <mat-select-trigger>
                         <span>Select Columns</span>
@@ -166,7 +178,37 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-            </div>
+            </div> -->
+
+            <div class="flex justify-between items-center">
+                <div class="text-xl">Service Billing</div>
+                <div class="flex items-center">
+                  <div class="flex mx-2">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel()" matTooltip="Export To Excel">
+                        <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
+                      </button>
+                    </div>
+                    <div class="">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf1()" matTooltip="Export To PDF">
+                        <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select multiple [(ngModel)]="selectedColumns" (selectionChange)="updateDisplayedColumns()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions" [value]="column.def">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
     
             <div  class="example-container mat-elevation-z8" #TABLE>
                 <table class="table1" id="table1" mat-table [dataSource]="deptReports" matSort>
@@ -255,10 +297,10 @@
 
     <div   class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
-        <div class="flex flex-cols justify-between">
-            <div class=" flex flex-cols gap-2 ">
+        <!-- <div class="flex flex-cols justify-end"> -->
+            <!-- <div class=" flex flex-cols gap-2 "> -->
                 <!-- *ngIf="Repdata" -->
-                <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
+                <!-- <mat-form-field  class="col-span-2 search1 custom-background" appearance="outline">
                     <mat-icon matPrefix>perm_identity</mat-icon>
                     <input matInput [(ngModel)]="searchKey3" placeholder="Search"
                     autocomplete="off" (keyup)="applyFilter3()" />
@@ -280,7 +322,7 @@
                     <input matInput [matDatepicker]="picker6" [min]="fromDate" placeholder="Select To Date"  [(ngModel)]="appToDate" [(ngModel)]="toDate" required />
                     <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                     <mat-datepicker #picker6></mat-datepicker>
-                  </mat-form-field>
+                  </mat-form-field> -->
                   
                   <!-- <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
             mat-flat-button [color]="'primary'"
@@ -289,42 +331,49 @@
             <span class="ml-2">Search</span>
         </button> -->
                 
-         <div class="mt-1">
+         <!-- <div class="mt-1">
 
             <button  class="fuse-mat-button-rounded  flex flex-col justify-end"
             [disabled]="!fromDate || !toDate"
            [ngClass]="!fromDate || !toDate ? 'btnsub' : 'btnsub1'" 
-           (click)="GetPatientData(appFromDate,appToDate)">
+           (click)="GetPatientData()">
            
            <span class="ml-2">Search</span>
        </button>
         
-                </div>     
-            </div>
-            <div class="flex mx-2">
-                <div class="mr-1">
-                    <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel3()" matTooltip="Export To Excel">
+                </div>      -->
+            <!-- </div> -->
+            
+
+            <div class="flex justify-between items-center">
+                <div class="text-xl">Patient Details</div>
+                <div class="flex items-center">
+                  <div class="flex mx-2">
+                    <div class="mr-1">
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="ExportTOExcel3()" matTooltip="Export To Excel">
                         <mat-icon svgIcon="mat_outline:sim_card_download"></mat-icon>
                       </button>
-                </div>
-                <div class="">
-                    <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf3()" matTooltip="Export To PDF">
+                    </div>
+                    <div>
+                      <button mat-mini-fab color="primary" style="background-color: #ff7633 !important; box-shadow: none;" (click)="exportpdf3()" matTooltip="Export To PDF">
                         <mat-icon svgIcon="mat_outline:picture_as_pdf"></mat-icon>
                       </button>
+                    </div>
+                  </div>
+                  <mat-form-field class="custom-background" appearance="outline">
+                    <!-- <mat-label>Select Columns</mat-label> -->
+                    <mat-select multiple [(ngModel)]="selectedColumns3" (selectionChange)="updateDisplayedColumns3()">
+                      <mat-select-trigger>
+                        <span>Select Columns</span>
+                      </mat-select-trigger>
+                      <mat-option *ngFor="let column of columnDefinitions3" [value]="column.def">
+                        {{ column.displayName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
-              <mat-form-field class="custom-background" appearance="outline">
-                <!-- <mat-label>Select Columns</mat-label> -->
-                <mat-select  multiple [(ngModel)]="selectedColumns3" (selectionChange)="updateDisplayedColumns3()">
-                  <mat-select-trigger>
-                    <span>Select Columns</span>
-                  </mat-select-trigger>
-                  <mat-option *ngFor="let column of columnDefinitions3" [value]="column.def">
-                    {{ column.displayName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-        </div>
+              
 
        
 
@@ -438,7 +487,6 @@
 
 
        
-    </div>
     
     <!-- </div> -->
 
