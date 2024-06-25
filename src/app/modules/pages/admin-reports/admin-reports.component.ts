@@ -211,53 +211,108 @@ export class AdminReportsComponent implements OnInit {
   
 
   
-  exportpdf1() {
-    const prepare = [];
-    this.deptReports.filteredData.forEach(e => {
-        const tempObj = [];
-        tempObj.push(e.department);
-        tempObj.push(e.service);
-        tempObj.push(e.count);
-        tempObj.push(e.totalBilled);
-        tempObj.push(e.totalCollected);
-        prepare.push(tempObj);
-    });
+//   exportpdf1() {
+//     const prepare = [];
+//     this.deptReports.filteredData.forEach(e => {
+//         const tempObj = [];
+//         tempObj.push(e.department);
+//         tempObj.push(e.service);
+//         tempObj.push(e.count);
+//         tempObj.push(e.totalBilled);
+//         tempObj.push(e.totalCollected);
+//         prepare.push(tempObj);
+//     });
 
-    const doc = new jsPDF();
+//     const doc = new jsPDF();
     
-    // Add logo
-    const logo = new Image();
-    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
-    logo.onload = () => {
-        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+//     // Add logo
+//     const logo = new Image();
+//     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+//     logo.onload = () => {
+//         doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
         
-        // Add title
-        doc.setFontSize(12);
+//         // Add title
+//         doc.setFontSize(12);
 
-        // Format and add selected dates with left padding
-        const fromDate = this.formatDate(this.dept.fromDate);
-        const toDate = this.formatDate(this.dept.toDate);
-        doc.text(`From Date: ${fromDate.padStart(10)}  To Date: ${toDate.padStart(10)}`, 105, 40); // Adjust the x-coordinate to move the dates slightly to the right and add padding
+//         // Format and add selected dates with left padding
+//         const fromDate = this.formatDate(this.dept.fromDate);
+//         const toDate = this.formatDate(this.dept.toDate);
+//         doc.text(`From Date: ${fromDate.padStart(10)}  To Date: ${toDate.padStart(10)}`, 105, 40); // Adjust the x-coordinate to move the dates slightly to the right and add padding
 
-        // Add table
-        autoTable(doc, {
-            head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
-            body: prepare,
-            startY: 50 // adjust the start position as needed
-        });
-        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
-        doc.setFontSize(10);
-        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
-        // Save PDF
-        doc.save('deptReports.pdf');
-    };
+//         // Add table
+//         autoTable(doc, {
+//             head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
+//             body: prepare,
+//             startY: 50 // adjust the start position as needed
+//         });
+//         const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+//         doc.setFontSize(10);
+//         doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+//         // Save PDF
+//         doc.save('deptReports.pdf');
+//     };
+// }
+
+
+exportpdf1() {
+  const prepare = [];
+  this.deptReports.filteredData.forEach(e => {
+      const tempObj = [];
+      tempObj.push(e.department);
+      tempObj.push(e.service);
+      tempObj.push(e.count);
+      tempObj.push(e.totalBilled);
+      tempObj.push(e.totalCollected);
+      prepare.push(tempObj);
+  });
+
+  const doc = new jsPDF();
+
+  // Format and add selected dates with left padding
+  const fromDate = this.formatDate(this.dept.fromDate);
+  const toDate = this.formatDate(this.dept.toDate);
+
+  const addHeader = (doc, logo, fromDate, toDate) => {
+      doc.addImage(logo, 'PNG', 10, 10, 50, 20); // Add logo
+      doc.setFontSize(12);
+      const textWidth = doc.getTextWidth(`From Date: ${fromDate.padStart(10)}  To Date: ${toDate.padStart(10)}`);
+      const startX = (doc.internal.pageSize.width - textWidth) / 2; // Align text in the middle
+      doc.text(`From Date: ${fromDate.padStart(10)}  To Date: ${toDate.padStart(10)}`, startX, 40);
+  };
+
+  // Load logo and generate PDF
+  const logo = new Image();
+  logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+  logo.onload = () => {
+      // Add the first page header
+      addHeader(doc, logo, fromDate, toDate);
+
+      // Add table with margins to avoid overlapping with header and footer
+      autoTable(doc, {
+          head: [['Department', 'Service', 'Count', 'Total Bill', 'Total Collected']],
+          body: prepare,
+          startY: 50, // Start position below the header
+          margin: { left: 10, right: 10, bottom: 30, top: 50 }, // Margins to avoid overlap
+          didDrawPage: function (data) {
+              if (data.pageNumber > 1) {
+                  addHeader(doc, logo, fromDate, toDate);
+              }
+
+              // Footer
+              const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+              doc.setFontSize(10);
+              doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+          }
+      });
+
+      // Save PDF
+      doc.save('deptReports.pdf');
+  };
 }
 
+
   
-  formatDate(date: Date): string {
-      const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
-      return date.toLocaleDateString('en-US', options);
-  }
+ 
   
   
 
@@ -500,59 +555,131 @@ onDateChange(data) {
   //this.datepipe.transform(from, 'd MMM yyyy');
 }
 
-GetPatientData() {
-  debugger
-  //this.appt.FromDate=from;
-  // this.appt.ToDate=to;
-  if (this.patientList.length > 0) {
-      this.hasData = true;
-    } else {
-      this.hasData = false;
-    }
+// GetPatientData() {
+//   debugger
+//   //this.appt.FromDate=from;
+//   // this.appt.ToDate=to;
+//   if (this.patientList.length > 0) {
+//       this.hasData = true;
+//     } else {
+//       this.hasData = false;
+//     }
 
-  this.appt.FromDate = this.cardrep.fromDate, 'd MMM yyyy';
-  this.appt.ToDate = this.cardrep.toDate, 'd MMM yyyy';
+//   this.appt.FromDate = this.cardrep.fromDate, 'd MMM yyyy';
+//   this.appt.ToDate = this.cardrep.toDate, 'd MMM yyyy';
   
 
-  // let arr = [];
-  // arr.push({ fromDate: from })
-  // arr.push({ toDate: to })
+//   // let arr = [];
+//   // arr.push({ fromDate: from })
+//   // arr.push({ toDate: to })
 
+//   debugger;
+//   this.reportService.getReportPatientList(this.appt).subscribe(
+//       (data) => {
+//           debugger;
+//           if (data) {
+//               if (this.roleID == 2) {
+//                   this.patientsappointments = data;
+//                   this.patientsappointments = this.patientsappointments.filter((a) => a.doctorID == this.registrationID);
+//               }
+//               else {
+//                   this.patientsappointments = data;
+//               }
+//               this.patientList = data;
+//               if(this.patientsappointments.length>0){
+//                   this.Repdata=true
+//               }
+//               else{
+//                   this.Repdata=false
+//               }
+
+//               this.patientsappointments = new MatTableDataSource(this.patientsappointments);                   
+//               this.patientsappointments.sort = this.sort;
+//               // this.patientsappointments.paginator = this.paginator;
+//               this.patientsappointments.paginator = this.paginator1;
+//               this.totalPrice();
+//           }
+//       },
+
+//       () => {
+
+//       }
+
+//   );
+
+// }
+
+
+
+// formatDate(date: Date): string {
+//   const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+//   return date.toLocaleDateString('en-US', options);
+// }
+
+
+
+GetPatientData() {
   debugger;
+  // Assuming this.cardrep.fromDate and this.cardrep.toDate are valid date strings
+  let fromDate = new Date(this.cardrep.fromDate);
+  let toDate = new Date(this.cardrep.toDate);
+
+  // Ensure the dates are correctly set (timezone adjustment if necessary)
+  fromDate.setHours(0, 0, 0, 0); // Adjust time to midnight to avoid timezone issues
+  toDate.setHours(0, 0, 0, 0); // Adjust time to midnight to avoid timezone issues
+
+  // Log the dates to ensure they are correct
+  console.log("Adjusted FromDate:", fromDate);
+  console.log("Adjusted ToDate:", toDate);
+
+  // Format dates as 'd MMM yyyy'
+  this.appt.FromDate = this.formatDate(fromDate);
+  this.appt.ToDate = this.formatDate(toDate);
+
+  if (this.patientList.length > 0) {
+    this.hasData = true;
+  } else {
+    this.hasData = false;
+  }
+
+  // Debug log to see the payload
+  console.log("Payload:", this.appt);
+
   this.reportService.getReportPatientList(this.appt).subscribe(
-      (data) => {
-          debugger;
-          if (data) {
-              if (this.roleID == 2) {
-                  this.patientsappointments = data;
-                  this.patientsappointments = this.patientsappointments.filter((a) => a.doctorID == this.registrationID);
-              }
-              else {
-                  this.patientsappointments = data;
-              }
-              this.patientList = data;
-              if(this.patientsappointments.length>0){
-                  this.Repdata=true
-              }
-              else{
-                  this.Repdata=false
-              }
+    (data) => {
+      debugger;
+      if (data) {
+        if (this.roleID == 2) {
+          this.patientsappointments = data;
+          this.patientsappointments = this.patientsappointments.filter((a) => a.doctorID == this.registrationID);
+        } else {
+          this.patientsappointments = data;
+        }
+        this.patientList = data;
+        if (this.patientsappointments.length > 0) {
+          this.Repdata = true;
+        } else {
+          this.Repdata = false;
+        }
 
-              this.patientsappointments = new MatTableDataSource(this.patientsappointments);                   
-              this.patientsappointments.sort = this.sort;
-              // this.patientsappointments.paginator = this.paginator;
-              this.patientsappointments.paginator = this.paginator1;
-              this.totalPrice();
-          }
-      },
-
-      () => {
-
+        this.patientsappointments = new MatTableDataSource(this.patientsappointments);
+        this.patientsappointments.sort = this.sort;
+        this.patientsappointments.paginator = this.paginator1;
+        this.totalPrice();
       }
-
+    },
+    (error) => {
+      // Handle error
+      console.error("Error:", error);
+    }
   );
-
 }
+
+formatDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+  return date.toLocaleDateString('en-GB', options); // Using 'en-GB' for 'd MMM yyyy' format
+}
+
 
 totalPrice() {
   let total = Number(0);
@@ -609,62 +736,134 @@ totalPrice() {
 // }
 
 
-exportpdf3() {
-    const prepare = [];
-    this.patientsappointments.filteredData.forEach(e => {
-        const tempObj = [];
-        tempObj.push(e.appointmentID);
-        tempObj.push(e.patientARCID);
-        tempObj.push(e.patient);
-        tempObj.push(e.gender);
-        tempObj.push(e.age);
-        tempObj.push(e.mobile);
-        tempObj.push(e.serviceName);
-        tempObj.push(e.serviceDate);
-        tempObj.push(e.discount);
-        tempObj.push(e.payment);
-        tempObj.push(e.modeofPayment);
-        prepare.push(tempObj);
-    });
+// exportpdf3() {
+//     const prepare = [];
+//     this.patientsappointments.filteredData.forEach(e => {
+//         const tempObj = [];
+//         tempObj.push(e.appointmentID);
+//         tempObj.push(e.patientARCID);
+//         tempObj.push(e.patient);
+//         tempObj.push(e.gender);
+//         tempObj.push(e.age);
+//         tempObj.push(e.mobile);
+//         tempObj.push(e.serviceName);
+//         tempObj.push(e.serviceDate);
+//         tempObj.push(e.discount);
+//         tempObj.push(e.payment);
+//         tempObj.push(e.modeofPayment);
+//         prepare.push(tempObj);
+//     });
 
-    const doc = new jsPDF();
+//     const doc = new jsPDF();
     
-    // Add logo
-    const logo = new Image();
-    logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
-    logo.onload = () => {
-        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+//     // Add logo
+//     const logo = new Image();
+//     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+//     logo.onload = () => {
+//         doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
         
-        // Format dates to "25 May 2024"
-        const formatDate = (date) => {
-            const d = new Date(date);
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
-        };
+//         // Format dates to "25 May 2024"
+//         const formatDate = (date) => {
+//             const d = new Date(date);
+//             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//             return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+//         };
 
-        const formattedFromDate = formatDate(this.appFromDate);
-        const formattedToDate = formatDate(this.appToDate);
+//         const formattedFromDate = formatDate(this.appFromDate);
+//         const formattedToDate = formatDate(this.appToDate);
         
-        // Add date range in a single line with padding left 10px and space between dates
-        doc.setFontSize(12);
-        const textWidth = doc.getTextWidth(`From Date: ${formattedFromDate}  to  ${formattedToDate}`);
-        const startX = (doc.internal.pageSize.width - textWidth) / 2; // Align text in the middle
-        doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
+//         // Add date range in a single line with padding left 10px and space between dates
+//         doc.setFontSize(12);
+//         const textWidth = doc.getTextWidth(`From Date: ${formattedFromDate}  to  ${formattedToDate}`);
+//         const startX = (doc.internal.pageSize.width - textWidth) / 2; // Align text in the middle
+//         doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
 
-        // Add table with reduced distance between dates and table data
-        autoTable(doc, {
-            head: [[' SL', 'Patient ARCID', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Discount', 'Payment', 'Mode of Payment']],
-            body: prepare,
-            startY: 50, // adjust the start position to reduce distance
-            margin: { left: 10, right: 10 } // setting left and right margins to 10
-        });
-        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
-        doc.setFontSize(10);
-        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+//         // Add table with reduced distance between dates and table data
+//         autoTable(doc, {
+//             head: [[' SL', 'Patient ARCID', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Discount', 'Payment', 'Mode of Payment']],
+//             body: prepare,
+//             startY: 50, // adjust the start position to reduce distance
+//             margin: { left: 10, right: 10 } // setting left and right margins to 10
+//         });
+//         const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+//         doc.setFontSize(10);
+//         doc.text(footerText, 13, doc.internal.pageSize.height - 20);
 
-        // Save PDF
-        doc.save('Reports.pdf');
-    };
+//         // Save PDF
+//         doc.save('Reports.pdf');
+//     };
+// }
+
+
+exportpdf3() {
+  const prepare = [];
+  this.patientsappointments.filteredData.forEach(e => {
+      const tempObj = [];
+      tempObj.push(e.appointmentID);
+      tempObj.push(e.patientARCID);
+      tempObj.push(e.patient);
+      tempObj.push(e.gender);
+      tempObj.push(e.age);
+      tempObj.push(e.mobile);
+      tempObj.push(e.serviceName);
+      tempObj.push(e.serviceDate);
+      tempObj.push(e.discount);
+      tempObj.push(e.payment);
+      tempObj.push(e.modeofPayment);
+      prepare.push(tempObj);
+  });
+
+  const doc = new jsPDF();
+  
+  // Add logo
+  const logo = new Image();
+  logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+  logo.onload = () => {
+      // Format dates to "25 May 2024"
+      const formatDate = (date) => {
+          const d = new Date(date);
+          const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+      };
+
+      const formattedFromDate = formatDate(this.appFromDate);
+      const formattedToDate = formatDate(this.appToDate);
+
+      const addHeader = (doc, logo, formattedFromDate, formattedToDate) => {
+          // Add logo
+          doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+
+          // Add date range
+          doc.setFontSize(12);
+          const textWidth = doc.getTextWidth(`From Date: ${formattedFromDate}  to  ${formattedToDate}`);
+          const startX = (doc.internal.pageSize.width - textWidth) / 2; // Align text in the middle
+          doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, startX, 40);
+      };
+
+      // Add the first page header
+      addHeader(doc, logo, formattedFromDate, formattedToDate);
+
+      // Add table with reduced distance between dates and table data
+      autoTable(doc, {
+          head: [['SL', 'Patient ARCID', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Discount', 'Payment', 'Mode of Payment']],
+          body: prepare,
+          startY: 50, // Adjust the start position to leave space for the header
+          margin: { left: 10, right: 10, bottom: 30, top: 50 }, // Setting left, right margins to 10, bottom margin to 30, and top margin to 50 to avoid overlap
+          didDrawPage: function (data) {
+              if (data.pageNumber > 1) {
+                  addHeader(doc, logo, formattedFromDate, formattedToDate);
+              }
+
+              // Footer
+              const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+              doc.setFontSize(10);
+              doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+          }
+      });
+
+      // Save PDF
+      doc.save('Reports.pdf');
+  };
 }
 
 

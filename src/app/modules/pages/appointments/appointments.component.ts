@@ -3167,13 +3167,26 @@ debugger
                      background-color: #fff;
                  }
                  
-                 .Adress_row{
-                     text-align: left;
-                    padding-bottom: 36px; 
-                     padding-left: 36px; 
-                     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
-                     font-size: 16px; line-height: 24px;
-                 }
+                //  .Adress_row{
+                //      text-align: left;
+                //     padding-bottom: 36px; 
+                //      padding-left: 36px; 
+                //      font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
+                //      font-size: 16px; line-height: 24px;
+                //  }
+
+                 .Adress_row {
+                            position: fixed;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            text-align: left;
+                            padding-bottom: 36px;
+                            padding-left: 36px;
+                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                            font-size: 16px;
+                            line-height: 24px;
+                        }
      
             </style>
           </head>
@@ -3507,6 +3520,7 @@ change(){
                 if (data) {
 debugger
                     this.slotsArr = data;
+                    console.log("multiple time",this.slotsArr)
                     if (this.slotsArr.length == 0) {
                         //this.slotsArr[0].slot="No Slot";
                         this.slotsArr.push({ day: 7, rowid: 0, doctorid: 0, slot: 'No Slots Available' });

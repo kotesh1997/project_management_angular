@@ -147,6 +147,62 @@ export class ReportComponent implements OnInit {
 
 
 
+// exportpdf() {
+//     const prepare = [];
+//     this.patientsappointments.filteredData.forEach(e => {
+//         const tempObj = [];
+//         tempObj.push(e.patientARCID);
+//         tempObj.push(e.appointmentID);
+//         tempObj.push(e.patient);
+//         tempObj.push(e.gender);
+//         tempObj.push(e.age);
+//         tempObj.push(e.mobile);
+//         tempObj.push(e.serviceName);
+//         tempObj.push(e.serviceDate);
+//         tempObj.push(e.payment);
+//         tempObj.push(e.modeofPayment);
+//         prepare.push(tempObj);
+//     });
+
+//     const doc = new jsPDF();
+
+//     // Add logo
+//     const logo = new Image();
+//     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+//     logo.onload = () => {
+//         doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+
+//         // Format dates to "25 May 2024"
+//         const formatDate = (date) => {
+//             const d = new Date(date);
+//             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//             return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+//         };
+
+//         const formattedFromDate = formatDate(this.appFromDate);
+//         const formattedToDate = formatDate(this.appToDate);
+
+//         // Add date range in a single line with padding left 10px and space between dates
+//         doc.setFontSize(12);
+//         doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
+
+//         // Add table with reduced distance between dates and table data
+//         autoTable(doc, {
+//             head: [['Patient ARCID', 'SL', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Payment', 'Mode of Payment']],
+//             body: prepare,
+//             startY: 50, // adjust the start position to reduce distance
+//             margin: { left: 10, right: 10 } // setting left and right margins to 10
+//         });
+//         const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+//         doc.setFontSize(10);
+//         doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+//         // Save PDF
+//         doc.save('Reports.pdf');
+//     };
+// }
+
+
 exportpdf() {
     const prepare = [];
     this.patientsappointments.filteredData.forEach(e => {
@@ -166,36 +222,49 @@ exportpdf() {
 
     const doc = new jsPDF();
 
-    // Add logo
+    // Format dates to "25 May 2024"
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+    };
+
+    const formattedFromDate = formatDate(this.appFromDate);
+    const formattedToDate = formatDate(this.appToDate);
+
+    const addHeader = (doc, logo, formattedFromDate, formattedToDate) => {
+        // Add logo
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+
+        // Add date range
+        doc.setFontSize(12);
+        doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
+    };
+
+    // Load logo and generate PDF
     const logo = new Image();
     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
     logo.onload = () => {
-        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        // Add the first page header
+        addHeader(doc, logo, formattedFromDate, formattedToDate);
 
-        // Format dates to "25 May 2024"
-        const formatDate = (date) => {
-            const d = new Date(date);
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            return `${d.getDate()} ${monthNames[d.getMonth()]} ${d.getFullYear()}`;
-        };
-
-        const formattedFromDate = formatDate(this.appFromDate);
-        const formattedToDate = formatDate(this.appToDate);
-
-        // Add date range in a single line with padding left 10px and space between dates
-        doc.setFontSize(12);
-        doc.text(`From Date: ${formattedFromDate}  to  ${formattedToDate}`, 120, 40);
-
-        // Add table with reduced distance between dates and table data
+        // Add table with margins to avoid overlapping with header and footer
         autoTable(doc, {
             head: [['Patient ARCID', 'SL', 'Name', 'Gender', 'Age', 'Mobile', 'Service Name', 'Last Visit', 'Payment', 'Mode of Payment']],
             body: prepare,
-            startY: 50, // adjust the start position to reduce distance
-            margin: { left: 10, right: 10 } // setting left and right margins to 10
+            startY: 50, // Start position below the header
+            margin: { left: 10, right: 10, bottom: 30, top: 50 }, // Margins to avoid overlap
+            didDrawPage: function (data) {
+                if (data.pageNumber > 1) {
+                    addHeader(doc, logo, formattedFromDate, formattedToDate);
+                }
+
+                // Footer
+                const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+                doc.setFontSize(10);
+                doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+            }
         });
-        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
-        doc.setFontSize(10);
-        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
 
         // Save PDF
         doc.save('Reports.pdf');

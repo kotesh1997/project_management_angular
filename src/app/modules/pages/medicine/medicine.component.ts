@@ -165,6 +165,47 @@ export class MedicineComponent implements OnInit {
 //             // });
 //         }
 
+// exportpdf() {
+//     const prepare = [];
+//     this.medicineList.filteredData.forEach(e => {
+//         const tempObj = [];
+//         tempObj.push(e.medicineId);
+//         tempObj.push(e.medicineName);
+//         tempObj.push(e.composition);
+//         prepare.push(tempObj);
+//     });
+
+//     const doc = new jsPDF();
+
+//     // Add logo
+//     const logo = new Image();
+//     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
+//     logo.onload = () => {
+//         doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
+        
+//         // Add title
+//         doc.setFontSize(12);
+
+//         // Add current date
+//         const currentDate = new Date();
+//         const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+//         doc.text(`Date: ${formattedDate}`, 160, 40);
+
+//         // Add table
+//         autoTable(doc, {
+//             head: [['MedicineId', 'MedicineName', 'Composition']],
+//             body: prepare,
+//             startY: 50 // adjust the start position as needed
+//         });
+//         const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+//         doc.setFontSize(10);
+//         doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+
+//         // Save PDF
+//         doc.save('Medicine.pdf');
+//     };
+// }
+
 exportpdf() {
     const prepare = [];
     this.medicineList.filteredData.forEach(e => {
@@ -177,29 +218,43 @@ exportpdf() {
 
     const doc = new jsPDF();
 
-    // Add logo
+    // Format current date
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+
+    const addHeader = (doc, logo, formattedDate) => {
+        // Add logo
+        doc.addImage(logo, 'PNG', 10, 10, 50, 20);
+
+        // Add date
+        doc.setFontSize(12);
+        doc.text(`Date: ${formattedDate}`, 160, 40);
+    };
+
+    // Load logo and generate PDF
     const logo = new Image();
     logo.src = 'assets/images/logo/LOGO.png'; // path to your logo file
     logo.onload = () => {
-        doc.addImage(logo, 'PNG', 10, 10, 50, 20); // adjust the positioning and size as needed
-        
-        // Add title
-        doc.setFontSize(12);
+        // Add the first page header
+        addHeader(doc, logo, formattedDate);
 
-        // Add current date
-        const currentDate = new Date();
-        const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
-        doc.text(`Date: ${formattedDate}`, 160, 40);
-
-        // Add table
+        // Add table with margins to avoid overlapping with header and footer
         autoTable(doc, {
             head: [['MedicineId', 'MedicineName', 'Composition']],
             body: prepare,
-            startY: 50 // adjust the start position as needed
+            startY: 50, // Start position below the header
+            margin: { left: 10, right: 10, bottom: 30, top: 50 }, // Margins to avoid overlap
+            didDrawPage: function (data) {
+                if (data.pageNumber > 1) {
+                    addHeader(doc, logo, formattedDate);
+                }
+
+                // Footer
+                const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
+                doc.setFontSize(10);
+                doc.text(footerText, 13, doc.internal.pageSize.height - 20);
+            }
         });
-        const footerText = `Advance Rheumatology Center\n6-3-652, 1st Floor, Kautilya Building, near Erramanzil bus stop, Somajiguda,\nHyderabad, Telangana 500082, Contact No : 9088765677`;
-        doc.setFontSize(10);
-        doc.text(footerText, 13, doc.internal.pageSize.height - 20);
 
         // Save PDF
         doc.save('Medicine.pdf');
