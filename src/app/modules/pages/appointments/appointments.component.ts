@@ -2391,7 +2391,6 @@ if(disc==5){
                         
                         this.actionFormName('New Appointment');
 
-
                     } else if (data) {
                         this._snackBar.open('Appointment Added Successfully...!!', 'OK', {
                             horizontalPosition: this.horizontalPosition,
@@ -2762,7 +2761,7 @@ debugger
                 <head>
                     <style>
                         body {
-                            width: 99%;
+                            width: 100%;
                         }
     
                         /**
@@ -2861,11 +2860,12 @@ debugger
                         .heading_1 {
                             background-color: #fff;
                             padding: 36px 24px 0;
-                            border-top: 3px solid #d4dadf;
                             font-family: sans-serif;
                             font-size: 21px;
                             font-weight: bold;
                             letter-spacing: 0.2px;
+                            border-bottom: 3px solid #d4dadf;
+
                         }
     
                         .tocken_no {
@@ -2874,13 +2874,30 @@ debugger
                             font-weight: bold;
                         }
     
-                        .td_style {
-                            padding: 24px;
-                            font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-                            width: 50%;
-                            padding-bottom: 0px;
-                            padding-top: 10px;
-                        }
+                        // .td_style {
+                        //     padding: 24px;
+                        //     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                        //     width: 50%;
+                        //     padding-bottom: 0px;
+                        //     padding-top: 10px;
+                        // }
+
+
+                                 .td_style {
+                                    padding: 24px;
+                                    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+                                    width: 50%;
+                                    padding-bottom: 0px;
+                                    padding-top: 10px;
+                                }
+
+                                .td_style span {
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                }
+
+
+
     
                         .td_table {
                             text-align: left;
@@ -2895,6 +2912,7 @@ debugger
                         .td_table1 {
                             text-align: left;
                             width: 100%;
+                            max-width:100%
                             padding: 12px;
                             font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                             font-size: 16px;
@@ -2936,19 +2954,20 @@ debugger
                             text-align: left;
                             background-color: #ffffff;
                             padding: 36px 24px 0;
-                            border-top: 3px solid #d4dadf;
-                            width: 30%;
+                            width: 35%;
+                            border-bottom: 3px solid #d4dadf;
+
                         }
     
                         .Token_No {
                             width: 100%;
-                            max-width: 600px;
-                            border-top: 1px solid #c1c1c1;
+                            max-width: 100%;
+                            margin-top: 200px;
                             background-color: #fff;
                         }
     
                         .Payment_method_bgmcolr {
-                            width: 600px;
+                            width: 100%;
                             background-color: #fff;
                         }
     
@@ -2960,6 +2979,7 @@ debugger
                             text-align: left;
                             padding-bottom: 36px;
                             padding-left: 36px;
+                            border-top: 3px solid #d4dadf;
                             font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
                             font-size: 16px;
                             line-height: 24px;
@@ -2968,10 +2988,7 @@ debugger
                 </head>
                 <body onload="window.print();window.close()">
                     ${printContents}
-                    <div class="Adress_row">
-                        <!-- Content of Adress_row that should appear on every page -->
-                        Address content here...
-                    </div>
+                   
                 </body>
             </html>
         `);
@@ -3102,7 +3119,7 @@ debugger
          font-weight: bold;
              }
               .td_style{
-                 padding: 24px; 
+                 padding: 20px; 
                  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
                  width: 50%;padding-bottom: 0px;
                  padding-top: 10px;
@@ -3126,7 +3143,7 @@ debugger
              .td_table2{
                  text-align: left; 
                  width:50%;
-                 padding: 12px; 
+                 padding: 10px; 
                  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; 
                  font-size: 16px; line-height: 24px; 
                  border-top: 2px dashed #D2C7BA; 
@@ -3157,7 +3174,7 @@ debugger
              }
              .Token_No{
              width: 100%; 
-             max-width: 600px;
+             max-width: 100%;
              border-top:1px solid #c1c1c1;
              background-color: #fff;
      

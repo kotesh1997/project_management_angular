@@ -3052,25 +3052,28 @@
                             <tr style="background-color:#fff">
 
                                 <td class="td_style">
-                                    <span>Token No</span>
-                                    <div class="tocken_no">{{receiptToken}}</div>
+                                    <!-- <span>Token No</span>
+                                    <div class="tocken_no">{{receiptToken}}</div> -->
+                                    <!-- <span>Token No : </span> <span class="tocken_no">{{receiptToken}}</span> -->
+                                    <span>Token No :&nbsp;</span> <span class="tocken_no">{{receiptToken}}</span>
+
                                 </td>
                                 <td class="td_style">
-                                    <span>Appointment Date</span>
-                                    <div class="tocken_no">{{todayDataSourcePrintBookings[0].appointmentDate | date:
-                                        'dd-MM-yyyy'}}</div>
+                                    <span>Appointment Date :&nbsp;</span>
+                                    <span class="tocken_no">{{todayDataSourcePrintBookings[0].appointmentDate | date:
+                                        'dd-MM-yyyy'}}</span>
                                 </td>
 
                             </tr>
                             <tr style="background-color:#fff">
 
                                 <td class="td_style">
-                                    <span>Service Name</span>
-                                    <div class="tocken_no">{{todayDataSourcePrintBookings[0].serviceName}}</div>
+                                    <span>Service Name :&nbsp; </span>
+                                    <span class="tocken_no">{{todayDataSourcePrintBookings[0].serviceName}}</span>
                                 </td>
                                 <td class="td_style">
-                                    <span>Patient Name</span>
-                                    <div class="tocken_no">{{todayDataSourcePrintBookings[0].patient}}</div>
+                                    <span>Patient Name :&nbsp;</span>
+                                    <span class="tocken_no">{{todayDataSourcePrintBookings[0].patient}}</span>
                                 </td>
 
                             </tr>
@@ -3082,8 +3085,8 @@
                             <div class="tocken_no">0596147558</div> -->
                                 </td>
                                 <td class="td_style">
-                                    <span>Patient ID</span>
-                                    <div class="tocken_no">{{todayDataSourcePrintBookings[0].patientARCID}}</div>
+                                    <span>Patient ID :&nbsp; </span>
+                                    <span class="tocken_no">{{todayDataSourcePrintBookings[0].patientARCID}}</span>
                                 </td>
 
                             </tr>
@@ -3097,21 +3100,24 @@
                                 <td class="Payment_row">
                                     <table border="0" style="width: 100%;">
                                         <tr>
-                                            <td class="td_table"><strong>Payment Method</strong></td>
+                                            <!-- <td class="td_table"><strong>Payment Method</strong></td>
                                             <td class="td_table">
                                                 <strong>{{todayDataSourcePrintBookings[0].modeofPayment}}</strong>
+                                            </td> -->
+                                            <td class="td_table">
+                                                <strong>Payment Method : </strong> {{todayDataSourcePrintBookings[0].modeofPayment}}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="td_table1">{{todayDataSourcePrintBookings[0].serviceName}}</td>
-                                            <td class="td_table1">{{todayDataSourcePrintBookings[0].payment}}</td>
+                                            <td class="td_table1">{{todayDataSourcePrintBookings[0].serviceName}} : ₹&nbsp;{{todayDataSourcePrintBookings[0].payment}}</td>
+                                            <!-- <td class="td_table1">₹{{todayDataSourcePrintBookings[0].payment}}</td> -->
                                         </tr>
 
                                         <tr>
-                                            <td class="td_table2"><strong>Total</strong></td>
-                                            <td class="td_table2">
-                                                <strong>{{todayDataSourcePrintBookings[0].payment}}</strong>
-                                            </td>
+                                            <td class="td_table2"><strong>Total : ₹&nbsp;{{todayDataSourcePrintBookings[0].payment}}</strong></td>
+                                            <!-- <td class="td_table2">
+                                                <strong>₹{{todayDataSourcePrintBookings[0].payment}}</strong>
+                                            </td> -->
                                         </tr>
                                     </table>
                                 </td>
@@ -3135,7 +3141,7 @@
                                                     <p style="margin-bottom: 5px;"><strong>Advance Rheumatology
                                                             Center</strong></p>
                                                     <p style="margin-top: 0;"> 6-3-652, 1st Floor, Kautilya Building,
-                                                        near Erramanzil bus stop, Somajiguda, <br> Hyderabad, Telangana
+                                                        Near Erramanzil bus stop, Somajiguda, <br> Hyderabad, Telangana
                                                         500082, Contact No : 9088765677</p>
                                                 </td>
                                             </tr>
