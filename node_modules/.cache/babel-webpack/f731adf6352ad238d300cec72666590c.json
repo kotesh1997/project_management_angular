@@ -1,1 +1,0 @@
-{"ast":null,"code":"export * from '@fuse/version/fuse-version';\nexport * from '@fuse/version/version';","map":null,"metadata":{},"sourceType":"module"}

@@ -36,7 +36,6 @@ export class GeneralService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return new Promise((resolve, reject) => {
         this.http.get('../assets/WebService.json').subscribe((data: any) => {
-            debugger
         this.urlname = data.Webservice;
           url = this.API_URL + url
             this.http.post(url, PostParam, { headers: headers }).subscribe(data => {

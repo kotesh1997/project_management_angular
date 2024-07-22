@@ -10,7 +10,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { fuseAnimations } from '@fuse/animations';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
@@ -19,7 +18,6 @@ import { FuseUtilsService } from '@fuse/services/utils/utils.service';
     selector: 'fuse-horizontal-navigation',
     templateUrl: './horizontal.component.html',
     styleUrls: ['./horizontal.component.scss'],
-    animations: fuseAnimations,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'fuseHorizontalNavigation',
@@ -43,222 +41,28 @@ export class FuseHorizontalNavigationComponent
         private _fuseUtilsService: FuseUtilsService
     ) {
         this.roleID = localStorage.getItem('roleID');
-        if (this.roleID == 1) {
             //Admin
             this.navItems.push(
-                {
-                    id: 'Admindashboard',
-                    title: 'Dashboard',
-                    type: 'basic',
-                    link: '/Admindashboard',
-                },
-                {
-                    id: 'Appointments',
-                    title: 'Appointments',
-                    type: 'basic',
-                    link: '/Appointments',
-                },
+            
                 {
                     id: 'DoctorsCalender',
-                    title: "Doctor" + "'" + "s Calendar",
+                    title: "Projects",
                     type: 'basic',
                     //link: '/DoctorsCalender'
-                    link: '/calendar'
+                    link: '/Project'
                 },
-                // {
-                //     id: 'Patients',
-                //     title: 'Patients',
-                //     type: 'basic',
-                //     link: '/Patients',
-                // },
-                {
-                    id: 'Employees',
-                    title: 'Employees',
-                    type: 'basic',
-                    link: '/Employess',
-                },
+               
                 {
                     id: 'MyPatients',
-                    title: 'My Patients',
-                    type: 'basic',
-                    link: '/MyPatients',
-                },
-                {
-                    id: 'Medicine',
-                    title: 'Medicine Data Entry',
-                    type: 'basic',
-                    link: '/Medicine',
-                },
-                {
-                    id: 'Reports',
                     title: 'Reports',
                     type: 'basic',
-                    link: '/Reports',
+                    link: '/reportings',
                 },
-                // {
-                //     id: 'Services',
-                //     title: 'Services',
-                //     type: 'basic',
-                //     link: '/service',
-                // }
+             
             );
-        } else if (this.roleID == 2) {
-            //Doctor
+        
 
-            this.navItems.push(
-                //{
-                //    id: 'Admindashboard',
-                //    title: 'Dashboard',
-                //    type: 'basic',
-                //    link: '/Admindashboard',
-                //},
-                {
-                    id: 'Appointments',
-                    title: 'Appointments',
-                    type: 'basic',
-                    link: '/Appointments',
-                },
-                {
-                    id: 'DoctorsCalender',
-                    title: "Doctor" + "'" + "s Calendar",
-                    type: 'basic',
-                    //link: '/DoctorsCalender'
-                    link: '/calendar'
-                },
-                // {
-                //     id: 'Patients',
-                //     title: 'Patients',
-                //     type: 'basic',
-                //     link: '/Patients',
-                // }
-                {
-                    id: 'MyPatients',
-                    title: 'My Patients',
-                    type: 'basic',
-                    link: '/MyPatients',
-                },
-
-                {
-                    id: 'Reports',
-                    title: 'Reports',
-                    type: 'basic',
-                    link: '/Reports',
-                },
-
-            );
-        } else if (this.roleID == 3) {
-            //FrontDesk
-            this.navItems.push(
-                //{ id: 'Admindashboard', title: 'Dashboard', type: 'basic', link: '/Admindashboard' },
-                {
-                    id: 'Appointments',
-                    title: 'Appointments',
-                    type: 'basic',
-                    link: '/Appointments',
-                },
-                {
-                    id: 'DoctorsCalender',
-                    title: "Doctor" + "'" + "s Calendar",
-                    type: 'basic',
-                    //link: '/DoctorsCalender'
-                    link: '/calendar'
-                },
-
-                {
-                    id: 'Reports',
-                    title: 'Reports',
-                    type: 'basic',
-                    link: '/Reports',
-                },
-
-                // {
-                //     id: 'Patients',
-                //     title: 'Patients',
-                //     type: 'basic',
-                //     link: '/Patients',
-                // }
-            );
-        } else if (this.roleID == 4) {
-            //Patient
-            this.navItems.push(
-                {
-                    id: 'Admindashboard',
-                    title: 'Dashboard',
-                    type: 'basic',
-                    link: '/Admindashboard',
-                },
-                {
-                    id: 'Appointments',
-                    title: 'Appointments',
-                    type: 'basic',
-                    link: '/Appointments',
-                },
-                {
-                    id: 'DoctorsCalender',
-                    title: "Doctor" + "'" + "s Calendar",
-                    type: 'basic',
-                    //link: '/DoctorsCalender'
-                    link: '/calendar'
-                },
-
-                {
-                    id: 'Reports',
-                    title: 'Reports',
-                    type: 'basic',
-                    link: '/Reports',
-                },
-
-                // {
-                //     id: 'Patients',
-                //     title: 'Patients',
-                //     type: 'basic',
-                //     link: '/Patients',
-                // }
-            );
-        }
-        else if (this.roleID == 5) {
-            //Jr Doctor
-
-            this.navItems.push(
-                //{
-                //    id: 'Admindashboard',
-                //    title: 'Dashboard',
-                //    type: 'basic',
-                //    link: '/Admindashboard',
-                //},
-                {
-                    id: 'Appointments',
-                    title: 'Appointments',
-                    type: 'basic',
-                    link: '/Appointments',
-                },
-                {
-                    id: 'DoctorsCalender',
-                    title: "Doctor" + "'" + "s Calendar",
-                    type: 'basic',
-                    //link: '/DoctorsCalender'
-                    link: '/calendar'
-                },
-                // {
-                //     id: 'Patients',
-                //     title: 'Patients',
-                //     type: 'basic',
-                //     link: '/Patients',
-                // }
-                {
-                    id: 'MyPatients',
-                    title: 'My Patients',
-                    type: 'basic',
-                    link: '/MyPatients',
-                },
-                {
-                    id: 'Reports',
-                    title: 'Reports',
-                    type: 'basic',
-                    link: '/Reports',
-                }
-            );
-        }
+       
     }
 
     // -----------------------------------------------------------------------------------------------------

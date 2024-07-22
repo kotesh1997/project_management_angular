@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { AuthForgotPasswordComponent } from 'app/modules/auth/forgot-password/forgot-password.component';\nexport const authForgotPasswordRoutes = [{\n  path: '',\n  component: AuthForgotPasswordComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

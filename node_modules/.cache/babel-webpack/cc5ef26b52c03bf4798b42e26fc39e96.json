@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { AuthSignInComponent } from 'app/modules/auth/sign-in/sign-in.component';\nexport const authSignInRoutes = [{\n  path: '',\n  component: AuthSignInComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

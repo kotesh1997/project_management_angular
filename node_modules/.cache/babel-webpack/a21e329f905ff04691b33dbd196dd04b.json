@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { LandingHomeComponent } from 'app/modules/landing/home/home.component';\nexport const landingHomeRoutes = [{\n  path: '',\n  component: LandingHomeComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

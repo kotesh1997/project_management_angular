@@ -3,14 +3,12 @@ import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
-import { fuseAnimations } from '@fuse/animations/public-api';
 
 @Component({
     selector     : 'search',
     templateUrl  : './search.component.html',
     encapsulation: ViewEncapsulation.None,
     exportAs     : 'fuseSearch',
-    animations   : fuseAnimations
 })
 export class SearchComponent implements OnChanges, OnInit, OnDestroy
 {

@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { InjectionToken } from '@angular/core';\nexport const FUSE_MOCK_API_DEFAULT_DELAY = new InjectionToken('FUSE_MOCK_API_DEFAULT_DELAY');","map":null,"metadata":{},"sourceType":"module"}

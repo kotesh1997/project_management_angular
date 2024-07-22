@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { AuthUnlockSessionComponent } from 'app/modules/auth/unlock-session/unlock-session.component';\nexport const authUnlockSessionRoutes = [{\n  path: '',\n  component: AuthUnlockSessionComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

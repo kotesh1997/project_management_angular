@@ -11,12 +11,9 @@ import { ModernLayoutModule } from 'app/layout/layouts/horizontal/modern/modern.
 import { ClassicLayoutModule } from 'app/layout/layouts/vertical/classic/classic.module';
 import { ClassyLayoutModule } from 'app/layout/layouts/vertical/classy/classy.module';
 import { CompactLayoutModule } from 'app/layout/layouts/vertical/compact/compact.module';
-import { DenseLayoutModule } from 'app/layout/layouts/vertical/dense/dense.module';
 import { FuturisticLayoutModule } from 'app/layout/layouts/vertical/futuristic/futuristic.module';
-import { ThinLayoutModule } from 'app/layout/layouts/vertical/thin/thin.module';
 import { SettingsModule } from 'app/layout/common/settings/settings.module';
 import { SharedModule } from 'app/shared/shared.module';
-import { PasswordComponent } from './common/password/password.component';
 
 const layoutModules = [
     // Empty
@@ -32,9 +29,7 @@ const layoutModules = [
     ClassicLayoutModule,
     ClassyLayoutModule,
     CompactLayoutModule,
-    DenseLayoutModule,
     FuturisticLayoutModule,
-    ThinLayoutModule
 ];
 
 @NgModule({

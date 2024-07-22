@@ -25,13 +25,6 @@ import { Route, RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { AppointmentsComponent } from './appointments/appointments.component';
-import { DoctorsCalenderComponent } from './doctors-calender/doctors-calender.component';
-import { PatientsComponent } from './patients/patients.component';
-import { MyPatientsComponent } from './mypatients/myPatients.component';
-import { ReportComponent } from './Reports/report.component';
-import { MedicineComponent } from './medicine/medicine.component';
-import { PatientsService } from './patients/patients.service';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -46,44 +39,17 @@ import {
     NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { AdmindashboardModule } from '../admin/admindashboard/admindashboard.module';
-import { AdmindashboardComponent } from '../admin/admindashboard/admindashboard.component';
-import { AdmindashboardService } from '../admin/admindashboard/admindashboard.service';
-
 import { ToastComponent } from './directives/toast.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { FuseAlertModule } from '@fuse/components/alert';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MastersComponent } from './masters/masters.component';
-import { PatientHistoryComponent } from './patient-history/patient-history.component';
-import { MyPatientsService } from './mypatients/mypatients.service';
- import { ReportService } from './Reports/report.service';
-import { MedicineService } from './medicine/medicine.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ServiceComponent } from './service/service.component';
-import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
-import { AdminReportsComponent } from './admin-reports/admin-reports.component';
-import { AppointmentsV1Component } from './appointments-v1/appointments-v1.component';
-import { GraphComponent } from './graph/graph.component';
-import { DiscountComponent } from './discount/discount.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { PopupComponent } from './popup/popup.component';
+import { ReportingsComponent } from './reportings/reportings.component';
 
  const Routes: Route[] = [
-     { path: 'Appointments', component: AppointmentsComponent },
-     { path: 'Appointmentsv1', component: AppointmentsV1Component },
-    // { path: 'DoctorsCalender', component: DoctorsCalenderComponent },
-    { path: 'Patients', component: PatientsComponent },
-    { path: 'MyPatients', component: MyPatientsComponent },
-    { path: 'Medicine', component:  MedicineComponent},
-     { path: 'Reports', component: ReportComponent },
-    // { path: 'Admindashboard', component: AdmindashboardComponent },
-    //{ path: 'Admindashboard', component: MastersComponent },
-    { path: 'Employess', component: MastersComponent },
-    { path: 'PatientHist', component: PatientHistoryComponent },
-    {path:'service',component:ServiceComponent},
-    {path:'admin-settings',component:AdminSettingsComponent},
-    {path:'admin-reports',component:AdminReportsComponent},
-    {path:'graph',component:GraphComponent},
-    {path:'Discount',component:DiscountComponent},
+    {path:'projects',component:ProjectsComponent},
+    {path:'reports',component:ReportingsComponent},
 
 
 
@@ -93,21 +59,10 @@ import { DiscountComponent } from './discount/discount.component';
 
 @NgModule({
     declarations: [
-        AppointmentsComponent,
-        DoctorsCalenderComponent,
-        PatientsComponent,
-        MyPatientsComponent,
-        MedicineComponent,
-        ReportComponent,
+        PopupComponent,
         ToastComponent,
-        MastersComponent,
-        PatientHistoryComponent,
-        ServiceComponent,
-        AdminSettingsComponent,
-        AppointmentsV1Component,
-        AdminReportsComponent,
-        GraphComponent,
-        DiscountComponent
+        ProjectsComponent,
+        ReportingsComponent,
     ],
     imports: [
         CommonModule, MatExpansionModule, MatChipsModule, MatAutocompleteModule,
@@ -143,15 +98,14 @@ import { DiscountComponent } from './discount/discount.component';
         MatStepperModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        // MatDatepickerInputEvent,
         NgxMatDatetimePickerModule,
         NgxMatTimepickerModule,
         NgxMatNativeDateModule,
         NgxMaterialTimepickerModule,
-        FuseAlertModule, MatSnackBarModule, FullCalendarModule,
+        MatSnackBarModule, FullCalendarModule,
         MatProgressSpinnerModule, 
        
     ],
-    providers: [PatientsService,DatePipe, AdmindashboardService,MyPatientsService,ReportService,MedicineService],
+    providers: [DatePipe]
 })
 export class PagesModule {}

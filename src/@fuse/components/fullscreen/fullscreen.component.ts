@@ -59,7 +59,6 @@ export class FuseFullscreenComponent implements OnInit
      */
     toggleFullscreen(): void
     {
-        debugger
         // Check if the fullscreen is open
         this._isFullscreen = this._getBrowserFullscreenElement() !== null;
 
@@ -173,5 +172,13 @@ export class FuseFullscreenComponent implements OnInit
             this._fsDoc.msExitFullscreen();
             return;
         }
+    }
+
+    gotoproject() {
+        this.router.navigate(['/projects']);
+    }
+
+    gotoreport(){
+        this.router.navigate(['/reports']);
     }
 }

@@ -23,14 +23,14 @@
             <!-- Logo -->
             <div class="flex items-center mx-2 lg:mr-8">
                 <div class="hidden lg:flex">
-                    <img class="dark:hidden" style="width: 60%;"  src="assets/images/logo/LOGO.png">
-                    <img class="hidden dark:flex w-24" src="assets/images/logo/LOGO.png">
+                    <!-- <img class="dark:hidden" style="width: 60%;"  src="assets/images/logo/LOGO.png"> -->
+                    <!-- <img class="hidden dark:flex w-24" src="assets/images/logo/LOGO.png"> -->
                 </div>
-                <img class="flex lg:hidden w-8" src="assets/images/logo/LOGO.png">
+                <!-- <img class="flex lg:hidden w-8" src="assets/images/logo/LOGO.png"> -->
             </div>
             <!-- Horizontal navigation -->
-            <fuse-horizontal-navigation class="mr-2" [name]="'mainNavigation'" [navigation]="navigation.horizontal">
-            </fuse-horizontal-navigation>
+            <!-- <fuse-horizontal-navigation class="mr-2" [name]="'mainNavigation'" [navigation]="navigation.horizontal">
+            </fuse-horizontal-navigation> -->
         </ng-container>
         <!-- Navigation toggle button -->
         <ng-container *ngIf="isScreenSmall">
@@ -49,11 +49,11 @@
             <button
                 class="lg:hidden"
                 mat-icon-button
-                (click)="quickChat.toggle()">
+                >
                 <mat-icon [svgIcon]="'heroicons_outline:chat-alt-2'"></mat-icon>
             </button>-->
-            <languages *ngIf="roleID=='3' || roleID=='1'"></languages>
-            <user></user>
+            <!-- <languages *ngIf="roleID=='3' || roleID=='1'"></languages>
+            <user></user> -->
         </div>
     </div>
 
@@ -67,10 +67,9 @@
     <!-- Footer -->
     <div 
         class="relative flex flex-0 items-center w-full h-14 sm:h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
-        <span class="font-medium text-secondary">CMS &copy; {{currentYear}}</span>
+        <span class="font-medium text-secondary">Projects &copy; {{currentYear}}</span>
     </div>
 
 </div>
 
 <!-- Quick chat -->
-<!--<quick-chat #quickChat="quickChat"></quick-chat>-->

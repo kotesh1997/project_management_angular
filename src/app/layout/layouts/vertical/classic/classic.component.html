@@ -12,12 +12,12 @@
             <!-- Light version -->
             <img
                 class="dark:hidden w-30"
-                src="assets/images/logo/LOGO.png"
+                src="assets/images/logo/Project.png"
                 alt="Logo image">
             <!-- Dark version -->
             <img
                 class="hidden dark:flex w-30"
-                src="assets/images/logo/LOGO.png"
+                src="assets/images/logo/Project.png"
                 alt="Logo image">
         </div>
     </ng-container>
@@ -36,7 +36,6 @@
         </button>
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
-            <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
             <search [appearance]="'bar'"></search>
             <shortcuts></shortcuts>
@@ -45,7 +44,7 @@
             <button
                 class="lg:hidden"
                 mat-icon-button
-                (click)="quickChat.toggle()">
+                >
                 <mat-icon [svgIcon]="'heroicons_outline:chat-alt-2'"></mat-icon>
             </button>
             <user></user>
@@ -67,4 +66,3 @@
 </div>
 
 <!-- Quick chat -->
-<quick-chat #quickChat="quickChat"></quick-chat>

@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { AuthConfirmationRequiredComponent } from 'app/modules/auth/confirmation-required/confirmation-required.component';\nexport const authConfirmationRequiredRoutes = [{\n  path: '',\n  component: AuthConfirmationRequiredComponent\n}];","map":null,"metadata":{},"sourceType":"module"}

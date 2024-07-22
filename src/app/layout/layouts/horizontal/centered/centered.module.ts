@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuseFullscreenModule } from '@fuse/components/fullscreen';
 import { FuseNavigationModule } from '@fuse/components/navigation';
-import { LanguagesModule } from 'app/layout/common/languages/languages.module';
 import { MessagesModule } from 'app/layout/common/messages/messages.module';
 import { NotificationsModule } from 'app/layout/common/notifications/notifications.module';
 import { SearchModule } from 'app/layout/common/search/search.module';
@@ -29,7 +28,6 @@ import { CenteredLayoutComponent } from 'app/layout/layouts/horizontal/centered/
         MatMenuModule,
         FuseFullscreenModule,
         FuseNavigationModule,
-        LanguagesModule,
         MessagesModule,
         NotificationsModule,
         SearchModule,
